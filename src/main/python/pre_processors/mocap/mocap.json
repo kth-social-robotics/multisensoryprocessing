@@ -1,0 +1,32 @@
+{
+	"frame": "17044156",
+	"participant": "red",
+	"coord": "xyz_left",
+	"head": {
+		"type": "glasses",
+		"name":  "glasses_red",
+		"position": {"x": 209.886, "y": 2296.58, "z": 852.55},
+		"rotation": {"x": 0.0488613, "y": -0.0312445, "z": 0.912453, "w": 0.405051},
+		"markers":
+		[
+			{
+				"name": "glasses1a",
+				"position": {"x": 154.961, "y": 2351.84, "z": 861.614}
+			},
+			{
+				"name": "glasses1c",
+				"position": {"x": 119.116, "y": 2315.4, "z": 854.728}
+			},
+			{
+				"name": "glasses1d",
+				"position": {"x": 258.76, "y": 2203.29, "z": 842.933}
+			},
+			{
+				"name": "glasses1b",
+				"position": {"x": 282.3, "y": 2268.21, "z": 848.115}
+			}
+		]
+	},
+	"glove_left": {},
+	"glove_right": {}
+}

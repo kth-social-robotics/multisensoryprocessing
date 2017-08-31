@@ -1,0 +1,169 @@
+DA_m	speakers	DA_t	text	agree
+ACCUSE	ONE_DA	ACCUSE	Or maybe you are a werewol- werewolf and then you just want to kill everyone very quickly and you know	TRUE
+ACCUSE	ONE_DA	ACCUSE	... the werewolves	TRUE
+SUPPORT	ONE_DA	ACCUSE	why not?	FALSE
+SUPPORT	ONE_DA	SUPPORT	mm yes	TRUE
+GAME	ONE_DA	GAME	But lovers can as well be werewolves	TRUE
+ACCUSE	ONE_DA	ACCUSE	Or maybe she is just playing that she was the priest	TRUE
+ACCUSE	ONE_DA	ACCUSE		TRUE
+SUPPORT	ONE_DA	SUPPORT		TRUE
+SUPPORT	ONE_DA	SUPPORT		TRUE
+GAME	ONE_DA	ACCUSE		FALSE
+ACCUSE	ONE_DA	ACCUSE		TRUE
+SUPPORT	ONE_DA	SUPPORT		TRUE
+JOKES	TWO_DA	GAME	You get two lives	FALSE
+SUPPORT	TWO_DA	SUPPORT	Yeah I guess that that would be the fact that yeah if we killed the Mayor we have to agree that the four people who decided chose him made mistakes so...	TRUE
+DISTRACT	TWO_DA	ACCUSE	So out of the four possibly two are lovers possibly two are werewolves possibly I do not know	FALSE
+SUPPORT	TWO_DA	SUPPORT	Yeah that is so many combinations it could be the lovers it could be	TRUE
+SUPPORT	TWO_DA	SUPPORT	mm	TRUE
+SUPPORT	TWO_DA	DEFEND	Oj... that... h- how can you arg- how can how can you how can you convince the people that we have to kill our elected mayor so that I become the were in the next round?	FALSE
+DISTRACT	TWO_DA	DEFEND	Oh but then you cannot kill him because then he is not going to appoint you <LAUGHTER>	FALSE
+ACCUSE	TWO_DA	ACCUSE	Johan Johan	TRUE
+JOKES	TWO_DA	JOKE	Nothing he swapped the votes! Corruption! I think we <LAUGHTER>	FALSE
+SUPPORT	TWO_DA	SUPPORT	Mm... yeah this is- it is...	TRUE
+DISTRACT	TWO_DA	ACCUSE	But he is starting to defend her	FALSE
+ACCUSE	TWO_DA	ACCUSE	Well that is what you are saying but you know we do not know that identity yet	TRUE
+DISTRACT	TWO_DA	SUPPORT	If they are	FALSE
+GAME	TWO_DA	SUPPORT	then if she killed then he also gets killed	FALSE
+DISTRACT	TWO_DA	SUPPORT	Yeah but we have to figure out if they are the werewolf or not	FALSE
+DISTRACT	TWO_DA	SUPPORT	Because if we kill the wrong person then... we do two citizens and	FALSE
+DEFEND	TWO_DA	DEFEND	I like to speak <LAUGHTER>	TRUE
+SUPPORT	TWO_DA	SUPPORT	Yeah that is the thing you could change someone's mind you are still	TRUE
+JOKES	TWO_DA	JOKE	This village is turning zombie	FALSE
+DEFEND	TWO_DA	DEFEND	No I am not I am not because	TRUE
+ACCUSE	TWO_DA	ACCUSE	It is difficult to justify but Sofia has been very quiet and Jonathan has been protecting her for a while so I have to suspect that	TRUE
+ACCUSE	TWO_DA	ACCUSE	They could also be both the lover partners and lovers and the werewolf	TRUE
+ACCUSE	TWO_DA	ACCUSE	Then you are werewolf. Then it is not me it is among them	TRUE
+SUPPORT	THREE_DA	SUPPORT	Yeah out of pity	TRUE
+GAME	THREE_DA	GAME	You can discuss but not yeah	TRUE
+JOKES	THREE_DA	SUPPORT	The Death has spoken	FALSE
+SUPPORT	THREE_DA	SUPPORT	Yeah	TRUE
+SUPPORT	THREE_DA	SUPPORT	mm	TRUE
+GAME	THREE_DA	GAME	Nominate but not vote	TRUE
+SUPPORT	THREE_DA	DISTRACT	Maybe it will change somebody's mind?	FALSE
+DISTRACT	THREE_DA	ACCUSE	He might be	FALSE
+DEFEND	THREE_DA	DEFEND	I am not	TRUE
+DEFEND	THREE_DA	DEFEND	You are making an honest mistake here	TRUE
+DEFEND	THREE_DA	DEFEND	Like I am suspected now because Jonathan is defending my but I never asked for his for him to defend me	TRUE
+JOKES	THREE_DA	DEFEND	Thanks	FALSE
+JOKES	FOUR_DA	GAME	Cannot nominate myself	FALSE
+DISTRACT	FOUR_DA	ACCUSE	Or we can kill the Mayor	FALSE
+SUPPORT	FOUR_DA	SUPPORT	Yeah that is true yeah	TRUE
+GAME	FOUR_DA	GAME	Yeah but I but I I can discuss	TRUE
+GAME	FOUR_DA	GAME	Yeah but lovers can be werewolves	TRUE
+ACCUSE	FOUR_DA	ACCUSE	Yeah but I Sofia has been very quiet so I mean this is uh	TRUE
+ACCUSE	FOUR_DA	ACCUSE	You know maybe both of them are are <PAUSE> are werewolves	TRUE
+ACCUSE	FOUR_DA	ACCUSE	Jonathan and Sofia I mean were- werewolves	TRUE
+SUPPORT	FOUR_DA	SUPPORT	Yeah	TRUE
+ACCUSE	FOUR_DA	ACCUSE	I am thinking Sofia and Jonathan but yeah I I I think Sofia first	TRUE
+ACCUSE	FOUR_DA	ACCUSE	I said Jonathan but di- not this time this time it is Sofia	TRUE
+ACCUSE	FOUR_DA	SUPPORT	I think Jonathan is the other but th- this time we should focus on on on yeah	FALSE
+GAME	SIX_DA	GAME	It's just no risks actually at the beginning so	TRUE
+DEFEND	SIX_DA	DEFEND	Or maybe not	TRUE
+SUPPORT	SIX_DA	DEFEND	It is too risky?	FALSE
+JOKES	SIX_DA	JOKE	In my previous life!	FALSE
+DEFEND	SIX_DA	SUPPORT	Yeah but I supported him last round although we were not the werewolves the two of us	FALSE
+JOKES	SIX_DA	ACCUSE	In the previous life! it does not count!	FALSE
+DISTRACT	SIX_DA	ACCUSE	I think as a village we should uh uh <PAUSE> like combine our strengths and uh kill Johan	FALSE
+ACCUSE	SIX_DA	SUPPORT	Because he is against the Mayor and uh	FALSE
+DEFEND	SIX_DA	DEFEND	You cannot kill the Mayor because you just chose me	TRUE
+JOKES	SIX_DA	DEFEND	OK so I commit suicide	FALSE
+DEFEND	SIX_DA	DEFEND	But you are going to kill a perfectly decent citizen for your	TRUE
+DEFEND	SIX_DA	DEFEND	No	TRUE
+ACCUSE	SIX_DA	SUPPORT	Yeah but if Jo- John is a is a werewolf definitely he is going he is going after the Mayor's place and <SMACK> yeah it is obvious,T=SEVEN_transcription,B=501150,E=508115	FALSE
+ACCUSE	SIX_DA	ACCUSE	Well it is obvious that Johan is after my M- M- May May Mayor's place and it is actually a very good position to be a Mayor and a werewolf so I believe that he is werewolf and ah yeah and I am going to use all my power just being elected as a Mayor to to-hi to kill him	TRUE
+JOKES	SIX_DA	JOKE	Even though it is amor	FALSE
+GAME	SIX_DA	GAME	Yeah but he cannot vote any more	TRUE
+SUPPORT	SIX_DA	SUPPORT	Yeah exactly	TRUE
+DISTRACT	SIX_DA	SUPPORT	Yeah this is a very good actually strategy to say it and then use it I mean	FALSE
+DEFEND	SIX_DA	ACCUSE	Hm <SMACK> not not convincing you know for me	FALSE
+SUPPORT	SIX_DA	DEFEND	<STUTTERING> It might change someone's mind so	FALSE
+DISTRACT	SIX_DA	DISTRACT	Ah yeah well I do not know	TRUE
+DEFEND	SIX_DA	DEFEND	Uh no	TRUE
+DISTRACT	SIX_DA	DEFEND	Just uh quite interesting to see how people change their minds	FALSE
+DISTRACT	SIX_DA	ACCUSE	Uh Jonathan was on my side previous round and now he changed	FALSE
+DISTRACT	SIX_DA	ACCUSE	This is very this this is very suspicious to me	FALSE
+ACCUSE	SIX_DA	ACCUSE	So I really believe now when he changed his mind that uh he and uh Sofia are the werewolves this time because now he is defending her very much	TRUE
+JOKES	SIX_DA	DISTRACT	This is going to take some time	FALSE
+SUPPORT	SEVEN_DA	SUPPORT	No but I think that is a good leader	TRUE
+DEFEND	SEVEN_DA	SUPPORT	Yeah it is suspicious because we are the lovers	FALSE
+DEFEND	SEVEN_DA	DEFEND	We are the Lovers	TRUE
+JOKES	SEVEN_DA	JOKE	You can see:we married yesterday <LAUGHTER>	FALSE
+DISTRACT	SEVEN_DA	DEFEND	But why?	FALSE
+DEFEND	SEVEN_DA	DEFEND	J- You do not have a say	TRUE
+SUPPORT	SEVEN_DA	SUPPORT	Yeah I am more on the side of the Mayor	TRUE
+GAME	SEVEN_DA	DISTRACT	Yeah but I mean a werewolf can still be a lover	FALSE
+DISTRACT	SEVEN_DA	DISTRACT	I guess	TRUE
+GAME	SEVEN_DA	JOKE	Amor does not know <SMACK>	FALSE
+SUPPORT	SEVEN_DA	SUPPORT	Yeah	TRUE
+ACCUSE	SEVEN_DA	ACCUSE	I am more I am more on uh Kalin's side because I think when you are having an aggressive like <SMACK> uh you are going ahead uh very quickly in the discussions and have your own poin- uh point like statement from the beginning then you are either the Mayor or the werewolf so I think Johan is still pretty suspicious	TRUE
+JOKES	SEVEN_DA	DEFEND	So you can be killed your turn	FALSE
+SUPPORT	SEVEN_DA	SUPPORT	Yeah yeah	TRUE
+SUPPORT	SEVEN_DA	SUPPORT	Yeah	TRUE
+SUPPORT	SEVEN_DA	SUPPORT	Yeah that is true	TRUE
+SUPPORT	SEVEN_DA	SUPPORT	Yeah she was surprised	TRUE
+DEFEND	SEVEN_DA	DEFEND	So I do not suspect her of anything	TRUE
+SUPPORT	SEVEN_DA	SUPPORT	Yeah	TRUE
+DEFEND	SEVEN_DA	DEFEND	But no because she mentioned earlier she has a uh well in the previous village she has a bad poker face and	TRUE
+DEFEND	SEVEN_DA	DEFEND	Yeah but I do not think	TRUE
+DEFEND	SEVEN_DA	DEFEND	But I think it is just being like a coward. Uh I would also be quiet un- unless I was like attacked from the beginning... So, yeah, it is just a mean of saving your own lives	TRUE
+DEFEND	SEVEN_DA	DEFEND	No	TRUE
+DEFEND	SEVEN_DA	DEFEND	But I am not her lover	TRUE
+DEFEND	SEVEN_DA	DEFEND	I am the lover of Kalin <LAUGHTER>	TRUE
+DEFEND	SEVEN_DA	DEFEND	I am I am no werewolf	TRUE
+ACCUSE	SEVEN_DA	ACCUSE	Well I think Maja and I have begun to mistrust my lover <LAUGHTER>	TRUE
+ACCUSE	SEVEN_DA	ACCUSE	But Maja is the most suspicious	TRUE
+ACCUSE	SEVEN_DA	ACCUSE	Well in that case Raveesh and Kalin	TRUE
+DEFEND	SEVEN_DA	SUPPORT	Yeah n- n- n- Yeah I do not think Raveesh is suspicious	FALSE
+DEFEND	SEVEN_DA	SUPPORT	But I think Sofia is very non-suspect so...	FALSE
+ACCUSE	SEVEN_DA	ACCUSE	Therefore Raveesh and Kalin are the only ones to be	TRUE
+SUPPORT	SEVEN_DA	SUPPORT	Yeah yeah you can	TRUE
+No not vote	SEVEN_DA	GAME	GAMERULES	FALSE
+JOKES	SEVEN_DA	ACCUSE	Suspiciousness	FALSE
+DEFEND	SEVEN_DA	DEFEND	No: we are not lovers	TRUE
+DEFEND	SEVEN_DA	DEFEND	No	TRUE
+DEFEND	SEVEN_DA	DEFEND	No I know I am not	TRUE
+DEFEND	SEVEN_DA	DEFEND	But I do not think you are	TRUE
+JOKES	SEVEN_DA	JOKE	Accusing the Dead <LAUGHTER>	FALSE
+DEFEND	SEVEN_DA	DEFEND	No I am still I am still your lover but I mean	TRUE
+DEFEND	SEVEN_DA	DEFEND	We are only four people left here and	TRUE
+SUPPORT	SEVEN_DA	SUPPORT	Okay fine	TRUE
+DEFEND	SEVEN_DA	DEFEND	Yeah I have I have nothing more to say to my defence because well I am working at my at my farm - that is what I do. I am I am like totally non-aware of the activities in the village - But	TRUE
+DISTRACT	SEVEN_DA	DEFEND	I know now since I am the lover of Kalin that he will vote for Sofia because he thinks uh he thinks I am supsicious uh but if he kills me he will also die <SMACK> so Sofia will get one vote from there	FALSE
+DEFEND	SEVEN_DA	DEFEND	Uh and I am not going to vote for Sofia	TRUE
+GAME	SEVEN_DA	DEFEND	If you die then I die also	FALSE
+SUPPORT	SEVEN_DA	SUPPORT	<LAUGHTER> Yeah	TRUE
+SUPPORT	EIGHT_DA	ACCUSE	Yeah we should have somebody who is not self-appointed I think <COUGH>	FALSE
+SUPPORT	EIGHT_DA	ACCUSE	Yeah so he is probably	FALSE
+JOKES	EIGHT_DA	DEFEND	He is probably innocent this time too	FALSE
+ACCUSE	EIGHT_DA	ACCUSE	I think I think Kalin and Jonathan are the werewolves because you know Jonathan tries to back Kalin here in his self-appointed pointmental being mayor and I think that is very suspicious	TRUE
+ACCUSE	EIGHT_DA	ACCUSE	No I think you are the werewolves <COUGH>	TRUE
+DISTRACT	EIGHT_DA	ACCUSE	That was that was last round	FALSE
+SUPPORT	EIGHT_DA	SUPPORT	Yeah yeah	TRUE
+ACCUSE	EIGHT_DA	ACCUSE	I think we should kill Jonathan actually	TRUE
+JOKES	EIGHT_DA	SUPPORT	On the other hand yeah it could be pretty cool to lynch the Mayor right?	FALSE
+ACCUSE	EIGHT_DA	SUPPORT	So so we let us	FALSE
+JOKES	EIGHT_DA	SUPPORT	We are not worse so we can admit we made a mistake <LAUGHTER>	FALSE
+SUPPORT	EIGHT_DA	SUPPORT	Yes	TRUE
+DEFEND	EIGHT_DA	JOKE	I just want to be the Mayor that is my secret dream.	FALSE
+ACCUSE	EIGHT_DA	ACCUSE	So I think we should lynch the Mayor so I can elected Mayor <COUGH>	TRUE
+DEFEND	EIGHT_DA	SUPPORT	Yeah that is the only reason I have	FALSE
+JOKES	EIGHT_DA	JOKE	Well I mean there are ups and downs to every th- decision in life <UNINTELLIGIBLE>	FALSE
+SUPPORT	EIGHT_DA	SUPPORT	Yes, definitely	TRUE
+JOKES	EIGHT_DA	DISTRACT	Do you think it happened before in history?	FALSE
+JOKES	EIGHT_DA	DEFEND	Well I I must admit that the odds looks bad for that, yes	FALSE
+ACCUSE	EIGHT_DA	ACCUSE	Ok so <UNINTELLIGIBLE> we should kill <UNINTELLIGIBLE> I think then	TRUE
+JOKES	EIGHT_DA	DEFEND	Well I admit that I am looking for the Mayor's pose but that has nothing to do with this werewolf nonsense I am an ordinary human being	FALSE
+ACCUSE	EIGHT_DA	ACCUSE	So I just think that Kalin is a werewolf and you should kill him	TRUE
+SUPPORT	EIGHT_DA	SUPPORT	No no I do not think you made a mistake	TRUE
+JOKES	EIGHT_DA	SUPPORT	I think the I think the protocol is the Truth ground truth here <COUGH>	FALSE
+JOKES	EIGHT_DA	DEFEND	I object thoroughly object	FALSE
+JOKES	EIGHT_DA	DISTRACT	This non-standard procedure <COUGH>	FALSE
+JOKES	EIGHT_DA	ACCUSE	I have a call from beyon the grave here	FALSE
+ACCUSE	EIGHT_DA	ACCUSE	You saw that I was right: was completely innocent so you know that you know these guys are- I am sure they are guilty so I mean I leave it to you now I cannot vote but <COUGH>	TRUE
+ACCUSE	EIGHT_DA	DEFEND	You say we lose but you could pass as werewolf you too	FALSE
+DEFEND	EIGHT_DA	DEFEND	Can you hear can you hear the bad judgement here yes? I mean miss- <COUGH> so it is <COUGH>	TRUE
+JOKES	EIGHT_DA	DISTRACT	Now everyone is nominated <LAUGhTER>	FALSE
+JOKES	EIGHT_DA	JOKE	Were do you hear were?	FALSE
+JOKES	EIGHT_DA	ACCUSE	He is he is the guilty guy	FALSE
+JOKES	EIGHT_DA	ACCUSE	Another werewolf chameleon ok	FALSE

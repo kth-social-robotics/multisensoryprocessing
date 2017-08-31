@@ -1,0 +1,1 @@
+ffmpeg -y -f avfoundation -i 1 -filter_complex "[0] crop=1000:1000:100:200,scale=300:300 [1]" -map "[1]" -vsync 2 -pix_fmt yuv422p -c:v libx264 -qp 0 -preset ultrafast -f mpegts udp://0.0.0.0:12345

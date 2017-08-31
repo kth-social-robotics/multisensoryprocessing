@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+      <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <meta charset="utf-8">
+    <title>Voting</title>
+  </head>
+  <body class="container" style="padding-top: 50px;">
+    <div class="row" style="margin-bottom: 20px">
+      <div  class="col-xs-6 col-xs-offset-3">
+        <div class="col-xs-6">
+            You are:
+        </div>
+        <select name="" class="col-xs-6" id="select_participant">
+          <option value="red">red</option>
+          <option value="black">black</option>
+          <option value="blue">blue</option>
+          <option value="white">white</option>
+          <option value="brown">brown</option>
+          <option value="pink">pink</option>
+          <option value="orange">orange</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="row" id="row1" style="margin-bottom: 20px">
+      <button type="button" id="col1" style="background-color: black; color: white" name="button" class="btn btn-lg btn-default col-xs-4 col-xs-offset-1">black</button>
+      <button type="button" id="col2" style="background-color: blue; color: white" name="button" class="btn btn-lg btn-default col-xs-4 col-xs-offset-2">blue</button>
+    </div>
+    <div class="row" id="row2" style="margin-bottom: 20px">
+      <button type="button" id="col3" style="background-color: white" name="button" class="btn btn-lg btn-default col-xs-4">White</button>
+      <button type="button" id="col4" style="background-color: brown; color: white" name="button" class="btn btn-lg btn-default col-xs-4 col-xs-offset-4">brown</button>
+    </div>
+    <div class="row" id="row3" style="margin-bottom: 20px">
+      <button type="button" id="col5" style="background-color: pink; color: white" name="button" class="btn btn-lg btn-default col-xs-4 col-xs-offset-1">pink</button>
+      <button type="button" id="col6" style="background-color: orange; color: white" name="button" class="btn btn-lg btn-default col-xs-4 col-xs-offset-2">orange</button>
+    </div>
+    <div class="row" id="row4"  style="margin-bottom: 20px; margin-top: 20px">
+      <button type="button" id="col7" style="background-color: red; color: white" name="button" class="btn btn-lg btn-default col-xs-4 col-xs-offset-4">red</button>
+    </div>
+  </body>
+</html>

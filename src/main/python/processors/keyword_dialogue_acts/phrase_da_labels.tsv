@@ -1,0 +1,33 @@
+PHRASE	DA
+I accuse <user>	ACCUSE
+I accuse you	ACCUSE
+<user> is suspicious	ACCUSE
+you are suspicious	ACCUSE
+should kill <user>	ACCUSE
+<user> is the werewolf	ACCUSE
+you are the werewolf	ACCUSE
+I think <user> is the werewolf	ACCUSE
+I think you are the werewolf	ACCUSE
+I don't believe <user>	ACCUSE
+I don't believe you	ACCUSE
+<user> is lying	ACCUSE
+you are lying	ACCUSE
+yes I agree	SUPPORT
+<user> is a good leader	SUPPORT
+I am on the side of <user>	SUPPORT
+I agree with <user>	SUPPORT
+that is true	SUPPORT
+yes exactly	SUPPORT
+yeah exactly	SUPPORT
+yes	definitely	SUPPORT
+I don't think so	DEFEND
+I am not a werewolf	DEFEND
+I am not the werewolf	DEFEND
+but I am not	DEFEND
+I am a villager	DEFEND
+<user> is a villager	DEFEND
+<user> is making a mistake	DEFEND
+you are making a mistake	DEFEND
+do not kill me	DEFEND
+<user> is wrong	DEFEND
+you are wrong	DEFEND

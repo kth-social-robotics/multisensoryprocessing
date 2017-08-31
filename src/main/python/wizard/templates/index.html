@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% include 'mustache_templates/beliefs.html' %}
+{% include 'mustache_templates/voting.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-xs-5 col-xs-offset-5">
+        <div class="btn-group" role="group" id="naver" style="margin-left: auto; margin-right: auto;">
+            <a href="#small-talk" type="button" class="change-pane btn btn-primary" data-page="small-talk">Small talk</a>
+            <a href="#dialog" type="button" class="change-pane btn btn-primary" data-page="dialog">Dialog acts</a>
+            <!--<button type="button" class="btn btn-default">Gestures</button> -->
+            <!--<button type="button" class="btn btn-default">Head movement</button>-->
+            <a href="#argue-vote" type="button" class="change-pane btn btn-primary" data-page="argue-vote">Argue & Vote</a>
+        </div>
+    </div>
+</div>
+
+
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="dialog">
+      {% include 'pages/dialog.html' %}
+    </div>
+
+
+    <div role="tabpanel" class="tab-pane" id="small-talk">
+        {% include 'pages/small-talk.html' %}
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="argue-vote">
+        {% include 'pages/argue-vote.html' %}
+    </div>
+    <div class="row">
+        {% include 'bottom_pane.html' %}
+    </div>
+
+  </div>
+
+{% endblock %}

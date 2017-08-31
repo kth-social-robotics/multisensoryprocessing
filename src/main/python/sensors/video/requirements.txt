@@ -1,0 +1,4 @@
+msgpack-python==0.4.8
+pika==0.10.0
+PyYAML==3.12
+pyzmq==16.0.2

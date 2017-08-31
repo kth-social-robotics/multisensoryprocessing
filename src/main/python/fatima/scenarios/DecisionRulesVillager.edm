@@ -1,0 +1,69 @@
+{
+	"root":
+		{
+			"classId": 0,
+			"DefaultActionPriority": 0,
+			"ActionTendencies": [
+				{
+					"Action": "Accuse",
+					"Target": "[votee]",
+					"Conditions":
+						{
+							"Set": ["EventID(*,[voter], vote, [votee]) = [id]",
+							"IsDead([votee]) = false",
+							"IsDead([voter]) = true",
+							"EventElapsedTime([id]) > 1"
+							]
+						}
+				
+				},  
+				{
+					"Action": "Accuse",
+					"Target": "[suspect]",
+					"Conditions":
+						{
+							"Set": ["GazeAt(suspect, participant) < 0.3",
+							"LastEventID([suspect], vote, [participant]) = [id]",
+							"IsDead([suspect]) = false"
+							]
+						}
+				},
+				{
+					"Action": "Accuse",
+					"Target": "[suspect1]",
+					"Conditions":
+						{
+							"Set": ["GazeMostAt([suspect1]) = [suspect2]",
+							"GazeMostAt([suspect2]) = [suspect1]",
+							"[suspect1] != [suspect2]",
+							"IsDead([suspect1]) = false"
+							]
+						}
+				},
+				{
+					"Action": "Accuse",
+					"Target": "[suspect]",
+					"Conditions":
+						{
+							"Set": ["IsDead([suspect]) = false",
+							"ClosedMouth([suspect]) = true"
+							]
+						}
+				},
+				{
+					"Action": "Accuse",
+					"Target": "[suspect]",
+					"Conditions":
+						{
+							"Set": ["IsDead([suspect]) = false",
+							"EyesOpen([suspect]) = true"
+							]
+						}
+				}]
+		},
+	"types": [
+		{
+			"TypeId": 0,
+			"ClassName": "EmotionalDecisionMaking.EmotionalDecisionMakingAsset, EmotionalDecisionMaking, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+		}]
+}

@@ -1,0 +1,20 @@
+# "Logic":
+1. If a playerA votes for playerB and then dies the following night, and if playerB is not killed, then playerB is returned as a suspect. Based on the assumption that playerB saw playerA as threat and therefore killed him/her during the night.
+
+2. If a playerA votes for playerB, but does not gaze at him/her so much playerA is returned as a suspect. Based on the idea that a werewolf does not need to observe another player as much, since he/she already knows who are the werewolf.
+
+# Nonverbal
+3. If a playerA gazes at playerB mostly, and playerB gazes at playerA mostly, both are returned as suspects.
+
+4. The player that has their mouth closed the most is returned as a suspect, based on a cue from litterature.
+
+5. The player that has their eyes opened the most is returned as a suspect, based on a cue from litterature.
+
+6. The player that has their eyebrows lowest the most is returned as a suspect, based on a cue from litterature.
+
+# Verbal
+7. Player that silent, i.e. say the least, are returned as suspects. Based on litterature.
+
+8. Player that have a low average word per sentence, i.e. say the least (threshold set to 6), are returned as suspects. Based on litterature.
+
+

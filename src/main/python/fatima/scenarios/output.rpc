@@ -1,0 +1,4235 @@
+{
+	"root":
+		{
+			"classId": 1,
+			"KnowledgeBase":
+				{
+					"Perspective": "Furhat",
+					"Knowledge":
+						{
+							"SELF":
+								{
+									"GazeMostAt(Blue)": "Red, 1",
+									"GazeMostAt(Red)": "Blue, 1",
+									"IsDead(Blue)": "False, 1",
+									"IsDead(Red)": "False, 1"
+								}
+						}
+				},
+			"BodyName": null,
+			"VoiceName": null,
+			"EmotionalAppraisalAssetSource": null,
+			"EmotionalDecisionMakingSource": "../../fatima/scenarios/DecisionRulesVillager.edm",
+			"SocialImportanceAssetSource": null,
+			"CommeillFautAssetSource": null,
+			"EmotionalState":
+				{
+					"Mood": 0,
+					"initialTick": 0,
+					"EmotionalPool": [],
+					"AppraisalConfiguration":
+						{
+							"HalfLifeDecayConstant": 0.5,
+							"EmotionInfluenceOnMoodFactor": 0.3,
+							"MoodInfluenceOnEmotionFactor": 0.3,
+							"MinimumMoodValueForInfluencingEmotions": 0.5,
+							"EmotionalHalfLifeDecayTime": 15,
+							"MoodHalfLifeDecayTime": 60
+						}
+				},
+			"AutobiographicMemory":
+				{
+					"Tick": 463,
+					"records": [
+						{
+							"classId": 0,
+							"Id": 1,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 0,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 2,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 1,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 3,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 2,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 4,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 3,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 5,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 4,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 6,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 5,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 7,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 6,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 8,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 7,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 9,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 8,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 10,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 9,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 11,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 10,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 12,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 11,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 13,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 12,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 14,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 13,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 15,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 14,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 16,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 15,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 17,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 16,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 18,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 17,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 19,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 18,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 20,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 19,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 21,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 20,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 22,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 21,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 23,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 22,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 24,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 23,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 25,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 24,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 26,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 25,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 27,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 26,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 28,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 27,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 29,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 28,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 30,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 29,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 31,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 30,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 32,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 31,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 33,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 32,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 34,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 33,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 35,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 34,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 36,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 35,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 37,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 36,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 38,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 37,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 39,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 38,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 40,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 39,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 41,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 40,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 42,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 41,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 43,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 42,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 44,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 43,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 45,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 44,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 46,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 45,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 47,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 46,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 48,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 47,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 49,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 48,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 50,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 49,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 51,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 50,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 52,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 51,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 53,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 52,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 54,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 53,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 55,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 54,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 56,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 55,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 57,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 56,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 58,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 57,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 59,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 58,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 60,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 59,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 61,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 60,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 62,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 61,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 63,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 62,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 64,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 63,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 65,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 64,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 66,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 65,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 67,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 66,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 68,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 67,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 69,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 68,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 70,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 69,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 71,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 70,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 72,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 71,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 73,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 72,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 74,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 73,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 75,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 74,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 76,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 75,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 77,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 76,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 78,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 77,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 79,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 78,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 80,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 79,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 81,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 80,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 82,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 81,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 83,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 82,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 84,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 83,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 85,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 84,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 86,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 85,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 87,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 86,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 88,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 87,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 89,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 88,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 90,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 89,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 91,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 90,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 92,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 91,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 93,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 92,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 94,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 93,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 95,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 94,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 96,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 95,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 97,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 96,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 98,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 97,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 99,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 98,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 100,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 99,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 101,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 100,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 102,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 101,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 103,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 102,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 104,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 103,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 105,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 104,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 106,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 105,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 107,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 106,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 108,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 107,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 109,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 108,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 110,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 109,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 111,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 110,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 112,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 111,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 113,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 112,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 114,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 113,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 115,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 114,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 116,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 115,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 117,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 116,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 118,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 117,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 119,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 118,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 120,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 119,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 121,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 120,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 122,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 121,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 123,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 122,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 124,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 123,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 125,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 124,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 126,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 125,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 127,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 126,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 128,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 127,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 129,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 128,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 130,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 129,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 131,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 130,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 132,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 131,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 133,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 132,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 134,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 133,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 135,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 134,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 136,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 135,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 137,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 136,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 138,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 137,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 139,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 138,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 140,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 139,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 141,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 140,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 142,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 141,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 143,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 142,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 144,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 143,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 145,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 144,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 146,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 145,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 147,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 146,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 148,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 147,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 149,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 148,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 150,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 149,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 151,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 150,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 152,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 151,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 153,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 152,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 154,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 153,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 155,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 154,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 156,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 155,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 157,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 156,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 158,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 157,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 159,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 158,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 160,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 159,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 161,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 160,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 162,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 161,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 163,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 162,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 164,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 163,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 165,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 164,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 166,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 165,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 167,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 166,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 168,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 167,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 169,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 168,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 170,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 169,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 171,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 170,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 172,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 171,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 173,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 172,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 174,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 173,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 175,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 174,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 176,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 175,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 177,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 176,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 178,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 177,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 179,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 178,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 180,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 179,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 181,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 180,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 182,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 181,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 183,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 182,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 184,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 183,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 185,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 184,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 186,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 185,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 187,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 186,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 188,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 187,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 189,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 188,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 190,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 189,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 191,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 190,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 192,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 191,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 193,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 192,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 194,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 193,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 195,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 194,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 196,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 195,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 197,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 196,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 198,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 197,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 199,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 198,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 200,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 199,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 201,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 200,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 202,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 201,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 203,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 202,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 204,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 203,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 205,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 204,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 206,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 205,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 207,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 206,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 208,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 207,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 209,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 208,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 210,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 209,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 211,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 210,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 212,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 211,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 213,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 212,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 214,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 213,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 215,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 214,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 216,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 215,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 217,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 216,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 218,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 217,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 219,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 218,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 220,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 219,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 221,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 220,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 222,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 221,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 223,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 222,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 224,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 223,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 225,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 224,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 226,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 225,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 227,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 226,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 228,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 227,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 229,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 228,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 230,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 229,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 231,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 230,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 232,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 231,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 233,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 232,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 234,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 233,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 235,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 234,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 236,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 235,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 237,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 236,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 238,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 237,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 239,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 238,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 240,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 239,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 241,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 240,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 242,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 241,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 243,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 242,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 244,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 243,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 245,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 244,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 246,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 245,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 247,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 246,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 248,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 247,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 249,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 248,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 250,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 249,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 251,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 250,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 252,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 251,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 253,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 252,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 254,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 253,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 255,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 254,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 256,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 255,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 257,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 256,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 258,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 257,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 259,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 258,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 260,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 259,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 261,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 260,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 262,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 261,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 263,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 262,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 264,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 263,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 265,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 264,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 266,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 265,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 267,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 266,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 268,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 267,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 269,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 268,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 270,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 269,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 271,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 270,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 272,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 271,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 273,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 272,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 274,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 273,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 275,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 274,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 276,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 275,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 277,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 276,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 278,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 277,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 279,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 278,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 280,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 279,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 281,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 280,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 282,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 281,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 283,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 282,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 284,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 283,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 285,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 284,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 286,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 285,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 287,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 286,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 288,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 287,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 289,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 288,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 290,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 289,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 291,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 290,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 292,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 291,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 293,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 292,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 294,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 293,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 295,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 294,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 296,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 295,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 297,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 296,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 298,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 297,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 299,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 298,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 300,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 299,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 301,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 300,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 302,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 301,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 303,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 302,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 304,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 303,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 305,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 304,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 306,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 305,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 307,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 306,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 308,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 307,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 309,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 308,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 310,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 309,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 311,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 310,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 312,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 311,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 313,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 312,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 314,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 313,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 315,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 314,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 316,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 315,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 317,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 316,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 318,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 317,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 319,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 318,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 320,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 319,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 321,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 320,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 322,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 321,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 323,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 322,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 324,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 323,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 325,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 324,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 326,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 325,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 327,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 326,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 328,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 327,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 329,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 328,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 330,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 329,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 331,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 330,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 332,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 331,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 333,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 332,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 334,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 333,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 335,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 334,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 336,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 335,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 337,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 336,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 338,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 337,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 339,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 338,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 340,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 339,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 341,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 340,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 342,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 341,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 343,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 342,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 344,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 343,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 345,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 344,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 346,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 345,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 347,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 346,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 348,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 347,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 349,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 348,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 350,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 349,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 351,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 350,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 352,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 351,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 353,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 352,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 354,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 353,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 355,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 354,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 356,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 355,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 357,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 356,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 358,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 357,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 359,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 358,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 360,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 359,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 361,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 360,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 362,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 361,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 363,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 362,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 364,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 363,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 365,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 364,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 366,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 365,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 367,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 366,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 368,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 367,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 369,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 368,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 370,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 369,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 371,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 370,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 372,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 371,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 373,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 372,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 374,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 373,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 375,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 374,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 376,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 375,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 377,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 376,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 378,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 377,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 379,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 378,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 380,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 379,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 381,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 380,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 382,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 381,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 383,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 382,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 384,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 383,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 385,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 384,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 386,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 385,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 387,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 386,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 388,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 387,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 389,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 388,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 390,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 389,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 391,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 390,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 392,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 391,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 393,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 392,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 394,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 393,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 395,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 394,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 396,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 395,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 397,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 396,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 398,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 397,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 399,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 398,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 400,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 399,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 401,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 400,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 402,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 401,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 403,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 402,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 404,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 403,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 405,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 404,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 406,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 405,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 407,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 406,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 408,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 407,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 409,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 408,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 410,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 409,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 411,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 410,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 412,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 411,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 413,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 412,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 414,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 413,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 415,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 414,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 416,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 415,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 417,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 416,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 418,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 417,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 419,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 418,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 420,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 419,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 421,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 420,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 422,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 421,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 423,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 422,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 424,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 423,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 425,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 424,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 426,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 425,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 427,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 426,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 428,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 427,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 429,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 428,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 430,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 429,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 431,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 430,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 432,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 431,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 433,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 432,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 434,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 433,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 435,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 434,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 436,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 435,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 437,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 436,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 438,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 437,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 439,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 438,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 440,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 439,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 441,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 440,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 442,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 441,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 443,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 442,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 444,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 443,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 445,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 444,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 446,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 445,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 447,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 446,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 448,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 447,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 449,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 448,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 450,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 449,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 451,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 450,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 452,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 451,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 453,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 452,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 454,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 453,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 455,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 454,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 456,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 455,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 457,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 456,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 458,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 457,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 459,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 458,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 460,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 459,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 461,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 460,
+							"Property": "GazeMostAt(Blue)",
+							"NewValue": "Red"
+						}, 
+						{
+							"classId": 0,
+							"Id": 462,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 461,
+							"Property": "GazeMostAt(Red)",
+							"NewValue": "Blue"
+						}, 
+						{
+							"classId": 0,
+							"Id": 463,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 462,
+							"Property": "IsDead(Blue)",
+							"NewValue": false
+						}, 
+						{
+							"classId": 0,
+							"Id": 464,
+							"Type": "Property-Change",
+							"Subject": "world",
+							"Timestamp": 463,
+							"Property": "IsDead(Red)",
+							"NewValue": false
+						}]
+				},
+			"OtherAgents":
+				{
+					"dictionary": []
+				}
+		},
+	"types": [
+		{
+			"TypeId": 0,
+			"ClassName": "AutobiographicMemory.AM+PropertyChangeEvent, AutobiographicMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+		}, 
+		{
+			"TypeId": 1,
+			"ClassName": "RolePlayCharacter.RolePlayCharacterAsset, RolePlayCharacter, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+		}]
+}

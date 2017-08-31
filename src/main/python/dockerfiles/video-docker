@@ -1,0 +1,8 @@
+FROM jjanzic/docker-python3-opencv
+ADD sensors/video/video.py /
+ADD sensors/video/requirements.txt /
+ADD settings.yaml /
+ADD shared /shared
+WORKDIR /
+RUN pip install -r requirements.txt
+CMD [ "python", "./video.py" ]

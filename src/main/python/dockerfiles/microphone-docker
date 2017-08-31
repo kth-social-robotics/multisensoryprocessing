@@ -1,0 +1,13 @@
+FROM python:3
+ADD sensors/microphone/microphone.py /
+ADD sensors/microphone/requirements.txt /
+ADD shared /shared
+RUN apt-get install git
+RUN git clone https://github.com/EddieRingle/portaudio.git
+WORKDIR /portaudio
+RUN ./configure
+RUN make
+RUN make install
+WORKDIR /
+RUN pip install -r requirements.txt
+CMD [ "python", "./microphone.py" ]
