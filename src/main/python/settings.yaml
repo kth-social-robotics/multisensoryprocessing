@@ -62,8 +62,8 @@ file_storage:
   port: 139
 
 logging:
-  asr_path: 'C:\Users\kalins\Documents\Data\enterface_arc\asr'
-  sensor_path: 'C:\Users\kalins\Documents\Data\enterface_arc\sensors'
+  asr_path: 'C:\Users\kalins\Documents\Data\multisensoryprocessing\asr'
+  sensor_path: 'C:\Users\kalins\Documents\Data\multisensoryprocessing\sensors'
 
 messaging:
 
