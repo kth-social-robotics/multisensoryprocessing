@@ -62,25 +62,24 @@ file_storage:
   port: 139
 
 logging:
-  asr_path: 'C:\Users\kalins\Documents\Data\multisensoryprocessing\asr'
-  sensor_path: 'C:\Users\kalins\Documents\Data\multisensoryprocessing\sensors'
+  asr_path: 'C:\Users\PMIL\Documents\Dimos\HRI\DATA\asr'
+  sensor_path: 'C:\Users\PMIL\Documents\Dimos\HRI\DATA\sensors'
 
 messaging:
 
-  #broker_host: "192.168.0.111"
-  broker_host: "130.237.67.194"
+  broker_host: "130.237.67.209"
   broker_port: 5672
   broker_user: "test"
   broker_pass: "test"
 
   # time server host
-  time_server_host: "tcp://130.237.67.194:45321"
+  time_server_host: "tcp://130.237.67.209:45321"
 
   # connection server
-  connection_server_host: "tcp://130.237.67.194:45322"
+  connection_server_host: "tcp://130.237.67.209:45322"
 
   # sensor hosts
-  mocap_host: "192.168.0.120"
+  mocap_host: "130.237.67.209"
 
   # exchanges
   artificial_agent: "artificial-agent"
