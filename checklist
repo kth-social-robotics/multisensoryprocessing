@@ -1,15 +1,15 @@
 -Git pull
 -RabbitMQ
-Timeserver
-Logging of sensors
--Watson
-Mocap-gaze processor
--KeyWord processor
-Mocap position processor
--Message logger
--Furhat logger
+-Timeserver
+-Logging of sensors
++Watson
+-Mocap-gaze processor
++KeyWord processor
++Mocap position processor
++Message logger
++Furhat logger
 Mocap pre-processor
-Tobii pre-processor
--Microphone x3
+-Tobii pre-processor
++Microphone x3
 Mocap sensor
 Tobii sensor x3
