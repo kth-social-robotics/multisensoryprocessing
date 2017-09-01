@@ -7,7 +7,7 @@ while True:
     packet = rx.unpack(data, version=version)
     if type(packet) is rx.SenderData:
         version = packet.natnet_version
-    print packet
+    print(packet)
 
 
 
