@@ -1,0 +1,1 @@
+C:\enterface\ffmpeg-20170711-0780ad9-win64-static\bin\ffmpeg.exe -y -f dshow -i video="screen-capture-recorder" -filter_complex "[0] crop=600:600:200:200,scale=300:300 [1]" -map "[1]" -vsync 2 -pix_fmt yuv422p -c:v libx264 -qp 0 -preset ultrafast -f mpegts udp://127.0.0.1:12345
