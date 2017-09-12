@@ -14,7 +14,7 @@ if len(sys.argv) != 2:
 mocap_ip = sys.argv[1]
 
 # Print messages
-DEBUG = True
+DEBUG = False
 
 # Settings
 SETTINGS_FILE = '../../../settings.yaml'
@@ -31,14 +31,6 @@ mq.publish(
     body={'address': zmq_server_addr, 'file_type': 'txt'}
 )
 
-# Pretty-printer for parsed
-try:
-    from simplejson import dumps, encoder
-    encoder.FLOAT_REPR = lambda o: ("%.4f" % o)
-except ImportError:
-    from json import dumps, encoder
-    encoder.FLOAT_REPR = lambda o: ("%.4f" % o)
-
 # Get mocap data stream
 dsock = rx.mkdatasock(mocap_ip)
 version = (2, 9, 0, 0)  # NatNet version to use
@@ -47,15 +39,12 @@ while True:
     packet = rx.unpack(data, version=version)
     if type(packet) is rx.SenderData:
         version = packet.natnet_version
-    frame = dumps(str(packet._asdict()), indent=4)
+
+    frame = packet._asdict()
     if DEBUG: print(frame)
+    zmq_socket.send(msgpack.packb((frame, mq.get_shifted_time())))
 
 print('[*] Serving at {}. To exit press enter'.format(zmq_server_addr))
 
-# Send each data stream
-try:
-    zmq_socket.send(msgpack.packb((frame, time.time())))
-finally:
-    # Close connection
-    zmq_socket.send(b'CLOSE')
-    zmq_socket.close()
+zmq_socket.send(b'CLOSE')
+zmq_socket.close()
