@@ -62,7 +62,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
             if data == b'CLOSE':
                 if DEBUG: print('connection closed')
                 break
-            msgdata, timestamp = msgpack.unpackb(data, use_list=False)
+            msgdata, localtime = msgpack.unpackb(data, use_list=False)
 
             if DEBUG: print "----------------------------------------------------------------"
 
@@ -152,7 +152,8 @@ def callback(_mq, get_shifted_time, routing_key, body):
                     "name":  tobii_dict[pname]['object'],
                     "timestamp":  tobii_dict[pname]['timestamp'],
                     "gp": coordtofloat2d(tobii_dict[pname]['gp']),
-                    "gp3": coordtofloat3d(tobii_dict[pname]['gp3'])
+                    "gp3": coordtofloat3d(tobii_dict[pname]['gp3']),
+                    "localtime": localtime
                 }
 
                 key = settings['messaging']['tobii_processing']

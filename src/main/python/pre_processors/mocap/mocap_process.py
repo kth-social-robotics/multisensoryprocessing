@@ -35,7 +35,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
 
     while True:
         data = s.recv()
-        msgdata, timestamp = msgpack.unpackb(data, use_list=False)
+        msgdata, localtime = msgpack.unpackb(data, use_list=False)
 
         # Get frame
         frame = msgdata['frameno']
@@ -96,7 +96,8 @@ def callback(_mq, get_shifted_time, routing_key, body):
                 "marker2": poscoordtofloat(str(mocap_dict[objectid]['marker2'])),
                 "marker3": poscoordtofloat(str(mocap_dict[objectid]['marker3'])),
                 "marker4": poscoordtofloat(str(mocap_dict[objectid]['marker4'])),
-                "timestamp": mocaptimestamp
+                "mocaptimestamp": mocaptimestamp,
+                "localtime": localtime
             }
 
             key = settings['messaging']['mocap_processing']
