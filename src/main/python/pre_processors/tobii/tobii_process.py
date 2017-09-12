@@ -170,7 +170,6 @@ def callback(_mq, get_shifted_time, routing_key, body):
     thread.start()
 
 mq = MessageQueue('tobii-preprocessor')
-
 mq.bind_queue(exchange='sensors', routing_key="{}.*".format(settings['messaging']['new_sensor_tobii']), callback=callback)
 
 print('[*] Waiting for messages. To exit press CTRL+C')

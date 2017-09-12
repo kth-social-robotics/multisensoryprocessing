@@ -204,7 +204,7 @@ finally:
 
     # Send end of recording
     data = "END"
-    zmq_socket.send(msgpack.packb((data, mq.get_shifted_time())))
+    zmq_socket.send(msgpack.packb((packed_data, time.time())))
 
     # Close la conneccion
     zmq_socket.send(b"CLOSE")

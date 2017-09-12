@@ -10,7 +10,7 @@ from shared import MessageQueue
 import yaml
 from collections import defaultdict
 
-DEBUG = False
+DEBUG = True
 
 # Settings
 SETTINGS_FILE = '../../settings.yaml'
@@ -62,6 +62,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
 
     while True:
         data = s.recv()
+        print(data)
         msgdata_list, timestamp = msgpack.unpackb(data, use_list=False)
 
         for msgdata in msgdata_list:
