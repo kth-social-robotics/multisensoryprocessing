@@ -31,6 +31,8 @@ mq.publish(
     body={'address': zmq_server_addr, 'file_type': 'txt'}
 )
 
+print("Sending sensor data...")
+
 # Get mocap data stream
 dsock = rx.mkdatasock(mocap_ip)
 version = (2, 9, 0, 0)  # NatNet version to use
