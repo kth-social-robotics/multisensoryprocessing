@@ -177,7 +177,7 @@ try:
 
             if packed_data and new_ts != old_ts:
                 # Send data stream
-                zmq_socket.send(msgpack.packb((packed_data, time.time())))
+                zmq_socket.send(msgpack.packb((data, mq.get_shifted_time())))
 
                 if DEBUG:
                     print(packed_data)
@@ -204,7 +204,7 @@ finally:
 
     # Send end of recording
     data = "END"
-    zmq_socket.send(msgpack.packb((packed_data, time.time())))
+    zmq_socket.send(msgpack.packb((data, mq.get_shifted_time())))
 
     # Close la conneccion
     zmq_socket.send(b"CLOSE")

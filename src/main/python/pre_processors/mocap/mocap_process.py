@@ -33,7 +33,7 @@ mocap_dict['black']['type'] = 'hat'
 
 # Procees input data
 def callback(_mq, get_shifted_time, routing_key, body):
-    print('Connected! Sending messages.')
+    print('Connected! Receiving messages.')
 
     context = zmq.Context()
     s = context.socket(zmq.SUB)
@@ -61,6 +61,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
     marker3pos = None
 
     while True:
+        print("test")
         data = s.recv()
         print(data)
         msgdata_list, timestamp = msgpack.unpackb(data, use_list=False)
