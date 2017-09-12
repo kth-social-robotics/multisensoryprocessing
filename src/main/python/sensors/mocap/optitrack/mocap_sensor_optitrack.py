@@ -54,7 +54,7 @@ print('[*] Serving at {}. To exit press enter'.format(zmq_server_addr))
 
 # Send each data stream
 try:
-    zmq_socket.send(msgpack.packb((frame, mq.get_shifted_time())))
+    zmq_socket.send(msgpack.packb((frame, time.time())))
 finally:
     # Close connection
     zmq_socket.send(b'CLOSE')
