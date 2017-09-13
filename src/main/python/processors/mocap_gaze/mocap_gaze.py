@@ -1,3 +1,5 @@
+# Get access to tobii live video streaming: rtsp://130.237.67.195:8554/live/eyes or scene
+
 import zmq
 import pika
 import json
@@ -9,22 +11,34 @@ sys.path.append('../..')
 from shared import MessageQueue
 import yaml
 
+DEBUG = True
+
 # Settings
 SETTINGS_FILE = '../../settings.yaml'
 settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 
-# Get access to tobii live video streaming: rtsp://130.237.67.195:8554/live/eyes or scene
+# Dictionaries
+#mocap_dict = defaultdict(lambda : defaultdict(dict))
+#mocap_dict[0]['name'] = 'target1'
 
-# Procees input data
-def callback(_mq, get_shifted_time, routing_key, body):
-    #json.load
-    print(body)
-    print("-------------------------------------------------")
+# Procees tobii input data
+def tobiicallback(_mq, get_shifted_time, routing_key, body):
+    if DEBUG:
+        print("-------------------------------------------------Tobii-------------------------------------------------")
+        tobiitime = body['localtime']
+        print(tobiitime)
+
+# Procees mocap input data
+def mocapcallback(_mq, get_shifted_time, routing_key, body):
+    if DEBUG:
+        print("-------------------------------------------------Mocap-------------------------------------------------")
+        mocaptime = body['localtime']
+        print(mocaptime)
 
 mq = MessageQueue('mocaptobii_processing')
 
-mq.bind_queue(exchange='pre-processor', routing_key="{}.*".format(settings['messaging']['mocap_processing']), callback=callback)
-#mq.bind_queue(exchange='pre-processor', routing_key="{}.*".format(settings['messaging']['tobii_processing']), callback=callback)
+mq.bind_queue(exchange='pre-processor', routing_key="{}.*".format(settings['messaging']['tobii_processing']), callback=tobiicallback)
+mq.bind_queue(exchange='pre-processor', routing_key="{}.*".format(settings['messaging']['mocap_processing']), callback=mocapcallback)
 
 print('[*] Waiting for messages. To exit press CTRL+C')
 mq.listen()
