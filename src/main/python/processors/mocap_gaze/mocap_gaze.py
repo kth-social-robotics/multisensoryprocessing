@@ -10,6 +10,7 @@ import sys
 sys.path.append('../..')
 from shared import MessageQueue
 import yaml
+from collections import defaultdict
 
 DEBUG = True
 
@@ -18,22 +19,24 @@ SETTINGS_FILE = '../../settings.yaml'
 settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 
 # Dictionaries
-#mocap_dict = defaultdict(lambda : defaultdict(dict))
-#mocap_dict[0]['name'] = 'target1'
+tobiimocap_dict = defaultdict(lambda : defaultdict(dict))
+tobiimocap_dict[0]['0'] = '0'
 
 # Procees tobii input data
 def tobiicallback(_mq, get_shifted_time, routing_key, body):
     if DEBUG:
         print("-------------------------------------------------Tobii-------------------------------------------------")
         tobiitime = body['localtime']
-        print(tobiitime)
+        tobiimocap_dict[tobiitime]['tobii'] = body
+        print(tobiimocap_dict[tobiitime])
 
 # Procees mocap input data
 def mocapcallback(_mq, get_shifted_time, routing_key, body):
     if DEBUG:
         print("-------------------------------------------------Mocap-------------------------------------------------")
         mocaptime = body['localtime']
-        print(mocaptime)
+        tobiimocap_dict[mocaptime]['mocap'] = body
+        print(tobiimocap_dict[mocaptime])
 
 mq = MessageQueue('mocaptobii_processing')
 
