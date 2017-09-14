@@ -44,6 +44,9 @@ def tobiicallback(_mq, get_shifted_time, routing_key, body):
     # Print 1 frame before
     if DEBUG: print(tobiimocap_dict[second][frame-1])
 
+    #key = settings['messaging']['mocaptobii_processing']
+    #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-1])
+
 # Procees mocap input data
 def mocapcallback(_mq, get_shifted_time, routing_key, body):
     # Get mocap localtime

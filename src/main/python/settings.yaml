@@ -85,6 +85,7 @@ messaging:
   artificial_agent: "artificial-agent"
   sensors: "sensors"
   pre_processing: "pre-processor"
+  processing: "processor"
   environment: "environment"
   wizard: "wizard"
   fatima: "fatima"
