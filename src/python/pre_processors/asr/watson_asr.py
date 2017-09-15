@@ -137,17 +137,18 @@ class WatsonASR(object):
             self.on_message_callback(data)
 
 
-
+received_keys = []
 def callback(_mq, get_shifted_time, routing_key, body):
-    participant = routing_key.rsplit('.', 1)[1]
-    print('connected {}'.format(routing_key))
+    if routing_key not in received_keys:
+        received_keys.append(routing_key)
+        participant = routing_key.rsplit('.', 1)[1]
+        print('connected {}'.format(routing_key))
+        def on_message(data):
+            if data["final"]:
+                if DEBUG: print(data)
+                _mq.publish(exchange='pre-processor', routing_key='asr.data.{}'.format(participant), body=data)
 
-    def on_message(data):
-        if DEBUG: print(data)
-        routing_key = 'asr.data' if data["final"] else 'asr.incremental_data'
-        _mq.publish(exchange='pre-processor', routing_key='{}.{}'.format(routing_key,participant), body=data)
-
-    WatsonASR(body.get('address'), recognition_method_url, token, on_message)
+        WatsonASR(body.get('address'), recognition_method_url, token, on_message)
 
 
 mq = MessageQueue('watson-asr-preprocessor')
