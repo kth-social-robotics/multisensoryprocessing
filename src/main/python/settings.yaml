@@ -67,19 +67,19 @@ logging:
 
 messaging:
 
-  broker_host: "130.237.67.202"
+  broker_host: "130.237.67.236"
   broker_port: 5672
   broker_user: "test"
   broker_pass: "test"
 
   # time server host
-  time_server_host: "tcp://130.237.67.202:45321"
+  time_server_host: "tcp://130.237.67.236:45321"
 
   # connection server
-  connection_server_host: "tcp://130.237.67.202:45322"
+  connection_server_host: "tcp://130.237.67.236:45322"
 
   # sensor hosts
-  mocap_host: "130.237.67.202"
+  mocap_host: "130.237.67.236"
 
   # exchanges
   artificial_agent: "artificial-agent"
