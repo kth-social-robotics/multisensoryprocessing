@@ -2,12 +2,12 @@
 -RabbitMQ
 -Timeserver
 -Logging of sensors
-+Watson
 -Mocap-gaze processor
 +KeyWord processor
 +Mocap position processor
 +Message logger
 +Furhat logger
++Watson
 -Mocap pre-processor
 -Tobii pre-processor
 +Microphone x3

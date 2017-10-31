@@ -14,7 +14,6 @@ sys.path.append('../..')
 from shared import MessageQueue
 import urllib.parse
 
-
 DEBUG = True
 
 with open('watson_credentials.json') as f:
@@ -31,8 +30,6 @@ def create_regognition_method_str(api_base_url):
 	return urllib.parse.urlunparse(("wss", parsed_url.netloc, parsed_url.path + "/v1/recognize", parsed_url.params, parsed_url.query, parsed_url.fragment, ))
 
 recognition_method_url = create_regognition_method_str(api_base_url)
-
-
 
 class WatsonASR(object):
     START_MESSAGE = {
@@ -59,13 +56,11 @@ class WatsonASR(object):
         thread.deamon = True
         thread.start()
 
-
     def run(self, ws):
         context = zmq.Context()
         s = context.socket(zmq.SUB)
-        s.setsockopt_string( zmq.SUBSCRIBE, u'')
+        s.setsockopt_string(zmq.SUBSCRIBE, u'')
         s.connect(self.zmq_address)
-
 
         if DEBUG: print(json.dumps(self.START_MESSAGE))
         ws.send(json.dumps(self.START_MESSAGE).encode('utf-8'))
@@ -136,8 +131,6 @@ class WatsonASR(object):
                 self.timer = None
             self.on_message_callback(data)
 
-
-
 def callback(_mq, get_shifted_time, routing_key, body):
     participant = routing_key.rsplit('.', 1)[1]
     print('connected {}'.format(routing_key))
@@ -148,7 +141,6 @@ def callback(_mq, get_shifted_time, routing_key, body):
         _mq.publish(exchange='pre-processor', routing_key='{}.{}'.format(routing_key,participant), body=data)
 
     WatsonASR(body.get('address'), recognition_method_url, token, on_message)
-
 
 mq = MessageQueue('watson-asr-preprocessor')
 mq.bind_queue(
