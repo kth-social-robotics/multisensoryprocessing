@@ -132,7 +132,8 @@ class WatsonASR(object):
             self.on_message_callback(data)
 
 def callback(_mq, get_shifted_time, routing_key, body):
-    participant = routing_key.rsplit('.', 1)[1]
+    #participant = routing_key.rsplit('.', 1)[1]
+    participant = 1
     print('connected {}'.format(routing_key))
 
     def on_message(data):

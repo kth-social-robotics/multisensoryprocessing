@@ -38,6 +38,7 @@ device_index = 0
 #     exit('please connect a proper soundcard')
 
 device_names = device_names_string.split(',')
+device_names[0] = 'mic1'
 
 mq.publish(
     exchange='sensors',
