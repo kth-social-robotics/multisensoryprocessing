@@ -12,3 +12,5 @@ src/main/python/shared/__pycache__/message_queue.cpython-36.pyc
 *.wav
 
 src/main/python/pre_processors/asr/watson_credentials.json
+
+*.pyc

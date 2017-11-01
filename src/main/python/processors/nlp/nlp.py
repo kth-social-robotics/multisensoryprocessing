@@ -8,6 +8,9 @@ import sys
 sys.path.append('../..')
 from shared import MessageQueue
 import yaml
+import subprocess
+from subprocess import PIPE
+import os
 
 # Settings
 SETTINGS_FILE = '../../settings.yaml'
@@ -17,16 +20,35 @@ settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 def callback(_mq, get_shifted_time, routing_key, body):
     participant = routing_key.rsplit('.', 1)[1]
 
-    print(body)
+    def calc_syntaxnet(x):
+        p = subprocess.Popen(('docker', 'run', '--rm', '-i', 'brianlow/syntaxnet'), stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        stdout, stderr = p.communicate(x)
+        adjectives = set(re.findall('\+\-\- (.*) (?:JJ|JJR|JJS)', stdout))
+        nouns = set(re.findall('\+\-\- (.*) (?:NN|NNS|NNP|NNPS)', stdout))
+        verbs = set(re.findall('(.*) (?:VB|VBD|VBG|VBN|VBP|VBZ)', stdout))
+        #verbs2 = set(re.findall('\+\-\- (.*) (?:VB|VBD|VBG|VBN|VBP|VBZ)', stdout))
+        #verbs.update(verbs2)
+        syntaxdata = {
+            'verbs': verbs,
+            'adjectives': adjectives,
+            'nouns': nouns
+        }
+        return syntaxdata
 
-    # data = {
-    #     'position': position,
-    #     'timestamps': body['timestamps']
-    # }
-    # position_data = settings['messaging']['position_data']
-    # key = '{}.{}'.format(position_data, participant)
+    syntax = calc_syntaxnet(body['text'])
+
+    data = {
+        'speech': body['text'],
+        'language': syntax,
+        'timestamps': body['timestamps']
+    }
+
+    print(data['language'])
+
+    # nlp_data = settings['messaging']['nlp_data']
+    # key = '{}.{}'.format(nlp_data, participant)
     # _mq.publish(
-    #     exchange='pre-processor',
+    #     exchange='processor',
     #     routing_key=key,
     #     body=data
     # )
@@ -34,8 +56,6 @@ def callback(_mq, get_shifted_time, routing_key, body):
 mq = MessageQueue('nlp-processor')
 
 routing_key1 = "{}.*".format(settings['messaging']['asr_watson'])
-print(routing_key1)
-
 mq.bind_queue(exchange='pre-processor', routing_key=routing_key1, callback=callback)
 
 print('[*] Waiting for messages. To exit press CTRL+C')

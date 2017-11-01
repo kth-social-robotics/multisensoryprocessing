@@ -81,7 +81,7 @@ try:
     #input('[*] Serving at {} and {}. To exit press enter'.format(zmq_server_addr_1, zmq_server_addr_2))
     input('[*] Serving at {}. To exit press enter'.format(zmq_server_addr_1))
 finally:
-    waveFile.close()
+    #waveFile.close()
     stream.stop_stream()
     stream.close()
     zmq_socket_1.send(b'CLOSE')
