@@ -45,13 +45,13 @@ def callback(_mq, get_shifted_time, routing_key, body):
 
     print(data['language'])
 
-    nlp_data = settings['messaging']['nlp_data']
-    key = '{}.{}'.format(nlp_data, participant)
-    _mq.publish(
-        exchange='processor',
-        routing_key=key,
-        body=data
-    )
+    # nlp_data = settings['messaging']['nlp_data']
+    # key = '{}.{}'.format(nlp_data, participant)
+    # _mq.publish(
+    #     exchange='processor',
+    #     routing_key=key,
+    #     body=data
+    # )
 
 mq = MessageQueue('nlp-processor')
 
