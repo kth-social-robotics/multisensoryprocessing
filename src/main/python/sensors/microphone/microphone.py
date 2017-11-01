@@ -54,10 +54,10 @@ mq.publish(
 session_name = datetime.datetime.now().isoformat().replace('.', '_').replace(':', '_') + device_names_string
 
 # Let's be on the safe side and recording this to the computer...
-waveFile = wave.open('{}.wav'.format(session_name), 'wb')
-waveFile.setnchannels(CHANNELS)
-waveFile.setsampwidth(p.get_sample_size(FORMAT))
-waveFile.setframerate(RATE)
+# waveFile = wave.open('{}.wav'.format(session_name), 'wb')
+# waveFile.setnchannels(CHANNELS)
+# waveFile.setsampwidth(p.get_sample_size(FORMAT))
+# waveFile.setframerate(RATE)
 
 def callback(in_data, frame_count, time_info, status):
     result = np.fromstring(in_data, dtype=np.uint16)
@@ -65,7 +65,7 @@ def callback(in_data, frame_count, time_info, status):
     the_time = mq.get_shifted_time()
     zmq_socket_1.send(msgpack.packb((result[:, 0].tobytes(), the_time)))
     #zmq_socket_2.send(msgpack.packb((result[:, 1].tobytes(), the_time)))
-    waveFile.writeframes(in_data)
+    #waveFile.writeframes(in_data)
     return None, pyaudio.paContinue
 
 stream = p.open(
