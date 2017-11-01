@@ -14,7 +14,7 @@ sys.path.append('../..')
 from shared import MessageQueue
 import urllib.parse
 
-DEBUG = True
+DEBUG = False
 
 with open('watson_credentials.json') as f:
     credentials = json.loads(f.read())
