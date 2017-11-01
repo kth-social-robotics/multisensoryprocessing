@@ -4,13 +4,13 @@
 -Timeserver
 -Logging of sensors
 -Mocap-gaze processor
-+KeyWord processor
+-NLP
 +Mocap position processor
 +Message logger
 +Furhat logger
-+Watson
+-ASR
 -Mocap pre-processor
 -Tobii pre-processor
-+Microphone x3
+-Microphone x3
 -Mocap sensor
 -Tobii sensor x3

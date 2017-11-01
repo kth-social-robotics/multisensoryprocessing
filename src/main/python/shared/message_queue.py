@@ -83,7 +83,8 @@ class MessageQueue(object):
                 msg = json.loads(body)
                 if not no_time:
                     self.timestamp(msg, 'arrived')
-                callback(self, self.get_shifted_time, method.routing_key, msg)
+                mq2 = MessageQueue('{}-send'.format(self.name))
+                callback(mq2, self.get_shifted_time, method.routing_key, msg)
             callback_wrapper_func = callback_wrapper
 
         self.channel.basic_consume(callback_wrapper_func, queue=queue_name)

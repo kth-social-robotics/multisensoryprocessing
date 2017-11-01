@@ -13,6 +13,7 @@ import sys
 sys.path.append('../..')
 from shared import MessageQueue
 import urllib.parse
+from pprint import pprint
 
 DEBUG = False
 
@@ -37,9 +38,8 @@ class WatsonASR(object):
       'content-type': 'audio/l16;rate=44100',
       'word_confidence': True,
       'timestamps': True,
-      'continuous' : True,
       'interim_results' : True,
-      'inactivity_timeout ': -1
+      'inactivity_timeout': -1
     }
 
     def __init__(self, zmq_address, api_base_url, token, on_message_callback):
@@ -137,9 +137,13 @@ def callback(_mq, get_shifted_time, routing_key, body):
     print('connected {}'.format(routing_key))
 
     def on_message(data):
-        if DEBUG: print(data)
-        routing_key = 'asr.data' if data["final"] else 'asr.incremental_data'
-        _mq.publish(exchange='pre-processor', routing_key='{}.{}'.format(routing_key,participant), body=data)
+        if data["final"]:
+            if DEBUG: print(data)
+            _mq.publish(
+                exchange='pre-processor',
+                routing_key='asr.data.{}'.format(participant),
+                body=data
+            )
 
     WatsonASR(body.get('address'), recognition_method_url, token, on_message)
 

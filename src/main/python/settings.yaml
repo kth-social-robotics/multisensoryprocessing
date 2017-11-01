@@ -112,6 +112,7 @@ messaging:
 
   #processors
   mocaptobii_processing: "mocaptobii.processing"
+  nlp_processing: "nlp.processing"
   position_data: "position.data"
   asr_watson: "asr.data"
   dialogue_acts : "dialogue_act.data"
