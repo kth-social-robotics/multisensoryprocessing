@@ -25,9 +25,14 @@ def callback(_mq, get_shifted_time, routing_key, body):
         stdout, stderr = p.communicate(x)
         adjectives = set(re.findall('\+\-\- (.*) (?:JJ|JJR|JJS)', stdout))
         nouns = set(re.findall('\+\-\- (.*) (?:NN|NNS|NNP|NNPS)', stdout))
-        verbs = set(re.findall('(.*) (?:VB|VBD|VBG|VBN|VBP|VBZ)', stdout))
-        #verbs2 = set(re.findall('\+\-\- (.*) (?:VB|VBD|VBG|VBN|VBP|VBZ)', stdout))
-        #verbs.update(verbs2)
+        verbs0 = set(re.findall('(.*) (?:VB|VBD|VBG|VBN|VBP|VBZ)', stdout))
+        verbs = set()
+        for i in verbs0:
+            matched = re.match('\s*\+\-\-\s+(.+)', i)
+            if matched:
+                verbs.add(matched.group(1))
+            else:
+                verbs.add(i)
         syntaxdata = {
             'verbs': verbs,
             'adjectives': adjectives,
