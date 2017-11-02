@@ -27,6 +27,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
         nouns = set(re.findall('\+\-\- (.*) (?:NN|NNS|NNP|NNPS)', stdout))
         verbs0 = set(re.findall('(.*) (?:VB|VBD|VBG|VBN|VBP|VBZ)', stdout))
         verbs = set()
+        confirmation = set(re.findall('(yes|yeah|no)', stdout))
         for i in verbs0:
             matched = re.match('\s*\+\-\-\s+(.+)', i)
             if matched:
@@ -34,9 +35,10 @@ def callback(_mq, get_shifted_time, routing_key, body):
             else:
                 verbs.add(i)
         syntaxdata = {
-            'verbs': verbs,
-            'adjectives': adjectives,
-            'nouns': nouns
+            'verbs': list(verbs),
+            'adjectives': list(adjectives),
+            'nouns': list(nouns),
+            'feedback': list(confirmation)
         }
         return syntaxdata
 
@@ -44,19 +46,16 @@ def callback(_mq, get_shifted_time, routing_key, body):
 
     data = {
         'speech': body['text'],
-        'language': syntax,
-        'timestamps': body['timestamps']
+        'language': syntax
     }
 
-    print(data['language'])
+    #print(data['language'])
 
-    # nlp_data = settings['messaging']['nlp_data']
-    # key = '{}.{}'.format(nlp_data, participant)
-    # _mq.publish(
-    #     exchange='processor',
-    #     routing_key=key,
-    #     body=data
-    # )
+    _mq.publish(
+        exchange='pre-processor',
+        routing_key='nlp.data.{}'.format(participant),
+        body=data
+    )
 
 mq = MessageQueue('nlp-processor')
 

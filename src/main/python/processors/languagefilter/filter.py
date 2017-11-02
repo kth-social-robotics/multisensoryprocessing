@@ -20,7 +20,7 @@ settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 def callback(_mq, get_shifted_time, routing_key, body):
     participant = routing_key.rsplit('.', 1)[1]
 
-    print(body)
+    print(body['language'])
 
     # data = {
     #     'speech': body['text'],
@@ -28,18 +28,16 @@ def callback(_mq, get_shifted_time, routing_key, body):
     #     'timestamps': body['timestamps']
     # }
 
-    # nlp_data = settings['messaging']['nlp_data']
-    # key = '{}.{}'.format(nlp_data, participant)
     # _mq.publish(
-    #     exchange='processor',
-    #     routing_key=key,
+    #     exchange='pre-processor',
+    #     routing_key='nlp.data.{}'.format(participant),
     #     body=data
     # )
 
 mq = MessageQueue('langfilter-processor')
 
 routing_key1 = "{}.*".format(settings['messaging']['nlp_data'])
-mq.bind_queue(exchange='processor', routing_key=routing_key1, callback=callback)
+mq.bind_queue(exchange='pre-processor', routing_key=routing_key1, callback=callback)
 
 print('[*] Waiting for messages. To exit press CTRL+C')
 mq.listen()
