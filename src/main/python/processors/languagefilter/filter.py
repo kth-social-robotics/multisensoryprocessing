@@ -53,6 +53,8 @@ def callback(_mq, get_shifted_time, routing_key, body):
 
     print(data)
 
+    
+
     # _mq.publish(
     #     exchange='pre-processor',
     #     routing_key='nlp.data.{}'.format(participant),

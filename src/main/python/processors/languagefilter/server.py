@@ -38,8 +38,6 @@ class Server:
         self.connection_dict["server"] = self.server_socket
         self.log("Server started\t addr:\t{}\tport:{} ".format(self.server_socket.getsockname()[0],\
                                                                self.server_socket.getsockname()[1]))
-
-
     def run(self):
         """ The main loop of the server.
         """
@@ -150,7 +148,8 @@ class Server:
             ips = check_output(['hostname', '--all-ip-addresses']).decode("utf-8")
             return ips.split(" ")[0]
         else:
-            return socket.gethostbyname(socket.gethostname())
+            #return socket.gethostbyname(socket.gethostname())
+            return socket.gethostbyname('localhost')
 
     def log(self, message):
         """ Add a time stamp and write the message to the log file.

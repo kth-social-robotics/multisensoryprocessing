@@ -4,7 +4,6 @@ https://pymotw.com/2/socket/tcp.html
 http://www.binarytides.com/code-chat-application-server-client-sockets-python/
 
 """
-
 import socket
 import select
 import sys
@@ -35,7 +34,7 @@ class Client(Process):
 
         if host == "localhost":
             host = self.get_local_ip(platform.system())
-            
+
         # Connect to remote host
         attempt = 0
         while attempt <= connection_attempts:
