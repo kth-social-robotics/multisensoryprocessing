@@ -149,7 +149,7 @@ class Server:
             return ips.split(" ")[0]
         else:
             #return socket.gethostbyname(socket.gethostname())
-            return socket.gethostbyname('localhost')
+            return socket.gethostbyname('130.229.140.0')
 
     def log(self, message):
         """ Add a time stamp and write the message to the log file.

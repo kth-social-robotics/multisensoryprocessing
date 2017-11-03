@@ -1,3 +1,22 @@
 2017-11-03 16:23:13		Server started	 addr:	127.0.0.1	port:5000 
 2017-11-03 16:26:10		Server started	 addr:	127.0.0.1	port:5000 
 2017-11-03 16:29:08		Server started	 addr:	127.0.0.1	port:5000 
+2017-11-03 16:44:58		Server started	 addr:	127.0.0.1	port:5000 
+2017-11-03 17:07:23		Server started	 addr:	127.0.0.1	port:5000 
+2017-11-03 17:12:56		Client (127.0.0.1, 63004) connected
+2017-11-03 17:12:57		A new client, 'the_architecture', has joined with addr ('127.0.0.1', 63004)
+2017-11-03 17:13:22		Client (127.0.0.1, 63007) connected
+2017-11-03 17:13:23		A new client, 'the_architecture', has joined with addr ('127.0.0.1', 63007)
+2017-11-03 17:13:39		Client (127.0.0.1, 63009) connected
+2017-11-03 17:13:40		A new client, 'the_architecture', has joined with addr ('127.0.0.1', 63009)
+2017-11-03 17:13:40		Client: the_architecture has been removed from the connectionlist, due to a broken socket.
+2017-11-03 17:17:26		Client (127.0.0.1, 63048) connected
+2017-11-03 17:17:27		A new client, 'the_architecture', has joined with addr ('127.0.0.1', 63048)
+2017-11-03 17:17:27		Client: the_architecture has been removed from the connectionlist, due to a broken socket.
+2017-11-03 17:19:37		Server started	 addr:	130.229.140.0	port:5000 
+2017-11-03 17:19:46		Client (130.229.140.0, 63069) connected
+2017-11-03 17:19:47		A new client, 'the_architecture', has joined with addr ('130.229.140.0', 63069)
+2017-11-03 17:19:47		Client: the_architecture has been removed from the connectionlist, due to a broken socket.
+2017-11-03 17:38:16		Server started	 addr:	130.229.140.0	port:5000 
+2017-11-03 17:38:20		Client (130.229.140.0, 63352) connected
+2017-11-03 17:38:21		A new client, 'the_architecture', has joined with addr ('130.229.140.0', 63352)

@@ -13,10 +13,27 @@ from subprocess import PIPE
 import os
 from os import system
 import unicodedata
+from client import Client
 
 # Settings
 SETTINGS_FILE = '../../settings.yaml'
 settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
+
+# Create pipes to communicate to the client process
+pipe_in_client, pipe_out = os.pipe()
+pipe_in, pipe_out_client = os.pipe()
+
+# Create a "name" for the client, so that other clients can access by that name
+my_client_type = "the_architecture"
+
+# Create a client object to communicate with the server
+client = Client(client_type=my_client_type,
+                pipe_in=pipe_in_client,
+                pipe_out=pipe_out_client,
+                host="130.229.140.0")
+
+# Start the client-process
+client.start()
 
 # Procees input data
 def callback(_mq, get_shifted_time, routing_key, body):
@@ -48,6 +65,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
         'attributes': attributes,
         'feedback': feedback
     }
+    # Add dollar sign at the end
 
     # Print and say data
     print(data)
@@ -55,6 +73,13 @@ def callback(_mq, get_shifted_time, routing_key, body):
     system('say objects {}'.format(objects))
     system('say attributes {}'.format(attributes))
     #system('say feedback {}'.format(feeback))
+
+    # Sending messages
+    my_message = data
+
+    # Encode the string to utf-8 and write it to the pipe defined above
+    os.write(pipe_out, my_message.encode("utf-8"))
+    sys.stdout.flush()
 
     # _mq.publish(
     #     exchange='pre-processor',
@@ -69,3 +94,7 @@ mq.bind_queue(exchange='pre-processor', routing_key=routing_key1, callback=callb
 
 print('[*] Waiting for messages. To exit press CTRL+C')
 mq.listen()
+
+# Close the client safely, not always necessary
+client.close() # Tell it to close
+client.join() # Wait for it to close

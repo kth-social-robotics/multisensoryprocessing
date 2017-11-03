@@ -84,7 +84,8 @@ class Client(Process):
             ips = check_output(['hostname', '--all-ip-addresses']).decode("utf-8")
             return ips.split(" ")[0]
         else:
-            return socket.gethostbyname(socket.gethostname())
+            #return socket.gethostbyname(socket.gethostname())
+            return socket.gethostbyname('localhost')
 
     def close(self):
         """ Close the client.
