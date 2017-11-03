@@ -28,11 +28,12 @@ p = pyaudio.PyAudio()
 device_index = None
 for i in range(p.get_device_count()):
     device = p.get_device_info_by_index(i)
+    print(device)
     if device['name'].startswith('[{}]'.format(device_names_string)):
         device_index = i
 
 # Hardcoded first device index
-device_index = 0
+device_index = int(device_names_string)
 
 # if not device_index:
 #     exit('please connect a proper soundcard')

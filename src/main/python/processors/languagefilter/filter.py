@@ -11,6 +11,8 @@ import yaml
 import subprocess
 from subprocess import PIPE
 import os
+from os import system
+import unicodedata
 
 # Settings
 SETTINGS_FILE = '../../settings.yaml'
@@ -20,13 +22,36 @@ settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 def callback(_mq, get_shifted_time, routing_key, body):
     participant = routing_key.rsplit('.', 1)[1]
 
-    print(body['language'])
+    # Say skills
+    skills = []
+    for x in body['language']['verbs']:
+        skills.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
+    system('say skills {}'.format(skills))
+    # Say objects
+    objects = []
+    for x in body['language']['nouns']:
+        objects.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
+    system('say objects {}'.format(objects))
+    # Say attributes
+    attributes = []
+    for x in body['language']['adjectives']:
+        attributes.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
+    system('say attributes {}'.format(attributes))
+    # Say feedback
+    feedback = []
+    for x in body['language']['feedback']:
+        feedback.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
+    #system('say feedback {}'.format(feeback))
+    #{u'adjectives': [u'red'], u'verbs': [u'pick'], u'feedback': [], u'nouns': [u'block']}
 
-    # data = {
-    #     'speech': body['text'],
-    #     'language': syntax,
-    #     'timestamps': body['timestamps']
-    # }
+    data = {
+        'skills': skills,
+        'objects': objects,
+        'attributes': attributes,
+        'feedback': feedback
+    }
+
+    print(data)
 
     # _mq.publish(
     #     exchange='pre-processor',
