@@ -22,27 +22,25 @@ settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 def callback(_mq, get_shifted_time, routing_key, body):
     participant = routing_key.rsplit('.', 1)[1]
 
-    # Say skills
+    # Gather skills
     skills = []
     for x in body['language']['verbs']:
         skills.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
-    system('say skills {}'.format(skills))
-    # Say objects
+
+    # Gather objects
     objects = []
     for x in body['language']['nouns']:
         objects.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
-    system('say objects {}'.format(objects))
-    # Say attributes
+
+    # Gather attributes
     attributes = []
     for x in body['language']['adjectives']:
         attributes.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
-    system('say attributes {}'.format(attributes))
-    # Say feedback
+
+    # Gather feedback
     feedback = []
     for x in body['language']['feedback']:
         feedback.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
-    #system('say feedback {}'.format(feeback))
-    #{u'adjectives': [u'red'], u'verbs': [u'pick'], u'feedback': [], u'nouns': [u'block']}
 
     data = {
         'skills': skills,
@@ -51,9 +49,12 @@ def callback(_mq, get_shifted_time, routing_key, body):
         'feedback': feedback
     }
 
+    # Print and say data
     print(data)
-
-    
+    system('say skills {}'.format(skills))
+    system('say objects {}'.format(objects))
+    system('say attributes {}'.format(attributes))
+    #system('say feedback {}'.format(feeback))
 
     # _mq.publish(
     #     exchange='pre-processor',
