@@ -15,6 +15,10 @@ from os import system
 import unicodedata
 from client import Client
 
+if len(sys.argv) != 2:
+    exit('please supply ip')
+server_ip = sys.argv[1]
+
 # Settings
 SETTINGS_FILE = '../../settings.yaml'
 settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
@@ -30,7 +34,7 @@ my_client_type = "the_architecture"
 client = Client(client_type=my_client_type,
                 pipe_in=pipe_in_client,
                 pipe_out=pipe_out_client,
-                host="130.229.140.0")
+                host=server_ip)
 
 # Start the client-process
 client.start()
@@ -65,17 +69,18 @@ def callback(_mq, get_shifted_time, routing_key, body):
         'attributes': attributes,
         'feedback': feedback
     }
-    # Add dollar sign at the end
 
     # Print and say data
-    print(data)
-    system('say skills {}'.format(skills))
-    system('say objects {}'.format(objects))
-    system('say attributes {}'.format(attributes))
+    #print(data)
+    #system('say skills {}'.format(skills))
+    #system('say objects {}'.format(objects))
+    #system('say attributes {}'.format(attributes))
     #system('say feedback {}'.format(feeback))
 
     # Sending messages
-    my_message = data
+    my_message = str(data)
+    my_message = "interpreter;" + my_message + "$"
+    print(my_message)
 
     # Encode the string to utf-8 and write it to the pipe defined above
     os.write(pipe_out, my_message.encode("utf-8"))

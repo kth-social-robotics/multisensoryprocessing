@@ -9,6 +9,11 @@ import platform
 from subprocess import check_output
 from datetime import datetime
 import re
+import sys
+
+if len(sys.argv) != 2:
+    exit('please supply ip')
+server_ip = sys.argv[1]
 
 class Server:
     """ A simple TCP server.
@@ -149,7 +154,7 @@ class Server:
             return ips.split(" ")[0]
         else:
             #return socket.gethostbyname(socket.gethostname())
-            return socket.gethostbyname('130.229.140.0')
+            return socket.gethostbyname(server_ip)
 
     def log(self, message):
         """ Add a time stamp and write the message to the log file.

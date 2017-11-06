@@ -28,7 +28,7 @@ p = pyaudio.PyAudio()
 device_index = None
 for i in range(p.get_device_count()):
     device = p.get_device_info_by_index(i)
-    print(device)
+    print(str(i) + ": " + device['name'])
     if device['name'].startswith('[{}]'.format(device_names_string)):
         device_index = i
 
