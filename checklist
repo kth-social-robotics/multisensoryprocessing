@@ -3,7 +3,9 @@
 -RabbitMQ
 -Timeserver
 -Logging of sensors
--Mocap-gaze processor
+-ROS Connector
++Feature Vector
++Mocap-gaze processor
 -NLP
 +Mocap position processor
 +Message logger
@@ -11,6 +13,6 @@
 -ASR
 -Mocap pre-processor
 -Tobii pre-processor
--Microphone x3
+-Microphone x2
 -Mocap sensor
--Tobii sensor x3
+-Tobii sensor x2
