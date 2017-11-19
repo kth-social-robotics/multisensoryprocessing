@@ -18,11 +18,9 @@ settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 
 # Dictionaries
 mocap_dict = defaultdict(lambda : defaultdict(dict))
-mocap_dict[0]['name'] = 'target1'
-mocap_dict[1]['name'] = 'target2'
-mocap_dict[2]['name'] = 'target3'
-# blue = glasses2
-mocap_dict[3]['name'] = 'glasses2'
+mocap_dict[0]['name'] = 'glasses1'
+mocap_dict[1]['name'] = 'target1'
+mocap_dict[2]['name'] = 'target2'
 
 # Procees input data
 def callback(_mq, get_shifted_time, routing_key, body):
@@ -110,7 +108,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
         sendjson(0)
         sendjson(1)
         sendjson(2)
-        sendjson(3)
+        #sendjson(3)
     s.close()
 
 mq = MessageQueue('mocap-preprocessor')
