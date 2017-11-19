@@ -28,8 +28,6 @@ tobiimocap_dict[0][0]['device'] = 'body'
 
 # Procees tobii input data
 def tobiicallback(_mq, get_shifted_time, routing_key, body):
-    if DEBUG: print("--------------------------------------------------------------------------------------------------")
-
     # Get tobii localtime
     tobiitime = body['localtime']
 
@@ -40,10 +38,12 @@ def tobiicallback(_mq, get_shifted_time, routing_key, body):
     frame = int(math.modf(tobiitime)[0] * 50)
 
     # Put in dictionary
-    tobiimocap_dict[second][frame][body['name']] = body
+    tobiimocap_dict[second][frame]['tobii_' + body['name']] = body
 
     # Print 1 frame before
-    if DEBUG: print(tobiimocap_dict[second][frame-1])
+    if DEBUG:
+        print("--------------------------------------------------------------------------------------------------")
+        print(tobiimocap_dict[second][frame-1])
 
     #key = settings['messaging']['mocaptobii_processing']
     #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-1])

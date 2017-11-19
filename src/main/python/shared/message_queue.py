@@ -29,6 +29,7 @@ class MessageQueue(object):
         )
         self.connection = pika.BlockingConnection(connection_parameters)
         self.channel = self.connection.channel()
+        self.channel.exchange_declare(exchange=self.settings['messaging']['processing'], exchange_type='topic')
         self.channel.exchange_declare(exchange=self.settings['messaging']['pre_processing'], exchange_type='topic')
         self.channel.exchange_declare(exchange=self.settings['messaging']['sensors'], exchange_type='topic')
         self.channel.exchange_declare(exchange=self.settings['messaging']['wizard'], exchange_type='topic')
@@ -41,12 +42,12 @@ class MessageQueue(object):
         time_server_host = self.settings['messaging']['time_server_host']
         context = zmq.Context()
         s = context.socket(zmq.REQ)
-        print('connecting to time server..', time_server_host)
+        #print('connecting to time server..', time_server_host)
         s.connect(time_server_host)
         s.send(b'')
         message = s.recv()
         self.time_offset = float(message) - time.time()
-        print('got time from time server!')
+        #print('got time from time server!')
 
     def timestamp(self, msg, timestamp_type):
         timestamps = msg.get('timestamps', [])
