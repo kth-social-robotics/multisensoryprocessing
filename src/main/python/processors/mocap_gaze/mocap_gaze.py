@@ -62,7 +62,7 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
         # Print 1 frame before
         if DEBUG:
-            print("--------------------------------------------------------------------------------------------------")
+            #print("--------------------------------------------------------------------------------------------------")
             print(tobiimocap_dict[second][frame-1])
 
         #key = settings['messaging']['mocaptobii_processing']
@@ -105,7 +105,7 @@ mq = MessageQueue('mocaptobii-processor')
 mq.bind_queue(exchange='pre-processor', routing_key=settings['messaging']['mocap_processing'], callback=mocapcallback)
 mq.bind_queue(exchange='pre-processor', routing_key=settings['messaging']['tobii_processing'], callback=tobiicallback)
 
-print('[*] Waiting for messages. To exit press CTRL+C')
+#print('[*] Waiting for messages. To exit press CTRL+C')
 mq.listen()
 
 zmq_socket.send(b'CLOSE')
