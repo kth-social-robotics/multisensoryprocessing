@@ -9,12 +9,23 @@ sys.path.append('../..')
 from shared import MessageQueue
 import yaml
 from collections import defaultdict
+from shared import create_zmq_server, MessageQueue
 
 DEBUG = False
 
 # Settings
 SETTINGS_FILE = '../../settings.yaml'
 settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
+
+# Define server
+zmq_socket, zmq_server_addr = create_zmq_server()
+mq = MessageQueue('mocap-preprocessor')
+
+mq.publish(
+    exchange='pre-processor',
+    routing_key=settings['messaging']['mocap_processing'],
+    body={'address': zmq_server_addr, 'file_type': 'txt'}
+)
 
 # Dictionaries
 mocap_dict = defaultdict(lambda : defaultdict(dict))
@@ -98,9 +109,11 @@ def callback(_mq, get_shifted_time, routing_key, body):
                 "localtime": localtime
             }
 
-            key = settings['messaging']['mocap_processing']
-            new_routing_key = "{key}.{objname}".format(key=key, objname=mocap_dict[objectid]['name'])
-            _mq.publish(exchange='pre-processor', routing_key=new_routing_key, body=json_data)
+            # key = settings['messaging']['mocap_processing']
+            # new_routing_key = "{key}.{objname}".format(key=key, objname=mocap_dict[objectid]['name'])
+            # _mq.publish(exchange='pre-processor', routing_key=new_routing_key, body=json_data)
+
+            zmq_socket.send(msgpack.packb((json_data, mq.get_shifted_time())))
 
             return;
 
@@ -116,3 +129,6 @@ mq.bind_queue(exchange='sensors', routing_key=settings['messaging']['new_sensor_
 
 print('[*] Waiting for messages. To exit press CTRL+C')
 mq.listen()
+
+zmq_socket.send(b'CLOSE')
+zmq_socket.close()

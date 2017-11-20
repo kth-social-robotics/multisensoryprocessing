@@ -13,6 +13,7 @@ from shared import MessageQueue
 import yaml
 from collections import defaultdict
 import math
+from shared import create_zmq_server, MessageQueue
 
 DEBUG = True
 
@@ -20,52 +21,92 @@ DEBUG = True
 SETTINGS_FILE = '../../settings.yaml'
 settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 
+# Define server
+zmq_socket, zmq_server_addr = create_zmq_server()
+mq = MessageQueue('mocaptobii-processor')
+
+mq.publish(
+    exchange='processor',
+    routing_key=settings['messaging']['mocaptobii_processing'],
+    body={'address': zmq_server_addr, 'file_type': 'txt'}
+)
+
 # Dictionaries
 tobiimocap_dict = defaultdict(lambda : defaultdict(dict))
 
 # Each key is the local timestamp in seconds. The second key is the frame
 tobiimocap_dict[0][0]['device'] = 'body'
 
-# Procees tobii input data
-def tobiicallback(_mq, get_shifted_time, routing_key, body):
-    # Get tobii localtime
-    tobiitime = body['localtime']
-
-    # First get which second
-    second = int(tobiitime)
-
-    # Get decimals to decide which frame
-    frame = int(math.modf(tobiitime)[0] * 50)
-
-    # Put in dictionary
-    tobiimocap_dict[second][frame]['tobii_' + body['name']] = body
-
-    # Print 1 frame before
-    if DEBUG:
-        print("--------------------------------------------------------------------------------------------------")
-        print(tobiimocap_dict[second][frame-1])
-
-    #key = settings['messaging']['mocaptobii_processing']
-    #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-1])
-
 # Procees mocap input data
-def mocapcallback(_mq, get_shifted_time, routing_key, body):
-    # Get mocap localtime
-    mocaptime = body['localtime']
+def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
+    context1 = zmq.Context()
+    s1 = context1.socket(zmq.SUB)
+    s1.setsockopt_string(zmq.SUBSCRIBE, u'')
+    s1.connect(body1.get('address'))
 
-    # First get which second
-    second = int(mocaptime)
+    while True:
+        data1 = s1.recv()
+        mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
 
-    # Get decimals to decide which frame
-    frame = int(math.modf(mocaptime)[0] * 50)
+        # Get mocap localtime
+        mocaptime = mocapbody['localtime']
 
-    # Put in dictionary
-    tobiimocap_dict[second][frame]['mocap_' + body['name']] = body
+        # First get which second
+        second = int(mocaptime)
 
-mq = MessageQueue('mocaptobii_processing')
+        # Get decimals to decide which frame
+        frame = int(math.modf(mocaptime)[0] * 50)
 
-mq.bind_queue(exchange='pre-processor', routing_key="{}.*".format(settings['messaging']['tobii_processing']), callback=tobiicallback)
-mq.bind_queue(exchange='pre-processor', routing_key="{}.*".format(settings['messaging']['mocap_processing']), callback=mocapcallback)
+        # Put in dictionary
+        tobiimocap_dict[second][frame]['mocap_' + mocapbody['name']] = mocapbody
+
+        # Print 1 frame before
+        if DEBUG:
+            print("--------------------------------------------------------------------------------------------------")
+            print(tobiimocap_dict[second][frame-1])
+
+        #key = settings['messaging']['mocaptobii_processing']
+        #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-1])
+    s1.close()
+
+# Procees tobii input data
+def tobiicallback(_mq2, get_shifted_time2, routing_key2, body2):
+    context2 = zmq.Context()
+    s2 = context2.socket(zmq.SUB)
+    s2.setsockopt_string(zmq.SUBSCRIBE, u'')
+    s2.connect(body2.get('address'))
+
+    while True:
+        data2 = s2.recv()
+        tobiibody, localtime2 = msgpack.unpackb(data2, use_list=False)
+
+        # Get tobii localtime
+        tobiitime = tobiibody['localtime']
+
+        # First get which second
+        second = int(tobiitime)
+
+        # Get decimals to decide which frame
+        frame = int(math.modf(tobiitime)[0] * 50)
+
+        # Put in dictionary
+        tobiimocap_dict[second][frame]['tobii_' + tobiibody['name']] = tobiibody
+
+        # # Print 1 frame before
+        # if DEBUG:
+        #     print("--------------------------------------------------------------------------------------------------")
+        #     print(tobiimocap_dict[second][frame-1])
+
+        #key = settings['messaging']['mocaptobii_processing']
+        #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-1])
+    s2.close()
+
+mq = MessageQueue('mocaptobii-processor')
+mq.bind_queue(exchange='pre-processor', routing_key=settings['messaging']['mocap_processing'], callback=mocapcallback)
+mq.bind_queue(exchange='pre-processor', routing_key=settings['messaging']['tobii_processing'], callback=tobiicallback)
 
 print('[*] Waiting for messages. To exit press CTRL+C')
 mq.listen()
+
+zmq_socket.send(b'CLOSE')
+zmq_socket.close()
