@@ -15,6 +15,12 @@ from collections import defaultdict
 import math
 from shared import create_zmq_server, MessageQueue
 from threading import Thread
+import matlab.engine
+
+# Start matlab engine
+mateng = matlab.engine.start_matlab()
+mateng.addpath(r'/Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/src/main/python/processors/mocap_gaze/matlab', nargout=0)
+print("MATLAB")
 
 # Settings
 SETTINGS_FILE = '../../settings.yaml'
@@ -59,6 +65,31 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
             # Put in dictionary
             tobiimocap_dict[second][frame]['mocap_' + mocapbody['name']] = mocapbody
+
+            # Get gaze values from the previous frame
+            if 'tobii_glasses1' in tobiimocap_dict[second][frame-1]:
+                gp3 = matlab.double([0.0358545139227714, 0.320597112935661, 1.97381152722561])
+                pos = matlab.double([-1.56786027083333, 1.17818001562500, 1.84015017187500])
+                quat = matlab.double([-0.989552718750000, 0.0359914687500000, 0.0660654635416667, -0.122987380208333])
+                rgbMarkers = matlab.double([[[-1.5827, -1.5436, -1.5333, -1.6118], [1.1757, 1.1782, 1.1807, 1.1782], [1.7504, 1.9161, 1.7645, 1.9296]]]) # [x1, x2, x3], [y1, y2, y3], [z1, z2, z3]
+
+                #gp3 = matlab.double([tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['x'], tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['y'], tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['z']])
+                #pos = matlab.double([tobiimocap_dict[second][frame-1]['mocap_glasses1']['position']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['position']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['position']['z']])
+                #quat = matlab.double([tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['w']])
+                #rgbMarkers = matlab.double([[[tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker1']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker2']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker3']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker4']['x']], [tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker1']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker2']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker3']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker4']['y']], [tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker1']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker2']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker3']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker4']['z']]]]) # [x1, x2, x3], [y1, y2, y3], [z1, z2, z3]
+
+                # Combine mocap and gaze. GP3 in mocap space (in Matlab)
+                gp3_3d = mateng.python(gp3, pos, quat, rgbMarkers)
+
+                # Get 3d values
+                gaze_left = {"x": gp3_3d[0][0][0], "y": gp3_3d[0][1][0], "z": gp3_3d[0][2][0]}
+                gaze_right = {"x": gp3_3d[0][0][1], "y": gp3_3d[0][1][1], "z": gp3_3d[0][2][1]}
+                gaze_gp3 = {"x": gp3_3d[0][0][2], "y": gp3_3d[0][1][2], "z": gp3_3d[0][2][2]}
+                head_pose = {"x": gp3_3d[0][0][3], "y": gp3_3d[0][1][3], "z": gp3_3d[0][2][3]}
+
+                # Update dict values
+                tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3'] = gaze_gp3
+                tobiimocap_dict[second][frame-1]['tobii_glasses1']['headpose'] = head_pose
 
             # Print 1 frame before
             print(tobiimocap_dict[second][frame-1])
