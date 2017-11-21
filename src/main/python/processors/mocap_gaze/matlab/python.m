@@ -16,9 +16,20 @@ front_left_marker1 = 3;
 front_right_marker1 = 4;
 back_left_marker1 = 2;
 back_right_marker1 = 1;
+% Test markers
+% front_left_marker1 = 3;
+% front_right_marker1 = 2;
+% back_left_marker1 = 1;
+% back_right_marker1 = 4;
+
+% Normalise gp3
+ggp3 = gp3 * 0.001;
+%nn = calc_norm(ggp3);
+%bin = nn == 0;
+%ggp3(bin,:) = nan(sum(bin),3);
 
 % Clamp the gaze target as this seem to be unreliable
-gd1.gp3 = clamp_magnitude(gp3, 2, Inf);
+gd1.gp3 = clamp_magnitude(ggp3, 2, Inf);
 
 % Assemble tobii data. Only 3 markers are used, the forth (back right) is
 % not necessary as it is only used for robustness. The back left marker is
