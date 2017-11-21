@@ -68,12 +68,7 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
             # Get gaze values from the previous frame
             if 'tobii_glasses1' in tobiimocap_dict[second][frame-1]:
-                # Test data
-                #gp3 = matlab.double([0.0358545139227714, 0.320597112935661, 1.97381152722561])
-                #pos = matlab.double([-1.56786027083333, 1.17818001562500, 1.84015017187500])
-                #quat = matlab.double([-0.989552718750000, 0.0359914687500000, 0.0660654635416667, -0.122987380208333])
-                #rgbMarkers = matlab.double([[[-1.5827, -1.5436, -1.5333, -1.6118], [1.1757, 1.1782, 1.1807, 1.1782], [1.7504, 1.9161, 1.7645, 1.9296]]]) # [x1, x2, x3], [y1, y2, y3], [z1, z2, z3]
-
+                # Get values from json
                 gp3 = matlab.double([tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['x'], tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['y'], tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['z']])
                 pos = matlab.double([tobiimocap_dict[second][frame-1]['mocap_glasses1']['position']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['position']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['position']['z']])
                 quat = matlab.double([tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['w']])

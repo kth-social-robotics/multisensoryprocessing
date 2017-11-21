@@ -16,17 +16,9 @@ front_left_marker1 = 3;
 front_right_marker1 = 4;
 back_left_marker1 = 2;
 back_right_marker1 = 1;
-% Test markers
-% front_left_marker1 = 3;
-% front_right_marker1 = 2;
-% back_left_marker1 = 1;
-% back_right_marker1 = 4;
 
 % Normalise gp3
 ggp3 = gp3 * 0.001;
-%nn = calc_norm(ggp3);
-%bin = nn == 0;
-%ggp3(bin,:) = nan(sum(bin),3);
 
 % Clamp the gaze target as this seem to be unreliable
 gd1.gp3 = clamp_magnitude(ggp3, 2, Inf);
@@ -37,9 +29,15 @@ gd1.gp3 = clamp_magnitude(ggp3, 2, Inf);
 % position varies.
 tobii_data1 = assemble_tobii_data(gd1, tobii_rgbdata1, front_left_marker1, front_right_marker1, back_left_marker1);
 
+% Remove nan cases of gp3 and put 0
+if (isnan(tobii_data1.gaze3D_w))
+    tobii_data1.gaze3D_w = [0, 0, 0];
+end
+
 % Trim errors
 Pgaze1 = trim_trails(matrix2points([tobii_data1.gazeLeftDir_w, tobii_data1.gazeRightDir_w, tobii_data1.gaze3D_w, tobii_data1.headpose]), 10, 10);
 
+%disp(tobii_data1.gaze3D_w)
 % Smooth gaze data. 10 is 200ms.
 Pgaze_sm1 = mocap_smooth(Pgaze1, 10, 'moving');
 data = Pgaze_sm1;
