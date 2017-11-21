@@ -8,98 +8,111 @@ import sys
 sys.path.append('../..')
 from shared import MessageQueue
 import yaml
-import subprocess
-from subprocess import PIPE
-import os
-from os import system
-import unicodedata
-from client import Client
+from collections import defaultdict
+import math
+from shared import create_zmq_server, MessageQueue
+from threading import Thread
+import matlab.engine
 
-if len(sys.argv) != 2:
-    exit('please supply ip')
-server_ip = sys.argv[1]
+# Start matlab engine
+#mateng = matlab.engine.start_matlab()
+#mateng.addpath(r'/Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/src/main/python/processors/mocap_gaze/matlab', nargout=0)
+#print("MATLAB")
 
 # Settings
 SETTINGS_FILE = '../../settings.yaml'
 settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 
-# Create pipes to communicate to the client process
-pipe_in_client, pipe_out = os.pipe()
-pipe_in, pipe_out_client = os.pipe()
+# Define server
+zmq_socket, zmq_server_addr = create_zmq_server()
+mq = MessageQueue('feature-processor')
 
-# Create a "name" for the client, so that other clients can access by that name
-my_client_type = "the_architecture"
+mq.publish(
+    exchange='processor',
+    routing_key=settings['messaging']['feature_processing'],
+    body={'address': zmq_server_addr, 'file_type': 'txt'}
+)
 
-# Create a client object to communicate with the server
-client = Client(client_type=my_client_type,
-                pipe_in=pipe_in_client,
-                pipe_out=pipe_out_client,
-                host=server_ip)
+# Dictionaries
+feature_dict = defaultdict(lambda : defaultdict(dict))
 
-# Start the client-process
-client.start()
+# Each key is the local timestamp in seconds. The second key is the frame
+feature_dict[0][0]['device'] = 'body'
 
-# Procees input data
-def callback(_mq, get_shifted_time, routing_key, body):
-    participant = routing_key.rsplit('.', 1)[1]
+# Procees mocap input data
+def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
+    context1 = zmq.Context()
+    s1 = context1.socket(zmq.SUB)
+    s1.setsockopt_string(zmq.SUBSCRIBE, u'')
+    s1.connect(body1.get('address'))
 
-    # Gather skills
-    skills = []
-    for x in body['language']['verbs']:
-        skills.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
+    def runA():
+        while True:
+            data1 = s1.recv()
+            mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
 
-    # Gather objects
-    objects = []
-    for x in body['language']['nouns']:
-        objects.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
+            if mocapbody:
+                # Get mocap localtime
+                #mocaptime = localtime1
+                #mocaptime = mocapbody['mocap_target1']['localtime']
 
-    # Gather attributes
-    attributes = []
-    for x in body['language']['adjectives']:
-        attributes.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
+                # First get which second
+                second = int(mocaptime)
 
-    # Gather feedback
-    feedback = []
-    for x in body['language']['feedback']:
-        feedback.append(unicodedata.normalize('NFKD', x).encode('ascii','ignore'))
+                # Get decimals to decide which frame
+                frame = int(math.modf(mocaptime)[0] * 50)
 
-    data = {
-        'skills': skills,
-        'objects': objects,
-        'attributes': attributes,
-        'feedback': feedback
-    }
+                # Put in dictionary
+                #feature_dict[second][frame]['mocap_' + mocapbody['name']] = mocapbody
 
-    # Print and say data
-    #print(data)
-    #system('say skills {}'.format(skills))
-    #system('say objects {}'.format(objects))
-    #system('say attributes {}'.format(attributes))
-    #system('say feedback {}'.format(feeback))
+                # Print 1 frame before
+                #print(feature_dict[second][frame-1])
+                print(mocapbody)
 
-    # Sending messages
-    my_message = str(data)
-    my_message = "interpreter;" + my_message + "$"
-    print(my_message)
+                #key = settings['messaging']['mocaptobii_processing']
+                #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-1])
 
-    # Encode the string to utf-8 and write it to the pipe defined above
-    os.write(pipe_out, my_message.encode("utf-8"))
-    sys.stdout.flush()
+    t1 = Thread(target = runA)
+    t1.setDaemon(True)
+    t1.start()
+    #s1.close()
 
-    # _mq.publish(
-    #     exchange='pre-processor',
-    #     routing_key='nlp.data.{}'.format(participant),
-    #     body=data
-    # )
+# Process nlp input data
+def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
+    context2 = zmq.Context()
+    s2 = context2.socket(zmq.SUB)
+    s2.setsockopt_string(zmq.SUBSCRIBE, u'')
+    s2.connect(body2.get('address'))
 
-mq = MessageQueue('langfilter-processor')
+    def runB():
+        while True:
+            data2 = s2.recv()
+            nlpbody, localtime2 = msgpack.unpackb(data2, use_list=False)
 
-routing_key1 = "{}.*".format(settings['messaging']['nlp_data'])
-mq.bind_queue(exchange='pre-processor', routing_key=routing_key1, callback=callback)
+            print(nlpbody)
+            print(localtime2)
+            # Get nlp localtime
+            #nlptime = nlpbody['localtime']
 
-print('[*] Waiting for messages. To exit press CTRL+C')
+            # First get which second
+            #second = int(nlptime)
+
+            # Get decimals to decide which frame
+            #frame = int(math.modf(nlptime)[0] * 50)
+
+            # Put in dictionary
+            #feature_dict[second][frame]['tobii_' + tobiibody['name']] = tobiibody
+
+    t2 = Thread(target = runB)
+    t2.setDaemon(True)
+    t2.start()
+    #s2.close()
+
+mq = MessageQueue('feature-processor')
+mq.bind_queue(exchange='processor', routing_key=settings['messaging']['mocaptobii_processing'], callback=mocapcallback)
+mq.bind_queue(exchange='processor', routing_key=settings['messaging']['nlp_data'], callback=nlpcallback)
+
 mq.listen()
 
-# Close the client safely, not always necessary
-client.close() # Tell it to close
-client.join() # Wait for it to close
+zmq_socket.send(b'CLOSE')
+zmq_socket.close()

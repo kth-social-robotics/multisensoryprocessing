@@ -89,6 +89,7 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
             # Print 1 frame before
             print(tobiimocap_dict[second][frame-1])
+            zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
 
             #key = settings['messaging']['mocaptobii_processing']
             #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-1])

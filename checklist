@@ -5,8 +5,8 @@
 -Logging of sensors
 -ROS Connector
 +Feature Vector
-+Mocap-gaze processor
-+Visualisation
+-Mocap-gaze processor
+-Visualisation
 -NLP
 +Mocap position processor
 +Message logger

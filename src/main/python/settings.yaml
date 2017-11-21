@@ -112,6 +112,7 @@ messaging:
 
   #processors
   mocaptobii_processing: "mocaptobii.processing"
+  feature_processing: "feature.processing"
   nlp_data: "nlp.data"
   position_data: "position.data"
   asr_watson: "asr.data"
