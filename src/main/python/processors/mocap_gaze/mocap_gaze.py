@@ -19,7 +19,7 @@ import matlab.engine
 
 # Start matlab engine
 mateng = matlab.engine.start_matlab()
-mateng.addpath(r'/Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/src/main/python/processors/mocap_gaze/matlab', nargout=0)
+mateng.addpath(r'/Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/src/main/matlab', nargout=0)
 print("MATLAB")
 
 # Settings
@@ -75,7 +75,7 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                 rgbMarkers = matlab.double([[[tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker1']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker2']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker3']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker4']['x']], [tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker1']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker2']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker3']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker4']['y']], [tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker1']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker2']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker3']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker4']['z']]]]) # [x1, x2, x3], [y1, y2, y3], [z1, z2, z3]
 
                 # Combine mocap and gaze. GP3 in mocap space (in Matlab)
-                gp3_3d = mateng.python(gp3, pos, quat, rgbMarkers)
+                gp3_3d = mateng.mocapgaze(gp3, pos, quat, rgbMarkers)
 
                 # Get 3d values
                 gaze_left = {"x": gp3_3d[0][0][0], "y": gp3_3d[0][1][0], "z": gp3_3d[0][2][0]}

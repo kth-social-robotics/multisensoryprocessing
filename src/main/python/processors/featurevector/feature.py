@@ -21,7 +21,7 @@ import unicodedata
 
 # Start matlab engine
 mateng = matlab.engine.start_matlab()
-mateng.addpath(r'/Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/src/main/python/processors/mocap_gaze/matlab', nargout=0)
+mateng.addpath(r'/Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/src/main/matlab', nargout=0)
 print("MATLAB")
 
 # Settings
@@ -57,7 +57,8 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
             mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
 
             if mocapbody:
-                print(localtime1, mocapbody)
+                #print(localtime1, mocapbody)
+                gaze_hits = mateng.gazehits(mocapbody)
 
                 # # Get values from json
                 # gp3 = matlab.double([tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['x'], tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['y'], tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['z']])
