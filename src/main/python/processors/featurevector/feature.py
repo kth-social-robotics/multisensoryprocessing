@@ -93,6 +93,7 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
                 # Print 1 frame before
                 #print(feature_dict[second][frame-1])
+                #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
 
     t1 = Thread(target = runA)
     t1.setDaemon(True)
