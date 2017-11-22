@@ -66,6 +66,8 @@ logging:
   #asr_path: 'C:\Users\kalins\Documents\Data\multisensoryprocessing\asr'
   sensor_path: 'C:\Users\PMIL\Documents\Dimos\ICMI\DATA\sensors'
   #sensor_path: 'C:\Users\kalins\Documents\Data\multisensoryprocessing\sensors'
+  processor_path: 'C:\Users\PMIL\Documents\Dimos\ICMI\DATA\processors'
+  #processor_path: 'C:\Users\kalins\Documents\Data\multisensoryprocessing\processors'
 
 messaging:
   broker_host: "130.237.67.234"

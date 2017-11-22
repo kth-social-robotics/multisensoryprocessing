@@ -14,12 +14,10 @@ import time
 import shutil
 
 if len(sys.argv) != 2:
-    print('No routing key given, assuming *.new_sensor.*')
-    listen_to_routing_key = '*.new_sensor.*'
+    print('No routing key given, assuming *.new_processor.*')
+    listen_to_routing_key = '*.processing'
 else:
     listen_to_routing_key = sys.argv[1]
-
-
 
 SETTINGS_FILE = os.path.abspath(
     os.path.join(os.path.abspath(__file__), os.pardir, os.pardir, 'settings.yaml')
@@ -28,9 +26,7 @@ settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 
 session_name = datetime.datetime.now().isoformat().replace('.', '_').replace(':', '_')
 
-log_path = os.path.join(settings['logging']['sensor_path'], session_name)
-
-
+log_path = os.path.join(settings['logging']['processor_path'], session_name)
 
 os.mkdir(log_path)
 shutil.copy(os.path.join('..', 'settings.yaml'), os.path.join(log_path, 'settings.yaml'))
@@ -51,9 +47,6 @@ def callback(mq, get_shifted_time, routing_key, body):
             go_on = False
         except FileExistsError:
             a += 1
-
-
-
 
     log_file = os.path.join(
         log_path,
@@ -95,7 +88,6 @@ def callback(mq, get_shifted_time, routing_key, body):
         s.close()
         print('[{}] streamer closed'.format(log_file))
 
-
     def storage_writer(log_file):
         global global_runner, running
         with open(log_file, 'ab') as f:
@@ -109,15 +101,13 @@ def callback(mq, get_shifted_time, routing_key, body):
     _thread.deamon = True
     _thread.start()
 
-
     thread = Thread(target = storage_writer, args=(log_file, ))
     thread.deamon = True
     thread.start()
 
-
 mq = MessageQueue('logger')
 mq.bind_queue(
-    exchange='sensors', routing_key=listen_to_routing_key, callback=callback
+    exchange='processor', routing_key=listen_to_routing_key, callback=callback
 )
 
 resend_new_sensor_messages.resend_new_sensor_messages()

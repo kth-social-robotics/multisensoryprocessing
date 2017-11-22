@@ -2,18 +2,16 @@
 -Settings
 -RabbitMQ
 -Timeserver
+-Logging of processors
 -Logging of sensors
 -ROS Connector
-+Feature Vector
+-Feature Vector
 -Mocap-gaze processor
 -Visualisation
 -NLP
-+Mocap position processor
-+Message logger
-+Furhat logger
 -ASR
 -Mocap pre-processor
 -Tobii pre-processor
--Microphone x2
 -Mocap sensor
+-Microphone x2
 -Tobii sensor x2
