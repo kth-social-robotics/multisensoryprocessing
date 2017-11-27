@@ -18,6 +18,7 @@ from subprocess import PIPE
 import os
 from os import system
 import unicodedata
+import mat4py as m4p
 
 # Start matlab engine
 mateng = matlab.engine.start_matlab()
@@ -58,7 +59,12 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
             if mocapbody:
                 #print(localtime1, mocapbody)
+                #mateng.workspace['y'] = mocapbody
+
                 gaze_hits = mateng.gazehits(mocapbody)
+                if gaze_hits[0] != ['']:
+                    print(gaze_hits)
+                #m4p.savemat('data1.mat', mocapbody)
 
                 # # Get values from json
                 # gp3 = matlab.double([tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['x'], tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['y'], tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['z']])
