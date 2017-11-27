@@ -75,13 +75,10 @@ if isfield(jsonfile, 'tobii_glasses1')
     % Write object values for P1
     if gaze_hits_o1p1 == 1
         mocapfield{1} = 'O1';
-        %disp('Target1');
     end
     if gaze_hits_o2p1 == 1
         mocapfield{1} = 'O2';
-        %disp('Target2');
     end
 end
 
-%disp(mocapfield);
 data = mocapfield;
