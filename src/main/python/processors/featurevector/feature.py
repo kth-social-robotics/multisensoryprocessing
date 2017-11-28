@@ -59,6 +59,9 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
     s1.connect(body1.get('address'))
 
     def runA():
+        # Fixation filter
+        fixfilter = 0
+
         while True:
             data1 = s1.recv()
             mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
@@ -67,7 +70,6 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                 # Call Matlab script to calculate gazehits
                 gaze_hits = mateng.gazehits(mocapbody)
 
-                # If there are gaze hits count and filter by fixation (5 frames = 100ms, 10 frames = 200ms)
                 # Tobii 1
                 if gaze_hits[0] != ['']:
                     # Get mocap localtime
@@ -82,9 +84,18 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                     # Put in dictionary
                     feature_dict[second][frame]['P1G'] = gaze_hits[0]
 
+                    # Count and filter by fixation (5 frames = 100ms, 10 frames = 200ms)
+                    for x in range(1, 10):
+                        if feature_dict[second][frame] == feature_dict[second][frame-x]:
+                            fixfilter = fixfilter + 1
+                        else:
+                            fixfilter = 0
+
                     # Print frame
-                    print(feature_dict[second][frame])
-                    #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+                    if fixfilter == 9:
+                        fixfilter = 0
+                        print(feature_dict[second][frame])
+                        #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
 
     t1 = Thread(target = runA)
     t1.setDaemon(True)
