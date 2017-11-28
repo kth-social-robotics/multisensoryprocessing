@@ -14,8 +14,24 @@ sys.path.append('../..')
 from shared import MessageQueue
 import urllib.parse
 from pprint import pprint
+import yaml
+from shared import create_zmq_server, MessageQueue
 
 DEBUG = False
+
+# Settings
+SETTINGS_FILE = '../../settings.yaml'
+settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
+
+# Define server
+zmq_socket, zmq_server_addr = create_zmq_server()
+mq = MessageQueue('asr-preprocessor')
+
+mq.publish(
+    exchange='pre-processor',
+    routing_key=settings['messaging']['asr_processing'],
+    body={'address': zmq_server_addr, 'file_type': 'txt'}
+)
 
 with open('watson_credentials.json') as f:
     credentials = json.loads(f.read())
@@ -139,18 +155,20 @@ def callback(_mq, get_shifted_time, routing_key, body):
     def on_message(data):
         if data["final"]:
             if DEBUG: print(data)
-            _mq.publish(
-                exchange='pre-processor',
-                routing_key='asr.data.{}'.format(participant),
-                body=data
-            )
+            # _mq.publish(
+            #     exchange='pre-processor',
+            #     routing_key='asr.data.{}'.format(participant),
+            #     body=data
+            # )
+            zmq_socket.send(msgpack.packb((data, mq.get_shifted_time())))
 
     WatsonASR(body.get('address'), recognition_method_url, token, on_message)
 
-mq = MessageQueue('watson-asr-preprocessor')
-mq.bind_queue(
-    exchange='sensors', routing_key='microphone.new_sensor.*', callback=callback
-)
+mq = MessageQueue('asr-preprocessor')
+mq.bind_queue(exchange='sensors', routing_key='microphone.new_sensor.*', callback=callback)
 
 print('[*] Waiting for messages. To exit press CTRL+C')
 mq.listen()
+
+zmq_socket.send(b'CLOSE')
+zmq_socket.close()

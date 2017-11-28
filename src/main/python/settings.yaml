@@ -106,10 +106,12 @@ messaging:
   # new sensor
   new_sensor_mocap: "mocap.new_sensor.all"
   new_sensor_tobii: "tobii.new_sensor"
+  new_sensor_mic: "mic.new_sensor.all"
 
   # pre_processing
   mocap_processing: "mocap.processing"
   tobii_processing: "tobii.processing"
+  asr_processing: "asr.processing"
   openface: "openface"
 
   #processors

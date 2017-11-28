@@ -106,8 +106,8 @@ def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
             nlpdata = {
                 'verbs': nlpbody['language']['verbs'],
                 'nouns': nlpbody['language']['nouns'],
-                'adjectives': nlpbody['language']['adjectives'],
-                'feedback': nlpbody['language']['feedback']
+                'adjectives': nlpbody['language']['adjectives']#,
+                #'feedback': nlpbody['language']['feedback']
             }
 
             # Print event

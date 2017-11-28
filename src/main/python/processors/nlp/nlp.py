@@ -38,7 +38,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
         nouns = set(re.findall('\+\-\- (.*) (?:NN|NNS|NNP|NNPS)', stdout))
         verbs0 = set(re.findall('(.*) (?:VB|VBD|VBG|VBN|VBP|VBZ)', stdout))
         verbs = set()
-        confirmation = set(re.findall('(yes|yeah|no)', stdout))
+        #confirmation = set(re.findall('(yes|yeah|no)', stdout))
         for i in verbs0:
             matched = re.match('\s*\+\-\-\s+(.+)', i)
             if matched:
@@ -48,32 +48,40 @@ def callback(_mq, get_shifted_time, routing_key, body):
         syntaxdata = {
             'verbs': list(verbs),
             'adjectives': list(adjectives),
-            'nouns': list(nouns),
-            'feedback': list(confirmation)
+            'nouns': list(nouns)#,
+            #'feedback': list(confirmation)
         }
         return syntaxdata
 
-    syntax = calc_syntaxnet(body['text'])
+    context = zmq.Context()
+    s = context.socket(zmq.SUB)
+    s.setsockopt_string(zmq.SUBSCRIBE, u'')
+    s.connect(body.get('address'))
 
-    data = {
-        'speech': body['text'],
-        'language': syntax
-    }
+    while True:
+        inputdata = s.recv()
+        msgdata, localtime = msgpack.unpackb(inputdata, use_list=False)
 
-    #print(data['language'])
+        syntax = calc_syntaxnet(msgdata['text'])
 
-    zmq_socket.send(msgpack.packb((data, mq.get_shifted_time())))
+        data = {
+            'speech': msgdata['text'],
+            'language': syntax
+        }
 
-    # _mq.publish(
-    #     exchange='pre-processor',
-    #     routing_key='nlp.data.{}'.format(participant),
-    #     body=data
-    # )
+        #print(data['language'])
+
+        zmq_socket.send(msgpack.packb((data, mq.get_shifted_time())))
+
+        # _mq.publish(
+        #     exchange='pre-processor',
+        #     routing_key='nlp.data.{}'.format(participant),
+        #     body=data
+        # )
 
 mq = MessageQueue('nlp-processor')
 
-routing_key1 = "{}.*".format(settings['messaging']['asr_watson'])
-mq.bind_queue(exchange='pre-processor', routing_key=routing_key1, callback=callback)
+mq.bind_queue(exchange='pre-processor', routing_key=settings['messaging']['asr_processing'], callback=callback)
 
 print('[*] Waiting for messages. To exit press CTRL+C')
 mq.listen()

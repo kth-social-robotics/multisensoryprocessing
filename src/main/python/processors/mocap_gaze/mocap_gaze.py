@@ -66,13 +66,13 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
             # Put in dictionary
             tobiimocap_dict[second][frame]['mocap_' + mocapbody['name']] = mocapbody
 
-            # Get gaze values from the previous frame
-            if 'tobii_glasses1' in tobiimocap_dict[second][frame-1]:
+            # Get gaze values from the 10th previous frame
+            if 'tobii_glasses1' in tobiimocap_dict[second][frame-10]:
                 # Get values from json
-                gp3 = matlab.double([tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['x'], tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['y'], tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3']['z']])
-                pos = matlab.double([tobiimocap_dict[second][frame-1]['mocap_glasses1']['position']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['position']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['position']['z']])
-                quat = matlab.double([tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['rotation']['w']])
-                rgbMarkers = matlab.double([[[tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker1']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker2']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker3']['x'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker4']['x']], [tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker1']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker2']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker3']['y'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker4']['y']], [tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker1']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker2']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker3']['z'], tobiimocap_dict[second][frame-1]['mocap_glasses1']['marker4']['z']]]]) # [x1, x2, x3], [y1, y2, y3], [z1, z2, z3]
+                gp3 = matlab.double([tobiimocap_dict[second][frame-10]['tobii_glasses1']['gp3']['x'], tobiimocap_dict[second][frame-10]['tobii_glasses1']['gp3']['y'], tobiimocap_dict[second][frame-10]['tobii_glasses1']['gp3']['z']])
+                pos = matlab.double([tobiimocap_dict[second][frame-10]['mocap_glasses1']['position']['x'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['position']['y'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['position']['z']])
+                quat = matlab.double([tobiimocap_dict[second][frame-10]['mocap_glasses1']['rotation']['x'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['rotation']['y'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['rotation']['z'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['rotation']['w']])
+                rgbMarkers = matlab.double([[[tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker1']['x'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker2']['x'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker3']['x'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker4']['x']], [tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker1']['y'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker2']['y'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker3']['y'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker4']['y']], [tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker1']['z'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker2']['z'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker3']['z'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['marker4']['z']]]]) # [x1, x2, x3], [y1, y2, y3], [z1, z2, z3]
 
                 # Combine mocap and gaze. GP3 in mocap space (in Matlab)
                 gp3_3d = mateng.mocapgaze(gp3, pos, quat, rgbMarkers)
@@ -84,15 +84,15 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                 head_pose = {"x": gp3_3d[0][0][3], "y": gp3_3d[0][1][3], "z": gp3_3d[0][2][3]}
 
                 # Update dict values
-                tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3_3d'] = gaze_gp3
-                tobiimocap_dict[second][frame-1]['tobii_glasses1']['headpose'] = head_pose
+                tobiimocap_dict[second][frame-10]['tobii_glasses1']['gp3_3d'] = gaze_gp3
+                tobiimocap_dict[second][frame-10]['tobii_glasses1']['headpose'] = head_pose
 
-            # Print 1 frame before
-            print(tobiimocap_dict[second][frame-1])
-            zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+            # Print 10 frames before
+            print(tobiimocap_dict[second][frame-10])
+            zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-10], mq.get_shifted_time())))
 
             #key = settings['messaging']['mocaptobii_processing']
-            #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-1])
+            #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-10])
 
     t1 = Thread(target = runA)
     t1.setDaemon(True)
