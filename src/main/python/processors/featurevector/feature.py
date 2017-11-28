@@ -19,6 +19,7 @@ import os
 from os import system
 import unicodedata
 import mat4py as m4p
+import numpy
 
 # Start matlab engine
 mateng = matlab.engine.start_matlab()
@@ -67,6 +68,31 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
             mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
 
             if mocapbody:
+                # Calculate object holdings
+                hand1 = numpy.array((mocapbody['mocap_hand1right']['position']['x'], mocapbody['mocap_hand1right']['position']['y'], mocapbody['mocap_hand1right']['position']['z']))
+                object2 = numpy.array((mocapbody['mocap_target2']['position']['x'], mocapbody['mocap_target2']['position']['y'], mocapbody['mocap_target2']['position']['z']))
+
+                # Calculate distance between hand1 and object 2
+                dist_h1_o2 = numpy.linalg.norm(hand1 - object2)
+
+                # If less than 15cm put in feature vector
+                if dist_h1_o2 < 0.15:
+                    # Get mocap localtime
+                    mocaptime = localtime1
+
+                    # First get which second
+                    second = int(mocaptime)
+
+                    # Get decimals to decide which frame
+                    frame = int(math.modf(mocaptime)[0] * 50)
+
+                    # Put in dictionary
+                    feature_dict[second][frame]['P1H'] = 'O2'
+
+                    # Print frame
+                    print(feature_dict[second][frame])
+                    #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+
                 # Call Matlab script to calculate gazehits
                 gaze_hits = mateng.gazehits(mocapbody)
 
