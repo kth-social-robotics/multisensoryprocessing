@@ -43,7 +43,13 @@ mq.publish(
 feature_dict = defaultdict(lambda : defaultdict(dict))
 
 # Each key is the local timestamp in seconds. The second key is the frame
-feature_dict[0][0]['device'] = 'body'
+# Time, Frame: P1 Gaze, P2 Gaze, P1 Holding object, P1 Np, P1 Adj, P1 Verb
+feature_dict[0][0]['P1G'] = ''
+feature_dict[0][0]['P2G'] = ''
+feature_dict[0][0]['P1H'] = ''
+feature_dict[0][0]['P1N'] = ''
+feature_dict[0][0]['P1A'] = ''
+feature_dict[0][0]['P1V'] = ''
 
 # Procees mocap input data
 def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
@@ -61,30 +67,24 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                 # Call Matlab script to calculate gazehits
                 gaze_hits = mateng.gazehits(mocapbody)
 
-                # If there are gaze hits count and filter by fixation (5 frames = 100ms)
+                # If there are gaze hits count and filter by fixation (5 frames = 100ms, 10 frames = 200ms)
                 # Tobii 1
                 if gaze_hits[0] != ['']:
-                    print(localtime1, gaze_hits)
+                    # Get mocap localtime
+                    mocaptime = localtime1
 
-                # # Update dict values
-                # tobiimocap_dict[second][frame-1]['tobii_glasses1']['gp3_3d'] = gaze_gp3
-                # tobiimocap_dict[second][frame-1]['tobii_glasses1']['headpose'] = head_pose
+                    # First get which second
+                    second = int(mocaptime)
 
-                # Get mocap localtime
-                #mocaptime = localtime1
+                    # Get decimals to decide which frame
+                    frame = int(math.modf(mocaptime)[0] * 50)
 
-                # First get which second
-                #second = int(mocaptime)
+                    # Put in dictionary
+                    feature_dict[second][frame]['P1G'] = gaze_hits[0]
 
-                # Get decimals to decide which frame
-                #frame = int(math.modf(mocaptime)[0] * 50)
-
-                # Put in dictionary
-                #feature_dict[second][frame]['mocap_' + mocapbody['name']] = mocapbody
-
-                # Print 1 frame before
-                #print(feature_dict[second][frame-1])
-                #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+                    # Print frame
+                    print(feature_dict[second][frame])
+                    #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
 
     t1 = Thread(target = runA)
     t1.setDaemon(True)
@@ -110,20 +110,23 @@ def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
                 #'feedback': nlpbody['language']['feedback']
             }
 
-            # Print event
-            print(localtime2, nlpdata)
-
             # Get nlp localtime
-            #nlptime = nlpbody['localtime']
+            nlptime = localtime2
 
             # First get which second
-            #second = int(nlptime)
+            second = int(nlptime)
 
             # Get decimals to decide which frame
-            #frame = int(math.modf(nlptime)[0] * 50)
+            frame = int(math.modf(nlptime)[0] * 50)
 
             # Put in dictionary
-            #feature_dict[second][frame]['tobii_' + tobiibody['name']] = tobiibody
+            feature_dict[second][frame]['P1N'] = nlpbody['language']['nouns']
+            feature_dict[second][frame]['P1A'] = nlpbody['language']['adjectives']
+            feature_dict[second][frame]['P1V'] = nlpbody['language']['verbs']
+
+            # Print feature vector
+            print(feature_dict[second][frame])
+            #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
 
     t2 = Thread(target = runB)
     t2.setDaemon(True)
