@@ -1,5 +1,7 @@
 # Get access to tobii live video streaming: rtsp://130.237.67.195:8554/live/eyes or scene
 # websocketd --port=8080 python mocap_gaze.py
+# Start webgl
+# Wait for Matlab to start
 
 import zmq
 import pika

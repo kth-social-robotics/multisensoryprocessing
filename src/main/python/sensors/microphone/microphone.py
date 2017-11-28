@@ -1,3 +1,5 @@
+# python microphone.py 2
+
 import pyaudio
 import sys
 import time

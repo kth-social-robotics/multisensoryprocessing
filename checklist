@@ -8,10 +8,10 @@
 -Feature Vector
 -Mocap-gaze processor
 -Visualisation
--NLP
--ASR
 -Mocap pre-processor
--Tobii pre-processor
 -Mocap sensor
--Microphone x2
+-NLP
+-Tobii pre-processor
+-ASR
+-Microphone
 -Tobii sensor x2
