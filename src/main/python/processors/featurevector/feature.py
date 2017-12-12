@@ -1,4 +1,4 @@
-# python feature.py
+# python feature.py 130.237.67.204
 # Wait for Matlab to start
 
 import zmq
@@ -23,6 +23,27 @@ from os import system
 import unicodedata
 import mat4py as m4p
 import numpy
+from client import Client
+
+if len(sys.argv) != 2:
+    exit('Please supply ROS server IP')
+server_ip = sys.argv[1]
+
+# Create pipes to communicate to the client process
+pipe_in_client, pipe_out = os.pipe()
+pipe_in, pipe_out_client = os.pipe()
+
+# Create a "name" for the client, so that other clients can access by that name
+my_client_type = "the_architecture"
+
+# Create a client object to communicate with the server
+client = Client(client_type=my_client_type,
+                pipe_in=pipe_in_client,
+                pipe_out=pipe_out_client,
+                host=server_ip)
+
+# Start the client-process
+client.start()
 
 # Start matlab engine
 mateng = matlab.engine.start_matlab()
@@ -49,11 +70,19 @@ feature_dict = defaultdict(lambda : defaultdict(dict))
 # Each key is the local timestamp in seconds. The second key is the frame
 # Time, Frame: P1 Gaze, P2 Gaze, P1 Holding object, P1 Np, P1 Adj, P1 Verb
 feature_dict[0][0]['P1G'] = ''
-feature_dict[0][0]['P2G'] = ''
+#feature_dict[0][0]['P2G'] = ''
+feature_dict[0][0]['P1GP'] = ''
+#feature_dict[0][0]['P2GP'] = ''
 feature_dict[0][0]['P1H'] = ''
+#feature_dict[0][0]['P2H'] = ''
 feature_dict[0][0]['P1N'] = ''
 feature_dict[0][0]['P1A'] = ''
 feature_dict[0][0]['P1V'] = ''
+feature_dict[0][0]['P1F'] = ''
+#feature_dict[0][0]['P2N'] = ''
+#feature_dict[0][0]['P2A'] = ''
+#feature_dict[0][0]['P2V'] = ''
+#feature_dict[0][0]['P2F'] = ''
 
 # Procees mocap input data
 def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
@@ -146,8 +175,8 @@ def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
             nlpdata = {
                 'verbs': nlpbody['language']['verbs'],
                 'nouns': nlpbody['language']['nouns'],
-                'adjectives': nlpbody['language']['adjectives']#,
-                #'feedback': nlpbody['language']['feedback']
+                'adjectives': nlpbody['language']['adjectives'],
+                'feedback': nlpbody['language']['feedback']
             }
 
             # Get nlp localtime
@@ -163,10 +192,22 @@ def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
             feature_dict[second][frame]['P1N'] = nlpbody['language']['nouns']
             feature_dict[second][frame]['P1A'] = nlpbody['language']['adjectives']
             feature_dict[second][frame]['P1V'] = nlpbody['language']['verbs']
+            feature_dict[second][frame]['P1F'] = nlpbody['language']['feedback']
 
             # Print feature vector
             print(feature_dict[second][frame])
             #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+
+            rosdata = feature_dict[second][frame]
+
+            # Sending messages
+            my_message = json.dumps(rosdata)
+            my_message = "interpreter;" + my_message + "$"
+            #print(my_message)
+
+            # Encode the string to utf-8 and write it to the pipe defined above
+            os.write(pipe_out, my_message.encode("utf-8"))
+            sys.stdout.flush()
 
     t2 = Thread(target = runB)
     t2.setDaemon(True)
@@ -181,3 +222,7 @@ mq.listen()
 
 zmq_socket.send(b'CLOSE')
 zmq_socket.close()
+
+# Close the client safely, not always necessary
+client.close() # Tell it to close
+client.join() # Wait for it to close

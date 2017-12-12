@@ -40,7 +40,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
         nouns = set(re.findall('\+\-\- (.*) (?:NN|NNS|NNP|NNPS)', stdout))
         verbs0 = set(re.findall('(.*) (?:VB|VBD|VBG|VBN|VBP|VBZ)', stdout))
         verbs = set()
-        #confirmation = set(re.findall('(yes|yeah|no)', stdout))
+        confirmation = set(re.findall('(yes|yeah|no)', stdout))
         for i in verbs0:
             matched = re.match('\s*\+\-\-\s+(.+)', i)
             if matched:
@@ -50,8 +50,8 @@ def callback(_mq, get_shifted_time, routing_key, body):
         syntaxdata = {
             'verbs': list(verbs),
             'adjectives': list(adjectives),
-            'nouns': list(nouns)#,
-            #'feedback': list(confirmation)
+            'nouns': list(nouns),
+            'feedback': list(confirmation)
         }
         return syntaxdata
 

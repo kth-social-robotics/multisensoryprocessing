@@ -1,3 +1,4 @@
+# python server.py 130.237.67.209
 """ This is the Hololens experiment Server that connects the hololens with all the other parts of
     the system.
 """
