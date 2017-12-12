@@ -70,22 +70,22 @@ logging:
   #processor_path: 'C:\Users\kalins\Documents\Data\multisensoryprocessing\processors'
 
 messaging:
-  broker_host: "130.237.67.233"
+  broker_host: "130.237.67.195"
   #broker_host: "130.237.67.194"
   broker_port: 5672
   broker_user: "test"
   broker_pass: "test"
 
   # time server host
-  time_server_host: "tcp://130.237.67.233:45321"
+  time_server_host: "tcp://130.237.67.195:45321"
   #time_server_host: "tcp://130.237.67.194:45321"
 
   # connection server
-  connection_server_host: "tcp://130.237.67.233:45322"
+  connection_server_host: "tcp://130.237.67.195:45322"
   #connection_server_host: "tcp://130.237.67.194:45322"
 
   # sensor hosts
-  mocap_host: "130.237.67.233"
+  mocap_host: "130.237.67.195"
 
   # exchanges
   artificial_agent: "artificial-agent"
