@@ -34,7 +34,9 @@ mocap_dict = defaultdict(lambda : defaultdict(dict))
 mocap_dict[0]['name'] = 'glasses1'
 mocap_dict[1]['name'] = 'target1'
 mocap_dict[2]['name'] = 'target2'
-mocap_dict[3]['name'] = 'hand1right'
+mocap_dict[3]['name'] = 'hand1l'
+mocap_dict[4]['name'] = 'hand1r'
+mocap_dict[5]['name'] = 'table1'
 
 # Procees input data
 def callback(_mq, get_shifted_time, routing_key, body):
@@ -125,6 +127,8 @@ def callback(_mq, get_shifted_time, routing_key, body):
         sendjson(1)
         sendjson(2)
         sendjson(3)
+        sendjson(4)
+        sendjson(5)
     s.close()
 
 mq = MessageQueue('mocap-preprocessor')

@@ -100,15 +100,19 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
             mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
 
             if mocapbody:
-                # Calculate object holdings
-                hand1 = numpy.array((mocapbody['mocap_hand1right']['position']['x'], mocapbody['mocap_hand1right']['position']['y'], mocapbody['mocap_hand1right']['position']['z']))
+                # Get objects
+                object1 = numpy.array((mocapbody['mocap_target1']['position']['x'], mocapbody['mocap_target1']['position']['y'], mocapbody['mocap_target1']['position']['z']))
                 object2 = numpy.array((mocapbody['mocap_target2']['position']['x'], mocapbody['mocap_target2']['position']['y'], mocapbody['mocap_target2']['position']['z']))
+                hand1l = numpy.array((mocapbody['mocap_hand1l']['position']['x'], mocapbody['mocap_hand1l']['position']['y'], mocapbody['mocap_hand1l']['position']['z']))
+                hand1r = numpy.array((mocapbody['mocap_hand1r']['position']['x'], mocapbody['mocap_hand1r']['position']['y'], mocapbody['mocap_hand1r']['position']['z']))
+                table1 = numpy.array((mocapbody['mocap_table1']['position']['x'], mocapbody['mocap_table1']['position']['y'], mocapbody['mocap_table1']['position']['z']))
 
-                # Calculate distance between hand1 and object 2
-                dist_h1_o2 = numpy.linalg.norm(hand1 - object2)
+                # Calculate object holdings
+                # Calculate distance between hand1r and object 2
+                dist_h1r_o2 = numpy.linalg.norm(hand1r - object2)
 
                 # If less than 15cm put in feature vector
-                if dist_h1_o2 < 0.15:
+                if dist_h1r_o2 < 0.15:
                     # Get mocap localtime
                     mocaptime = localtime1
 
@@ -198,10 +202,8 @@ def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
             print(feature_dict[second][frame])
             #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
 
-            rosdata = feature_dict[second][frame]
-
-            # Sending messages
-            my_message = json.dumps(rosdata)
+            # Sending messages to ROS
+            my_message = json.dumps(feature_dict[second][frame])
             my_message = "interpreter;" + my_message + "$"
             #print(my_message)
 
