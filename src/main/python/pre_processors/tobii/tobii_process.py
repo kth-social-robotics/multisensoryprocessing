@@ -1,4 +1,5 @@
 # python tobii_process.py
+# py -2 .\tobii_process.py
 
 import zmq
 import pika

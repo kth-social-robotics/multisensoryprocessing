@@ -1,4 +1,5 @@
 # python3 watson_asr.py
+# py .\watson_asr.py
 
 import json
 import pika

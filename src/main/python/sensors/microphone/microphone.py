@@ -1,4 +1,5 @@
 # python microphone.py 2
+# python microphone.py 1
 
 import pyaudio
 import sys

@@ -1,4 +1,5 @@
 # python mocap_process.py
+# py -2 .\mocap_process.py
 
 import zmq
 import pika
