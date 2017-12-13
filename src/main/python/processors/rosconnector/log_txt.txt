@@ -61,3 +61,25 @@
 2017-12-12 19:09:00		Server started	 addr:	130.237.67.209	port:5000 
 2017-12-12 19:09:03		Client (130.237.67.209, 62337) connected
 2017-12-12 19:09:04		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 62337)
+2017-12-13 10:23:38		Server started	 addr:	130.237.67.209	port:5000 
+2017-12-13 10:23:42		Client (130.237.67.209, 49286) connected
+2017-12-13 10:23:43		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 49286)
+2017-12-13 10:28:24		Client (130.237.67.209, 49286) is offline
+2017-12-13 10:28:24		Client: the_architecture has been removed from the connectionlist, due to a broken socket.
+2017-12-13 10:29:00		Server started	 addr:	130.237.67.209	port:5000 
+2017-12-13 10:29:04		Client (130.237.67.209, 49497) connected
+2017-12-13 10:29:05		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 49497)
+2017-12-13 10:33:26		Client (130.237.67.209, 49497) is offline
+2017-12-13 10:33:26		Client: the_architecture has been removed from the connectionlist, due to a broken socket.
+2017-12-13 13:30:37		Server started	 addr:	130.237.67.209	port:5000 
+2017-12-13 13:30:40		Client (130.237.67.209, 52449) connected
+2017-12-13 13:30:41		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 52449)
+2017-12-13 13:37:27		Server started	 addr:	130.237.67.209	port:5000 
+2017-12-13 13:37:31		Client (130.237.67.209, 52582) connected
+2017-12-13 13:37:32		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 52582)
+2017-12-13 13:40:09		Client (130.237.67.209, 52651) connected
+2017-12-13 13:40:10		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 52651)
+2017-12-13 13:43:16		Client (130.237.67.209, 52716) connected
+2017-12-13 13:43:17		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 52716)
+2017-12-13 13:48:17		Client (130.237.67.209, 52799) connected
+2017-12-13 13:48:18		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 52799)

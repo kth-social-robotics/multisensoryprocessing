@@ -204,7 +204,7 @@ def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
 
             # Sending messages to ROS
             my_message = json.dumps(feature_dict[second][frame])
-            my_message = "interpreter;" + my_message + "$"
+            my_message = "interpreter;data;" + my_message + "$"
             #print(my_message)
 
             # Encode the string to utf-8 and write it to the pipe defined above

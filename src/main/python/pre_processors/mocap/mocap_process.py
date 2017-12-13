@@ -32,10 +32,10 @@ mq.publish(
 # Dictionaries
 mocap_dict = defaultdict(lambda : defaultdict(dict))
 mocap_dict[0]['name'] = 'glasses1'
-mocap_dict[1]['name'] = 'target1'
-mocap_dict[2]['name'] = 'target2'
-mocap_dict[3]['name'] = 'hand1l'
-mocap_dict[4]['name'] = 'hand1r'
+mocap_dict[1]['name'] = 'hand1l'
+mocap_dict[2]['name'] = 'hand1r'
+mocap_dict[3]['name'] = 'target1'
+mocap_dict[4]['name'] = 'target2'
 mocap_dict[5]['name'] = 'table1'
 
 # Procees input data
@@ -57,11 +57,13 @@ def callback(_mq, get_shifted_time, routing_key, body):
             print("----------------------------------------------------------------")
             print("Frame: ", frame)
 
-        # Check how many objects
+        # Get objects
         objects = msgdata['sets']
+
         if DEBUG:
             for key in objects.keys():
-                print("Object: ", key)
+                if key != 'all':
+                    print("Object: ", key)
 
         # Get rigid bodies
         rigidbodies = msgdata['rigid_bodies']
@@ -69,15 +71,29 @@ def callback(_mq, get_shifted_time, routing_key, body):
             # Take each rigid body
             rigidbody = rigidbodies[count]
 
-            mocap_dict[count]['id'] = rigidbody[0]
-            mocap_dict[count]['position'] = rigidbody[1]
-            mocap_dict[count]['rotation'] = rigidbody[2]
-            mocap_dict[count]['marker1'] = rigidbody[3][0]
-            mocap_dict[count]['marker2'] = rigidbody[3][1]
-            mocap_dict[count]['marker3'] = rigidbody[3][2]
-            mocap_dict[count]['marker4'] = rigidbody[3][3]
+            # Check that marker 1 position is the same in sets and rigidbodies
+            if objects['glasses1'][0] == rigidbody[3][0]:
+                objid = 0
+            elif objects['hand1l'][0] == rigidbody[3][0]:
+                objid = 1
+            elif objects['hand1r'][0] == rigidbody[3][0]:
+                objid = 2
+            elif objects['target1'][0] == rigidbody[3][0]:
+                objid = 3
+            elif objects['target2'][0] == rigidbody[3][0]:
+                objid = 4
+            elif objects['table1'][0] == rigidbody[3][0]:
+                objid = 5
 
-            if DEBUG: print("Rigid body: ", mocap_dict[count])
+            mocap_dict[objid]['id'] = rigidbody[0]
+            mocap_dict[objid]['position'] = rigidbody[1]
+            mocap_dict[objid]['rotation'] = rigidbody[2]
+            mocap_dict[objid]['marker1'] = rigidbody[3][0]
+            mocap_dict[objid]['marker2'] = rigidbody[3][1]
+            mocap_dict[objid]['marker3'] = rigidbody[3][2]
+            mocap_dict[objid]['marker4'] = rigidbody[3][3]
+
+            if DEBUG: print("Rigid body: ", mocap_dict[objid])
 
         # Get timestamp
         mocaptimestamp = msgdata['timestamp']
