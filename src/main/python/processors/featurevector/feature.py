@@ -120,27 +120,57 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
                 # Calculate object holdings
                 dist_h1r_o2 = 0
+                dist_h1r_tab1 = 0
 
                 # Calculate distance between hand1r and object 2
                 dist_h1r_o2 = numpy.linalg.norm(hand1r - object2)
 
+                # Calculate distance between hand1r and table 1
+                dist_h1r_tab1 = numpy.linalg.norm(hand1r - table1)
+
+                # Get mocap localtime
+                mocaptime = localtime1
+
+                # First get which second
+                second = int(mocaptime)
+
+                # Get decimals to decide which frame
+                frame = int(math.modf(mocaptime)[0] * 50)
+
                 # If less than 15cm put in feature vector
                 if dist_h1r_o2 != 0 and dist_h1r_o2 < 0.15:
-                    # Get mocap localtime
-                    mocaptime = localtime1
-
-                    # First get which second
-                    second = int(mocaptime)
-
-                    # Get decimals to decide which frame
-                    frame = int(math.modf(mocaptime)[0] * 50)
-
                     # Put in dictionary
                     feature_dict[second][frame]['P1H'] = 'O2'
 
                     # Print frame
                     print(feature_dict[second][frame])
                     #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+
+                    # Sending messages to ROS
+                    my_message = json.dumps(feature_dict[second][frame])
+                    my_message = "interpreter;data;" + my_message + "$"
+                    #print(my_message)
+
+                    # Encode the string to utf-8 and write it to the pipe defined above
+                    os.write(pipe_out, my_message.encode("utf-8"))
+                    sys.stdout.flush()
+
+                if dist_h1r_tab1 != 0 and dist_h1r_tab1 < 0.30:
+                    # Put in dictionary
+                    feature_dict[second][frame]['P1H'] = 'T'
+
+                    # Print frame
+                    print(feature_dict[second][frame])
+                    #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+
+                    # Sending messages to ROS
+                    my_message = json.dumps(feature_dict[second][frame])
+                    my_message = "interpreter;data;" + my_message + "$"
+                    #print(my_message)
+
+                    # Encode the string to utf-8 and write it to the pipe defined above
+                    os.write(pipe_out, my_message.encode("utf-8"))
+                    sys.stdout.flush()
 
                 # Call Matlab script to calculate gazehits
                 gaze_hits = mateng.gazehits(mocapbody)

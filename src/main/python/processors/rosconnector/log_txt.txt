@@ -132,3 +132,9 @@
 2017-12-14 15:04:11		Server started	 addr:	130.237.67.209	port:5000 
 2017-12-14 15:04:15		Client (130.237.67.209, 51914) connected
 2017-12-14 15:04:16		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 51914)
+2017-12-14 15:24:33		Server started	 addr:	130.237.67.209	port:5000 
+2017-12-14 15:24:36		Client (130.237.67.209, 52333) connected
+2017-12-14 15:24:37		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 52333)
+2017-12-14 15:27:32		Server started	 addr:	130.237.67.209	port:5000 
+2017-12-14 15:27:36		Client (130.237.67.209, 52419) connected
+2017-12-14 15:27:37		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 52419)
