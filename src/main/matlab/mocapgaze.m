@@ -12,10 +12,10 @@ tobii_rgbdata1.name = ['glasses1'];
 % Calculate a transform from rigidbody coordinates to tobii glasses
 % coordinates, assuming there are 2 markers on the front, and 2 markers
 % at the back
-front_left_marker1 = 3;
-front_right_marker1 = 4;
-back_left_marker1 = 2;
-back_right_marker1 = 1;
+front_left_marker1 = 1;
+front_right_marker1 = 3;
+back_left_marker1 = 4;
+back_right_marker1 = 2;
 
 % Normalise gp3
 ggp3 = gp3 * 0.001;

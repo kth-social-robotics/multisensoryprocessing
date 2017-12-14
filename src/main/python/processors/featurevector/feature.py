@@ -100,19 +100,32 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
             mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
 
             if mocapbody:
+                object1 = 0
+                object2 = 0
+                hand1l = 0
+                hand1r = 0
+                table1 = 0
+
                 # Get objects
-                object1 = numpy.array((mocapbody['mocap_target1']['position']['x'], mocapbody['mocap_target1']['position']['y'], mocapbody['mocap_target1']['position']['z']))
-                object2 = numpy.array((mocapbody['mocap_target2']['position']['x'], mocapbody['mocap_target2']['position']['y'], mocapbody['mocap_target2']['position']['z']))
-                hand1l = numpy.array((mocapbody['mocap_hand1l']['position']['x'], mocapbody['mocap_hand1l']['position']['y'], mocapbody['mocap_hand1l']['position']['z']))
-                hand1r = numpy.array((mocapbody['mocap_hand1r']['position']['x'], mocapbody['mocap_hand1r']['position']['y'], mocapbody['mocap_hand1r']['position']['z']))
-                table1 = numpy.array((mocapbody['mocap_table1']['position']['x'], mocapbody['mocap_table1']['position']['y'], mocapbody['mocap_table1']['position']['z']))
+                if 'mocap_target1' in mocapbody:
+                    object1 = numpy.array((mocapbody['mocap_target1']['position']['x'], mocapbody['mocap_target1']['position']['y'], mocapbody['mocap_target1']['position']['z']))
+                if 'mocap_target2' in mocapbody:
+                    object2 = numpy.array((mocapbody['mocap_target2']['position']['x'], mocapbody['mocap_target2']['position']['y'], mocapbody['mocap_target2']['position']['z']))
+                if 'mocap_hand1l' in mocapbody:
+                    hand1l = numpy.array((mocapbody['mocap_hand1l']['position']['x'], mocapbody['mocap_hand1l']['position']['y'], mocapbody['mocap_hand1l']['position']['z']))
+                if 'mocap_hand1r' in mocapbody:
+                    hand1r = numpy.array((mocapbody['mocap_hand1r']['position']['x'], mocapbody['mocap_hand1r']['position']['y'], mocapbody['mocap_hand1r']['position']['z']))
+                if 'mocap_table1' in mocapbody:
+                    table1 = numpy.array((mocapbody['mocap_table1']['position']['x'], mocapbody['mocap_table1']['position']['y'], mocapbody['mocap_table1']['position']['z']))
 
                 # Calculate object holdings
+                dist_h1r_o2 = 0
+
                 # Calculate distance between hand1r and object 2
                 dist_h1r_o2 = numpy.linalg.norm(hand1r - object2)
 
                 # If less than 15cm put in feature vector
-                if dist_h1r_o2 < 0.15:
+                if dist_h1r_o2 != 0 and dist_h1r_o2 < 0.15:
                     # Get mocap localtime
                     mocaptime = localtime1
 

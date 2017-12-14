@@ -12,11 +12,11 @@ object_radius = 0.1;
 mocapfield{1} = {''};
 
 % Check that tobii glasses exist
-if isfield(jsonfile, 'tobii_glasses1')
+if isfield(jsonfile, 'tobii_glasses1') & isfield(jsonfile, 'mocap_glasses1') & isfield(jsonfile, 'mocap_target1') & isfield(jsonfile, 'mocap_target2')
     % Get glasses
     % Get P1 glasses position
-    glasses_p1_left = jsonfile.mocap_glasses1.marker3;
-    glasses_p1_right = jsonfile.mocap_glasses1.marker4;
+    glasses_p1_left = jsonfile.mocap_glasses1.marker1;
+    glasses_p1_right = jsonfile.mocap_glasses1.marker3;
     gp1x = (jsonfile.mocap_glasses1.marker3.x + jsonfile.mocap_glasses1.marker4.x) / 2;
     gp1y = (jsonfile.mocap_glasses1.marker3.y + jsonfile.mocap_glasses1.marker4.y) / 2;
     gp1z = (jsonfile.mocap_glasses1.marker3.z + jsonfile.mocap_glasses1.marker4.z) / 2;

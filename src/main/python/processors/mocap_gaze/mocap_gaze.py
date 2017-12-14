@@ -1,5 +1,6 @@
 # Get access to tobii live video streaming: rtsp://130.237.67.195:8554/live/eyes or scene
-# websocketd --port=8080 python mocap_gaze.py
+# websocketd --port=8080 python mocap_gaze.py 1
+# python mocap_gaze.py 2
 # Start webgl
 # Wait for Matlab to start
 
@@ -18,6 +19,11 @@ import math
 from shared import create_zmq_server, MessageQueue
 from threading import Thread
 import matlab.engine
+
+# Get print flag
+if len(sys.argv) != 2:
+    exit('Error. Enter print flag')
+printflag = sys.argv[1]
 
 # Start matlab engine
 mateng = matlab.engine.start_matlab()
@@ -69,7 +75,7 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
             tobiimocap_dict[second][frame]['mocap_' + mocapbody['name']] = mocapbody
 
             # Get gaze values from the 10th previous frame
-            if 'tobii_glasses1' in tobiimocap_dict[second][frame-10]:
+            if 'tobii_glasses1' in tobiimocap_dict[second][frame-10] and 'mocap_glasses1' in tobiimocap_dict[second][frame-10]:
                 # Get values from json
                 gp3 = matlab.double([tobiimocap_dict[second][frame-10]['tobii_glasses1']['gp3']['x'], tobiimocap_dict[second][frame-10]['tobii_glasses1']['gp3']['y'], tobiimocap_dict[second][frame-10]['tobii_glasses1']['gp3']['z']])
                 pos = matlab.double([tobiimocap_dict[second][frame-10]['mocap_glasses1']['position']['x'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['position']['y'], tobiimocap_dict[second][frame-10]['mocap_glasses1']['position']['z']])
@@ -90,7 +96,7 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                 tobiimocap_dict[second][frame-10]['tobii_glasses1']['headpose'] = head_pose
 
             # Print 10 frames before
-            print(tobiimocap_dict[second][frame-10])
+            if printflag == '1': print(tobiimocap_dict[second][frame-10])
             zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-10], mq.get_shifted_time())))
 
             #key = settings['messaging']['mocaptobii_processing']
