@@ -99,6 +99,9 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
             if printflag == '1': print(tobiimocap_dict[second][frame-10])
             zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-10], mq.get_shifted_time())))
 
+            # Remove from dictionary
+            tobiimocap_dict[second].pop(frame-10, None)
+
             #key = settings['messaging']['mocaptobii_processing']
             #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-10])
 

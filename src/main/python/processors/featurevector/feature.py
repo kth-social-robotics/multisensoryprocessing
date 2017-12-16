@@ -155,6 +155,9 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                     os.write(pipe_out, my_message.encode("utf-8"))
                     sys.stdout.flush()
 
+                    # Remove from dict
+                    feature_dict[second].pop(frame-10, None)
+
                 if dist_h1r_tab1 != 0 and dist_h1r_tab1 < 0.30:
                     # Put in dictionary
                     feature_dict[second][frame]['P1H'] = 'T'
@@ -172,35 +175,83 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                     os.write(pipe_out, my_message.encode("utf-8"))
                     sys.stdout.flush()
 
+                    # Remove from dict
+                    feature_dict[second].pop(frame-10, None)
+
                 # Call Matlab script to calculate gazehits
                 gaze_hits = mateng.gazehits(mocapbody)
 
+                # Get mocap localtime
+                mocaptime = localtime1
+
+                # First get which second
+                second = int(mocaptime)
+
+                # Get decimals to decide which frame
+                frame = int(math.modf(mocaptime)[0] * 50)
+
+                # Vision system point bottom right: x = 0.65, y = 0.34
+                # Mocap system point bottom right: x = -2.81, z = 4.19
+                # xrobot = -zmocap (-3.54)
+                # yrobot = -xmocap (+3.15)
+
+                # Table Tobii 1 gaze position
+                if gaze_hits[0] == 'T1':
+                    xrobot = 0.65 - (gaze_hits[1][0][0] - 4.19) # xrobot - (xcurrent - xmocap)
+                    yrobot = 0.34 - (gaze_hits[1][0][2] + 2.81) # yrobot - (ycurrent + ymocap)
+
+                    # Put in dictionary
+                    feature_dict[second][frame]['P1GP'] = [xrobot, yrobot]
+
+                    # # Print frame
+                    # print(feature_dict[second][frame])
+                    # #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+                    #
+                    # # Sending messages to ROS
+                    # my_message = json.dumps(feature_dict[second][frame])
+                    # my_message = "interpreter;data;" + my_message + "$"
+                    # #print(my_message)
+                    #
+                    # # Encode the string to utf-8 and write it to the pipe defined above
+                    # os.write(pipe_out, my_message.encode("utf-8"))
+                    # sys.stdout.flush()
+                    #
+                    # # Remove from dict
+                    # feature_dict[second].pop(frame-10, None)
+
                 # Tobii 1
                 if gaze_hits[0] != ['']:
-                    # Get mocap localtime
-                    mocaptime = localtime1
-
-                    # First get which second
-                    second = int(mocaptime)
-
-                    # Get decimals to decide which frame
-                    frame = int(math.modf(mocaptime)[0] * 50)
-
                     # Put in dictionary
                     feature_dict[second][frame]['P1G'] = gaze_hits[0]
 
-                    # Count and filter by fixation (5 frames = 100ms, 10 frames = 200ms)
-                    for x in range(1, 10):
-                        if feature_dict[second][frame] == feature_dict[second][frame-x]:
-                            fixfilter = fixfilter + 1
-                        else:
-                            fixfilter = 0
+                    # # Count and filter by fixation (5 frames = 100ms, 10 frames = 200ms)
+                    # for x in range(1, 10):
+                    #     if feature_dict[second][frame] == feature_dict[second][frame-x]:
+                    #         fixfilter = fixfilter + 1
+                    #     else:
+                    #         fixfilter = 0
 
                     # Print frame
-                    if fixfilter == 9:
-                        fixfilter = 0
-                        print(feature_dict[second][frame])
+                    #if fixfilter == 9:
+                        #fixfilter = 0
+                        #print(feature_dict[second][frame])
                         #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+
+                    # Print frame
+                    print(feature_dict[second][frame])
+                    #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+
+                    # Sending messages to ROS
+                    my_message = json.dumps(feature_dict[second][frame])
+                    my_message = "interpreter;data;" + my_message + "$"
+                    #print(my_message)
+
+                    # Encode the string to utf-8 and write it to the pipe defined above
+                    os.write(pipe_out, my_message.encode("utf-8"))
+                    sys.stdout.flush()
+
+                    # Remove from dict
+                    feature_dict[second].pop(frame-10, None)
 
     t1 = Thread(target = runA)
     t1.setDaemon(True)
@@ -253,6 +304,9 @@ def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
             # Encode the string to utf-8 and write it to the pipe defined above
             os.write(pipe_out, my_message.encode("utf-8"))
             sys.stdout.flush()
+
+            # Remove value from dict
+            feature_dict[second].pop(frame-10, None)
 
     t2 = Thread(target = runB)
     t2.setDaemon(True)
