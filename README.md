@@ -32,8 +32,10 @@ Starting sequence:
     -Logging of sensors (win) (optional)
 -ROS Connector (Server) (mac) (optional)
 
--NLP Bat:
-    -Microphone (win)
+-ASR Bat:
+    -ASR bat (win)
+    -Microphone bat (win)
+
 
 -Feature Vector (mac)
 -Mocap-gaze processor (mac)
@@ -42,5 +44,4 @@ Starting sequence:
 -Mocap sensor (win)
 -NLP (mac)
 -Tobii pre-processor (win)
--ASR (win)
 -Tobii sensor x2 (win)
