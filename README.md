@@ -1,3 +1,12 @@
+Multisensory Processing Architecture
+
+Misc:
+-
+
+Processors:
+-
+
+Starting sequence:
 -Git pull
 -Settings
 -RabbitMQ
