@@ -1,4 +1,4 @@
-REM START CMD /K CALL "run.bat"
+REM START CMD /K CALL "run_asr.bat"
 
 REM start asr preprocessor
 START CMD /K CALL "asr.bat"
