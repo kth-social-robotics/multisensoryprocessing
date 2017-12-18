@@ -7,7 +7,7 @@ Processors:
 -
 
 Starting sequence:
--Git pull
+-Git sync
 -Settings
 -RabbitMQ
 -Timeserver
