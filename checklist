@@ -4,7 +4,7 @@
 -Timeserver
 -Logging of processors
 -Logging of sensors
--ROS Connector
+-ROS Connector (Server)
 -Feature Vector
 -Mocap-gaze processor
 -Visualisation
