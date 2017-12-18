@@ -39,10 +39,6 @@ mq = MessageQueue('asr-logger')
 
 mq.bind_queue(exchange=settings['messaging']['pre_processing'], routing_key="*.*.*", callback_wrapper_func=callback)
 mq.bind_queue(exchange=settings['messaging']['sensors'], routing_key="*.*.*", callback_wrapper_func=callback)
-mq.bind_queue(exchange=settings['messaging']['wizard'], routing_key="*.*.*", callback_wrapper_func=callback)
-mq.bind_queue(exchange=settings['messaging']['environment'], routing_key="*.*.*", callback_wrapper_func=callback)
-mq.bind_queue(exchange=settings['messaging']['fatima'], routing_key="*.*.*", callback_wrapper_func=callback)
-
 
 print('[*] Waiting for messages. To exit press CTRL+C')
 mq.listen()
