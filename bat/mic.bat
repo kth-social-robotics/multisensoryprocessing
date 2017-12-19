@@ -1,2 +1,2 @@
 cd ..\python\sensors\microphone
-python microphone.py 13
+python microphone.py 8
