@@ -1,2 +1,6 @@
-cd ../python/processors/nlp
-python nlp.py
+#!/bin/bash
+open -a Terminal.app run_nlp.sh
+
+sleep 2
+
+open -a Terminal.app run_mocapgaze.sh
