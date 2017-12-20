@@ -95,6 +95,7 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                 tobiimocap_dict[second][frame-10][tobii_device]['gp3_3d'] = gaze_gp3
                 tobiimocap_dict[second][frame-10][tobii_device]['headpose'] = head_pose
 
+            # Check that the frame exists
             if tobiimocap_dict[second][frame-10]:
                 # Run for tobii 1
                 if 'tobii_glasses1' in tobiimocap_dict[second][frame-10] and 'mocap_glasses1' in tobiimocap_dict[second][frame-10]:
