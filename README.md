@@ -34,18 +34,16 @@ Starting sequence:
 -ROS Connector (Server) (mac) (optional)
 
 -Processors sh (mac):
-    -NLP processor (mac)
+    -Feature Vector sh (mac)
+    -NLP processor sh (mac)
+    -Mocap-gaze processor sh (mac)
+-WebGL Visualisation browser (win)
 -TobiiMocap bat (win):
     -Tobii pre-processor bat (win)
     -Mocap pre-processor bat (win)
     -Mocap sensor bat (win)
 -Tobii glasses1 (win)
 -Tobii glasses2 (win)
--ASR Bat (win):
+-ASR bat (win):
     -ASR bat (win)
     -Microphone bat (win)
-
-
--Feature Vector (mac)
--Mocap-gaze processor (mac)
--Visualisation (win)
