@@ -19,6 +19,9 @@ from shared import create_zmq_server, MessageQueue
 SETTINGS_FILE = '../../settings.yaml'
 settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 
+# Print messages
+DEBUG = False
+
 # Define server
 zmq_socket, zmq_server_addr = create_zmq_server()
 mq = MessageQueue('nlp-processor')
@@ -36,23 +39,32 @@ def callback(_mq, get_shifted_time, routing_key, body):
     def calc_syntaxnet(x):
         p = subprocess.Popen(('docker', 'run', '--rm', '-i', 'brianlow/syntaxnet'), stdin=PIPE, stdout=PIPE, stderr=PIPE)
         stdout, stderr = p.communicate(x)
+
+        # Process syntaxnet output
         adjectives = set(re.findall('\+\-\- (.*) (?:JJ|JJR|JJS)', stdout))
-        nouns = set(re.findall('\+\-\- (.*) (?:NN|NNS|NNP|NNPS)', stdout))
+        nouns0 = set(re.findall('\+\-\- (.*) (?:NN|NNS|NNP|NNPS)', stdout))
+        nouns = set()
         verbs0 = set(re.findall('(.*) (?:VB|VBD|VBG|VBN|VBP|VBZ)', stdout))
         verbs = set()
-        confirmation = set(re.findall('(yes|yeah|no)', stdout))
-        for i in verbs0:
-            matched = re.match('\s*\+\-\-\s+(.+)', i)
-            if matched:
-                verbs.add(matched.group(1))
-            else:
-                verbs.add(i)
+        determiners = set(re.findall('\+\-\- (.*) (?:DT)', stdout))
+        pronouns = set(re.findall('\+\-\- (.*) (?:PRP|PRP$)', stdout))
+        confirmation = set(re.findall('(yes|yeah|no|nope)', stdout))
+
+        for i in nouns0:
+            if not i == '%' and not i == 'HESITATION':
+                nouns.add(i)
+        for j in verbs0:
+            verbs.add(j.replace(" ","").replace("+--","").replace("|",""))
+
         syntaxdata = {
             'verbs': list(verbs),
             'adjectives': list(adjectives),
             'nouns': list(nouns),
+            'determiners': list(determiners),
+            'pronouns': list(pronouns),
             'feedback': list(confirmation)
         }
+
         return syntaxdata
 
     context = zmq.Context()
@@ -67,11 +79,12 @@ def callback(_mq, get_shifted_time, routing_key, body):
         syntax = calc_syntaxnet(msgdata['text'])
 
         data = {
+            'timestamp': localtime,
             'speech': msgdata['text'],
             'language': syntax
         }
 
-        #print(data['language'])
+        if DEBUG: print(data)
 
         zmq_socket.send(msgpack.packb((data, mq.get_shifted_time())))
 

@@ -36,6 +36,8 @@ Starting sequence:
     -Tobii pre-processor bat (win)
     -Mocap pre-processor bat (win)
     -Mocap sensor bat (win)
+-Tobii glasses1 (win)
+-Tobii glasses2 (win)
 -ASR Bat:
     -ASR bat (win)
     -Microphone bat (win)
@@ -45,4 +47,3 @@ Starting sequence:
 -Mocap-gaze processor (mac)
 -Visualisation (win)
 -NLP (mac)
--Tobii sensor x2 (win)
