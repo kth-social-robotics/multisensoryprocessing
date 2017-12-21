@@ -31,6 +31,7 @@ Starting sequence:
     -Logging of processors (win) (optional)
     -Logging of sensors (win) (optional)
 
+-Attention model (Server) (mac)
 -ROS Connector (Server) (mac) (optional)
 
 -Processors sh (mac):

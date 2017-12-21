@@ -1,3 +1,5 @@
+% ASSIGN THE CORRECT VALUES OF THE MARKERS
+
 function [data] = mocapgaze(tobii_device, gp3, pos, quat, rgbMarkers)
 if (strcmp(tobii_device, 'tobii_glasses1'))
     % Values
