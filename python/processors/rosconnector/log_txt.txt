@@ -200,3 +200,28 @@
 2017-12-15 11:22:21		Server started	 addr:	130.237.67.209	port:5000 
 2017-12-15 11:22:25		Client (130.237.67.209, 62902) connected
 2017-12-15 11:22:26		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 62902)
+2017-12-21 17:31:27		Server started	 addr:	130.237.67.209	port:5000 
+2017-12-21 17:33:01		Server started	 addr:	130.237.67.209	port:5000 
+2017-12-21 17:33:05		Client (130.237.67.209, 49171) connected
+2017-12-21 17:33:06		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 49171)
+2017-12-21 17:33:19		Client (130.237.67.209, 49171) is offline
+2017-12-21 17:33:19		Client: the_architecture has been removed from the connectionlist, due to a broken socket.
+2017-12-21 17:39:40		Server started	 addr:	130.237.67.209	port:5000 
+2017-12-21 17:39:43		Client (130.237.67.209, 49307) connected
+2017-12-21 17:39:44		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 49307)
+2017-12-21 17:39:58		Client (130.237.67.209, 49317) connected
+2017-12-21 17:39:59		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 49317)
+2017-12-21 17:40:32		Client (130.237.67.209, 49317) is offline
+2017-12-21 17:40:32		Client: the_architecture has been removed from the connectionlist, due to a broken socket.
+2017-12-21 17:41:37		Server started	 addr:	130.237.67.209	port:5000 
+2017-12-21 17:41:40		Client (130.237.67.209, 49395) connected
+2017-12-21 17:41:41		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 49395)
+2017-12-21 17:43:33		Client (130.237.67.209, 49395) is offline
+2017-12-21 17:43:33		Client: the_architecture has been removed from the connectionlist, due to a broken socket.
+2017-12-21 17:43:35		Server started	 addr:	130.237.67.209	port:5000 
+2017-12-21 17:43:39		Client (130.237.67.209, 49477) connected
+2017-12-21 17:43:40		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 49477)
+2017-12-21 17:50:27		Client (130.237.67.209, 49603) connected
+2017-12-21 17:50:28		A new client, 'the_architecture', has joined with addr ('130.237.67.209', 49603)
+2017-12-21 17:55:46		Client (130.237.67.209, 49603) is offline
+2017-12-21 17:55:46		Client: the_architecture has been removed from the connectionlist, due to a broken socket.
