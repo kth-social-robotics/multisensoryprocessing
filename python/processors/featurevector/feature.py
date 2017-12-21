@@ -85,6 +85,11 @@ feature_dict[0][0]['P2GA'] = ''
 feature_dict[0][0]['P1H'] = ''
 feature_dict[0][0]['S'] = ''
 
+glasses_num = 2
+gloves_num = 1
+targets_num = 5
+tables_num = 2
+
 # Procees mocap input data
 def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
     context1 = zmq.Context()
@@ -93,92 +98,118 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
     s1.connect(body1.get('address'))
 
     def runA():
-        # Fixation filter
-        fixfilter = 0
-
         while True:
             data1 = s1.recv()
             mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
 
+            # Get mocap localtime
+            mocaptime = localtime1
+
+            # First get which second
+            second = int(mocaptime)
+
+            # Get decimals to decide which frame
+            frame = int(math.modf(mocaptime)[0] * 50)
+
+            # Check that data is received
             if mocapbody:
-                object1 = 0
-                object2 = 0
-                hand1l = 0
-                hand1r = 0
-                table1 = 0
+                # Initiate objects
+                handl = []
+                handr = []
+                target = []
+                table = []
+                # Hands
+                for x in range(0, gloves_num):
+                    handl.append(0)
+                    handr.append(0)
+                # Targets
+                for x in range(0, targets_num):
+                    target.append(0)
+                # Tables
+                for x in range(0, tables_num):
+                    table.append(0)
 
                 # Get objects
-                if 'mocap_target1' in mocapbody:
-                    object1 = numpy.array((mocapbody['mocap_target1']['position']['x'], mocapbody['mocap_target1']['position']['y'], mocapbody['mocap_target1']['position']['z']))
-                if 'mocap_target2' in mocapbody:
-                    object2 = numpy.array((mocapbody['mocap_target2']['position']['x'], mocapbody['mocap_target2']['position']['y'], mocapbody['mocap_target2']['position']['z']))
-                if 'mocap_hand1l' in mocapbody:
-                    hand1l = numpy.array((mocapbody['mocap_hand1l']['position']['x'], mocapbody['mocap_hand1l']['position']['y'], mocapbody['mocap_hand1l']['position']['z']))
-                if 'mocap_hand1r' in mocapbody:
-                    hand1r = numpy.array((mocapbody['mocap_hand1r']['position']['x'], mocapbody['mocap_hand1r']['position']['y'], mocapbody['mocap_hand1r']['position']['z']))
-                if 'mocap_table1' in mocapbody:
-                    table1 = numpy.array((mocapbody['mocap_table1']['position']['x'], mocapbody['mocap_table1']['position']['y'], mocapbody['mocap_table1']['position']['z']))
+                # Hands
+                for x in range(0, gloves_num):
+                    if 'mocap_hand' + str(x + 1) + 'l' in mocapbody:
+                        handl[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['z']))
+                    if 'mocap_hand' + str(x + 1) + 'r' in mocapbody:
+                        handr[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['z']))
+                # Targets
+                for x in range(0, targets_num):
+                    if 'mocap_target' + str(x + 1) in mocapbody:
+                        target[x] = numpy.array((mocapbody['mocap_target' + str(x + 1)]['position']['x'], mocapbody['mocap_target' + str(x + 1)]['position']['y'], mocapbody['mocap_target' + str(x + 1)]['position']['z']))
+                # Tables
+                for x in range(0, tables_num):
+                    if 'mocap_table' + str(x + 1) in mocapbody:
+                        table[x] = numpy.array((mocapbody['mocap_table' + str(x + 1)]['position']['x'], mocapbody['mocap_table' + str(x + 1)]['position']['y'], mocapbody['mocap_table' + str(x + 1)]['position']['z']))
 
                 # Calculate object holdings
-                dist_h1r_o2 = 0
-                dist_h1r_tab1 = 0
+                # Targets
+                dist_tarl = [[0 for x in range(targets_num)] for y in range(gloves_num)]
+                dist_tarr = [[0 for x in range(targets_num)] for y in range(gloves_num)]
+                # Tables
+                dist_tabl = [[0 for x in range(tables_num)] for y in range(gloves_num)]
+                dist_tabr = [[0 for x in range(tables_num)] for y in range(gloves_num)]
 
-                # Calculate distance between hand1r and object 2
-                dist_h1r_o2 = numpy.linalg.norm(hand1r - object2)
+                # Calculate distance between hands and targets
+                for x in range(0, gloves_num):
+                    for y in range(0, targets_num):
+                        dist_tarl[x][y] = numpy.linalg.norm(handl[x] - target[y])
+                        dist_tarr[x][y] = numpy.linalg.norm(handr[x] - target[y])
+                        touchtarget = 100
 
-                # Calculate distance between hand1r and table 1
-                dist_h1r_tab1 = numpy.linalg.norm(hand1r - table1)
+                        # If less than 15cm put in feature vector
+                        if dist_tarl[x][y] != 0 and dist_tarl[x][y] < 0.15:
+                            touchtarget = y
+                        if dist_tarr[x][y] != 0 and dist_tarr[x][y] < 0.15:
+                            touchtarget = y
 
-                # Get mocap localtime
-                mocaptime = localtime1
+                        if touchtarget != 100:
+                            # Put in dictionary
+                            feature_dict[second][frame]['P' + str(x + 1) + 'H'] = 'T' + str(y + 1)
+                            # Print frame
+                            print(feature_dict[second][frame])
+                            # Sending messages to teh server
+                            my_message = json.dumps(feature_dict[second][frame])
+                            my_message = "interpreter;data;" + my_message + "$"
+                            # Encode the string to utf-8 and write it to the pipe defined above
+                            os.write(pipe_out, my_message.encode("utf-8"))
+                            sys.stdout.flush()
+                            # Remove from dict
+                            feature_dict[second].pop(frame-10, None)
+                            touchtarget = 100
 
-                # First get which second
-                second = int(mocaptime)
+                # Calculate distance between hands and tables
+                for x in range(0, gloves_num):
+                    for y in range(0, tables_num):
+                        dist_tabl[x][y] = numpy.linalg.norm(handl[x] - table[y])
+                        dist_tabr[x][y] = numpy.linalg.norm(handr[x] - table[y])
+                        touchtable = 100
 
-                # Get decimals to decide which frame
-                frame = int(math.modf(mocaptime)[0] * 50)
+                        # If less than 30cm put in feature vector
+                        if dist_tabl[x][y] != 0 and dist_tabl[x][y] < 0.30:
+                            touchtable = y
+                        if dist_tabr[x][y] != 0 and dist_tabr[x][y] < 0.30:
+                            touchtable = y
 
-                # If less than 15cm put in feature vector
-                if dist_h1r_o2 != 0 and dist_h1r_o2 < 0.15:
-                    # Put in dictionary
-                    feature_dict[second][frame]['P1H'] = 'O2'
+                        if touchtable != 100:
+                            # Put in dictionary
+                            feature_dict[second][frame]['P' + str(x + 1) + 'H'] = 'Tab' + str(y + 1)
+                            # Print frame
+                            print(feature_dict[second][frame])
+                            # Sending messages to the server
+                            my_message = json.dumps(feature_dict[second][frame])
+                            my_message = "interpreter;data;" + my_message + "$"
+                            # Encode the string to utf-8 and write it to the pipe defined above
+                            os.write(pipe_out, my_message.encode("utf-8"))
+                            sys.stdout.flush()
+                            # Remove from dict
+                            feature_dict[second].pop(frame-10, None)
+                            touchtable = 100
 
-                    # Print frame
-                    print(feature_dict[second][frame])
-                    #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
-
-                    # Sending messages to ROS
-                    my_message = json.dumps(feature_dict[second][frame])
-                    my_message = "interpreter;data;" + my_message + "$"
-                    #print(my_message)
-
-                    # Encode the string to utf-8 and write it to the pipe defined above
-                    os.write(pipe_out, my_message.encode("utf-8"))
-                    sys.stdout.flush()
-
-                    # Remove from dict
-                    feature_dict[second].pop(frame-10, None)
-
-                if dist_h1r_tab1 != 0 and dist_h1r_tab1 < 0.30:
-                    # Put in dictionary
-                    feature_dict[second][frame]['P1H'] = 'T'
-
-                    # Print frame
-                    print(feature_dict[second][frame])
-                    #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
-
-                    # Sending messages to ROS
-                    my_message = json.dumps(feature_dict[second][frame])
-                    my_message = "interpreter;data;" + my_message + "$"
-                    #print(my_message)
-
-                    # Encode the string to utf-8 and write it to the pipe defined above
-                    os.write(pipe_out, my_message.encode("utf-8"))
-                    sys.stdout.flush()
-
-                    # Remove from dict
-                    feature_dict[second].pop(frame-10, None)
-
+                # Gaze Hits
                 # Call Matlab script to calculate gazehits
                 gaze_hits = mateng.gazehits(mocapbody)
 
