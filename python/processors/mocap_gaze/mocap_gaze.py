@@ -1,7 +1,8 @@
 # Get access to tobii live video streaming: rtsp://130.237.67.195:8554/live/eyes or scene
-# websocketd --port=8080 python mocap_gaze.py 1
-# Start webgl
-# python mocap_gaze.py 2
+# websocketd --port=8080 python mocap_gaze.py 1 13
+# Start webgl: http://130.237.67.209:8888/webgl/realtimevis/realtime/vs.html?IP=130.237.67.209
+# python mocap_gaze.py 2 13
+# Check number of mocap objects
 # Wait for Matlab to start
 
 import zmq
@@ -21,9 +22,10 @@ from threading import Thread
 import matlab.engine
 
 # Get print flag
-if len(sys.argv) != 2:
-    exit('Error. Enter print flag')
+if len(sys.argv) != 3:
+    exit('Error. Enter print flag and number of objects')
 printflag = sys.argv[1]
+objectnum = sys.argv[2]
 
 # Start matlab engine
 mateng = matlab.engine.start_matlab()
@@ -74,45 +76,47 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
             # Put in dictionary
             tobiimocap_dict[second][frame]['mocap_' + mocapbody['name']] = mocapbody
 
-            # Get gaze values from the 10th previous frame
-            def mocapgaze(tobii_device, mocap_device):
-                # Get values from json
-                gp3 = matlab.double([tobiimocap_dict[second][frame-10][tobii_device]['gp3']['x'], tobiimocap_dict[second][frame-10][tobii_device]['gp3']['y'], tobiimocap_dict[second][frame-10][tobii_device]['gp3']['z']])
-                pos = matlab.double([tobiimocap_dict[second][frame-10][mocap_device]['position']['x'], tobiimocap_dict[second][frame-10][mocap_device]['position']['y'], tobiimocap_dict[second][frame-10][mocap_device]['position']['z']])
-                quat = matlab.double([tobiimocap_dict[second][frame-10][mocap_device]['rotation']['x'], tobiimocap_dict[second][frame-10][mocap_device]['rotation']['y'], tobiimocap_dict[second][frame-10][mocap_device]['rotation']['z'], tobiimocap_dict[second][frame-10][mocap_device]['rotation']['w']])
-                rgbMarkers = matlab.double([[[tobiimocap_dict[second][frame-10][mocap_device]['marker1']['x'], tobiimocap_dict[second][frame-10][mocap_device]['marker2']['x'], tobiimocap_dict[second][frame-10][mocap_device]['marker3']['x'], tobiimocap_dict[second][frame-10][mocap_device]['marker4']['x']], [tobiimocap_dict[second][frame-10][mocap_device]['marker1']['y'], tobiimocap_dict[second][frame-10][mocap_device]['marker2']['y'], tobiimocap_dict[second][frame-10][mocap_device]['marker3']['y'], tobiimocap_dict[second][frame-10][mocap_device]['marker4']['y']], [tobiimocap_dict[second][frame-10][mocap_device]['marker1']['z'], tobiimocap_dict[second][frame-10][mocap_device]['marker2']['z'], tobiimocap_dict[second][frame-10][mocap_device]['marker3']['z'], tobiimocap_dict[second][frame-10][mocap_device]['marker4']['z']]]]) # [x1, x2, x3], [y1, y2, y3], [z1, z2, z3]
+            # Check that all mocap objects have arrived
+            if (len(tobiimocap_dict[second][frame]) == int(objectnum)):
+                # Get gaze values from the 10th previous frame
+                def mocapgaze(tobii_device, mocap_device):
+                    # Get values from json
+                    gp3 = matlab.double([tobiimocap_dict[second][frame-10][tobii_device]['gp3']['x'], tobiimocap_dict[second][frame-10][tobii_device]['gp3']['y'], tobiimocap_dict[second][frame-10][tobii_device]['gp3']['z']])
+                    pos = matlab.double([tobiimocap_dict[second][frame-10][mocap_device]['position']['x'], tobiimocap_dict[second][frame-10][mocap_device]['position']['y'], tobiimocap_dict[second][frame-10][mocap_device]['position']['z']])
+                    quat = matlab.double([tobiimocap_dict[second][frame-10][mocap_device]['rotation']['x'], tobiimocap_dict[second][frame-10][mocap_device]['rotation']['y'], tobiimocap_dict[second][frame-10][mocap_device]['rotation']['z'], tobiimocap_dict[second][frame-10][mocap_device]['rotation']['w']])
+                    rgbMarkers = matlab.double([[[tobiimocap_dict[second][frame-10][mocap_device]['marker1']['x'], tobiimocap_dict[second][frame-10][mocap_device]['marker2']['x'], tobiimocap_dict[second][frame-10][mocap_device]['marker3']['x'], tobiimocap_dict[second][frame-10][mocap_device]['marker4']['x']], [tobiimocap_dict[second][frame-10][mocap_device]['marker1']['y'], tobiimocap_dict[second][frame-10][mocap_device]['marker2']['y'], tobiimocap_dict[second][frame-10][mocap_device]['marker3']['y'], tobiimocap_dict[second][frame-10][mocap_device]['marker4']['y']], [tobiimocap_dict[second][frame-10][mocap_device]['marker1']['z'], tobiimocap_dict[second][frame-10][mocap_device]['marker2']['z'], tobiimocap_dict[second][frame-10][mocap_device]['marker3']['z'], tobiimocap_dict[second][frame-10][mocap_device]['marker4']['z']]]]) # [x1, x2, x3], [y1, y2, y3], [z1, z2, z3]
 
-                # Combine mocap and gaze. GP3 in mocap space (in Matlab)
-                gp3_3d = mateng.mocapgaze(tobii_device, gp3, pos, quat, rgbMarkers)
+                    # Combine mocap and gaze. GP3 in mocap space (in Matlab)
+                    gp3_3d = mateng.mocapgaze(tobii_device, gp3, pos, quat, rgbMarkers)
 
-                # Get 3d values
-                gaze_left = {"x": gp3_3d[0][0][0], "y": gp3_3d[0][1][0], "z": gp3_3d[0][2][0]}
-                gaze_right = {"x": gp3_3d[0][0][1], "y": gp3_3d[0][1][1], "z": gp3_3d[0][2][1]}
-                gaze_gp3 = {"x": gp3_3d[0][0][2], "y": gp3_3d[0][1][2], "z": gp3_3d[0][2][2]}
-                head_pose = {"x": gp3_3d[0][0][3], "y": gp3_3d[0][1][3], "z": gp3_3d[0][2][3]}
+                    # Get 3d values
+                    gaze_left = {"x": gp3_3d[0][0][0], "y": gp3_3d[0][1][0], "z": gp3_3d[0][2][0]}
+                    gaze_right = {"x": gp3_3d[0][0][1], "y": gp3_3d[0][1][1], "z": gp3_3d[0][2][1]}
+                    gaze_gp3 = {"x": gp3_3d[0][0][2], "y": gp3_3d[0][1][2], "z": gp3_3d[0][2][2]}
+                    head_pose = {"x": gp3_3d[0][0][3], "y": gp3_3d[0][1][3], "z": gp3_3d[0][2][3]}
 
-                # Update dict values
-                tobiimocap_dict[second][frame-10][tobii_device]['gp3_3d'] = gaze_gp3
-                tobiimocap_dict[second][frame-10][tobii_device]['headpose'] = head_pose
+                    # Update dict values
+                    tobiimocap_dict[second][frame-10][tobii_device]['gp3_3d'] = gaze_gp3
+                    tobiimocap_dict[second][frame-10][tobii_device]['headpose'] = head_pose
 
-            # Check that the frame exists
-            if tobiimocap_dict[second][frame-10]:
-                # Run for tobii 1
-                if 'tobii_glasses1' in tobiimocap_dict[second][frame-10] and 'mocap_glasses1' in tobiimocap_dict[second][frame-10]:
-                    mocapgaze('tobii_glasses1', 'mocap_glasses1')
-                # Run for tobii 2
-                if 'tobii_glasses2' in tobiimocap_dict[second][frame-10] and 'mocap_glasses2' in tobiimocap_dict[second][frame-10]:
-                    mocapgaze('tobii_glasses2', 'mocap_glasses2')
+                # Check that the frame exists
+                if tobiimocap_dict[second][frame-10]:
+                    # Run for tobii 1
+                    if 'tobii_glasses1' in tobiimocap_dict[second][frame-10] and 'mocap_glasses1' in tobiimocap_dict[second][frame-10]:
+                        mocapgaze('tobii_glasses1', 'mocap_glasses1')
+                    # Run for tobii 2
+                    if 'tobii_glasses2' in tobiimocap_dict[second][frame-10] and 'mocap_glasses2' in tobiimocap_dict[second][frame-10]:
+                        mocapgaze('tobii_glasses2', 'mocap_glasses2')
 
-            # Print 10 frames before
-            if printflag == '1': print(tobiimocap_dict[second][frame-10])
-            zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-10], mq.get_shifted_time())))
+                # Print 10 frames before
+                if printflag == '1': print(tobiimocap_dict[second][frame-10])
+                zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-10], mq.get_shifted_time())))
 
-            # Remove from dictionary
-            tobiimocap_dict[second].pop(frame-10, None)
+                # Remove from dictionary
+                tobiimocap_dict[second].pop(frame-10, None)
 
-            #key = settings['messaging']['mocaptobii_processing']
-            #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-10])
+                #key = settings['messaging']['mocaptobii_processing']
+                #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[second][frame-10])
 
     t1 = Thread(target = runA)
     t1.setDaemon(True)
