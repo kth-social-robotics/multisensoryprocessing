@@ -168,6 +168,7 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
                         if touchtarget != 100:
                             # Put in dictionary
+                            feature_dict[second][frame]['TS'] = mocaptime
                             feature_dict[second][frame]['P' + str(x + 1) + 'H'] = 'T' + str(y + 1)
                             # Print frame
                             print(feature_dict[second][frame])
@@ -196,6 +197,7 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
                         if touchtable != 100:
                             # Put in dictionary
+                            feature_dict[second][frame]['TS'] = mocaptime
                             feature_dict[second][frame]['P' + str(x + 1) + 'H'] = 'Tab' + str(y + 1)
                             # Print frame
                             print(feature_dict[second][frame])
