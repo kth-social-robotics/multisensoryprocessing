@@ -78,13 +78,15 @@ if isfield(jsonfile, 'mocap_glasses2')
 end
 
 if isfield(jsonfile, 'tobii_glasses2')
-    % Get P2 gaze position
-    gpp2x = jsonfile.tobii_glasses2.gp3_3d.x;
-    gpp2y = jsonfile.tobii_glasses2.gp3_3d.y;
-    gpp2z = jsonfile.tobii_glasses2.gp3_3d.z;
+    if isfield(jsonfile.tobii_glasses2, 'gp3_3d')
+        % Get P2 gaze position
+        gpp2x = jsonfile.tobii_glasses2.gp3_3d.x;
+        gpp2y = jsonfile.tobii_glasses2.gp3_3d.y;
+        gpp2z = jsonfile.tobii_glasses2.gp3_3d.z;
 
-    % Get gaze vectors
-    gaze_vecp2 = [gpp2x, gpp2z, gpp2y];
+        % Get gaze vectors
+        gaze_vecp2 = [gpp2x, gpp2z, gpp2y];
+    end
 end
 
 % Get tables

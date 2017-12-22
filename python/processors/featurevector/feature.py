@@ -162,10 +162,10 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                         dist_tarr[x][y] = numpy.linalg.norm(handr[x] - target[y])
                         touchtarget = 100
 
-                        # If less than 15cm put in feature vector
-                        if dist_tarl[x][y] != 0 and dist_tarl[x][y] < 0.15:
+                        # If less than 20cm put in feature vector
+                        if dist_tarl[x][y] != 0 and dist_tarl[x][y] < 0.20:
                             touchtarget = y
-                        if dist_tarr[x][y] != 0 and dist_tarr[x][y] < 0.15:
+                        if dist_tarr[x][y] != 0 and dist_tarr[x][y] < 0.20:
                             touchtarget = y
 
                         if touchtarget != 100:
