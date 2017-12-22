@@ -1,8 +1,8 @@
 """
 Launch point for the kernel-server.
 Options:
-    -i                          [Launch Interpreter ]
     -s                          [Launch Server]
+    -i                          [Launch Interpreter ]
     -da                         [Dummy Architecture]
 Example:
     python3 main.py -i
@@ -11,7 +11,6 @@ Example:
 """
 import sys
 from src.kernel import Kernel
-
 
 def _read_command_line(commands, arg):
     if "-" in arg:

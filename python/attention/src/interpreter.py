@@ -12,7 +12,6 @@ from .client import Client
 import csv
 import collections
 
-
 class Interpreter(Process):
     """ The Interpreter-class is a intermediator between the arcitecture and the ROS-network.
     """
@@ -42,7 +41,7 @@ class Interpreter(Process):
 
         # Create and initialize the variables
         self.print_every = 1.0
-        self.verb_keys = ["P1N", "P1A", "P1V", "P1D", "P1P"]
+        self.verb_keys = ["P1N", "P1A", "P1V", "P1D", "P1P", "P1F", "P1ASR"]
         self.gaze_keys = ["P1G", "P2G", "P1H"]
 
         self.current_step = 0
@@ -60,7 +59,20 @@ class Interpreter(Process):
                 object_dict = {"L":label}
                 for key in att_attr:
                     object_dict[key] = 0
-                att_table["T{}".format(i+1)] = object_dict
+
+                # Define objects
+                if i == 0:
+                    att_table["P1"] = object_dict
+                elif i == 1:
+                    att_table["P2"] = object_dict
+                elif i == 2:
+                    att_table["Furhat"] = object_dict
+                elif i == 3:
+                    att_table["Tab1"] = object_dict
+                elif i == 4:
+                    att_table["Tab2"] = object_dict
+                else:
+                    att_table["T{}".format(i+1-5)] = object_dict
             return att_table
         except IndexError:
             return False
