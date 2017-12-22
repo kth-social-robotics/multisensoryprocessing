@@ -32,13 +32,12 @@ Starting sequence:
     -Logging of sensors (win) (optional)
 
 -Attention model (Server) (mac)
--ROS Connector (Server) (mac) (optional)
 
 -Processors sh (mac):
     -Feature Vector sh (mac)
     -NLP processor sh (mac)
     -Mocap-gaze processor sh (mac)
--WebGL Visualisation browser (win)
+-WebGL Visualisation browser (win/mac)
 -TobiiMocap bat (win):
     -Tobii pre-processor bat (win)
     -Mocap pre-processor bat (win)

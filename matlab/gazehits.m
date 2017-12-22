@@ -176,7 +176,7 @@ if strcmp(agent, 'yumi')
 end
 
 % P1
-if isfield(jsonfile, 'tobii_glasses1')
+if isfield(jsonfile, 'tobii_glasses1') & isfield(jsonfile, 'mocap_glasses1')
     % Calculate hits for P1 to P2
     if isfield(jsonfile, 'mocap_glasses2')
         dist_p2p1 = calc_norm(glassesp2-glassesp1);
@@ -310,7 +310,7 @@ if isfield(jsonfile, 'tobii_glasses1')
 end
 
 % P2
-if isfield(jsonfile, 'tobii_glasses2')
+if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
     % Calculate hits for P2 to P1
     if isfield(jsonfile, 'mocap_glasses1')
         dist_p1p2 = calc_norm(glassesp1-glassesp2);
