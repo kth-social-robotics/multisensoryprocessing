@@ -26,6 +26,28 @@ elseif strcmp(agent, 'furhat')
     mocapfield{4} = zeros(targets_num); % P2
 end
 
+% Initialise gaze hits
+gaze_hits_p2p1 = 0;
+gaze_hits_t1p1 = 0;
+gaze_hits_t2p1 = 0;
+gaze_hits_fp1 = 0;
+gaze_hits_cp1 = 0;
+gaze_hits_o1p1 = 0;
+gaze_hits_o2p1 = 0;
+gaze_hits_o3p1 = 0;
+gaze_hits_o4p1 = 0;
+gaze_hits_o5p1 = 0;
+gaze_hits_p1p2 = 0;
+gaze_hits_t1p2 = 0;
+gaze_hits_t2p2 = 0;
+gaze_hits_fp2 = 0;
+gaze_hits_cp2 = 0;
+gaze_hits_o1p2 = 0;
+gaze_hits_o2p2 = 0;
+gaze_hits_o3p2 = 0;
+gaze_hits_o4p2 = 0;
+gaze_hits_o5p2 = 0;
+
 % Check that tobii glasses 1 exist
 if isfield(jsonfile, 'mocap_glasses1')
     % Get P1 glasses position
@@ -36,13 +58,15 @@ if isfield(jsonfile, 'mocap_glasses1')
 end
 
 if isfield(jsonfile, 'tobii_glasses1')
-    % Get P1 gaze position
-    gpp1x = jsonfile.tobii_glasses1.gp3_3d.x;
-    gpp1y = jsonfile.tobii_glasses1.gp3_3d.y;
-    gpp1z = jsonfile.tobii_glasses1.gp3_3d.z;
+    if isfield(jsonfile.tobii_glasses1, 'gp3_3d')
+        % Get P1 gaze position
+        gpp1x = jsonfile.tobii_glasses1.gp3_3d.x;
+        gpp1y = jsonfile.tobii_glasses1.gp3_3d.y;
+        gpp1z = jsonfile.tobii_glasses1.gp3_3d.z;
 
-    % Get gaze vectors
-    gaze_vecp1 = [gpp1x, gpp1z, gpp1y];
+        % Get gaze vectors
+        gaze_vecp1 = [gpp1x, gpp1z, gpp1y];
+    end
 end
 
 if isfield(jsonfile, 'mocap_glasses2')
@@ -84,7 +108,7 @@ end
 % Get furhat position
 if isfield(jsonfile, 'mocap_furhat')
     fx = jsonfile.mocap_furhat.position.x;
-    fy = jsonfile.mocap_furhat.position.y;
+    fy = jsonfile.mocap_furhat.position.y + 0.20; % Add 20cm to furhat
     fz = jsonfile.mocap_furhat.position.z;
     furhat = [fx, fz, fy];
 end

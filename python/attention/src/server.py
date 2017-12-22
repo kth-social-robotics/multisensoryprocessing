@@ -2,6 +2,9 @@
     the system.
 """
 
+# DEFINE IP
+IP = "130.237.67.209"
+
 import platform
 import select
 import socket
@@ -9,7 +12,6 @@ import traceback
 from datetime import datetime
 from multiprocessing import Process
 from subprocess import check_output
-
 
 class Server(Process):
     """ A simple TCP server.
@@ -29,7 +31,8 @@ class Server(Process):
         self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
         # In order to get the correct (local) ip we need to detect which platform we are running on
-        server_address = self.get_local_ip(platform.system())
+        #server_address = self.get_local_ip(platform.system())
+        server_address = IP
         server_address = (server_address, self.port)
         self.server_socket.bind(server_address)
         self.server_socket.listen(10)
@@ -150,9 +153,10 @@ class Server(Process):
         """
         try:
             recipient_socket.send(message.encode('utf-8'))
-            for client, sock in self.connection_dict.items():
-                if sock == recipient_socket:
-                    self.log("A message '{}' has been sent to client '{}'".format(message, client))
+            # Print messages
+            # for client, sock in self.connection_dict.items():
+            #     if sock == recipient_socket:
+            #         self.log("A message '{}' has been sent to client '{}'".format(message, client))
         except:
             # Broken socket connection may be, chat client pressed ctrl+c for example
             recipient_socket.close()

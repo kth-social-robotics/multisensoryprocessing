@@ -77,12 +77,12 @@ feature_dict[0][0]['P1V'] = ''
 feature_dict[0][0]['P1D'] = ''
 feature_dict[0][0]['P1P'] = ''
 feature_dict[0][0]['P1F'] = ''
-feature_dict[0][0]['P1ASR'] = ''
-feature_dict[0][0]['P1G'] = ''
-feature_dict[0][0]['P2G'] = ''
-feature_dict[0][0]['P1GA'] = ''
-feature_dict[0][0]['P2GA'] = ''
-feature_dict[0][0]['P1H'] = ''
+feature_dict[0][0]['P1ASR'] = ['']
+feature_dict[0][0]['P1G'] = ['']
+feature_dict[0][0]['P2G'] = ['']
+feature_dict[0][0]['P1GA'] = ['']
+feature_dict[0][0]['P2GA'] = ['']
+feature_dict[0][0]['P1H'] = ['']
 feature_dict[0][0]['S'] = ''
 
 glasses_num = 2
@@ -170,8 +170,8 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
                         if touchtarget != 100:
                             # Put in dictionary
-                            feature_dict[second][frame]['TS'] = mocaptime
-                            feature_dict[second][frame]['P' + str(x + 1) + 'H'] = 'T' + str(y + 1)
+                            feature_dict[second][frame]['TS'] = str(mocaptime)
+                            feature_dict[second][frame]['P' + str(x + 1) + 'H'] = ['T' + str(y + 1)]
                             # Print frame
                             print(feature_dict[second][frame])
                             # Sending messages to teh server
@@ -199,8 +199,8 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
                         if touchtable != 100:
                             # Put in dictionary
-                            feature_dict[second][frame]['TS'] = mocaptime
-                            feature_dict[second][frame]['P' + str(x + 1) + 'H'] = 'Tab' + str(y + 1)
+                            feature_dict[second][frame]['TS'] = str(mocaptime)
+                            feature_dict[second][frame]['P' + str(x + 1) + 'H'] = ['Tab' + str(y + 1)]
                             # Print frame
                             print(feature_dict[second][frame])
                             # Sending messages to the server
@@ -249,8 +249,8 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                 # Glasses 1
                 if gaze_hits[0] != ['']:
                     # Put in dictionary
-                    feature_dict[second][frame]['TS'] = mocaptime
-                    feature_dict[second][frame]['P1G'] = gaze_hits[0]
+                    feature_dict[second][frame]['TS'] = str(mocaptime)
+                    feature_dict[second][frame]['P1G'] = [gaze_hits[0]]
 
                     # # Count and filter by fixation (5 frames = 100ms, 10 frames = 200ms)
                     # for x in range(1, 10):
@@ -280,8 +280,8 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
 
                 if gaze_hits[1] != ['']:
                     # Put in dictionary
-                    feature_dict[second][frame]['TS'] = mocaptime
-                    feature_dict[second][frame]['P2G'] = gaze_hits[1]
+                    feature_dict[second][frame]['TS'] = str(mocaptime)
+                    feature_dict[second][frame]['P2G'] = [gaze_hits[1]]
 
                     # Print frame
                     print(feature_dict[second][frame])
@@ -323,14 +323,14 @@ def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
             frame = int(math.modf(nlptime)[0] * 50)
 
             # Put in dictionary
-            feature_dict[second][frame]['TS'] = nlpbody['timestamp']
+            feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
             feature_dict[second][frame]['P1N'] = nlpbody['language']['nouns']
             feature_dict[second][frame]['P1A'] = nlpbody['language']['adjectives']
             feature_dict[second][frame]['P1V'] = nlpbody['language']['verbs']
             feature_dict[second][frame]['P1D'] = nlpbody['language']['determiners']
             feature_dict[second][frame]['P1P'] = nlpbody['language']['pronouns']
             feature_dict[second][frame]['P1F'] = nlpbody['language']['feedback']
-            feature_dict[second][frame]['P1ASR'] = nlpbody['speech']
+            feature_dict[second][frame]['P1ASR'] = [nlpbody['speech']]
 
             # Print feature vector
             print(feature_dict[second][frame])

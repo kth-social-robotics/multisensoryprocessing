@@ -5,9 +5,9 @@ Options:
     -s                          [Launch Server]
     -da                         [Dummy Architecture]
 Example:
-    python3.5 main.py -i
-    python3.5 main.py -s
-    python3.5 main.py -da
+    python3 main.py -i
+    python3 main.py -s
+    python3 main.py -da
 """
 import sys
 from src.kernel import Kernel

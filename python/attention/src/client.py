@@ -2,8 +2,10 @@
 https://github.com/alexwhb/simple-python-chat-server/blob/master/server.py
 https://pymotw.com/2/socket/tcp.html
 http://www.binarytides.com/code-chat-application-server-client-sockets-python/
-
 """
+
+# DEFINE IP
+IP = "130.237.67.209"
 
 import socket
 import select
@@ -34,8 +36,9 @@ class Client(Process):
         self.server.settimeout(2)
 
         if host == "localhost":
-            host = self.get_local_ip(platform.system())
-            
+            #host = self.get_local_ip(platform.system())
+            host = IP
+
         # Connect to remote host
         attempt = 0
         while attempt <= connection_attempts:

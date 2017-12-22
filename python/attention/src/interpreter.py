@@ -72,7 +72,7 @@ class Interpreter(Process):
 
     def run(self):
         """ Main loop. Simply read messages from the server and send them to self._parse() to take
-        appropriate action. 
+        appropriate action.
         param: N/A
         return: N/A
         """
@@ -96,7 +96,7 @@ class Interpreter(Process):
         """ Interperet the incomming message and take appropriate action.
         param: data [String, format defined in README.md]
         return: N/A
-        """ 
+        """
         # Preporcess the data message.
         data = data.replace("$", "")
         data = data.split(";")
@@ -119,7 +119,7 @@ class Interpreter(Process):
         self._process_verbal(data)
         # Process the gaze and hold information in the data
         self._process_gaze_hold(data)
-        # Check whether the message indicates end of step. If so then save the current state and 
+        # Check whether the message indicates end of step. If so then save the current state and
         # reset variables.
         if "S" in data.keys():
             self._do_step()
@@ -167,7 +167,7 @@ class Interpreter(Process):
         self.current_step += 1
         self.attention_table = self._new_attention_table()
         self.current_verbal_dict = self._new_verbal_dict()
-        # If the attention_table returns false the label_sequence if empty and the program should 
+        # If the attention_table returns false the label_sequence if empty and the program should
         # save and exit.
         if not self.attention_table:
             ver_list = self._dict_of_dicts_to_list_of_lists(self.verbal_table,
@@ -191,7 +191,7 @@ class Interpreter(Process):
         return list_of_lists
 
     def _save_as(self, data, file_name):
-        with open(file_name, 'a') as data_file:  
+        with open(file_name, 'a') as data_file:
             writer = csv.writer(data_file, delimiter=';')
             if isinstance(data[0], list):
                 writer.writerows(data)
