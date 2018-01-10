@@ -28,9 +28,18 @@ Processors receive events with data, processes them (e.g. a gaze-tracking proces
 #### Time server
 The time server lets all of the components of the system have a centralized time, so that synchronization of data streams is possible. 
 
+The time server can be started running the time_server.py that can be found in the misc folder of the python source code.
+
 #### Messaging
 Messaging is done with rabbitmq, but as such another message broker could be used. 
 
+Install rabbitmq from Docker (Suggestion):
+  - Check if you have Docker installed. 
+  - Once docker is installed you can install the rabbitmq docker running the following command from your terminal :`docker pull rabbitmq`.
+  - Start the rabbitmq docker using the following command: `docker run -d -p [<port>:<port>] rabbitmq[:latest]`.
+
+  Please refer to the rabbitmq docker documentation for the complete specification (https://hub.docker.com/_/rabbitmq/)
+  
 ## Architecture
 
 The system is built to be distributed over several machines. And having stand-alone applications running on each maching focusing on performing some kind of work.
