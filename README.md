@@ -32,6 +32,7 @@ Starting sequence:
     -Logging of sensors (win) (optional)
 
 +++-Attention model (Server) (mac)
+    -Define server IP on server and client files and feature bat file
 +++-Processors sh (mac):
     +++-Feature Vector sh (mac)
     -NLP processor sh (mac)
