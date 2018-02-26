@@ -43,6 +43,6 @@ Starting sequence:
     +++-Mocap sensor bat (win)
 +++-Tobii glasses1 (win)
 +++-Tobii glasses2 (win)
-+++-ASR sh (mac):
-    +++-ASR sh (mac)
-    +++-Microphone sh (mac)
+-ASR sh (mac):
+    -ASR sh (mac)
+    -Microphone sh (mac)
