@@ -31,19 +31,18 @@ Starting sequence:
     -Logging of processors (win) (optional)
     -Logging of sensors (win) (optional)
 
--Attention model (Server) (mac)
-
--Processors sh (mac):
-    -Feature Vector sh (mac)
-    -NLP processor sh (mac)
-    -Mocap-gaze processor sh (mac)
--WebGL Visualisation browser (win/mac)
--TobiiMocap bat (win):
-    -Tobii pre-processor bat (win)
-    -Mocap pre-processor bat (win)
-    -Mocap sensor bat (win)
--Tobii glasses1 (win)
--Tobii glasses2 (win)
--ASR bat (win):
-    -ASR bat (win)
-    -Microphone bat (win)
++++-Attention model (Server) (mac)
++++-Processors sh (mac):
+    +++-Feature Vector sh (mac)
+    +++-NLP processor sh (mac)
+    +++-Mocap-gaze processor sh (mac)
++++-WebGL Visualisation browser (win/mac)
++++-TobiiMocap bat (win):
+    +++-Tobii pre-processor bat (win)
+    +++-Mocap pre-processor bat (win)
+    +++-Mocap sensor bat (win)
++++-Tobii glasses1 (win)
++++-Tobii glasses2 (win)
++++-ASR sh (mac):
+    +++-ASR sh (mac)
+    +++-Microphone sh (mac)

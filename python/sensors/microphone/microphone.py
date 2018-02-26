@@ -1,4 +1,4 @@
-# python microphone.py 1
+# python microphone.py 3
 # python microphone.py 13
 
 import pyaudio
