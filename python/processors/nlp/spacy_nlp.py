@@ -23,10 +23,19 @@ doc = nlp(u'Apple is looking at buying U.K. startup for $1 billion')
 #     print(ent.text, ent.start_char, ent.end_char, ent.label_)
 
 # Word similarity
-tokens = nlp(u'dog cat banana')
-for token1 in tokens:
-    for token2 in tokens:
-        print(token1, token2, token1.similarity(token2))
+# tokens = nlp(u'dog cat banana')
+# for token1 in tokens:
+#     for token2 in tokens:
+#         print(token1, token2, token1.similarity(token2))
+
+# # Document similarity
+doc1 = nlp(u"Paris is the largest city in France.")
+doc2 = nlp(u"Vilnius is the capital of Lithuania.")
+doc3 = nlp(u"An emu is a large bird.")
+
+for doc in [doc1, doc2, doc3]:
+    for other_doc in [doc1, doc2, doc3]:
+        print(doc, other_doc, doc.similarity(other_doc))
 
 # Word vectors
 # tokens = nlp(u'dog cat banana sasquatch')

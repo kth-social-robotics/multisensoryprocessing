@@ -34,7 +34,7 @@ Starting sequence:
 +++-Attention model (Server) (mac)
 +++-Processors sh (mac):
     +++-Feature Vector sh (mac)
-    +++-NLP processor sh (mac)
+    -NLP processor sh (mac)
     +++-Mocap-gaze processor sh (mac)
 +++-WebGL Visualisation browser (win/mac)
 +++-TobiiMocap bat (win):

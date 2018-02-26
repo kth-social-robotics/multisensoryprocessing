@@ -20,7 +20,7 @@ SETTINGS_FILE = '../../settings.yaml'
 settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 
 # Print messages
-DEBUG = True
+DEBUG = False
 
 # Define server
 zmq_socket, zmq_server_addr = create_zmq_server()
