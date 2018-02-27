@@ -26,6 +26,9 @@ messaging:
   # sensor hosts
   mocap_host: "130.237.67.186"
 
+  # furhat host
+  furhat_host: "130.237.67.172"
+
   # exchanges
   artificial_agent: "artificial-agent"
   sensors: "sensors"
