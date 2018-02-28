@@ -1,7 +1,7 @@
 # Get access to tobii live video streaming: rtsp://130.237.67.195:8554/live/eyes or scene
-# websocketd --port=8080 python mocap_gaze.py 1 13
-# Start webgl: http://130.237.67.209:8888/webgl/realtimevis/realtime/vs.html?IP=130.237.67.209
-# python mocap_gaze.py 2 13
+# websocketd --port=8080 python mocap_gaze.py 1 20
+# Start webgl: http://130.237.67.232:8888/webgl/realtimevis/realtime/vs.html?IP=130.237.67.232
+# python mocap_gaze.py 2 20
 # Check number of mocap objects
 # Wait for Matlab to start
 
@@ -108,8 +108,12 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                     if 'tobii_glasses2' in tobiimocap_dict[second][frame-10] and 'mocap_glasses2' in tobiimocap_dict[second][frame-10]:
                         mocapgaze('tobii_glasses2', 'mocap_glasses2')
 
-                # Print 10 frames before
-                if printflag == '1': print(tobiimocap_dict[second][frame-10])
+                # Print and send 10 frames before
+                # Send to WebGL
+                if printflag == '1':
+                    # Only send every 2 frames
+                    if frame % 2 == 0: # odd frames
+                        print(tobiimocap_dict[second][frame-10])
                 zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-10], mq.get_shifted_time())))
 
                 # Remove from dictionary

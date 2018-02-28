@@ -37,8 +37,10 @@ Starting sequence:
     +++-Feature Vector sh (mac)
     +++-NLP processor sh (mac)
     +++-Mocap-gaze processor sh (mac)
+        -Define Tobii markers on Matlab
 +++-WebGL Visualisation browser (win/mac)
-+++-TobiiMocap bat (win):
+    -Define number of glasses and targets (now works only if p2 has gloves)
+-TobiiMocap bat (win):
     -Tobii pre-processor bat (win)
     -Mocap pre-processor bat (win)
         -Update mocap objects

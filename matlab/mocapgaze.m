@@ -15,10 +15,10 @@ if (strcmp(tobii_device, 'tobii_glasses1'))
     % Calculate a transform from rigidbody coordinates to tobii glasses
     % coordinates, assuming there are 2 markers on the front, and 2 markers
     % at the back
-    front_left_marker = 2;
-    front_right_marker = 4;
-    back_left_marker = 1;
-    back_right_marker = 3;
+    front_left_marker = 1;
+    front_right_marker = 3;
+    back_left_marker = 2;
+    back_right_marker = 4;
 elseif (strcmp(tobii_device, 'tobii_glasses2'))
     % Values
     gd.left = [0, 0, 0];
@@ -34,9 +34,9 @@ elseif (strcmp(tobii_device, 'tobii_glasses2'))
     % coordinates, assuming there are 2 markers on the front, and 2 markers
     % at the back
     front_left_marker = 3;
-    front_right_marker = 2;
+    front_right_marker = 1;
     back_left_marker = 4;
-    back_right_marker = 1;
+    back_right_marker = 2;
 end
 
 % Normalise gp3
