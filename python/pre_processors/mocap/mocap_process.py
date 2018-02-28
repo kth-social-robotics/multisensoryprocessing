@@ -35,17 +35,25 @@ mq.publish(
 mocap_dict = defaultdict(lambda : defaultdict(dict))
 mocap_dict[0]['name'] = 'glasses1'
 mocap_dict[1]['name'] = 'glasses2'
-mocap_dict[2]['name'] = 'hand1l'
-mocap_dict[3]['name'] = 'hand1r'
+mocap_dict[2]['name'] = 'hand2l'
+mocap_dict[3]['name'] = 'hand2r'
 mocap_dict[4]['name'] = 'target1'
 mocap_dict[5]['name'] = 'target2'
 mocap_dict[6]['name'] = 'target3'
 mocap_dict[7]['name'] = 'target4'
 mocap_dict[8]['name'] = 'target5'
-mocap_dict[9]['name'] = 'table1'
-mocap_dict[10]['name'] = 'table2'
-mocap_dict[11]['name'] = 'furhat'
-mocap_dict[12]['name'] = 'calibration'
+mocap_dict[9]['name'] = 'target6'
+mocap_dict[10]['name'] = 'target7'
+mocap_dict[11]['name'] = 'target8'
+mocap_dict[12]['name'] = 'target9'
+mocap_dict[13]['name'] = 'target10'
+mocap_dict[14]['name'] = 'target11'
+mocap_dict[15]['name'] = 'target12'
+mocap_dict[16]['name'] = 'target13'
+mocap_dict[17]['name'] = 'target14'
+mocap_dict[18]['name'] = 'table1'
+mocap_dict[19]['name'] = 'furhat'
+mocap_dict[20]['name'] = 'calibration'
 
 # Procees input data
 def callback(_mq, get_shifted_time, routing_key, body):
@@ -85,9 +93,9 @@ def callback(_mq, get_shifted_time, routing_key, body):
                 objid = 0
             elif objects['glasses2'][0] == rigidbody[3][0]:
                 objid = 1
-            elif objects['hand1l'][0] == rigidbody[3][0]:
+            elif objects['hand2l'][0] == rigidbody[3][0]:
                 objid = 2
-            elif objects['hand1r'][0] == rigidbody[3][0]:
+            elif objects['hand2r'][0] == rigidbody[3][0]:
                 objid = 3
             elif objects['target1'][0] == rigidbody[3][0]:
                 objid = 4
@@ -99,14 +107,30 @@ def callback(_mq, get_shifted_time, routing_key, body):
                 objid = 7
             elif objects['target5'][0] == rigidbody[3][0]:
                 objid = 8
-            elif objects['table1'][0] == rigidbody[3][0]:
+            elif objects['target6'][0] == rigidbody[3][0]:
                 objid = 9
-            elif objects['table2'][0] == rigidbody[3][0]:
+            elif objects['target7'][0] == rigidbody[3][0]:
                 objid = 10
-            elif objects['furhat'][0] == rigidbody[3][0]:
+            elif objects['target8'][0] == rigidbody[3][0]:
                 objid = 11
-            elif objects['calibration'][0] == rigidbody[3][0]:
+            elif objects['target9'][0] == rigidbody[3][0]:
                 objid = 12
+            elif objects['target10'][0] == rigidbody[3][0]:
+                objid = 13
+            elif objects['target11'][0] == rigidbody[3][0]:
+                objid = 14
+            elif objects['target12'][0] == rigidbody[3][0]:
+                objid = 15
+            elif objects['target13'][0] == rigidbody[3][0]:
+                objid = 16
+            elif objects['target14'][0] == rigidbody[3][0]:
+                objid = 17
+            elif objects['table1'][0] == rigidbody[3][0]:
+                objid = 18
+            elif objects['furhat'][0] == rigidbody[3][0]:
+                objid = 19
+            elif objects['calibration'][0] == rigidbody[3][0]:
+                objid = 20
 
             mocap_dict[objid]['id'] = rigidbody[0]
             mocap_dict[objid]['position'] = rigidbody[1]
@@ -175,6 +199,14 @@ def callback(_mq, get_shifted_time, routing_key, body):
         sendjson(10)
         sendjson(11)
         sendjson(12)
+        sendjson(13)
+        sendjson(14)
+        sendjson(15)
+        sendjson(16)
+        sendjson(17)
+        sendjson(18)
+        sendjson(19)
+        sendjson(20)
     s.close()
 
 mq = MessageQueue('mocap-preprocessor')
