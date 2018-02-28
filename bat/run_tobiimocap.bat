@@ -14,3 +14,5 @@ CHOICE /N /C YN /T 2 /D Y >NUL
 
 REM start mocap sensor
 START CMD /K CALL "mocapsensor.bat"
+
+EXIT
