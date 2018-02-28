@@ -42,7 +42,7 @@ Starting sequence:
     +++-Tobii pre-processor bat (win)
     +++-Mocap pre-processor bat (win)
         +++-Update mocap objects
-    +++-Mocap sensor bat (win)
+    -Mocap sensor bat (win)
 -Tobii glasses1 (win)
 -Tobii glasses2 (win)
 -ASR sh (mac):
