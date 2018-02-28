@@ -39,9 +39,9 @@ Starting sequence:
     +++-Mocap-gaze processor sh (mac)
 +++-WebGL Visualisation browser (win/mac)
 +++-TobiiMocap bat (win):
-    +++-Tobii pre-processor bat (win)
-    +++-Mocap pre-processor bat (win)
-        +++-Update mocap objects
+    -Tobii pre-processor bat (win)
+    -Mocap pre-processor bat (win)
+        -Update mocap objects
     -Mocap sensor bat (win)
 -Tobii glasses1 (win)
 -Tobii glasses2 (win)
