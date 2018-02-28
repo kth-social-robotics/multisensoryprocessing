@@ -80,6 +80,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
 
         data = {
             'timestamp': localtime,
+            'mic': msgdata['mic'],
             'speech': msgdata['text'],
             'language': syntax
         }

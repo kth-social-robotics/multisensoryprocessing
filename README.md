@@ -35,7 +35,7 @@ Starting sequence:
     -Define server IP on server and client files and feature bat file
 +++-Processors sh (mac):
     +++-Feature Vector sh (mac)
-    +++-NLP processor sh (mac)
+    -NLP processor sh (mac)
     -Mocap-gaze processor sh (mac)
         -Define Tobii markers on Matlab
 -WebGL Visualisation browser (win/mac)

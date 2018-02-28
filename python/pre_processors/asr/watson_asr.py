@@ -151,12 +151,14 @@ class WatsonASR(object):
             self.on_message_callback(data)
 
 def callback(_mq, get_shifted_time, routing_key, body):
-    #participant = routing_key.rsplit('.', 1)[1]
-    participant = 1
-    print('connected {}'.format(routing_key))
+    participant = routing_key.rsplit('.', 1)[1]
+    print('connected {}'.format(participant))
 
     def on_message(data):
         if data["final"]:
+            # Add microphone number
+            data["mic"] = participant
+
             if DEBUG: print(data)
             # _mq.publish(
             #     exchange='pre-processor',
