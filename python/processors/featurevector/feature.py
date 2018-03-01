@@ -1,4 +1,4 @@
-# python feature.py 130.237.67.209 furhat
+# python feature.py 130.237.67.232 furhat
 # Wait for Matlab to start
 
 import zmq
@@ -24,6 +24,14 @@ import unicodedata
 import mat4py as m4p
 import numpy
 from client import Client
+from furhat import connect_to_iristk
+from time import sleep
+
+FURHAT_IP = '130.237.67.172' # Furhat IP address
+FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
+
+p1mic = 'mic0'
+p2mic = 'mic3'
 
 if len(sys.argv) != 3:
     exit('Please supply server IP and agent')
@@ -69,7 +77,9 @@ mq.publish(
 feature_dict = defaultdict(lambda : defaultdict(dict))
 
 # Each key is the local timestamp in seconds. The second key is the frame
-# Time, Frame: Timestamp, P1 Np, P1 Adj, P1 Verb, P1 Det, P1 Pron, P1 Feedback, P1 ASR, P1 Gaze, P2 Gaze, P1 Gaze Angle, P2 Gaze Angle, P1 Holding object, Step
+# Time, Frame: Timestamp, P1 Np, P1 Adj, P1 Verb, P1 Det, P1 Pron, P1 Feedback, P1 ASR,
+# P2 Np, P2 Adj, P2 Verb, P2 Det, P2 Pron, P2 Feedback, P2 ASR,
+# P1 Gaze Label, P2 Gaze Label, P1 Gaze Probabilities, P2 Gaze Probabilities, P2 Holding object, Step
 feature_dict[0][0]['TS'] = ''
 feature_dict[0][0]['P1N'] = ''
 feature_dict[0][0]['P1A'] = ''
@@ -78,167 +88,225 @@ feature_dict[0][0]['P1D'] = ''
 feature_dict[0][0]['P1P'] = ''
 feature_dict[0][0]['P1F'] = ''
 feature_dict[0][0]['P1ASR'] = ['']
-feature_dict[0][0]['P1G'] = ['']
-feature_dict[0][0]['P2G'] = ['']
-feature_dict[0][0]['P1GA'] = ['']
-feature_dict[0][0]['P2GA'] = ['']
-feature_dict[0][0]['P1H'] = ['']
+feature_dict[0][0]['P2N'] = ''
+feature_dict[0][0]['P2A'] = ''
+feature_dict[0][0]['P2V'] = ''
+feature_dict[0][0]['P2D'] = ''
+feature_dict[0][0]['P2P'] = ''
+feature_dict[0][0]['P2F'] = ''
+feature_dict[0][0]['P2ASR'] = ['']
+feature_dict[0][0]['P1GL'] = ['']
+feature_dict[0][0]['P2GL'] = ['']
+feature_dict[0][0]['P1GP'] = ['']
+feature_dict[0][0]['P2GP'] = ['']
+feature_dict[0][0]['P2H'] = ['']
 feature_dict[0][0]['S'] = ''
 
 glasses_num = 2
 gloves_num = 1
-targets_num = 5
-tables_num = 2
+targets_num = 14
+tables_num = 1
 
 #fixfilter = 0
 
-# Procees mocap input data
-def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
-    context1 = zmq.Context()
-    s1 = context1.socket(zmq.SUB)
-    s1.setsockopt_string(zmq.SUBSCRIBE, u'')
-    s1.connect(body1.get('address'))
+# Connect to Furhat
+with connect_to_iristk(FURHAT_IP) as furhat_client:
+    # Introduce Furhat
+    furhat_client.say(FURHAT_AGENT_NAME, 'Hello there. I am here to learn how you are putting this furniture together.')
+    sleep(0.1)
+    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':0.00,'y':0.00,'z':2.00})
+    sleep(0.1)
 
-    def runA():
-        while True:
-            data1 = s1.recv()
-            mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
+    # Log Furhat events
+    def event_callback(event):
+        #print(event) # Receives each event the furhat sends out.
+        fd = open('../../../logs/furhat_log.csv','a')
+        fd.write(event)
+        fd.write('\n')
+        fd.close()
 
-            # Get mocap localtime
-            mocaptime = localtime1
+    # Listen to events
+    furhat_client.start_listening(event_callback) # register the event callback receiver
 
-            # First get which second
-            second = int(mocaptime)
+    # Procees mocap input data
+    def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
+        context1 = zmq.Context()
+        s1 = context1.socket(zmq.SUB)
+        s1.setsockopt_string(zmq.SUBSCRIBE, u'')
+        s1.connect(body1.get('address'))
 
-            # Get decimals to decide which frame
-            frame = int(math.modf(mocaptime)[0] * 50)
+        def runA():
+            while True:
+                data1 = s1.recv()
+                mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
 
-            # Check that data is received
-            if mocapbody:
-                # Initiate objects
-                handl = []
-                handr = []
-                target = []
-                table = []
-                # Hands
-                for x in range(0, gloves_num):
-                    handl.append(0)
-                    handr.append(0)
-                # Targets
-                for x in range(0, targets_num):
-                    target.append(0)
-                # Tables
-                for x in range(0, tables_num):
-                    table.append(0)
+                # Get mocap localtime
+                mocaptime = localtime1
 
-                # Get objects
-                # Hands
-                for x in range(0, gloves_num):
-                    if 'mocap_hand' + str(x + 1) + 'l' in mocapbody:
-                        handl[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['z']))
-                    if 'mocap_hand' + str(x + 1) + 'r' in mocapbody:
-                        handr[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['z']))
-                # Targets
-                for x in range(0, targets_num):
-                    if 'mocap_target' + str(x + 1) in mocapbody:
-                        target[x] = numpy.array((mocapbody['mocap_target' + str(x + 1)]['position']['x'], mocapbody['mocap_target' + str(x + 1)]['position']['y'], mocapbody['mocap_target' + str(x + 1)]['position']['z']))
-                # Tables
-                for x in range(0, tables_num):
-                    if 'mocap_table' + str(x + 1) in mocapbody:
-                        table[x] = numpy.array((mocapbody['mocap_table' + str(x + 1)]['position']['x'], mocapbody['mocap_table' + str(x + 1)]['position']['y'], mocapbody['mocap_table' + str(x + 1)]['position']['z']))
+                # First get which second
+                second = int(mocaptime)
 
-                # Calculate object holdings
-                # Targets
-                dist_tarl = [[0 for x in range(targets_num)] for y in range(gloves_num)]
-                dist_tarr = [[0 for x in range(targets_num)] for y in range(gloves_num)]
-                # Tables
-                dist_tabl = [[0 for x in range(tables_num)] for y in range(gloves_num)]
-                dist_tabr = [[0 for x in range(tables_num)] for y in range(gloves_num)]
+                # Get decimals to decide which frame
+                frame = int(math.modf(mocaptime)[0] * 50)
 
-                # Calculate distance between hands and targets
-                for x in range(0, gloves_num):
-                    for y in range(0, targets_num):
-                        dist_tarl[x][y] = numpy.linalg.norm(handl[x] - target[y])
-                        dist_tarr[x][y] = numpy.linalg.norm(handr[x] - target[y])
-                        touchtarget = 100
+                # Check that data is received
+                if mocapbody:
+                    # Initiate objects
+                    handl = []
+                    handr = []
+                    target = []
+                    table = []
+                    # Hands
+                    for x in range(0, gloves_num):
+                        handl.append(0)
+                        handr.append(0)
+                    # Targets
+                    for x in range(0, targets_num):
+                        target.append(0)
+                    # Tables
+                    for x in range(0, tables_num):
+                        table.append(0)
 
-                        # If less than 20cm put in feature vector
-                        if dist_tarl[x][y] != 0 and dist_tarl[x][y] < 0.20:
-                            touchtarget = y
-                        if dist_tarr[x][y] != 0 and dist_tarr[x][y] < 0.20:
-                            touchtarget = y
+                    # Get objects
+                    # Hands
+                    for x in range(0, gloves_num):
+                        if 'mocap_hand' + str(x + 1) + 'l' in mocapbody:
+                            handl[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['z']))
+                        if 'mocap_hand' + str(x + 1) + 'r' in mocapbody:
+                            handr[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['z']))
+                    # Targets
+                    for x in range(0, targets_num):
+                        if 'mocap_target' + str(x + 1) in mocapbody:
+                            target[x] = numpy.array((mocapbody['mocap_target' + str(x + 1)]['position']['x'], mocapbody['mocap_target' + str(x + 1)]['position']['y'], mocapbody['mocap_target' + str(x + 1)]['position']['z']))
+                    # Tables
+                    for x in range(0, tables_num):
+                        if 'mocap_table' + str(x + 1) in mocapbody:
+                            table[x] = numpy.array((mocapbody['mocap_table' + str(x + 1)]['position']['x'], mocapbody['mocap_table' + str(x + 1)]['position']['y'], mocapbody['mocap_table' + str(x + 1)]['position']['z']))
 
-                        if touchtarget != 100:
-                            # Put in dictionary
-                            feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P' + str(x + 1) + 'H'] = ['T' + str(y + 1)]
-                            # Print frame
-                            print(feature_dict[second][frame])
-                            # Sending messages to teh server
-                            my_message = json.dumps(feature_dict[second][frame])
-                            my_message = "interpreter;data;" + my_message + "$"
-                            # Encode the string to utf-8 and write it to the pipe defined above
-                            os.write(pipe_out, my_message.encode("utf-8"))
-                            sys.stdout.flush()
-                            # Remove from dict
-                            feature_dict[second].pop(frame, None)
+                    # Calculate object holdings
+                    # Targets
+                    dist_tarl = [[0 for x in range(targets_num)] for y in range(gloves_num)]
+                    dist_tarr = [[0 for x in range(targets_num)] for y in range(gloves_num)]
+                    # Tables
+                    dist_tabl = [[0 for x in range(tables_num)] for y in range(gloves_num)]
+                    dist_tabr = [[0 for x in range(tables_num)] for y in range(gloves_num)]
+
+                    # Calculate distance between hands and targets
+                    for x in range(0, gloves_num):
+                        for y in range(0, targets_num):
+                            dist_tarl[x][y] = numpy.linalg.norm(handl[x] - target[y])
+                            dist_tarr[x][y] = numpy.linalg.norm(handr[x] - target[y])
                             touchtarget = 100
 
-                # Calculate distance between hands and tables
-                for x in range(0, gloves_num):
-                    for y in range(0, tables_num):
-                        dist_tabl[x][y] = numpy.linalg.norm(handl[x] - table[y])
-                        dist_tabr[x][y] = numpy.linalg.norm(handr[x] - table[y])
-                        touchtable = 100
+                            # If less than 20cm put in feature vector
+                            if dist_tarl[x][y] != 0 and dist_tarl[x][y] < 0.20:
+                                touchtarget = y
+                            if dist_tarr[x][y] != 0 and dist_tarr[x][y] < 0.20:
+                                touchtarget = y
 
-                        # If less than 30cm put in feature vector
-                        if dist_tabl[x][y] != 0 and dist_tabl[x][y] < 0.30:
-                            touchtable = y
-                        if dist_tabr[x][y] != 0 and dist_tabr[x][y] < 0.30:
-                            touchtable = y
+                            if touchtarget != 100:
+                                # Put in dictionary
+                                feature_dict[second][frame]['TS'] = str(mocaptime)
+                                feature_dict[second][frame]['P' + str(x + 1) + 'H'] = ['T' + str(y + 1)]
+                                # Print frame
+                                print(feature_dict[second][frame])
+                                # Sending messages to teh server
+                                my_message = json.dumps(feature_dict[second][frame])
+                                my_message = "interpreter;data;" + my_message + "$"
+                                # Encode the string to utf-8 and write it to the pipe defined above
+                                os.write(pipe_out, my_message.encode("utf-8"))
+                                sys.stdout.flush()
+                                # Remove from dict
+                                feature_dict[second].pop(frame, None)
+                                touchtarget = 100
 
-                        if touchtable != 100:
+                    # Calculate distance between hands and tables
+                    for x in range(0, gloves_num):
+                        for y in range(0, tables_num):
+                            dist_tabl[x][y] = numpy.linalg.norm(handl[x] - table[y])
+                            dist_tabr[x][y] = numpy.linalg.norm(handr[x] - table[y])
+                            touchtable = 100
+
+                            # If less than 30cm put in feature vector
+                            if dist_tabl[x][y] != 0 and dist_tabl[x][y] < 0.30:
+                                touchtable = y
+                            if dist_tabr[x][y] != 0 and dist_tabr[x][y] < 0.30:
+                                touchtable = y
+
+                            if touchtable != 100:
+                                # Put in dictionary
+                                feature_dict[second][frame]['TS'] = str(mocaptime)
+                                feature_dict[second][frame]['P' + str(x + 1) + 'H'] = ['Tab' + str(y + 1)]
+                                # Print frame
+                                print(feature_dict[second][frame])
+                                # Sending messages to the server
+                                my_message = json.dumps(feature_dict[second][frame])
+                                my_message = "interpreter;data;" + my_message + "$"
+                                # Encode the string to utf-8 and write it to the pipe defined above
+                                os.write(pipe_out, my_message.encode("utf-8"))
+                                sys.stdout.flush()
+                                # Remove from dict
+                                feature_dict[second].pop(frame, None)
+                                touchtable = 100
+
+                    # Gaze Hits
+                    # Call Matlab script to calculate gazehits
+                    gaze_hits = mateng.gazehits(mocapbody, agent, glasses_num, targets_num, tables_num)
+
+                    # Yumi Table
+                    if agent == 'yumi':
+                        # Vision system point bottom right: x = 0.65, y = 0.34
+                        # Mocap system point bottom right: x = -2.81, z = 4.19
+                        # xrobot = -zmocap (-3.54)
+                        # yrobot = -xmocap (+3.15)
+
+                        # Table Tobii 1 gaze position
+                        if gaze_hits[0] == 'Tab1':
+                            xrobot = 0.65 - (gaze_hits[1][0][0] - 4.19) # xrobot - (xcurrent - xmocap)
+                            yrobot = 0.34 - (gaze_hits[1][0][2] + 2.81) # yrobot - (ycurrent + ymocap)
+
                             # Put in dictionary
-                            feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P' + str(x + 1) + 'H'] = ['Tab' + str(y + 1)]
+                            feature_dict[second][frame]['P1GP'] = [xrobot, yrobot]
+
                             # Print frame
                             print(feature_dict[second][frame])
-                            # Sending messages to the server
+
+                            # Sending messages to ROS
                             my_message = json.dumps(feature_dict[second][frame])
                             my_message = "interpreter;data;" + my_message + "$"
+
                             # Encode the string to utf-8 and write it to the pipe defined above
                             os.write(pipe_out, my_message.encode("utf-8"))
                             sys.stdout.flush()
+
                             # Remove from dict
                             feature_dict[second].pop(frame, None)
-                            touchtable = 100
 
-                # Gaze Hits
-                # Call Matlab script to calculate gazehits
-                gaze_hits = mateng.gazehits(mocapbody, agent, glasses_num, targets_num, tables_num)
-
-                # Yumi Table
-                if agent == 'yumi':
-                    # Vision system point bottom right: x = 0.65, y = 0.34
-                    # Mocap system point bottom right: x = -2.81, z = 4.19
-                    # xrobot = -zmocap (-3.54)
-                    # yrobot = -xmocap (+3.15)
-
-                    # Table Tobii 1 gaze position
-                    if gaze_hits[0] == 'Tab1':
-                        xrobot = 0.65 - (gaze_hits[1][0][0] - 4.19) # xrobot - (xcurrent - xmocap)
-                        yrobot = 0.34 - (gaze_hits[1][0][2] + 2.81) # yrobot - (ycurrent + ymocap)
-
+                    # Glasses 1
+                    if gaze_hits[0] != ['']:
                         # Put in dictionary
-                        feature_dict[second][frame]['P1GP'] = [xrobot, yrobot]
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P1G'] = [gaze_hits[0]]
+
+                        # # Count and filter by fixation (5 frames = 100ms, 10 frames = 200ms)
+                        # for x in range(1, 10):
+                        #     if feature_dict[second][frame] == feature_dict[second][frame-x]:
+                        #         fixfilter = fixfilter + 1
+                        #     else:
+                        #         fixfilter = 0
+
+                        # Print frame
+                        #if fixfilter == 9:
+                            #fixfilter = 0
+                            #print(feature_dict[second][frame])
+                            #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
 
                         # Print frame
                         print(feature_dict[second][frame])
 
-                        # Sending messages to ROS
+                        # Sending messages to the server
                         my_message = json.dumps(feature_dict[second][frame])
                         my_message = "interpreter;data;" + my_message + "$"
-
                         # Encode the string to utf-8 and write it to the pipe defined above
                         os.write(pipe_out, my_message.encode("utf-8"))
                         sys.stdout.flush()
@@ -246,121 +314,104 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                         # Remove from dict
                         feature_dict[second].pop(frame, None)
 
-                # Glasses 1
-                if gaze_hits[0] != ['']:
-                    # Put in dictionary
-                    feature_dict[second][frame]['TS'] = str(mocaptime)
-                    feature_dict[second][frame]['P1G'] = [gaze_hits[0]]
+                    if gaze_hits[1] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P2G'] = [gaze_hits[1]]
 
-                    # # Count and filter by fixation (5 frames = 100ms, 10 frames = 200ms)
-                    # for x in range(1, 10):
-                    #     if feature_dict[second][frame] == feature_dict[second][frame-x]:
-                    #         fixfilter = fixfilter + 1
-                    #     else:
-                    #         fixfilter = 0
+                        # Print frame
+                        print(feature_dict[second][frame])
 
-                    # Print frame
-                    #if fixfilter == 9:
-                        #fixfilter = 0
-                        #print(feature_dict[second][frame])
-                        #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
 
-                    # Print frame
-                    print(feature_dict[second][frame])
+                        # Remove from dict
+                        feature_dict[second].pop(frame, None)
 
-                    # Sending messages to the server
-                    my_message = json.dumps(feature_dict[second][frame])
-                    my_message = "interpreter;data;" + my_message + "$"
-                    # Encode the string to utf-8 and write it to the pipe defined above
-                    os.write(pipe_out, my_message.encode("utf-8"))
-                    sys.stdout.flush()
+        t1 = Thread(target = runA)
+        t1.setDaemon(True)
+        t1.start()
+        #s1.close()
 
-                    # Remove from dict
-                    feature_dict[second].pop(frame, None)
+    # Process nlp input data
+    def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
+        context2 = zmq.Context()
+        s2 = context2.socket(zmq.SUB)
+        s2.setsockopt_string(zmq.SUBSCRIBE, u'')
+        s2.connect(body2.get('address'))
 
-                if gaze_hits[1] != ['']:
-                    # Put in dictionary
-                    feature_dict[second][frame]['TS'] = str(mocaptime)
-                    feature_dict[second][frame]['P2G'] = [gaze_hits[1]]
+        def runB():
+            while True:
+                data2 = s2.recv()
+                nlpbody, localtime2 = msgpack.unpackb(data2, use_list=False)
 
-                    # Print frame
-                    print(feature_dict[second][frame])
+                # Get nlp localtime
+                nlptime = localtime2
 
-                    # Sending messages to the server
-                    my_message = json.dumps(feature_dict[second][frame])
-                    my_message = "interpreter;data;" + my_message + "$"
-                    # Encode the string to utf-8 and write it to the pipe defined above
-                    os.write(pipe_out, my_message.encode("utf-8"))
-                    sys.stdout.flush()
+                # First get which second
+                second = int(nlptime)
 
-                    # Remove from dict
-                    feature_dict[second].pop(frame, None)
+                # Get decimals to decide which frame
+                frame = int(math.modf(nlptime)[0] * 50)
 
-    t1 = Thread(target = runA)
-    t1.setDaemon(True)
-    t1.start()
-    #s1.close()
+                # Put in dictionary
+                if nlpbody['mic'] == p1mic:
+                    feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
+                    feature_dict[second][frame]['P1N'] = nlpbody['language']['nouns']
+                    feature_dict[second][frame]['P1A'] = nlpbody['language']['adjectives']
+                    feature_dict[second][frame]['P1V'] = nlpbody['language']['verbs']
+                    feature_dict[second][frame]['P1D'] = nlpbody['language']['determiners']
+                    feature_dict[second][frame]['P1P'] = nlpbody['language']['pronouns']
+                    feature_dict[second][frame]['P1F'] = nlpbody['language']['feedback']
+                    feature_dict[second][frame]['P1ASR'] = [nlpbody['speech']]
+                elif nlpbody['mic'] == p2mic:
+                    feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
+                    feature_dict[second][frame]['P2N'] = nlpbody['language']['nouns']
+                    feature_dict[second][frame]['P2A'] = nlpbody['language']['adjectives']
+                    feature_dict[second][frame]['P2V'] = nlpbody['language']['verbs']
+                    feature_dict[second][frame]['P2D'] = nlpbody['language']['determiners']
+                    feature_dict[second][frame]['P2P'] = nlpbody['language']['pronouns']
+                    feature_dict[second][frame]['P2F'] = nlpbody['language']['feedback']
+                    feature_dict[second][frame]['P2ASR'] = [nlpbody['speech']]
 
-# Process nlp input data
-def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
-    context2 = zmq.Context()
-    s2 = context2.socket(zmq.SUB)
-    s2.setsockopt_string(zmq.SUBSCRIBE, u'')
-    s2.connect(body2.get('address'))
+                # Furhat react to P1 speech
+                if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
+                    furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
+                    sleep(0.1)
 
-    def runB():
-        while True:
-            data2 = s2.recv()
-            nlpbody, localtime2 = msgpack.unpackb(data2, use_list=False)
+                # Print feature vector
+                print(feature_dict[second][frame])
+                #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
 
-            # Get nlp localtime
-            nlptime = localtime2
+                # Sending messages to ROS
+                my_message = json.dumps(feature_dict[second][frame])
+                my_message = "interpreter;data;" + my_message + "$"
 
-            # First get which second
-            second = int(nlptime)
+                # Encode the string to utf-8 and write it to the pipe defined above
+                os.write(pipe_out, my_message.encode("utf-8"))
+                sys.stdout.flush()
 
-            # Get decimals to decide which frame
-            frame = int(math.modf(nlptime)[0] * 50)
+                # Remove value from dict
+                feature_dict[second].pop(frame, None)
 
-            # Put in dictionary
-            feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
-            feature_dict[second][frame]['P1N'] = nlpbody['language']['nouns']
-            feature_dict[second][frame]['P1A'] = nlpbody['language']['adjectives']
-            feature_dict[second][frame]['P1V'] = nlpbody['language']['verbs']
-            feature_dict[second][frame]['P1D'] = nlpbody['language']['determiners']
-            feature_dict[second][frame]['P1P'] = nlpbody['language']['pronouns']
-            feature_dict[second][frame]['P1F'] = nlpbody['language']['feedback']
-            feature_dict[second][frame]['P1ASR'] = [nlpbody['speech']]
+        t2 = Thread(target = runB)
+        t2.setDaemon(True)
+        t2.start()
+        #s2.close()
 
-            # Print feature vector
-            print(feature_dict[second][frame])
-            #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+    mq = MessageQueue('feature-processor')
+    mq.bind_queue(exchange='processor', routing_key=settings['messaging']['mocaptobii_processing'], callback=mocapcallback)
+    mq.bind_queue(exchange='processor', routing_key=settings['messaging']['nlp_data'], callback=nlpcallback)
 
-            # Sending messages to ROS
-            my_message = json.dumps(feature_dict[second][frame])
-            my_message = "interpreter;data;" + my_message + "$"
+    mq.listen()
 
-            # Encode the string to utf-8 and write it to the pipe defined above
-            os.write(pipe_out, my_message.encode("utf-8"))
-            sys.stdout.flush()
+    zmq_socket.send(b'CLOSE')
+    zmq_socket.close()
 
-            # Remove value from dict
-            feature_dict[second].pop(frame, None)
-
-    t2 = Thread(target = runB)
-    t2.setDaemon(True)
-    t2.start()
-    #s2.close()
-
-mq = MessageQueue('feature-processor')
-mq.bind_queue(exchange='processor', routing_key=settings['messaging']['mocaptobii_processing'], callback=mocapcallback)
-mq.bind_queue(exchange='processor', routing_key=settings['messaging']['nlp_data'], callback=nlpcallback)
-
-mq.listen()
-
-zmq_socket.send(b'CLOSE')
-zmq_socket.close()
-
-# Close the client safely, not always necessary
-client.close() # Tell it to close
-client.join() # Wait for it to close
+    # Close the client safely, not always necessary
+    client.close() # Tell it to close
+    client.join() # Wait for it to close

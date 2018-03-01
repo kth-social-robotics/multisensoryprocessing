@@ -3,7 +3,7 @@
 """
 
 # DEFINE IP
-IP = "130.237.67.214"
+IP = "130.237.67.232"
 
 import platform
 import select

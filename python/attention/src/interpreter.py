@@ -140,7 +140,7 @@ class Interpreter(Process):
         log_msg = [str(data["TS"]), str(self.current_step)]
         del data["TS"]
         log_msg.append(str(data))
-        self._save_as(log_msg, "log.csv")
+        self._save_as(log_msg, "../../logs/feature_log.csv")
 
     def _process_verbal(self, data):
         """ Add the verbal information in the verbal table.
