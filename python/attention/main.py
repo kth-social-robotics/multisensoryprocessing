@@ -1,3 +1,5 @@
+# python3 main.py -s -i
+
 """
 Launch point for the kernel-server.
 Options:

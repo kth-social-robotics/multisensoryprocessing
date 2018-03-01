@@ -1,5 +1,5 @@
 # Get access to tobii live video streaming: rtsp://130.237.67.195:8554/live/eyes or scene
-# websocketd --port=8080 python mocap_gaze.py 1 20
+# websocketd --port=8080 python2 mocap_gaze.py 1 20
 # Start webgl: http://130.237.67.232:8888/webgl/realtimevis/realtime/vs.html?IP=130.237.67.232
 # python mocap_gaze.py 2 20
 # Check number of mocap objects

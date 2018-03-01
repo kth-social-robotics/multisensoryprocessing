@@ -54,6 +54,7 @@ mocap_dict[17]['name'] = 'target14'
 mocap_dict[18]['name'] = 'table1'
 mocap_dict[19]['name'] = 'furhat'
 mocap_dict[20]['name'] = 'calibration'
+mocap_dict[21]['name'] = 'screen'
 
 # Procees input data
 def callback(_mq, get_shifted_time, routing_key, body):
@@ -131,6 +132,8 @@ def callback(_mq, get_shifted_time, routing_key, body):
                 objid = 19
             elif objects['calibration'][0] == rigidbody[3][0]:
                 objid = 20
+            elif objects['screen'][0] == rigidbody[3][0]:
+                objid = 21
 
             mocap_dict[objid]['id'] = rigidbody[0]
             mocap_dict[objid]['position'] = rigidbody[1]
@@ -207,6 +210,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
         sendjson(18)
         sendjson(19)
         sendjson(20)
+        sendjson(21)
     s.close()
 
 mq = MessageQueue('mocap-preprocessor')

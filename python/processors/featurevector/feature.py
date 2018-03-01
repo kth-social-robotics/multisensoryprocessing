@@ -50,6 +50,12 @@ FurhatRangey = (FurhatMaxy - FurhatMiny)
 p1mic = 'mic0'
 p2mic = 'mic3'
 
+# Mocap objects
+glasses_num = 2
+gloves_num = 1
+targets_num = 14
+tables_num = 1
+
 if len(sys.argv) != 3:
     exit('Please supply server IP and agent')
 server_ip = sys.argv[1]
@@ -119,11 +125,6 @@ feature_dict[0][0]['P2GP'] = ['']
 feature_dict[0][0]['P2HL'] = ['']
 feature_dict[0][0]['P2PP'] = ['']
 feature_dict[0][0]['S'] = ''
-
-glasses_num = 2
-gloves_num = 1
-targets_num = 14
-tables_num = 1
 
 #fixfilter = 0
 

@@ -11,12 +11,15 @@ import unicodedata
 import numpy
 from client import Client
 import math
+from datetime import datetime
 
+# Server IP
 IP = "130.237.67.232"
 
+# Define window
 master = Tk()
-master.minsize(300,100)
-master.geometry("320x100")
+master.minsize(500,300)
+master.geometry("520x300")
 
 # Create pipes to communicate to the client process
 pipe_in_client, pipe_out = os.pipe()
@@ -34,22 +37,24 @@ client = Client(client_type=my_client_type,
 # Start the client-process
 client.start()
 
+# Define dictionary for message
 feature_dict = defaultdict(lambda : defaultdict(dict))
 
+# Callback when the button is pressed
 def callback():
-    print("Next")
-    # Sending messages to the server
-    #feature_dict[0][0]['TS'] = ''
+    print("Next step.")
+    # Define time stamp
+    time = datetime.now()
+    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}\t".format(\
+                  time.year, time.month, time.day, time.hour, time.minute, time.second,\
+                  str(time.microsecond)[:3])
 
-    feature_dict[0][0]['TS'] = '101010'
-    feature_dict[0][0]['S'] = 'S'
+    feature_dict[0][0]['TS'] = time_stamp
+    feature_dict[0][0]['S'] = 'Sn'
 
     # Sending messages to the server
     my_message = json.dumps(feature_dict[0][0])
 
-
-
-    #my_message = json.dumps('S')
     my_message = "interpreter;data;" + my_message + "$"
     # Encode the string to utf-8 and write it to the pipe defined above
     os.write(pipe_out, my_message.encode("utf-8"))

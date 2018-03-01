@@ -35,11 +35,13 @@ Starting sequence:
     -Define server IP on server and client files and feature bat file
     +++-Get log files
     +++-Define objects and tables
+-Instructions (mac):
+    -Define server IP
 +++-Processors sh (mac):
     +++-Feature Vector sh (mac)
         -Define Furhat IP and coordinate ranges
         -Define mic for P1 and P2
-        -Define number of objects and tables
+        -Define number of targets and tables
     -NLP processor sh (mac)
     -Mocap-gaze processor sh (mac)
         -Define Tobii markers on Matlab
