@@ -1,3 +1,3 @@
 #!/bin/bash
 cd /Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/python/processors/nlp
-python nlp.py
+python2 nlp.py

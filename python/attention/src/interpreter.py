@@ -32,7 +32,7 @@ class Interpreter(Process):
         self.client.start()
 
         # Read the label file into a list of lists
-        data_file = "label_sequence.csv"
+        data_file = "../../logs/label_sequence.csv"
         with open(data_file, newline='') as csvfile:
             label_sequence = list(csv.reader(csvfile, delimiter=";"))
         self.label_sequence = []
@@ -170,7 +170,7 @@ class Interpreter(Process):
         # Format the attention table (dict) into a list of lists and save it.
         att_list = self._dict_of_dicts_to_list_of_lists(self.attention_table,
                                                         ['L'] + self.gaze_keys)
-        self._save_as(att_list, "attention_table_{}.csv".format(self.current_step))
+        self._save_as(att_list, "../../logs/attention_table_{}.csv".format(self.current_step))
 
         # Add the verbal information to the verbal_table.
         self.verbal_table[self.current_step] = self.current_verbal_dict
@@ -185,7 +185,7 @@ class Interpreter(Process):
             ver_list = self._dict_of_dicts_to_list_of_lists(self.verbal_table,
                                                             self.verb_keys)
             ver_list[0][0] = "Step"
-            self._save_as(ver_list, "language_table.csv")
+            self._save_as(ver_list, "../../logs/language_table.csv")
             self.client.close()
             sys.exit()
 
