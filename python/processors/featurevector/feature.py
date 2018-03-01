@@ -30,6 +30,23 @@ from time import sleep
 FURHAT_IP = '130.237.67.172' # Furhat IP address
 FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
 
+# Mocap and Furhat Ranges X
+MocapMaxx = -1.82
+MocapMinx = -3.23
+MocapRangex = (MocapMaxx - MocapMinx)
+FurhatMaxx = 3
+FurhatMinx = -2
+FurhatRangex = (FurhatMaxx - FurhatMinx)
+
+# Mocap and Furhat Ranges Y
+MocapMaxy = 1.70
+MocapMiny = 0.75
+MocapRangey = (MocapMaxy - MocapMiny)
+FurhatMaxy = 1
+FurhatMiny = -1
+FurhatRangey = (FurhatMaxy - FurhatMiny)
+
+# Microphones
 p1mic = 'mic0'
 p2mic = 'mic3'
 
@@ -99,7 +116,8 @@ feature_dict[0][0]['P1GL'] = ['']
 feature_dict[0][0]['P2GL'] = ['']
 feature_dict[0][0]['P1GP'] = ['']
 feature_dict[0][0]['P2GP'] = ['']
-feature_dict[0][0]['P2H'] = ['']
+feature_dict[0][0]['P2HL'] = ['']
+feature_dict[0][0]['P2PP'] = ['']
 feature_dict[0][0]['S'] = ''
 
 glasses_num = 2
@@ -113,9 +131,9 @@ tables_num = 1
 with connect_to_iristk(FURHAT_IP) as furhat_client:
     # Introduce Furhat
     furhat_client.say(FURHAT_AGENT_NAME, 'Hello there. I am here to learn how you are putting this furniture together.')
-    sleep(0.1)
-    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':0.00,'y':0.00,'z':2.00})
-    sleep(0.1)
+    #sleep(0.01)
+    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P2 position
+    #sleep(0.01)
 
     # Log Furhat events
     def event_callback(event):
@@ -170,10 +188,10 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                     # Get objects
                     # Hands
                     for x in range(0, gloves_num):
-                        if 'mocap_hand' + str(x + 1) + 'l' in mocapbody:
-                            handl[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['z']))
-                        if 'mocap_hand' + str(x + 1) + 'r' in mocapbody:
-                            handr[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['z']))
+                        if 'mocap_hand' + str(x + 2) + 'l' in mocapbody:
+                            handl[x] = numpy.array((mocapbody['mocap_hand' + str(x + 2) + 'l']['position']['x'], mocapbody['mocap_hand' + str(x + 2) + 'l']['position']['y'], mocapbody['mocap_hand' + str(x + 2) + 'l']['position']['z']))
+                        if 'mocap_hand' + str(x + 2) + 'r' in mocapbody:
+                            handr[x] = numpy.array((mocapbody['mocap_hand' + str(x + 2) + 'r']['position']['x'], mocapbody['mocap_hand' + str(x + 2) + 'r']['position']['y'], mocapbody['mocap_hand' + str(x + 2) + 'r']['position']['z']))
                     # Targets
                     for x in range(0, targets_num):
                         if 'mocap_target' + str(x + 1) in mocapbody:
@@ -187,9 +205,6 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                     # Targets
                     dist_tarl = [[0 for x in range(targets_num)] for y in range(gloves_num)]
                     dist_tarr = [[0 for x in range(targets_num)] for y in range(gloves_num)]
-                    # Tables
-                    dist_tabl = [[0 for x in range(tables_num)] for y in range(gloves_num)]
-                    dist_tabr = [[0 for x in range(tables_num)] for y in range(gloves_num)]
 
                     # Calculate distance between hands and targets
                     for x in range(0, gloves_num):
@@ -198,45 +213,16 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                             dist_tarr[x][y] = numpy.linalg.norm(handr[x] - target[y])
                             touchtarget = 100
 
-                            # If less than 20cm put in feature vector
-                            if dist_tarl[x][y] != 0 and dist_tarl[x][y] < 0.20:
+                            # If less than 25cm put in feature vector
+                            if dist_tarl[x][y] != 0 and dist_tarl[x][y] < 0.25:
                                 touchtarget = y
-                            if dist_tarr[x][y] != 0 and dist_tarr[x][y] < 0.20:
+                            if dist_tarr[x][y] != 0 and dist_tarr[x][y] < 0.25:
                                 touchtarget = y
 
                             if touchtarget != 100:
                                 # Put in dictionary
                                 feature_dict[second][frame]['TS'] = str(mocaptime)
-                                feature_dict[second][frame]['P' + str(x + 1) + 'H'] = ['T' + str(y + 1)]
-                                # Print frame
-                                print(feature_dict[second][frame])
-                                # Sending messages to teh server
-                                my_message = json.dumps(feature_dict[second][frame])
-                                my_message = "interpreter;data;" + my_message + "$"
-                                # Encode the string to utf-8 and write it to the pipe defined above
-                                os.write(pipe_out, my_message.encode("utf-8"))
-                                sys.stdout.flush()
-                                # Remove from dict
-                                feature_dict[second].pop(frame, None)
-                                touchtarget = 100
-
-                    # Calculate distance between hands and tables
-                    for x in range(0, gloves_num):
-                        for y in range(0, tables_num):
-                            dist_tabl[x][y] = numpy.linalg.norm(handl[x] - table[y])
-                            dist_tabr[x][y] = numpy.linalg.norm(handr[x] - table[y])
-                            touchtable = 100
-
-                            # If less than 30cm put in feature vector
-                            if dist_tabl[x][y] != 0 and dist_tabl[x][y] < 0.30:
-                                touchtable = y
-                            if dist_tabr[x][y] != 0 and dist_tabr[x][y] < 0.30:
-                                touchtable = y
-
-                            if touchtable != 100:
-                                # Put in dictionary
-                                feature_dict[second][frame]['TS'] = str(mocaptime)
-                                feature_dict[second][frame]['P' + str(x + 1) + 'H'] = ['Tab' + str(y + 1)]
+                                feature_dict[second][frame]['P' + str(x + 1) + 'HL'] = ['T' + str(y + 1)]
                                 # Print frame
                                 print(feature_dict[second][frame])
                                 # Sending messages to the server
@@ -247,7 +233,19 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                                 sys.stdout.flush()
                                 # Remove from dict
                                 feature_dict[second].pop(frame, None)
-                                touchtable = 100
+                                touchtarget = 100
+
+                                # Furhat gaze at object holded
+                                # Calculate Furhat gaze values based on Mocap object location values
+                                MocapValuex = target[y][0]
+                                FurhatValuex = (((MocapValuex - MocapMinx) * FurhatRangex) / MocapRangex) + FurhatMinx
+                                MocapValuey = target[y][1]
+                                FurhatValuey = (((MocapValuey - MocapMiny) * FurhatRangey) / MocapRangey) + FurhatMiny
+
+                                furhat_client.gaze(FURHAT_AGENT_NAME, {'x': FurhatValuex, 'y': FurhatValuey,'z': 2.00})
+                                #sleep(0.001)
+
+                    # aaa
 
                     # Gaze Hits
                     # Call Matlab script to calculate gazehits
@@ -381,7 +379,13 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                 # Furhat react to P1 speech
                 if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
                     furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
-                    sleep(0.1)
+                    #sleep(0.01)
+
+                # Furhat look at person speaking
+                if nlpbody['mic'] == p1mic:
+                    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P1 position
+                elif nlpbody['mic'] == p2mic:
+                    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P2 position
 
                 # Print feature vector
                 print(feature_dict[second][frame])

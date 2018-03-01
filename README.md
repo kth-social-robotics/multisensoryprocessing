@@ -37,7 +37,7 @@ Starting sequence:
     +++-Define objects and tables
 +++-Processors sh (mac):
     +++-Feature Vector sh (mac)
-        -Define Furhat IP and coordinates
+        -Define Furhat IP and coordinate ranges
         -Define mic for P1 and P2
         -Define number of objects and tables
     -NLP processor sh (mac)
