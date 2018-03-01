@@ -2,7 +2,6 @@ import json
 import uuid
 from threading import Thread
 
-
 class IristkClient(object):
 
     def __init__(self, client, client_name, callback=None):
@@ -26,6 +25,7 @@ class IristkClient(object):
             data += packet.decode()
             if '\n' in data:
                 data = data.replace('\n', '')
+                data = json.dumps(data)
                 try:
                     json_data = json.loads(data)
                     callback(json_data)
