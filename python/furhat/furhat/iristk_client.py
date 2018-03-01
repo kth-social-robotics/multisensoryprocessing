@@ -55,7 +55,7 @@ class IristkClient(object):
     def gesture(self, agent, gesture_name):
         self._send_event('action.gesture', agent, {'name': gesture_name})
 
-    def say(self, agent, text, audio_file=None, abort=True):
+    def say(self, agent, text, audio_file=None, abort=False):
         event_data = {'text': text, 'abort': abort}
         if audio_file:
             event_data['audio'] = audio_file
