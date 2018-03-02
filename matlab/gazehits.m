@@ -2,7 +2,7 @@
 % ASSIGN OBJECTS
 
 function [data] = gazehits(jsonfile, agent, glasses_num, targets_num, tables_num)
-% Parses processed json file and reproduces gaze hits
+% Parses processed json file and reproduces gaze hits and angles
 
 % Define a threshold around head mid point (20cm)
 head_radius = 0.2;
@@ -29,24 +29,42 @@ end
 % Initialise gaze hits
 gaze_hits_p2p1 = 0;
 gaze_hits_t1p1 = 0;
-gaze_hits_t2p1 = 0;
 gaze_hits_fp1 = 0;
 gaze_hits_cp1 = 0;
+gaze_hits_sp1 = 0;
 gaze_hits_o1p1 = 0;
 gaze_hits_o2p1 = 0;
 gaze_hits_o3p1 = 0;
 gaze_hits_o4p1 = 0;
 gaze_hits_o5p1 = 0;
+gaze_hits_o6p1 = 0;
+gaze_hits_o7p1 = 0;
+gaze_hits_o8p1 = 0;
+gaze_hits_o9p1 = 0;
+gaze_hits_o10p1 = 0;
+gaze_hits_o11p1 = 0;
+gaze_hits_o12p1 = 0;
+gaze_hits_o13p1 = 0;
+gaze_hits_o14p1 = 0;
 gaze_hits_p1p2 = 0;
 gaze_hits_t1p2 = 0;
-gaze_hits_t2p2 = 0;
 gaze_hits_fp2 = 0;
 gaze_hits_cp2 = 0;
+gaze_hits_sp2 = 0;
 gaze_hits_o1p2 = 0;
 gaze_hits_o2p2 = 0;
 gaze_hits_o3p2 = 0;
 gaze_hits_o4p2 = 0;
 gaze_hits_o5p2 = 0;
+gaze_hits_o6p2 = 0;
+gaze_hits_o7p2 = 0;
+gaze_hits_o8p2 = 0;
+gaze_hits_o9p2 = 0;
+gaze_hits_o10p2 = 0;
+gaze_hits_o11p2 = 0;
+gaze_hits_o12p2 = 0;
+gaze_hits_o13p2 = 0;
+gaze_hits_o14p2 = 0;
 
 % Check that tobii glasses 1 exist
 if isfield(jsonfile, 'mocap_glasses1')
@@ -98,15 +116,7 @@ if isfield(jsonfile, 'mocap_table1')
     table1 = [t1x, t1z, t1y];
 end
 
-% Get table 2 position
-if isfield(jsonfile, 'mocap_table2')
-    t2x = jsonfile.mocap_table2.position.x;
-    t2y = jsonfile.mocap_table2.position.y;
-    t2z = jsonfile.mocap_table2.position.z;
-    table2 = [t2x, t2z, t2y];
-end
-
-% Get furhat and calibration
+% Get furhat and calibration and screen
 % Get furhat position
 if isfield(jsonfile, 'mocap_furhat')
     fx = jsonfile.mocap_furhat.position.x;
@@ -121,6 +131,14 @@ if isfield(jsonfile, 'mocap_calibration')
     cy = jsonfile.mocap_calibration.position.y;
     cz = jsonfile.mocap_calibration.position.z;
     calibration = [cx, cz, cy];
+end
+
+% Get screen position
+if isfield(jsonfile, 'mocap_screen')
+    sx = jsonfile.mocap_screen.position.x;
+    sy = jsonfile.mocap_screen.position.y;
+    sz = jsonfile.mocap_screen.position.z;
+    screen = [sx, sz, sy];
 end
 
 % Get objects
@@ -164,6 +182,78 @@ if isfield(jsonfile, 'mocap_target5')
     object5 = [o5x, o5z, o5y];
 end
 
+% Get object 6 position
+if isfield(jsonfile, 'mocap_target6')
+    o6x = jsonfile.mocap_target6.position.x;
+    o6y = jsonfile.mocap_target6.position.y;
+    o6z = jsonfile.mocap_target6.position.z;
+    object6 = [o6x, o6z, o6y];
+end
+
+% Get object 7 position
+if isfield(jsonfile, 'mocap_target7')
+    o7x = jsonfile.mocap_target7.position.x;
+    o7y = jsonfile.mocap_target7.position.y;
+    o7z = jsonfile.mocap_target7.position.z;
+    object7 = [o7x, o7z, o7y];
+end
+
+% Get object 8 position
+if isfield(jsonfile, 'mocap_target8')
+    o8x = jsonfile.mocap_target8.position.x;
+    o8y = jsonfile.mocap_target8.position.y;
+    o8z = jsonfile.mocap_target8.position.z;
+    object8 = [o8x, o8z, o8y];
+end
+
+% Get object 9 position
+if isfield(jsonfile, 'mocap_target9')
+    o9x = jsonfile.mocap_target9.position.x;
+    o9y = jsonfile.mocap_target9.position.y;
+    o9z = jsonfile.mocap_target9.position.z;
+    object9 = [o9x, o9z, o9y];
+end
+
+% Get object 10 position
+if isfield(jsonfile, 'mocap_target10')
+    o10x = jsonfile.mocap_target10.position.x;
+    o10y = jsonfile.mocap_target10.position.y;
+    o10z = jsonfile.mocap_target10.position.z;
+    object10 = [o10x, o10z, o10y];
+end
+
+% Get object 11 position
+if isfield(jsonfile, 'mocap_target11')
+    o11x = jsonfile.mocap_target11.position.x;
+    o11y = jsonfile.mocap_target11.position.y;
+    o11z = jsonfile.mocap_target11.position.z;
+    object11 = [o11x, o11z, o11y];
+end
+
+% Get object 12 position
+if isfield(jsonfile, 'mocap_target12')
+    o12x = jsonfile.mocap_target12.position.x;
+    o12y = jsonfile.mocap_target12.position.y;
+    o12z = jsonfile.mocap_target12.position.z;
+    object12 = [o12x, o12z, o12y];
+end
+
+% Get object 13 position
+if isfield(jsonfile, 'mocap_target13')
+    o13x = jsonfile.mocap_target13.position.x;
+    o13y = jsonfile.mocap_target13.position.y;
+    o13z = jsonfile.mocap_target13.position.z;
+    object13 = [o13x, o13z, o13y];
+end
+
+% Get object 14 position
+if isfield(jsonfile, 'mocap_target14')
+    o14x = jsonfile.mocap_target14.position.x;
+    o14y = jsonfile.mocap_target14.position.y;
+    o14z = jsonfile.mocap_target14.position.z;
+    object14 = [o14x, o14z, o14y];
+end
+
 if strcmp(agent, 'yumi')
     % Get table marker properties
     table1marker1x = jsonfile.mocap_table1.marker1.x;
@@ -200,14 +290,6 @@ if isfield(jsonfile, 'tobii_glasses1') & isfield(jsonfile, 'mocap_glasses1')
         gaze_hits_t1p1 = gaze_ang_t1p1 <= collision_ang_t1p1;
     end
 
-    % Calculate hits for P1 to Table 2
-    if isfield(jsonfile, 'mocap_table2')
-        dist_t2p1 = calc_norm(table2-glassesp1);
-        collision_ang_t2p1 = atan(object_radius./dist_t2p1);
-        gaze_ang_t2p1 = calc_angle(gaze_vecp1-glassesp1, table2-glassesp1);
-        gaze_hits_t2p1 = gaze_ang_t2p1 <= collision_ang_t2p1;
-    end
-
     % Calculate intersection points for P1 to Table 1
     if strcmp(agent, 'yumi')
         tableplane = createPlane([table1marker1x table1marker1y table1marker1z], [table1marker2x table1marker2y table1marker2z], [table1marker3x table1marker3y table1marker3z]);
@@ -221,9 +303,6 @@ if isfield(jsonfile, 'tobii_glasses1') & isfield(jsonfile, 'mocap_glasses1')
     % Write table values for P1
     if gaze_hits_t1p1 == 1
         mocapfield{1} = 'Tab1';
-    end
-    if gaze_hits_t2p1 == 1
-        mocapfield{1} = 'Tab2';
     end
 
     % Calculate hits for P1 to Furhat
@@ -241,13 +320,24 @@ if isfield(jsonfile, 'tobii_glasses1') & isfield(jsonfile, 'mocap_glasses1')
         gaze_ang_cp1 = calc_angle(gaze_vecp1-glassesp1, calibration-glassesp1);
         gaze_hits_cp1 = gaze_ang_cp1 <= collision_ang_cp1;
     end
+    
+    % Calculate hits for P1 to screen
+    if isfield(jsonfile, 'mocap_screen')
+        dist_sp1 = calc_norm(screen-glassesp1);
+        collision_ang_sp1 = atan(object_radius./dist_sp1);
+        gaze_ang_sp1 = calc_angle(gaze_vecp1-glassesp1, screen-glassesp1);
+        gaze_hits_sp1 = gaze_ang_sp1 <= collision_ang_sp1;
+    end
 
-    % Write furhat and calibration values for P1
+    % Write furhat and calibration and screen values for P1
     if gaze_hits_fp1 == 1
         mocapfield{1} = 'Furhat';
     end
     if gaze_hits_cp1 == 1
         mocapfield{1} = 'Calibration';
+    end
+    if gaze_hits_sp1 == 1
+        mocapfield{1} = 'Screen';
     end
 
     % Calculate hits for P1 to O1
@@ -309,6 +399,117 @@ if isfield(jsonfile, 'tobii_glasses1') & isfield(jsonfile, 'mocap_glasses1')
             mocapfield{1} = 'T5';
         end
     end
+    
+    % Calculate hits for P1 to O6
+    if isfield(jsonfile, 'mocap_target6')
+        dist_o6p1 = calc_norm(object6-glassesp1);
+        collision_ang_o6p1 = atan(object_radius./dist_o6p1);
+        gaze_ang_o6p1 = calc_angle(gaze_vecp1-glassesp1, object6-glassesp1);
+        gaze_hits_o6p1 = gaze_ang_o6p1 <= collision_ang_o6p1;
+
+        if gaze_hits_o6p1 == 1
+            mocapfield{1} = 'T6';
+        end
+    end
+    
+    % Calculate hits for P1 to O7
+    if isfield(jsonfile, 'mocap_target7')
+        dist_o7p1 = calc_norm(object7-glassesp1);
+        collision_ang_o7p1 = atan(object_radius./dist_o7p1);
+        gaze_ang_o7p1 = calc_angle(gaze_vecp1-glassesp1, object7-glassesp1);
+        gaze_hits_o7p1 = gaze_ang_o7p1 <= collision_ang_o7p1;
+
+        if gaze_hits_o7p1 == 1
+            mocapfield{1} = 'T7';
+        end
+    end
+    
+    % Calculate hits for P1 to O8
+    if isfield(jsonfile, 'mocap_target8')
+        dist_o8p1 = calc_norm(object8-glassesp1);
+        collision_ang_o8p1 = atan(object_radius./dist_o8p1);
+        gaze_ang_o8p1 = calc_angle(gaze_vecp1-glassesp1, object8-glassesp1);
+        gaze_hits_o8p1 = gaze_ang_o8p1 <= collision_ang_o8p1;
+
+        if gaze_hits_o8p1 == 1
+            mocapfield{1} = 'T8';
+        end
+    end
+    
+    % Calculate hits for P1 to O9
+    if isfield(jsonfile, 'mocap_target9')
+        dist_o9p1 = calc_norm(object9-glassesp1);
+        collision_ang_o9p1 = atan(object_radius./dist_o9p1);
+        gaze_ang_o9p1 = calc_angle(gaze_vecp1-glassesp1, object9-glassesp1);
+        gaze_hits_o9p1 = gaze_ang_o9p1 <= collision_ang_o9p1;
+
+        if gaze_hits_o9p1 == 1
+            mocapfield{1} = 'T9';
+        end
+    end
+    
+    % Calculate hits for P1 to O10
+    if isfield(jsonfile, 'mocap_target10')
+        dist_o10p1 = calc_norm(object10-glassesp1);
+        collision_ang_o10p1 = atan(object_radius./dist_o10p1);
+        gaze_ang_o10p1 = calc_angle(gaze_vecp1-glassesp1, object10-glassesp1);
+        gaze_hits_o10p1 = gaze_ang_o10p1 <= collision_ang_o10p1;
+
+        if gaze_hits_o10p1 == 1
+            mocapfield{1} = 'T10';
+        end
+    end
+    
+    % Calculate hits for P1 to O11
+    if isfield(jsonfile, 'mocap_target11')
+        dist_o11p1 = calc_norm(object11-glassesp1);
+        collision_ang_o11p1 = atan(object_radius./dist_o11p1);
+        gaze_ang_o11p1 = calc_angle(gaze_vecp1-glassesp1, object11-glassesp1);
+        gaze_hits_o11p1 = gaze_ang_o11p1 <= collision_ang_o11p1;
+
+        if gaze_hits_o11p1 == 1
+            mocapfield{1} = 'T11';
+        end
+    end
+    
+    % Calculate hits for P1 to O12
+    if isfield(jsonfile, 'mocap_target12')
+        dist_o12p1 = calc_norm(object12-glassesp1);
+        collision_ang_o12p1 = atan(object_radius./dist_o12p1);
+        gaze_ang_o12p1 = calc_angle(gaze_vecp1-glassesp1, object12-glassesp1);
+        gaze_hits_o12p1 = gaze_ang_o12p1 <= collision_ang_o12p1;
+
+        if gaze_hits_o12p1 == 1
+            mocapfield{1} = 'T12';
+        end
+    end
+    
+    % Calculate hits for P1 to O13
+    if isfield(jsonfile, 'mocap_target13')
+        dist_o13p1 = calc_norm(object13-glassesp1);
+        collision_ang_o13p1 = atan(object_radius./dist_o13p1);
+        gaze_ang_o13p1 = calc_angle(gaze_vecp1-glassesp1, object13-glassesp1);
+        gaze_hits_o13p1 = gaze_ang_o13p1 <= collision_ang_o13p1;
+
+        if gaze_hits_o13p1 == 1
+            mocapfield{1} = 'T13';
+        end
+    end
+    
+    % Calculate hits for P1 to O14
+    if isfield(jsonfile, 'mocap_target14')
+        dist_o14p1 = calc_norm(object14-glassesp1);
+        collision_ang_o14p1 = atan(object_radius./dist_o14p1);
+        gaze_ang_o14p1 = calc_angle(gaze_vecp1-glassesp1, object14-glassesp1);
+        gaze_hits_o14p1 = gaze_ang_o14p1 <= collision_ang_o14p1;
+
+        if gaze_hits_o14p1 == 1
+            mocapfield{1} = 'T14';
+        end
+    end
+    
+    % Export gaze angle
+    mocapfield{3} = [gaze_ang_o1p1, gaze_ang_o2p1, gaze_ang_o3p1, gaze_ang_o4p1, gaze_ang_o5p1, gaze_ang_o6p1, gaze_ang_o7p1, gaze_ang_o8p1, gaze_ang_o9p1, gaze_ang_o10p1, gaze_ang_o11p1, gaze_ang_o12p1, gaze_ang_o13p1, gaze_ang_o14p1];
 end
 
 % P2

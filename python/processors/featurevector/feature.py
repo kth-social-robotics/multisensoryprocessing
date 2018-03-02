@@ -331,6 +331,8 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         # Remove from dict
                         feature_dict[second].pop(frame, None)
 
+                    # aaa
+
         t1 = Thread(target = runA)
         t1.setDaemon(True)
         t1.start()

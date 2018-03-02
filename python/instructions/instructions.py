@@ -26,7 +26,7 @@ pipe_in_client, pipe_out = os.pipe()
 pipe_in, pipe_out_client = os.pipe()
 
 # Create a "name" for the client, so that other clients can access by that name
-my_client_type = "the_architecture"
+my_client_type = "the_instructions"
 
 # Create a client object to communicate with the server
 client = Client(client_type=my_client_type,
