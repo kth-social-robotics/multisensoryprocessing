@@ -48,6 +48,20 @@ gaze_hits_cp2 = 0;
 gaze_hits_sp2 = 0;
 
 % Initialise gaze angles
+gaze_ang_o1p1 = 0;
+gaze_ang_o2p1 = 0;
+gaze_ang_o3p1 = 0;
+gaze_ang_o4p1 = 0;
+gaze_ang_o5p1 = 0;
+gaze_ang_o6p1 = 0;
+gaze_ang_o7p1 = 0;
+gaze_ang_o8p1 = 0;
+gaze_ang_o9p1 = 0;
+gaze_ang_o10p1 = 0;
+gaze_ang_o11p1 = 0;
+gaze_ang_o12p1 = 0;
+gaze_ang_o13p1 = 0;
+gaze_ang_o14p1 = 0;
 gaze_ang_o1p2 = 0;
 gaze_ang_o2p2 = 0;
 gaze_ang_o3p2 = 0;

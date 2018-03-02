@@ -246,20 +246,26 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                                 MocapValuey = target[y][1]
                                 FurhatValuey = (((MocapValuey - MocapMiny) * FurhatRangey) / MocapRangey) + FurhatMiny
 
-                                furhat_client.gaze(FURHAT_AGENT_NAME, {'x': FurhatValuex, 'y': FurhatValuey,'z': 2.00})
-                                #sleep(0.001)
+                                # Check frame and gaze every 10 frames
+                                if frame % 10 == 0:
+                                    furhat_client.gaze(FURHAT_AGENT_NAME, {'x': FurhatValuex, 'y': FurhatValuey,'z': 2.00})
+                                    #sleep(0.001)
 
                     # aaa
 
                     # Gaze Hits
-                    # Call Matlab script to calculate gazehits
+                    # Call Matlab script to calculate gaze hits and angles and pointing hits and angles
                     gaze_hits = mateng.gazehits(mocapbody, agent, glasses_num, targets_num, tables_num)
-                    print('LEFT',gaze_hits[4])
-                    print(gaze_hits[6])
-                    print('RIGHT',gaze_hits[5])
-                    print(gaze_hits[7])
+                    # gaze_hits[0] - P1GL
+                    # gaze_hits[1] - P2GL
+                    # gaze_hits[2] - P1GA
+                    # gaze_hits[3] - P2GA
+                    # gaze_hits[4] - P2PLL
+                    # gaze_hits[5] - P2PRL
+                    # gaze_hits[6] - P2PLA
+                    # gaze_hits[7] - P2PRA
 
-                    # Yumi Table
+                    # Gaze on Yumi Table
                     if agent == 'yumi':
                         # Vision system point bottom right: x = 0.65, y = 0.34
                         # Mocap system point bottom right: x = -2.81, z = 4.19
@@ -288,11 +294,11 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                             # Remove from dict
                             feature_dict[second].pop(frame, None)
 
-                    # Glasses 1
+                    # Glasses 1 Gaze Label
                     if gaze_hits[0] != ['']:
                         # Put in dictionary
                         feature_dict[second][frame]['TS'] = str(mocaptime)
-                        feature_dict[second][frame]['P1G'] = [gaze_hits[0]]
+                        feature_dict[second][frame]['P1GL'] = [gaze_hits[0]]
 
                         # # Count and filter by fixation (5 frames = 100ms, 10 frames = 200ms)
                         # for x in range(1, 10):
@@ -320,10 +326,11 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         # Remove from dict
                         feature_dict[second].pop(frame, None)
 
+                    # Glasses 2 Gaze Label
                     if gaze_hits[1] != ['']:
                         # Put in dictionary
                         feature_dict[second][frame]['TS'] = str(mocaptime)
-                        feature_dict[second][frame]['P2G'] = [gaze_hits[1]]
+                        feature_dict[second][frame]['P2GL'] = [gaze_hits[1]]
 
                         # Print frame
                         print(feature_dict[second][frame])
@@ -337,6 +344,73 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
                         # Remove from dict
                         feature_dict[second].pop(frame, None)
+
+                    # Hand Left 2 Point Label
+                    if gaze_hits[4] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P2PLL'] = [gaze_hits[4]]
+
+                        # Print frame
+                        print(feature_dict[second][frame])
+
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
+
+                        # Remove from dict
+                        feature_dict[second].pop(frame, None)
+
+                    # Hand Right 2 Point Label
+                    if gaze_hits[5] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P2PLR'] = [gaze_hits[5]]
+
+                        # Print frame
+                        print(feature_dict[second][frame])
+
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
+
+                        # Remove from dict
+                        feature_dict[second].pop(frame, None)
+
+                    # Glasses 1 and 2 Gaze Angles (Probabilities)
+                    np1 = numpy.array(gaze_hits[2])
+                    np2 = numpy.array(gaze_hits[3])
+                    # Put in dictionary
+                    feature_dict[second][frame]['TS'] = str(mocaptime)
+                    feature_dict[second][frame]['P1GP'] = [np1.tolist()]
+                    feature_dict[second][frame]['P2GP'] = [np2.tolist()]
+
+                    # Hands L and R Pointing Angles (Probabilities)
+                    np3 = numpy.array(gaze_hits[6])
+                    np4 = numpy.array(gaze_hits[7])
+                    # Put in dictionary
+                    feature_dict[second][frame]['TS'] = str(mocaptime)
+                    feature_dict[second][frame]['P2PPL'] = [np3.tolist()]
+                    feature_dict[second][frame]['P2PPR'] = [np4.tolist()]
+
+                    # Print frame
+                    #print(feature_dict[second][frame])
+
+                    # Sending messages to the server
+                    my_message = json.dumps(feature_dict[second][frame])
+                    my_message = "interpreter;data;" + my_message + "$"
+                    # Encode the string to utf-8 and write it to the pipe defined above
+                    os.write(pipe_out, my_message.encode("utf-8"))
+                    sys.stdout.flush()
+
+                    # Remove from dict
+                    feature_dict[second].pop(frame, None)
 
                     # aaa
 
