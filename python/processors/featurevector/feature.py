@@ -123,7 +123,10 @@ feature_dict[0][0]['P2GL'] = ['']
 feature_dict[0][0]['P1GP'] = ['']
 feature_dict[0][0]['P2GP'] = ['']
 feature_dict[0][0]['P2HL'] = ['']
-feature_dict[0][0]['P2PP'] = ['']
+feature_dict[0][0]['P2PLL'] = ['']
+feature_dict[0][0]['P2PLR'] = ['']
+feature_dict[0][0]['P2PPL'] = ['']
+feature_dict[0][0]['P2PPR'] = ['']
 feature_dict[0][0]['S'] = ''
 
 #fixfilter = 0
@@ -251,6 +254,10 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                     # Gaze Hits
                     # Call Matlab script to calculate gazehits
                     gaze_hits = mateng.gazehits(mocapbody, agent, glasses_num, targets_num, tables_num)
+                    print('LEFT',gaze_hits[4])
+                    print(gaze_hits[6])
+                    print('RIGHT',gaze_hits[5])
+                    print(gaze_hits[7])
 
                     # Yumi Table
                     if agent == 'yumi':

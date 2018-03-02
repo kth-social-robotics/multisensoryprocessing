@@ -42,6 +42,7 @@ Starting sequence:
         -Define Furhat IP and coordinate ranges
         -Define mic for P1 and P2
         -Define number of targets and tables
+        -Define glasses and hands markers
     -NLP processor sh (mac)
     -Mocap-gaze processor sh (mac)
         -Define Tobii markers on Matlab

@@ -1,4 +1,4 @@
-% ASSIGN THE CORRECT VALUES OF THE MARKERS FOR THE GLASSES
+% ASSIGN THE CORRECT VALUES OF THE MARKERS FOR THE GLASSES AND HANDS
 % ASSIGN OBJECTS
 
 function [data] = gazehits(jsonfile, agent, glasses_num, targets_num, tables_num)
@@ -7,8 +7,11 @@ function [data] = gazehits(jsonfile, agent, glasses_num, targets_num, tables_num
 % Define a threshold around head mid point (20cm)
 head_radius = 0.2;
 
-% Define a threshold around the object (10cm)
+% Define a threshold around the object (10cm) - Gaze
 object_radius = 0.1;
+
+% Define a threshold around the object (15cm) - Pointing
+pobject_radius = 0.15;
 
 % Check if gaze intersects with human or with object
 % First make all fields NULL
@@ -26,52 +29,76 @@ elseif strcmp(agent, 'furhat')
     mocapfield{4} = zeros(targets_num); % P2
 end
 
+% Pointing Targets labels and angles for P2
+mocapfield{5} = {''}; % Label HL
+mocapfield{6} = {''}; % Label HR
+mocapfield{7} = {''}; % Angle HL
+mocapfield{8} = {''}; % Angle HR
+
 % Initialise gaze hits
 gaze_hits_p2p1 = 0;
 gaze_hits_t1p1 = 0;
 gaze_hits_fp1 = 0;
 gaze_hits_cp1 = 0;
 gaze_hits_sp1 = 0;
-gaze_hits_o1p1 = 0;
-gaze_hits_o2p1 = 0;
-gaze_hits_o3p1 = 0;
-gaze_hits_o4p1 = 0;
-gaze_hits_o5p1 = 0;
-gaze_hits_o6p1 = 0;
-gaze_hits_o7p1 = 0;
-gaze_hits_o8p1 = 0;
-gaze_hits_o9p1 = 0;
-gaze_hits_o10p1 = 0;
-gaze_hits_o11p1 = 0;
-gaze_hits_o12p1 = 0;
-gaze_hits_o13p1 = 0;
-gaze_hits_o14p1 = 0;
 gaze_hits_p1p2 = 0;
 gaze_hits_t1p2 = 0;
 gaze_hits_fp2 = 0;
 gaze_hits_cp2 = 0;
 gaze_hits_sp2 = 0;
-gaze_hits_o1p2 = 0;
-gaze_hits_o2p2 = 0;
-gaze_hits_o3p2 = 0;
-gaze_hits_o4p2 = 0;
-gaze_hits_o5p2 = 0;
-gaze_hits_o6p2 = 0;
-gaze_hits_o7p2 = 0;
-gaze_hits_o8p2 = 0;
-gaze_hits_o9p2 = 0;
-gaze_hits_o10p2 = 0;
-gaze_hits_o11p2 = 0;
-gaze_hits_o12p2 = 0;
-gaze_hits_o13p2 = 0;
-gaze_hits_o14p2 = 0;
+
+% Initialise gaze angles
+gaze_ang_o1p2 = 0;
+gaze_ang_o2p2 = 0;
+gaze_ang_o3p2 = 0;
+gaze_ang_o4p2 = 0;
+gaze_ang_o5p2 = 0;
+gaze_ang_o6p2 = 0;
+gaze_ang_o7p2 = 0;
+gaze_ang_o8p2 = 0;
+gaze_ang_o9p2 = 0;
+gaze_ang_o10p2 = 0;
+gaze_ang_o11p2 = 0;
+gaze_ang_o12p2 = 0;
+gaze_ang_o13p2 = 0;
+gaze_ang_o14p2 = 0;
+
+% Initialise pointing angles
+pointl_ang_o1p2 = 0;
+pointl_ang_o2p2 = 0;
+pointl_ang_o3p2 = 0;
+pointl_ang_o4p2 = 0;
+pointl_ang_o5p2 = 0;
+pointl_ang_o6p2 = 0;
+pointl_ang_o7p2 = 0;
+pointl_ang_o8p2 = 0;
+pointl_ang_o9p2 = 0;
+pointl_ang_o10p2 = 0;
+pointl_ang_o11p2 = 0;
+pointl_ang_o12p2 = 0;
+pointl_ang_o13p2 = 0;
+pointl_ang_o14p2 = 0;
+pointr_ang_o1p2 = 0;
+pointr_ang_o2p2 = 0;
+pointr_ang_o3p2 = 0;
+pointr_ang_o4p2 = 0;
+pointr_ang_o5p2 = 0;
+pointr_ang_o6p2 = 0;
+pointr_ang_o7p2 = 0;
+pointr_ang_o8p2 = 0;
+pointr_ang_o9p2 = 0;
+pointr_ang_o10p2 = 0;
+pointr_ang_o11p2 = 0;
+pointr_ang_o12p2 = 0;
+pointr_ang_o13p2 = 0;
+pointr_ang_o14p2 = 0;
 
 % Check that tobii glasses 1 exist
 if isfield(jsonfile, 'mocap_glasses1')
-    % Get P1 glasses position
-    gp1x = (jsonfile.mocap_glasses1.marker2.x + jsonfile.mocap_glasses1.marker4.x) / 2;
-    gp1y = (jsonfile.mocap_glasses1.marker2.y + jsonfile.mocap_glasses1.marker4.y) / 2;
-    gp1z = (jsonfile.mocap_glasses1.marker2.z + jsonfile.mocap_glasses1.marker4.z) / 2;
+    % Get P1 glasses position (LEFT AND RIGHT MARKERS)
+    gp1x = (jsonfile.mocap_glasses1.marker1.x + jsonfile.mocap_glasses1.marker3.x) / 2;
+    gp1y = (jsonfile.mocap_glasses1.marker1.y + jsonfile.mocap_glasses1.marker3.y) / 2;
+    gp1z = (jsonfile.mocap_glasses1.marker1.z + jsonfile.mocap_glasses1.marker3.z) / 2;
     glassesp1 = [gp1x, gp1z, gp1y];
 end
 
@@ -88,10 +115,10 @@ if isfield(jsonfile, 'tobii_glasses1')
 end
 
 if isfield(jsonfile, 'mocap_glasses2')
-    % Get P2 glasses position
-    gp2x = (jsonfile.mocap_glasses2.marker3.x + jsonfile.mocap_glasses2.marker2.x) / 2;
-    gp2y = (jsonfile.mocap_glasses2.marker3.y + jsonfile.mocap_glasses2.marker2.y) / 2;
-    gp2z = (jsonfile.mocap_glasses2.marker3.z + jsonfile.mocap_glasses2.marker2.z) / 2;
+    % Get P2 glasses position (LEFT AND RIGHT MARKERS)
+    gp2x = (jsonfile.mocap_glasses2.marker3.x + jsonfile.mocap_glasses2.marker1.x) / 2;
+    gp2y = (jsonfile.mocap_glasses2.marker3.y + jsonfile.mocap_glasses2.marker1.y) / 2;
+    gp2z = (jsonfile.mocap_glasses2.marker3.z + jsonfile.mocap_glasses2.marker1.z) / 2;
     glassesp2 = [gp2x, gp2z, gp2y];
 end
 
@@ -105,6 +132,36 @@ if isfield(jsonfile, 'tobii_glasses2')
         % Get gaze vectors
         gaze_vecp2 = [gpp2x, gpp2z, gpp2y];
     end
+end
+
+% Hands (get back marker for center and front marker for 'gp3'
+if isfield(jsonfile, 'mocap_hand2l')
+    % Get back marker position
+    hp2lx = jsonfile.mocap_hand2l.marker3.x;
+    hp2ly = jsonfile.mocap_hand2l.marker3.y;
+    hp2lz = jsonfile.mocap_hand2l.marker3.z;
+    handlp2 = [hp2lx, hp2lz, hp2ly];
+
+    % Get front marker position
+    hpp2lx = jsonfile.mocap_hand2l.marker2.x;
+    hpp2ly = jsonfile.mocap_hand2l.marker2.y;
+    hpp2lz = jsonfile.mocap_hand2l.marker2.z;
+    pointl_vecp2 = [hpp2lx, hpp2lz, hpp2ly];
+end
+
+% Hands (get back marker for center and front marker for 'gp3'
+if isfield(jsonfile, 'mocap_hand2r')
+    % Get back marker position
+    hp2rx = jsonfile.mocap_hand2r.marker2.x;
+    hp2ry = jsonfile.mocap_hand2r.marker2.y;
+    hp2rz = jsonfile.mocap_hand2r.marker2.z;
+    handrp2 = [hp2rx, hp2rz, hp2ry];
+
+    % Get front marker position
+    hpp2rx = jsonfile.mocap_hand2r.marker3.x;
+    hpp2ry = jsonfile.mocap_hand2r.marker3.y;
+    hpp2rz = jsonfile.mocap_hand2r.marker3.z;
+    pointr_vecp2 = [hpp2rx, hpp2rz, hpp2ry];
 end
 
 % Get tables
@@ -526,21 +583,13 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
             mocapfield{2} = 'P1';
         end
     end
-
+    
     % Calculate hits for P2 to Table 1
     if isfield(jsonfile, 'mocap_table1')
         dist_t1p2 = calc_norm(table1-glassesp2);
         collision_ang_t1p2 = atan(object_radius./dist_t1p2);
         gaze_ang_t1p2 = calc_angle(gaze_vecp2-glassesp2, table1-glassesp2);
         gaze_hits_t1p2 = gaze_ang_t1p2 <= collision_ang_t1p2;
-    end
-
-    % Calculate hits for P2 to Table 2
-    if isfield(jsonfile, 'mocap_table2')
-        dist_t2p2 = calc_norm(table2-glassesp2);
-        collision_ang_t2p2 = atan(object_radius./dist_t2p2);
-        gaze_ang_t2p2 = calc_angle(gaze_vecp2-glassesp2, table2-glassesp2);
-        gaze_hits_t2p2 = gaze_ang_t2p2 <= collision_ang_t2p2;
     end
 
     % Calculate intersection points for P2 to Table 1
@@ -556,9 +605,6 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
     % Write table values for P1
     if gaze_hits_t1p2 == 1
         mocapfield{2} = 'Tab1';
-    end
-    if gaze_hits_t2p2 == 1
-        mocapfield{2} = 'Tab2';
     end
 
     % Calculate hits for P2 to Furhat
@@ -576,6 +622,14 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
         gaze_ang_cp2 = calc_angle(gaze_vecp2-glassesp2, calibration-glassesp2);
         gaze_hits_cp2 = gaze_ang_cp2 <= collision_ang_cp2;
     end
+    
+    % Calculate hits for P2 to screen
+    if isfield(jsonfile, 'mocap_screen')
+        dist_sp2 = calc_norm(screen-glassesp2);
+        collision_ang_sp2 = atan(object_radius./dist_sp2);
+        gaze_ang_sp2 = calc_angle(gaze_vecp2-glassesp2, screen-glassesp2);
+        gaze_hits_sp2 = gaze_ang_sp2 <= collision_ang_sp2;
+    end
 
     % Write furhat and calibration values for P2
     if gaze_hits_fp2 == 1
@@ -583,6 +637,9 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
     end
     if gaze_hits_cp2 == 1
         mocapfield{2} = 'Calibration';
+    end
+    if gaze_hits_sp2 == 1
+        mocapfield{2} = 'Screen';
     end
 
     % Calculate hits for P2 to O1
@@ -644,6 +701,461 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
             mocapfield{2} = 'T5';
         end
     end
+    
+    % Calculate hits for P2 to O6
+    if isfield(jsonfile, 'mocap_target6')
+        dist_o6p2 = calc_norm(object6-glassesp2);
+        collision_ang_o6p2 = atan(object_radius./dist_o6p2);
+        gaze_ang_o6p2 = calc_angle(gaze_vecp2-glassesp2, object6-glassesp2);
+        gaze_hits_o6p2 = gaze_ang_o6p2 <= collision_ang_o6p2;
+
+        if gaze_hits_o6p2 == 1
+            mocapfield{2} = 'T6';
+        end
+    end
+    
+    % Calculate hits for P2 to O7
+    if isfield(jsonfile, 'mocap_target7')
+        dist_o7p2 = calc_norm(object7-glassesp2);
+        collision_ang_o7p2 = atan(object_radius./dist_o7p2);
+        gaze_ang_o7p2 = calc_angle(gaze_vecp2-glassesp2, object7-glassesp2);
+        gaze_hits_o7p2 = gaze_ang_o7p2 <= collision_ang_o7p2;
+
+        if gaze_hits_o7p2 == 1
+            mocapfield{2} = 'T7';
+        end
+    end
+    
+    % Calculate hits for P2 to O8
+    if isfield(jsonfile, 'mocap_target8')
+        dist_o8p2 = calc_norm(object8-glassesp2);
+        collision_ang_o8p2 = atan(object_radius./dist_o8p2);
+        gaze_ang_o8p2 = calc_angle(gaze_vecp2-glassesp2, object8-glassesp2);
+        gaze_hits_o8p2 = gaze_ang_o8p2 <= collision_ang_o8p2;
+
+        if gaze_hits_o8p2 == 1
+            mocapfield{2} = 'T8';
+        end
+    end
+    
+    % Calculate hits for P2 to O9
+    if isfield(jsonfile, 'mocap_target9')
+        dist_o9p2 = calc_norm(object9-glassesp2);
+        collision_ang_o9p2 = atan(object_radius./dist_o9p2);
+        gaze_ang_o9p2 = calc_angle(gaze_vecp2-glassesp2, object9-glassesp2);
+        gaze_hits_o9p2 = gaze_ang_o9p2 <= collision_ang_o9p2;
+
+        if gaze_hits_o9p2 == 1
+            mocapfield{2} = 'T9';
+        end
+    end
+    
+    % Calculate hits for P2 to O10
+    if isfield(jsonfile, 'mocap_target10')
+        dist_o10p2 = calc_norm(object10-glassesp2);
+        collision_ang_o10p2 = atan(object_radius./dist_o10p2);
+        gaze_ang_o10p2 = calc_angle(gaze_vecp2-glassesp2, object10-glassesp2);
+        gaze_hits_o10p2 = gaze_ang_o10p2 <= collision_ang_o10p2;
+
+        if gaze_hits_o10p2 == 1
+            mocapfield{2} = 'T10';
+        end
+    end
+    
+    % Calculate hits for P2 to O11
+    if isfield(jsonfile, 'mocap_target11')
+        dist_o11p2 = calc_norm(object11-glassesp2);
+        collision_ang_o11p2 = atan(object_radius./dist_o11p2);
+        gaze_ang_o11p2 = calc_angle(gaze_vecp2-glassesp2, object11-glassesp2);
+        gaze_hits_o11p2 = gaze_ang_o11p2 <= collision_ang_o11p2;
+
+        if gaze_hits_o11p2 == 1
+            mocapfield{2} = 'T11';
+        end
+    end
+    
+    % Calculate hits for P2 to O12
+    if isfield(jsonfile, 'mocap_target12')
+        dist_o12p2 = calc_norm(object12-glassesp2);
+        collision_ang_o12p2 = atan(object_radius./dist_o12p2);
+        gaze_ang_o12p2 = calc_angle(gaze_vecp2-glassesp2, object12-glassesp2);
+        gaze_hits_o12p2 = gaze_ang_o12p2 <= collision_ang_o12p2;
+
+        if gaze_hits_o12p2 == 1
+            mocapfield{2} = 'T12';
+        end
+    end
+    
+    % Calculate hits for P2 to O13
+    if isfield(jsonfile, 'mocap_target13')
+        dist_o13p2 = calc_norm(object13-glassesp2);
+        collision_ang_o13p2 = atan(object_radius./dist_o13p2);
+        gaze_ang_o13p2 = calc_angle(gaze_vecp2-glassesp2, object13-glassesp2);
+        gaze_hits_o13p2 = gaze_ang_o13p2 <= collision_ang_o13p2;
+
+        if gaze_hits_o13p2 == 1
+            mocapfield{2} = 'T13';
+        end
+    end
+    
+    % Calculate hits for P2 to O14
+    if isfield(jsonfile, 'mocap_target14')
+        dist_o14p2 = calc_norm(object14-glassesp2);
+        collision_ang_o14p2 = atan(object_radius./dist_o14p2);
+        gaze_ang_o14p2 = calc_angle(gaze_vecp2-glassesp2, object14-glassesp2);
+        gaze_hits_o14p2 = gaze_ang_o14p2 <= collision_ang_o14p2;
+
+        if gaze_hits_o14p2 == 1
+            mocapfield{2} = 'T14';
+        end
+    end
+    
+    % Pointing HL
+    % Calculate pointing hits for P2L to O1
+    if isfield(jsonfile, 'mocap_target1')
+        pldist_o1p2 = calc_norm(object1-handlp2);
+        plcollision_ang_o1p2 = atan(pobject_radius./pldist_o1p2);
+        pointl_ang_o1p2 = calc_angle(pointl_vecp2-handlp2, object1-handlp2);
+        pointl_hits_o1p2 = pointl_ang_o1p2 <= plcollision_ang_o1p2;
+
+        if pointl_hits_o1p2 == 1
+            mocapfield{5} = 'TP1';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O2
+    if isfield(jsonfile, 'mocap_target2')
+        pldist_o2p2 = calc_norm(object2-handlp2);
+        plcollision_ang_o2p2 = atan(pobject_radius./pldist_o2p2);
+        pointl_ang_o2p2 = calc_angle(pointl_vecp2-handlp2, object2-handlp2);
+        pointl_hits_o2p2 = pointl_ang_o2p2 <= plcollision_ang_o2p2;
+
+        if pointl_hits_o2p2 == 1
+            mocapfield{5} = 'TP2';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O3
+    if isfield(jsonfile, 'mocap_target3')
+        pldist_o3p2 = calc_norm(object3-handlp2);
+        plcollision_ang_o3p2 = atan(pobject_radius./pldist_o3p2);
+        pointl_ang_o3p2 = calc_angle(pointl_vecp2-handlp2, object3-handlp2);
+        pointl_hits_o3p2 = pointl_ang_o3p2 <= plcollision_ang_o3p2;
+
+        if pointl_hits_o3p2 == 1
+            mocapfield{5} = 'TP3';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O4
+    if isfield(jsonfile, 'mocap_target4')
+        pldist_o4p2 = calc_norm(object4-handlp2);
+        plcollision_ang_o4p2 = atan(pobject_radius./pldist_o4p2);
+        pointl_ang_o4p2 = calc_angle(pointl_vecp2-handlp2, object4-handlp2);
+        pointl_hits_o4p2 = pointl_ang_o4p2 <= plcollision_ang_o4p2;
+
+        if pointl_hits_o4p2 == 1
+            mocapfield{5} = 'TP4';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O5
+    if isfield(jsonfile, 'mocap_target5')
+        pldist_o5p2 = calc_norm(object5-handlp2);
+        plcollision_ang_o5p2 = atan(pobject_radius./pldist_o5p2);
+        pointl_ang_o5p2 = calc_angle(pointl_vecp2-handlp2, object5-handlp2);
+        pointl_hits_o5p2 = pointl_ang_o5p2 <= plcollision_ang_o5p2;
+
+        if pointl_hits_o5p2 == 1
+            mocapfield{5} = 'TP5';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O6
+    if isfield(jsonfile, 'mocap_target6')
+        pldist_o6p2 = calc_norm(object6-handlp2);
+        plcollision_ang_o6p2 = atan(pobject_radius./pldist_o6p2);
+        pointl_ang_o6p2 = calc_angle(pointl_vecp2-handlp2, object6-handlp2);
+        pointl_hits_o6p2 = pointl_ang_o6p2 <= plcollision_ang_o6p2;
+
+        if pointl_hits_o6p2 == 1
+            mocapfield{5} = 'TP6';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O7
+    if isfield(jsonfile, 'mocap_target7')
+        pldist_o7p2 = calc_norm(object7-handlp2);
+        plcollision_ang_o7p2 = atan(pobject_radius./pldist_o7p2);
+        pointl_ang_o7p2 = calc_angle(pointl_vecp2-handlp2, object7-handlp2);
+        pointl_hits_o7p2 = pointl_ang_o7p2 <= plcollision_ang_o7p2;
+
+        if pointl_hits_o7p2 == 1
+            mocapfield{5} = 'TP7';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O8
+    if isfield(jsonfile, 'mocap_target8')
+        pldist_o8p2 = calc_norm(object8-handlp2);
+        plcollision_ang_o8p2 = atan(pobject_radius./pldist_o8p2);
+        pointl_ang_o8p2 = calc_angle(pointl_vecp2-handlp2, object8-handlp2);
+        pointl_hits_o8p2 = pointl_ang_o8p2 <= plcollision_ang_o8p2;
+
+        if pointl_hits_o8p2 == 1
+            mocapfield{5} = 'TP8';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O9
+    if isfield(jsonfile, 'mocap_target9')
+        pldist_o9p2 = calc_norm(object9-handlp2);
+        plcollision_ang_o9p2 = atan(pobject_radius./pldist_o9p2);
+        pointl_ang_o9p2 = calc_angle(pointl_vecp2-handlp2, object9-handlp2);
+        pointl_hits_o9p2 = pointl_ang_o9p2 <= plcollision_ang_o9p2;
+
+        if pointl_hits_o9p2 == 1
+            mocapfield{5} = 'TP9';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O10
+    if isfield(jsonfile, 'mocap_target10')
+        pldist_o10p2 = calc_norm(object10-handlp2);
+        plcollision_ang_o10p2 = atan(pobject_radius./pldist_o10p2);
+        pointl_ang_o10p2 = calc_angle(pointl_vecp2-handlp2, object10-handlp2);
+        pointl_hits_o10p2 = pointl_ang_o10p2 <= plcollision_ang_o10p2;
+
+        if pointl_hits_o10p2 == 1
+            mocapfield{5} = 'TP10';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O11
+    if isfield(jsonfile, 'mocap_target11')
+        pldist_o11p2 = calc_norm(object11-handlp2);
+        plcollision_ang_o11p2 = atan(pobject_radius./pldist_o11p2);
+        pointl_ang_o11p2 = calc_angle(pointl_vecp2-handlp2, object11-handlp2);
+        pointl_hits_o11p2 = pointl_ang_o11p2 <= plcollision_ang_o11p2;
+
+        if pointl_hits_o11p2 == 1
+            mocapfield{5} = 'TP11';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O12
+    if isfield(jsonfile, 'mocap_target12')
+        pldist_o12p2 = calc_norm(object12-handlp2);
+        plcollision_ang_o12p2 = atan(pobject_radius./pldist_o12p2);
+        pointl_ang_o12p2 = calc_angle(pointl_vecp2-handlp2, object12-handlp2);
+        pointl_hits_o12p2 = pointl_ang_o12p2 <= plcollision_ang_o12p2;
+
+        if pointl_hits_o12p2 == 1
+            mocapfield{5} = 'TP12';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O13
+    if isfield(jsonfile, 'mocap_target13')
+        pldist_o13p2 = calc_norm(object13-handlp2);
+        plcollision_ang_o13p2 = atan(pobject_radius./pldist_o13p2);
+        pointl_ang_o13p2 = calc_angle(pointl_vecp2-handlp2, object13-handlp2);
+        pointl_hits_o13p2 = pointl_ang_o13p2 <= plcollision_ang_o13p2;
+
+        if pointl_hits_o13p2 == 1
+            mocapfield{5} = 'TP13';
+        end
+    end
+    
+    % Calculate pointing hits for P2L to O14
+    if isfield(jsonfile, 'mocap_target14')
+        pldist_o14p2 = calc_norm(object14-handlp2);
+        plcollision_ang_o14p2 = atan(pobject_radius./pldist_o14p2);
+        pointl_ang_o14p2 = calc_angle(pointl_vecp2-handlp2, object14-handlp2);
+        pointl_hits_o14p2 = pointl_ang_o14p2 <= plcollision_ang_o14p2;
+
+        if pointl_hits_o14p2 == 1
+            mocapfield{5} = 'TP14';
+        end
+    end
+    
+    % Pointing HR
+    % Calculate pointing hits for P2R to O1
+    if isfield(jsonfile, 'mocap_target1')
+        prdist_o1p2 = calc_norm(object1-handrp2);
+        prcollision_ang_o1p2 = atan(pobject_radius./prdist_o1p2);
+        pointr_ang_o1p2 = calc_angle(pointr_vecp2-handrp2, object1-handrp2);
+        pointr_hits_o1p2 = pointr_ang_o1p2 <= prcollision_ang_o1p2;
+
+        if pointr_hits_o1p2 == 1
+            mocapfield{6} = 'TP1';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O2
+    if isfield(jsonfile, 'mocap_target2')
+        prdist_o2p2 = calc_norm(object2-handrp2);
+        prcollision_ang_o2p2 = atan(pobject_radius./prdist_o2p2);
+        pointr_ang_o2p2 = calc_angle(pointr_vecp2-handrp2, object2-handrp2);
+        pointr_hits_o2p2 = pointr_ang_o2p2 <= prcollision_ang_o2p2;
+
+        if pointr_hits_o2p2 == 1
+            mocapfield{6} = 'TP2';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O3
+    if isfield(jsonfile, 'mocap_target3')
+        prdist_o3p2 = calc_norm(object3-handrp2);
+        prcollision_ang_o3p2 = atan(pobject_radius./prdist_o3p2);
+        pointr_ang_o3p2 = calc_angle(pointr_vecp2-handrp2, object3-handrp2);
+        pointr_hits_o3p2 = pointr_ang_o3p2 <= prcollision_ang_o3p2;
+
+        if pointr_hits_o3p2 == 1
+            mocapfield{6} = 'TP3';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O4
+    if isfield(jsonfile, 'mocap_target4')
+        prdist_o4p2 = calc_norm(object4-handrp2);
+        prcollision_ang_o4p2 = atan(pobject_radius./prdist_o4p2);
+        pointr_ang_o4p2 = calc_angle(pointr_vecp2-handrp2, object4-handrp2);
+        pointr_hits_o4p2 = pointr_ang_o4p2 <= prcollision_ang_o4p2;
+
+        if pointr_hits_o4p2 == 1
+            mocapfield{6} = 'TP4';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O5
+    if isfield(jsonfile, 'mocap_target5')
+        prdist_o5p2 = calc_norm(object5-handrp2);
+        prcollision_ang_o5p2 = atan(pobject_radius./prdist_o5p2);
+        pointr_ang_o5p2 = calc_angle(pointr_vecp2-handrp2, object5-handrp2);
+        pointr_hits_o5p2 = pointr_ang_o5p2 <= prcollision_ang_o5p2;
+
+        if pointr_hits_o5p2 == 1
+            mocapfield{6} = 'TP5';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O6
+    if isfield(jsonfile, 'mocap_target6')
+        prdist_o6p2 = calc_norm(object6-handrp2);
+        prcollision_ang_o6p2 = atan(pobject_radius./prdist_o6p2);
+        pointr_ang_o6p2 = calc_angle(pointr_vecp2-handrp2, object6-handrp2);
+        pointr_hits_o6p2 = pointr_ang_o6p2 <= prcollision_ang_o6p2;
+
+        if pointr_hits_o6p2 == 1
+            mocapfield{6} = 'TP6';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O7
+    if isfield(jsonfile, 'mocap_target7')
+        prdist_o7p2 = calc_norm(object7-handrp2);
+        prcollision_ang_o7p2 = atan(pobject_radius./prdist_o7p2);
+        pointr_ang_o7p2 = calc_angle(pointr_vecp2-handrp2, object7-handrp2);
+        pointr_hits_o7p2 = pointr_ang_o7p2 <= prcollision_ang_o7p2;
+
+        if pointr_hits_o7p2 == 1
+            mocapfield{6} = 'TP7';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O8
+    if isfield(jsonfile, 'mocap_target8')
+        prdist_o8p2 = calc_norm(object8-handrp2);
+        prcollision_ang_o8p2 = atan(pobject_radius./prdist_o8p2);
+        pointr_ang_o8p2 = calc_angle(pointr_vecp2-handrp2, object8-handrp2);
+        pointr_hits_o8p2 = pointr_ang_o8p2 <= prcollision_ang_o8p2;
+
+        if pointr_hits_o8p2 == 1
+            mocapfield{6} = 'TP8';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O9
+    if isfield(jsonfile, 'mocap_target9')
+        prdist_o9p2 = calc_norm(object9-handrp2);
+        prcollision_ang_o9p2 = atan(pobject_radius./prdist_o9p2);
+        pointr_ang_o9p2 = calc_angle(pointr_vecp2-handrp2, object9-handrp2);
+        pointr_hits_o9p2 = pointr_ang_o9p2 <= prcollision_ang_o9p2;
+
+        if pointr_hits_o9p2 == 1
+            mocapfield{6} = 'TP9';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O10
+    if isfield(jsonfile, 'mocap_target10')
+        prdist_o10p2 = calc_norm(object10-handrp2);
+        prcollision_ang_o10p2 = atan(pobject_radius./prdist_o10p2);
+        pointr_ang_o10p2 = calc_angle(pointr_vecp2-handrp2, object10-handrp2);
+        pointr_hits_o10p2 = pointr_ang_o10p2 <= prcollision_ang_o10p2;
+
+        if pointr_hits_o10p2 == 1
+            mocapfield{6} = 'TP10';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O11
+    if isfield(jsonfile, 'mocap_target11')
+        prdist_o11p2 = calc_norm(object11-handrp2);
+        prcollision_ang_o11p2 = atan(pobject_radius./prdist_o11p2);
+        pointr_ang_o11p2 = calc_angle(pointr_vecp2-handrp2, object11-handrp2);
+        pointr_hits_o11p2 = pointr_ang_o11p2 <= prcollision_ang_o11p2;
+
+        if pointr_hits_o11p2 == 1
+            mocapfield{6} = 'TP11';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O12
+    if isfield(jsonfile, 'mocap_target12')
+        prdist_o12p2 = calc_norm(object12-handrp2);
+        prcollision_ang_o12p2 = atan(pobject_radius./prdist_o12p2);
+        pointr_ang_o12p2 = calc_angle(pointr_vecp2-handrp2, object12-handrp2);
+        pointr_hits_o12p2 = pointr_ang_o12p2 <= prcollision_ang_o12p2;
+
+        if pointr_hits_o12p2 == 1
+            mocapfield{6} = 'TP12';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O13
+    if isfield(jsonfile, 'mocap_target13')
+        prdist_o13p2 = calc_norm(object13-handrp2);
+        prcollision_ang_o13p2 = atan(pobject_radius./prdist_o13p2);
+        pointr_ang_o13p2 = calc_angle(pointr_vecp2-handrp2, object13-handrp2);
+        pointr_hits_o13p2 = pointr_ang_o13p2 <= prcollision_ang_o13p2;
+
+        if pointr_hits_o13p2 == 1
+            mocapfield{6} = 'TP13';
+        end
+    end
+    
+    % Calculate pointing hits for P2R to O14
+    if isfield(jsonfile, 'mocap_target14')
+        prdist_o14p2 = calc_norm(object14-handrp2);
+        prcollision_ang_o14p2 = atan(pobject_radius./prdist_o14p2);
+        pointr_ang_o14p2 = calc_angle(pointr_vecp2-handrp2, object14-handrp2);
+        pointr_hits_o14p2 = pointr_ang_o14p2 <= prcollision_ang_o14p2;
+
+        if pointr_hits_o14p2 == 1
+            mocapfield{6} = 'TP14';
+        end
+    end
+    
+    % Export gaze angle
+    mocapfield{4} = [gaze_ang_o1p2, gaze_ang_o2p2, gaze_ang_o3p2, gaze_ang_o4p2, gaze_ang_o5p2, gaze_ang_o6p2, gaze_ang_o7p2, gaze_ang_o8p2, gaze_ang_o9p2, gaze_ang_o10p2, gaze_ang_o11p2, gaze_ang_o12p2, gaze_ang_o13p2, gaze_ang_o14p2];
+    
+    % Export point angle HL
+    mocapfield{7} = [pointl_ang_o1p2, pointl_ang_o2p2, pointl_ang_o3p2, pointl_ang_o4p2, pointl_ang_o5p2, pointl_ang_o6p2, pointl_ang_o7p2, pointl_ang_o8p2, pointl_ang_o9p2, pointl_ang_o10p2, pointl_ang_o11p2, pointl_ang_o12p2, pointl_ang_o13p2, pointl_ang_o14p2];
+    
+    % Export point angle HR
+    mocapfield{8} = [pointr_ang_o1p2, pointr_ang_o2p2, pointr_ang_o3p2, pointr_ang_o4p2, pointr_ang_o5p2, pointr_ang_o6p2, pointr_ang_o7p2, pointr_ang_o8p2, pointr_ang_o9p2, pointr_ang_o10p2, pointr_ang_o11p2, pointr_ang_o12p2, pointr_ang_o13p2, pointr_ang_o14p2];
 end
 
 data = mocapfield;
