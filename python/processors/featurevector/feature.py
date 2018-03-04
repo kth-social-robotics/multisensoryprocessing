@@ -226,7 +226,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                             if touchtarget != 100:
                                 # Put in dictionary
                                 feature_dict[second][frame]['TS'] = str(mocaptime)
-                                feature_dict[second][frame]['P' + str(x + 1) + 'HL'] = ['T' + str(y + 1)]
+                                feature_dict[second][frame]['P' + str(x + 2) + 'HL'] = ['T' + str(y + 1)]
                                 # Print frame
                                 print(feature_dict[second][frame])
                                 # Sending messages to the server
