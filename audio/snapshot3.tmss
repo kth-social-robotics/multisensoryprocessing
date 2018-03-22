@@ -598,9 +598,9 @@
 			<val e="M/S-Coding 10" v="0.00,"/>
 			<val e="Width 10" v="1.00,"/>
 			<val e="PF Listen 10" v="0.00,"/>
-			<val e="Rev Send 10" v="-300.00,"/>
+			<val e="Rev Send 10" v="-54.51,"/>
 			<val e="Loopback 10" v="0.00,"/>
-			<val e="Phant Power 10" v="1.00,"/>
+			<val e="Phant Power 10" v="0.00,"/>
 			<val e="High Z Inp 10" v="0.00,"/>
 			<val e="RecordEnable 10" v="0.00,"/>
 			<val e="PlayChannel 10" v="0.00,"/>
@@ -3523,9 +3523,9 @@
 			<val e="Slider 00 07" v="-65.00,"/>
 			<val e="Slider 00 08" v="6.02,"/>
 			<val e="Pan 00 08" v="-1.00,"/>
-			<val e="Slider 00 09" v="0.43,"/>
-			<val e="Slider 00 10" v="6.02,"/>
-			<val e="Pan 00 10" v="-0.40,"/>
+			<val e="Slider 00 09" v="-1.86,"/>
+			<val e="Slider 00 10" v="6.00,"/>
+			<val e="Pan 00 10" v="-0.50,"/>
 			<val e="Slider 00 11" v="-65.00,"/>
 			<val e="Pan 00 11" v="1.00,"/>
 			<val e="Slider 00 12" v="-65.00,"/>
@@ -3577,8 +3577,8 @@
 			<val e="Slider 00 58" v="0.00,"/>
 			<val e="Slider 00 59" v="0.00,"/>
 			<val e="Slider 00 60" v="0.00,"/>
-			<val e="Slider 02 09" v="0.43,"/>
-			<val e="Slider 02 10" v="0.29,"/>
+			<val e="Slider 02 09" v="-3.71,"/>
+			<val e="Slider 02 10" v="-4.86,"/>
 			<val e="Pan 02 10" v="-1.00,"/>
 			<val e="Pan 02 11" v="1.00,"/>
 			<val e="Slider 02 30" v="0.00,"/>
@@ -3627,7 +3627,6 @@
 			<val e="Slider 07 60" v="6.00,"/>
 			<val e="Slider 08 08" v="6.02,"/>
 			<val e="Pan 08 08" v="-1.00,"/>
-			<val e="Slider 08 10" v="6.02,"/>
 			<val e="Slider 08 11" v="-65.00,"/>
 			<val e="Pan 08 11" v="1.00,"/>
 			<val e="Slider 08 36" v="-0.00,"/>
@@ -3833,7 +3832,7 @@
 			<val e="MidiOut" v=""/>
 			<val e="MidiSelBus" v="0"/>
 			<val e="MidiSelChannel" v="0"/>
-			<val e="MidiSelSubmix" v="2"/>
+			<val e="MidiSelSubmix" v="8"/>
 			<val e="MCSupport" v="1"/>
 			<val e="MCExtender" v="0"/>
 			<val e="MCSelSubmixInPb" v="0"/>
@@ -3898,7 +3897,7 @@
 		<OscRemote0>
 			<val e="OscSelBus" v="0"/>
 			<val e="OscSelChannel" v="0"/>
-			<val e="OscSelSubmix" v="2"/>
+			<val e="OscSelSubmix" v="8"/>
 			<val e="OSCRemoteInUse" v="1"/>
 			<val e="OSCOwnPort" v="7001"/>
 			<val e="OSCRemotePort" v="9001"/>
