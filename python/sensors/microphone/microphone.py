@@ -1,5 +1,5 @@
-# python microphone.py 3
-# python microphone.py 13
+# python3 microphone.py 9
+# python3 microphone.py 3
 
 import pyaudio
 import sys

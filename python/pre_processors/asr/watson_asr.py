@@ -1,5 +1,4 @@
 # python3 watson_asr.py
-# py .\watson_asr.py
 
 import json
 import pika
@@ -58,6 +57,7 @@ class WatsonASR(object):
       'word_confidence': True,
       'timestamps': True,
       'interim_results' : True,
+      'speaker_labels': True,
       'inactivity_timeout': -1
     }
 
@@ -143,6 +143,7 @@ class WatsonASR(object):
                 'time_start_asr': self.timer,
                 'time_until_asr': self.last_timer,
                 'text': msg['results'][0].get('alternatives', [{}])[0].get('transcript'),
+                'timestamps': msg['results'][0].get('alternatives', [{}])[0].get('timestamps'),
                 'final': msg["results"][0]["final"],
                 'confidence': msg['results'][0].get('alternatives', [{}])[0].get('confidence')
             }

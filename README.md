@@ -45,7 +45,6 @@ Starting sequence:
         +++-Define mic for P1 and P2
         +++-Define number of targets and tables
         +++-Define glasses and hands markers
-    +++-NLP processor sh (mac)
     +++-Mocap-gaze processor sh (mac)
         +++-Define Tobii markers on Matlab
 +++-WebGL Visualisation browser (win/mac)
@@ -58,6 +57,8 @@ Starting sequence:
     +++-Mocap sensor bat (win)
 +++-Tobii glasses1 (win)
 +++-Tobii glasses2 (win)
-+++-ASR sh (mac):
-    +++-ASR sh (mac)
-    +++-Microphone sh (mac)
+-NLP sh (macjocke):
+    -NLP processor sh (macjocke)
+    -ASR sh (macjocke)
+    -Microphone sh (macjocke)
+    -Microphone sh (macjocke)

@@ -136,7 +136,7 @@
 			<val e="Exp Thresh. 00" v="-60.00,"/>
 			<val e="Exp Ratio 00" v="1.00,"/>
 			<val e="Hide State 00" v="0.00,"/>
-			<val e="Remote Controls 00" v="1023.00,"/>
+			<val e="Remote Controls 00" v="255.00,"/>
 			<val e="Stereo 01" v="1.00,"/>
 			<val e="Name 01" v=""/>
 			<val e="Chan Mute 01" v="0.00,"/>
@@ -186,7 +186,7 @@
 			<val e="Exp Thresh. 01" v="-60.00,"/>
 			<val e="Exp Ratio 01" v="1.00,"/>
 			<val e="Hide State 01" v="0.00,"/>
-			<val e="Remote Controls 01" v="1023.00,"/>
+			<val e="Remote Controls 01" v="255.00,"/>
 			<val e="Stereo 02" v="1.00,"/>
 			<val e="Name 02" v=""/>
 			<val e="Chan Mute 02" v="0.00,"/>
@@ -236,7 +236,7 @@
 			<val e="Exp Thresh. 02" v="-60.00,"/>
 			<val e="Exp Ratio 02" v="1.00,"/>
 			<val e="Hide State 02" v="0.00,"/>
-			<val e="Remote Controls 02" v="1023.00,"/>
+			<val e="Remote Controls 02" v="255.00,"/>
 			<val e="Stereo 03" v="1.00,"/>
 			<val e="Name 03" v=""/>
 			<val e="Chan Mute 03" v="0.00,"/>
@@ -286,7 +286,7 @@
 			<val e="Exp Thresh. 03" v="-60.00,"/>
 			<val e="Exp Ratio 03" v="1.00,"/>
 			<val e="Hide State 03" v="0.00,"/>
-			<val e="Remote Controls 03" v="1023.00,"/>
+			<val e="Remote Controls 03" v="255.00,"/>
 			<val e="Stereo 04" v="1.00,"/>
 			<val e="Name 04" v=""/>
 			<val e="Chan Mute 04" v="0.00,"/>
@@ -336,7 +336,7 @@
 			<val e="Exp Thresh. 04" v="-60.00,"/>
 			<val e="Exp Ratio 04" v="1.00,"/>
 			<val e="Hide State 04" v="0.00,"/>
-			<val e="Remote Controls 04" v="1023.00,"/>
+			<val e="Remote Controls 04" v="255.00,"/>
 			<val e="Stereo 05" v="1.00,"/>
 			<val e="Name 05" v=""/>
 			<val e="Chan Mute 05" v="0.00,"/>
@@ -386,7 +386,7 @@
 			<val e="Exp Thresh. 05" v="-60.00,"/>
 			<val e="Exp Ratio 05" v="1.00,"/>
 			<val e="Hide State 05" v="0.00,"/>
-			<val e="Remote Controls 05" v="1023.00,"/>
+			<val e="Remote Controls 05" v="255.00,"/>
 			<val e="Stereo 06" v="1.00,"/>
 			<val e="Name 06" v=""/>
 			<val e="Chan Mute 06" v="0.00,"/>
@@ -436,7 +436,7 @@
 			<val e="Exp Thresh. 06" v="-60.00,"/>
 			<val e="Exp Ratio 06" v="1.00,"/>
 			<val e="Hide State 06" v="0.00,"/>
-			<val e="Remote Controls 06" v="1023.00,"/>
+			<val e="Remote Controls 06" v="255.00,"/>
 			<val e="Stereo 07" v="1.00,"/>
 			<val e="Name 07" v=""/>
 			<val e="Chan Mute 07" v="0.00,"/>
@@ -486,7 +486,7 @@
 			<val e="Exp Thresh. 07" v="-60.00,"/>
 			<val e="Exp Ratio 07" v="1.00,"/>
 			<val e="Hide State 07" v="0.00,"/>
-			<val e="Remote Controls 07" v="1023.00,"/>
+			<val e="Remote Controls 07" v="255.00,"/>
 			<val e="Stereo 08" v="0.00,"/>
 			<val e="Name 08" v=""/>
 			<val e="Chan Mute 08" v="0.00,"/>
@@ -536,7 +536,7 @@
 			<val e="Exp Thresh. 08" v="-60.00,"/>
 			<val e="Exp Ratio 08" v="1.00,"/>
 			<val e="Hide State 08" v="0.00,"/>
-			<val e="Remote Controls 08" v="1023.00,"/>
+			<val e="Remote Controls 08" v="255.00,"/>
 			<val e="Stereo 09" v="0.00,"/>
 			<val e="Name 09" v=""/>
 			<val e="Chan Mute 09" v="0.00,"/>
@@ -548,7 +548,7 @@
 			<val e="M/S-Coding 09" v="0.00,"/>
 			<val e="Width 09" v="1.00,"/>
 			<val e="PF Listen 09" v="0.00,"/>
-			<val e="Rev Send 09" v="-300.00,"/>
+			<val e="Rev Send 09" v="-62.85,"/>
 			<val e="Loopback 09" v="0.00,"/>
 			<val e="Phant Power 09" v="0.00,"/>
 			<val e="High Z Inp 09" v="0.00,"/>
@@ -586,7 +586,7 @@
 			<val e="Exp Thresh. 09" v="-60.00,"/>
 			<val e="Exp Ratio 09" v="1.00,"/>
 			<val e="Hide State 09" v="0.00,"/>
-			<val e="Remote Controls 09" v="1023.00,"/>
+			<val e="Remote Controls 09" v="255.00,"/>
 			<val e="Stereo 10" v="0.00,"/>
 			<val e="Name 10" v=""/>
 			<val e="Chan Mute 10" v="0.00,"/>
@@ -598,9 +598,9 @@
 			<val e="M/S-Coding 10" v="0.00,"/>
 			<val e="Width 10" v="1.00,"/>
 			<val e="PF Listen 10" v="0.00,"/>
-			<val e="Rev Send 10" v="-54.51,"/>
+			<val e="Rev Send 10" v="-63.21,"/>
 			<val e="Loopback 10" v="0.00,"/>
-			<val e="Phant Power 10" v="0.00,"/>
+			<val e="Phant Power 10" v="1.00,"/>
 			<val e="High Z Inp 10" v="0.00,"/>
 			<val e="RecordEnable 10" v="0.00,"/>
 			<val e="PlayChannel 10" v="0.00,"/>
@@ -636,7 +636,7 @@
 			<val e="Exp Thresh. 10" v="-60.00,"/>
 			<val e="Exp Ratio 10" v="1.00,"/>
 			<val e="Hide State 10" v="0.00,"/>
-			<val e="Remote Controls 10" v="1023.00,"/>
+			<val e="Remote Controls 10" v="255.00,"/>
 			<val e="Stereo 11" v="0.00,"/>
 			<val e="Name 11" v=""/>
 			<val e="Chan Mute 11" v="0.00,"/>
@@ -686,7 +686,7 @@
 			<val e="Exp Thresh. 11" v="-60.00,"/>
 			<val e="Exp Ratio 11" v="1.00,"/>
 			<val e="Hide State 11" v="0.00,"/>
-			<val e="Remote Controls 11" v="1023.00,"/>
+			<val e="Remote Controls 11" v="255.00,"/>
 			<val e="Stereo 12" v="1.00,"/>
 			<val e="Name 12" v=""/>
 			<val e="Chan Mute 12" v="0.00,"/>
@@ -736,7 +736,7 @@
 			<val e="Exp Thresh. 12" v="-60.00,"/>
 			<val e="Exp Ratio 12" v="1.00,"/>
 			<val e="Hide State 12" v="0.00,"/>
-			<val e="Remote Controls 12" v="1023.00,"/>
+			<val e="Remote Controls 12" v="255.00,"/>
 			<val e="Stereo 13" v="1.00,"/>
 			<val e="Name 13" v=""/>
 			<val e="Chan Mute 13" v="0.00,"/>
@@ -786,7 +786,7 @@
 			<val e="Exp Thresh. 13" v="-60.00,"/>
 			<val e="Exp Ratio 13" v="1.00,"/>
 			<val e="Hide State 13" v="0.00,"/>
-			<val e="Remote Controls 13" v="1023.00,"/>
+			<val e="Remote Controls 13" v="255.00,"/>
 			<val e="Stereo 14" v="1.00,"/>
 			<val e="Name 14" v=""/>
 			<val e="Chan Mute 14" v="0.00,"/>
@@ -836,7 +836,7 @@
 			<val e="Exp Thresh. 14" v="-60.00,"/>
 			<val e="Exp Ratio 14" v="1.00,"/>
 			<val e="Hide State 14" v="0.00,"/>
-			<val e="Remote Controls 14" v="1023.00,"/>
+			<val e="Remote Controls 14" v="255.00,"/>
 			<val e="Stereo 15" v="1.00,"/>
 			<val e="Name 15" v=""/>
 			<val e="Chan Mute 15" v="0.00,"/>
@@ -886,7 +886,7 @@
 			<val e="Exp Thresh. 15" v="-60.00,"/>
 			<val e="Exp Ratio 15" v="1.00,"/>
 			<val e="Hide State 15" v="0.00,"/>
-			<val e="Remote Controls 15" v="1023.00,"/>
+			<val e="Remote Controls 15" v="255.00,"/>
 			<val e="Stereo 16" v="1.00,"/>
 			<val e="Name 16" v=""/>
 			<val e="Chan Mute 16" v="0.00,"/>
@@ -936,7 +936,7 @@
 			<val e="Exp Thresh. 16" v="-60.00,"/>
 			<val e="Exp Ratio 16" v="1.00,"/>
 			<val e="Hide State 16" v="0.00,"/>
-			<val e="Remote Controls 16" v="1023.00,"/>
+			<val e="Remote Controls 16" v="255.00,"/>
 			<val e="Stereo 17" v="1.00,"/>
 			<val e="Name 17" v=""/>
 			<val e="Chan Mute 17" v="0.00,"/>
@@ -986,7 +986,7 @@
 			<val e="Exp Thresh. 17" v="-60.00,"/>
 			<val e="Exp Ratio 17" v="1.00,"/>
 			<val e="Hide State 17" v="0.00,"/>
-			<val e="Remote Controls 17" v="1023.00,"/>
+			<val e="Remote Controls 17" v="255.00,"/>
 			<val e="Stereo 18" v="1.00,"/>
 			<val e="Name 18" v=""/>
 			<val e="Chan Mute 18" v="0.00,"/>
@@ -1036,7 +1036,7 @@
 			<val e="Exp Thresh. 18" v="-60.00,"/>
 			<val e="Exp Ratio 18" v="1.00,"/>
 			<val e="Hide State 18" v="0.00,"/>
-			<val e="Remote Controls 18" v="1023.00,"/>
+			<val e="Remote Controls 18" v="255.00,"/>
 			<val e="Stereo 19" v="1.00,"/>
 			<val e="Name 19" v=""/>
 			<val e="Chan Mute 19" v="0.00,"/>
@@ -1086,7 +1086,7 @@
 			<val e="Exp Thresh. 19" v="-60.00,"/>
 			<val e="Exp Ratio 19" v="1.00,"/>
 			<val e="Hide State 19" v="0.00,"/>
-			<val e="Remote Controls 19" v="1023.00,"/>
+			<val e="Remote Controls 19" v="255.00,"/>
 			<val e="Stereo 20" v="1.00,"/>
 			<val e="Name 20" v=""/>
 			<val e="Chan Mute 20" v="0.00,"/>
@@ -1136,7 +1136,7 @@
 			<val e="Exp Thresh. 20" v="-60.00,"/>
 			<val e="Exp Ratio 20" v="1.00,"/>
 			<val e="Hide State 20" v="0.00,"/>
-			<val e="Remote Controls 20" v="1023.00,"/>
+			<val e="Remote Controls 20" v="255.00,"/>
 			<val e="Stereo 21" v="1.00,"/>
 			<val e="Name 21" v=""/>
 			<val e="Chan Mute 21" v="0.00,"/>
@@ -1186,7 +1186,7 @@
 			<val e="Exp Thresh. 21" v="-60.00,"/>
 			<val e="Exp Ratio 21" v="1.00,"/>
 			<val e="Hide State 21" v="0.00,"/>
-			<val e="Remote Controls 21" v="1023.00,"/>
+			<val e="Remote Controls 21" v="255.00,"/>
 			<val e="Stereo 22" v="1.00,"/>
 			<val e="Name 22" v=""/>
 			<val e="Chan Mute 22" v="0.00,"/>
@@ -1236,7 +1236,7 @@
 			<val e="Exp Thresh. 22" v="-60.00,"/>
 			<val e="Exp Ratio 22" v="1.00,"/>
 			<val e="Hide State 22" v="0.00,"/>
-			<val e="Remote Controls 22" v="1023.00,"/>
+			<val e="Remote Controls 22" v="255.00,"/>
 			<val e="Stereo 23" v="1.00,"/>
 			<val e="Name 23" v=""/>
 			<val e="Chan Mute 23" v="0.00,"/>
@@ -1286,7 +1286,7 @@
 			<val e="Exp Thresh. 23" v="-60.00,"/>
 			<val e="Exp Ratio 23" v="1.00,"/>
 			<val e="Hide State 23" v="0.00,"/>
-			<val e="Remote Controls 23" v="1023.00,"/>
+			<val e="Remote Controls 23" v="255.00,"/>
 			<val e="Stereo 24" v="1.00,"/>
 			<val e="Name 24" v=""/>
 			<val e="Chan Mute 24" v="0.00,"/>
@@ -1336,7 +1336,7 @@
 			<val e="Exp Thresh. 24" v="-60.00,"/>
 			<val e="Exp Ratio 24" v="1.00,"/>
 			<val e="Hide State 24" v="0.00,"/>
-			<val e="Remote Controls 24" v="1023.00,"/>
+			<val e="Remote Controls 24" v="255.00,"/>
 			<val e="Stereo 25" v="1.00,"/>
 			<val e="Name 25" v=""/>
 			<val e="Chan Mute 25" v="0.00,"/>
@@ -1386,7 +1386,7 @@
 			<val e="Exp Thresh. 25" v="-60.00,"/>
 			<val e="Exp Ratio 25" v="1.00,"/>
 			<val e="Hide State 25" v="0.00,"/>
-			<val e="Remote Controls 25" v="1023.00,"/>
+			<val e="Remote Controls 25" v="255.00,"/>
 			<val e="Stereo 26" v="1.00,"/>
 			<val e="Name 26" v=""/>
 			<val e="Chan Mute 26" v="0.00,"/>
@@ -1436,7 +1436,7 @@
 			<val e="Exp Thresh. 26" v="-60.00,"/>
 			<val e="Exp Ratio 26" v="1.00,"/>
 			<val e="Hide State 26" v="0.00,"/>
-			<val e="Remote Controls 26" v="1023.00,"/>
+			<val e="Remote Controls 26" v="255.00,"/>
 			<val e="Stereo 27" v="1.00,"/>
 			<val e="Name 27" v=""/>
 			<val e="Chan Mute 27" v="0.00,"/>
@@ -1486,7 +1486,7 @@
 			<val e="Exp Thresh. 27" v="-60.00,"/>
 			<val e="Exp Ratio 27" v="1.00,"/>
 			<val e="Hide State 27" v="0.00,"/>
-			<val e="Remote Controls 27" v="1023.00,"/>
+			<val e="Remote Controls 27" v="255.00,"/>
 			<val e="Stereo 28" v="1.00,"/>
 			<val e="Name 28" v=""/>
 			<val e="Chan Mute 28" v="0.00,"/>
@@ -1536,7 +1536,7 @@
 			<val e="Exp Thresh. 28" v="-60.00,"/>
 			<val e="Exp Ratio 28" v="1.00,"/>
 			<val e="Hide State 28" v="0.00,"/>
-			<val e="Remote Controls 28" v="1023.00,"/>
+			<val e="Remote Controls 28" v="255.00,"/>
 			<val e="Stereo 29" v="1.00,"/>
 			<val e="Name 29" v=""/>
 			<val e="Chan Mute 29" v="0.00,"/>
@@ -1586,7 +1586,7 @@
 			<val e="Exp Thresh. 29" v="-60.00,"/>
 			<val e="Exp Ratio 29" v="1.00,"/>
 			<val e="Hide State 29" v="0.00,"/>
-			<val e="Remote Controls 29" v="1023.00,"/>
+			<val e="Remote Controls 29" v="255.00,"/>
 		</Inputs>
 		<Playbacks>
 			<val e="Stereo 00" v="1.00,"/>
@@ -1602,7 +1602,7 @@
 			<val e="PF Listen 00" v="0.00,"/>
 			<val e="Rev Send 00" v="-300.00,"/>
 			<val e="Hide State 00" v="0.00,"/>
-			<val e="Remote Controls 00" v="1023.00,"/>
+			<val e="Remote Controls 00" v="255.00,"/>
 			<val e="Stereo 01" v="1.00,"/>
 			<val e="Name 01" v=""/>
 			<val e="Chan Mute 01" v="0.00,"/>
@@ -1616,7 +1616,7 @@
 			<val e="PF Listen 01" v="0.00,"/>
 			<val e="Rev Send 01" v="-300.00,"/>
 			<val e="Hide State 01" v="0.00,"/>
-			<val e="Remote Controls 01" v="1023.00,"/>
+			<val e="Remote Controls 01" v="255.00,"/>
 			<val e="Stereo 02" v="1.00,"/>
 			<val e="Name 02" v=""/>
 			<val e="Chan Mute 02" v="0.00,"/>
@@ -1630,7 +1630,7 @@
 			<val e="PF Listen 02" v="0.00,"/>
 			<val e="Rev Send 02" v="-300.00,"/>
 			<val e="Hide State 02" v="0.00,"/>
-			<val e="Remote Controls 02" v="1023.00,"/>
+			<val e="Remote Controls 02" v="255.00,"/>
 			<val e="Stereo 03" v="1.00,"/>
 			<val e="Name 03" v=""/>
 			<val e="Chan Mute 03" v="0.00,"/>
@@ -1644,7 +1644,7 @@
 			<val e="PF Listen 03" v="0.00,"/>
 			<val e="Rev Send 03" v="-300.00,"/>
 			<val e="Hide State 03" v="0.00,"/>
-			<val e="Remote Controls 03" v="1023.00,"/>
+			<val e="Remote Controls 03" v="255.00,"/>
 			<val e="Stereo 04" v="1.00,"/>
 			<val e="Name 04" v=""/>
 			<val e="Chan Mute 04" v="0.00,"/>
@@ -1658,7 +1658,7 @@
 			<val e="PF Listen 04" v="0.00,"/>
 			<val e="Rev Send 04" v="-300.00,"/>
 			<val e="Hide State 04" v="0.00,"/>
-			<val e="Remote Controls 04" v="1023.00,"/>
+			<val e="Remote Controls 04" v="255.00,"/>
 			<val e="Stereo 05" v="1.00,"/>
 			<val e="Name 05" v=""/>
 			<val e="Chan Mute 05" v="0.00,"/>
@@ -1672,7 +1672,7 @@
 			<val e="PF Listen 05" v="0.00,"/>
 			<val e="Rev Send 05" v="-300.00,"/>
 			<val e="Hide State 05" v="0.00,"/>
-			<val e="Remote Controls 05" v="1023.00,"/>
+			<val e="Remote Controls 05" v="255.00,"/>
 			<val e="Stereo 06" v="1.00,"/>
 			<val e="Name 06" v=""/>
 			<val e="Chan Mute 06" v="0.00,"/>
@@ -1686,7 +1686,7 @@
 			<val e="PF Listen 06" v="0.00,"/>
 			<val e="Rev Send 06" v="-300.00,"/>
 			<val e="Hide State 06" v="0.00,"/>
-			<val e="Remote Controls 06" v="1023.00,"/>
+			<val e="Remote Controls 06" v="255.00,"/>
 			<val e="Stereo 07" v="1.00,"/>
 			<val e="Name 07" v=""/>
 			<val e="Chan Mute 07" v="0.00,"/>
@@ -1700,7 +1700,7 @@
 			<val e="PF Listen 07" v="0.00,"/>
 			<val e="Rev Send 07" v="-300.00,"/>
 			<val e="Hide State 07" v="0.00,"/>
-			<val e="Remote Controls 07" v="1023.00,"/>
+			<val e="Remote Controls 07" v="255.00,"/>
 			<val e="Stereo 08" v="1.00,"/>
 			<val e="Name 08" v=""/>
 			<val e="Chan Mute 08" v="0.00,"/>
@@ -1714,7 +1714,7 @@
 			<val e="PF Listen 08" v="0.00,"/>
 			<val e="Rev Send 08" v="-300.00,"/>
 			<val e="Hide State 08" v="0.00,"/>
-			<val e="Remote Controls 08" v="1023.00,"/>
+			<val e="Remote Controls 08" v="255.00,"/>
 			<val e="Stereo 09" v="1.00,"/>
 			<val e="Name 09" v=""/>
 			<val e="Chan Mute 09" v="0.00,"/>
@@ -1728,7 +1728,7 @@
 			<val e="PF Listen 09" v="0.00,"/>
 			<val e="Rev Send 09" v="-300.00,"/>
 			<val e="Hide State 09" v="0.00,"/>
-			<val e="Remote Controls 09" v="1023.00,"/>
+			<val e="Remote Controls 09" v="255.00,"/>
 			<val e="Stereo 10" v="1.00,"/>
 			<val e="Name 10" v=""/>
 			<val e="Chan Mute 10" v="0.00,"/>
@@ -1742,7 +1742,7 @@
 			<val e="PF Listen 10" v="0.00,"/>
 			<val e="Rev Send 10" v="-300.00,"/>
 			<val e="Hide State 10" v="0.00,"/>
-			<val e="Remote Controls 10" v="1023.00,"/>
+			<val e="Remote Controls 10" v="255.00,"/>
 			<val e="Stereo 11" v="1.00,"/>
 			<val e="Name 11" v=""/>
 			<val e="Chan Mute 11" v="0.00,"/>
@@ -1756,7 +1756,7 @@
 			<val e="PF Listen 11" v="0.00,"/>
 			<val e="Rev Send 11" v="-300.00,"/>
 			<val e="Hide State 11" v="0.00,"/>
-			<val e="Remote Controls 11" v="1023.00,"/>
+			<val e="Remote Controls 11" v="255.00,"/>
 			<val e="Stereo 12" v="1.00,"/>
 			<val e="Name 12" v=""/>
 			<val e="Chan Mute 12" v="0.00,"/>
@@ -1770,7 +1770,7 @@
 			<val e="PF Listen 12" v="0.00,"/>
 			<val e="Rev Send 12" v="-300.00,"/>
 			<val e="Hide State 12" v="0.00,"/>
-			<val e="Remote Controls 12" v="1023.00,"/>
+			<val e="Remote Controls 12" v="255.00,"/>
 			<val e="Stereo 13" v="1.00,"/>
 			<val e="Name 13" v=""/>
 			<val e="Chan Mute 13" v="0.00,"/>
@@ -1784,7 +1784,7 @@
 			<val e="PF Listen 13" v="0.00,"/>
 			<val e="Rev Send 13" v="-300.00,"/>
 			<val e="Hide State 13" v="0.00,"/>
-			<val e="Remote Controls 13" v="1023.00,"/>
+			<val e="Remote Controls 13" v="255.00,"/>
 			<val e="Stereo 14" v="1.00,"/>
 			<val e="Name 14" v=""/>
 			<val e="Chan Mute 14" v="0.00,"/>
@@ -1798,7 +1798,7 @@
 			<val e="PF Listen 14" v="0.00,"/>
 			<val e="Rev Send 14" v="-300.00,"/>
 			<val e="Hide State 14" v="0.00,"/>
-			<val e="Remote Controls 14" v="1023.00,"/>
+			<val e="Remote Controls 14" v="255.00,"/>
 			<val e="Stereo 15" v="1.00,"/>
 			<val e="Name 15" v=""/>
 			<val e="Chan Mute 15" v="0.00,"/>
@@ -1812,7 +1812,7 @@
 			<val e="PF Listen 15" v="0.00,"/>
 			<val e="Rev Send 15" v="-300.00,"/>
 			<val e="Hide State 15" v="0.00,"/>
-			<val e="Remote Controls 15" v="1023.00,"/>
+			<val e="Remote Controls 15" v="255.00,"/>
 			<val e="Stereo 16" v="1.00,"/>
 			<val e="Name 16" v=""/>
 			<val e="Chan Mute 16" v="0.00,"/>
@@ -1826,7 +1826,7 @@
 			<val e="PF Listen 16" v="0.00,"/>
 			<val e="Rev Send 16" v="-300.00,"/>
 			<val e="Hide State 16" v="0.00,"/>
-			<val e="Remote Controls 16" v="1023.00,"/>
+			<val e="Remote Controls 16" v="255.00,"/>
 			<val e="Stereo 17" v="1.00,"/>
 			<val e="Name 17" v=""/>
 			<val e="Chan Mute 17" v="0.00,"/>
@@ -1840,7 +1840,7 @@
 			<val e="PF Listen 17" v="0.00,"/>
 			<val e="Rev Send 17" v="-300.00,"/>
 			<val e="Hide State 17" v="0.00,"/>
-			<val e="Remote Controls 17" v="1023.00,"/>
+			<val e="Remote Controls 17" v="255.00,"/>
 			<val e="Stereo 18" v="1.00,"/>
 			<val e="Name 18" v=""/>
 			<val e="Chan Mute 18" v="0.00,"/>
@@ -1854,7 +1854,7 @@
 			<val e="PF Listen 18" v="0.00,"/>
 			<val e="Rev Send 18" v="-300.00,"/>
 			<val e="Hide State 18" v="0.00,"/>
-			<val e="Remote Controls 18" v="1023.00,"/>
+			<val e="Remote Controls 18" v="255.00,"/>
 			<val e="Stereo 19" v="1.00,"/>
 			<val e="Name 19" v=""/>
 			<val e="Chan Mute 19" v="0.00,"/>
@@ -1868,7 +1868,7 @@
 			<val e="PF Listen 19" v="0.00,"/>
 			<val e="Rev Send 19" v="-300.00,"/>
 			<val e="Hide State 19" v="0.00,"/>
-			<val e="Remote Controls 19" v="1023.00,"/>
+			<val e="Remote Controls 19" v="255.00,"/>
 			<val e="Stereo 20" v="1.00,"/>
 			<val e="Name 20" v=""/>
 			<val e="Chan Mute 20" v="0.00,"/>
@@ -1882,7 +1882,7 @@
 			<val e="PF Listen 20" v="0.00,"/>
 			<val e="Rev Send 20" v="-300.00,"/>
 			<val e="Hide State 20" v="0.00,"/>
-			<val e="Remote Controls 20" v="1023.00,"/>
+			<val e="Remote Controls 20" v="255.00,"/>
 			<val e="Stereo 21" v="1.00,"/>
 			<val e="Name 21" v=""/>
 			<val e="Chan Mute 21" v="0.00,"/>
@@ -1896,7 +1896,7 @@
 			<val e="PF Listen 21" v="0.00,"/>
 			<val e="Rev Send 21" v="-300.00,"/>
 			<val e="Hide State 21" v="0.00,"/>
-			<val e="Remote Controls 21" v="1023.00,"/>
+			<val e="Remote Controls 21" v="255.00,"/>
 			<val e="Stereo 22" v="1.00,"/>
 			<val e="Name 22" v=""/>
 			<val e="Chan Mute 22" v="0.00,"/>
@@ -1910,7 +1910,7 @@
 			<val e="PF Listen 22" v="0.00,"/>
 			<val e="Rev Send 22" v="-300.00,"/>
 			<val e="Hide State 22" v="0.00,"/>
-			<val e="Remote Controls 22" v="1023.00,"/>
+			<val e="Remote Controls 22" v="255.00,"/>
 			<val e="Stereo 23" v="1.00,"/>
 			<val e="Name 23" v=""/>
 			<val e="Chan Mute 23" v="0.00,"/>
@@ -1924,7 +1924,7 @@
 			<val e="PF Listen 23" v="0.00,"/>
 			<val e="Rev Send 23" v="-300.00,"/>
 			<val e="Hide State 23" v="0.00,"/>
-			<val e="Remote Controls 23" v="1023.00,"/>
+			<val e="Remote Controls 23" v="255.00,"/>
 			<val e="Stereo 24" v="1.00,"/>
 			<val e="Name 24" v=""/>
 			<val e="Chan Mute 24" v="0.00,"/>
@@ -1938,7 +1938,7 @@
 			<val e="PF Listen 24" v="0.00,"/>
 			<val e="Rev Send 24" v="-300.00,"/>
 			<val e="Hide State 24" v="0.00,"/>
-			<val e="Remote Controls 24" v="1023.00,"/>
+			<val e="Remote Controls 24" v="255.00,"/>
 			<val e="Stereo 25" v="1.00,"/>
 			<val e="Name 25" v=""/>
 			<val e="Chan Mute 25" v="0.00,"/>
@@ -1952,7 +1952,7 @@
 			<val e="PF Listen 25" v="0.00,"/>
 			<val e="Rev Send 25" v="-300.00,"/>
 			<val e="Hide State 25" v="0.00,"/>
-			<val e="Remote Controls 25" v="1023.00,"/>
+			<val e="Remote Controls 25" v="255.00,"/>
 			<val e="Stereo 26" v="1.00,"/>
 			<val e="Name 26" v=""/>
 			<val e="Chan Mute 26" v="0.00,"/>
@@ -1966,7 +1966,7 @@
 			<val e="PF Listen 26" v="0.00,"/>
 			<val e="Rev Send 26" v="-300.00,"/>
 			<val e="Hide State 26" v="0.00,"/>
-			<val e="Remote Controls 26" v="1023.00,"/>
+			<val e="Remote Controls 26" v="255.00,"/>
 			<val e="Stereo 27" v="1.00,"/>
 			<val e="Name 27" v=""/>
 			<val e="Chan Mute 27" v="0.00,"/>
@@ -1980,7 +1980,7 @@
 			<val e="PF Listen 27" v="0.00,"/>
 			<val e="Rev Send 27" v="-300.00,"/>
 			<val e="Hide State 27" v="0.00,"/>
-			<val e="Remote Controls 27" v="1023.00,"/>
+			<val e="Remote Controls 27" v="255.00,"/>
 			<val e="Stereo 28" v="1.00,"/>
 			<val e="Name 28" v=""/>
 			<val e="Chan Mute 28" v="0.00,"/>
@@ -1994,7 +1994,7 @@
 			<val e="PF Listen 28" v="0.00,"/>
 			<val e="Rev Send 28" v="-300.00,"/>
 			<val e="Hide State 28" v="0.00,"/>
-			<val e="Remote Controls 28" v="1023.00,"/>
+			<val e="Remote Controls 28" v="255.00,"/>
 			<val e="Stereo 29" v="1.00,"/>
 			<val e="Name 29" v=""/>
 			<val e="Chan Mute 29" v="0.00,"/>
@@ -2008,7 +2008,7 @@
 			<val e="PF Listen 29" v="0.00,"/>
 			<val e="Rev Send 29" v="-300.00,"/>
 			<val e="Hide State 29" v="0.00,"/>
-			<val e="Remote Controls 29" v="1023.00,"/>
+			<val e="Remote Controls 29" v="255.00,"/>
 		</Playbacks>
 		<Outputs>
 			<val e="Stereo 00" v="1.00,"/>
@@ -2060,7 +2060,7 @@
 			<val e="Exp Thresh. 00" v="-60.00,"/>
 			<val e="Exp Ratio 00" v="1.00,"/>
 			<val e="Hide State 00" v="0.00,"/>
-			<val e="Remote Controls 00" v="1023.00,"/>
+			<val e="Remote Controls 00" v="255.00,"/>
 			<val e="Stereo 01" v="1.00,"/>
 			<val e="Name 01" v=""/>
 			<val e="Chan Mute 01" v="0.00,"/>
@@ -2110,7 +2110,7 @@
 			<val e="Exp Thresh. 01" v="-60.00,"/>
 			<val e="Exp Ratio 01" v="1.00,"/>
 			<val e="Hide State 01" v="0.00,"/>
-			<val e="Remote Controls 01" v="1023.00,"/>
+			<val e="Remote Controls 01" v="255.00,"/>
 			<val e="Stereo 02" v="1.00,"/>
 			<val e="Name 02" v=""/>
 			<val e="Chan Mute 02" v="0.00,"/>
@@ -2160,7 +2160,7 @@
 			<val e="Exp Thresh. 02" v="-60.00,"/>
 			<val e="Exp Ratio 02" v="1.00,"/>
 			<val e="Hide State 02" v="0.00,"/>
-			<val e="Remote Controls 02" v="1023.00,"/>
+			<val e="Remote Controls 02" v="255.00,"/>
 			<val e="Stereo 03" v="1.00,"/>
 			<val e="Name 03" v=""/>
 			<val e="Chan Mute 03" v="0.00,"/>
@@ -2210,7 +2210,7 @@
 			<val e="Exp Thresh. 03" v="-60.00,"/>
 			<val e="Exp Ratio 03" v="1.00,"/>
 			<val e="Hide State 03" v="0.00,"/>
-			<val e="Remote Controls 03" v="1023.00,"/>
+			<val e="Remote Controls 03" v="255.00,"/>
 			<val e="Stereo 04" v="1.00,"/>
 			<val e="Name 04" v=""/>
 			<val e="Chan Mute 04" v="0.00,"/>
@@ -2260,7 +2260,7 @@
 			<val e="Exp Thresh. 04" v="-60.00,"/>
 			<val e="Exp Ratio 04" v="1.00,"/>
 			<val e="Hide State 04" v="0.00,"/>
-			<val e="Remote Controls 04" v="1023.00,"/>
+			<val e="Remote Controls 04" v="255.00,"/>
 			<val e="Stereo 05" v="1.00,"/>
 			<val e="Name 05" v=""/>
 			<val e="Chan Mute 05" v="0.00,"/>
@@ -2310,7 +2310,7 @@
 			<val e="Exp Thresh. 05" v="-60.00,"/>
 			<val e="Exp Ratio 05" v="1.00,"/>
 			<val e="Hide State 05" v="0.00,"/>
-			<val e="Remote Controls 05" v="1023.00,"/>
+			<val e="Remote Controls 05" v="255.00,"/>
 			<val e="Stereo 06" v="1.00,"/>
 			<val e="Name 06" v=""/>
 			<val e="Chan Mute 06" v="0.00,"/>
@@ -2360,7 +2360,7 @@
 			<val e="Exp Thresh. 06" v="-60.00,"/>
 			<val e="Exp Ratio 06" v="1.00,"/>
 			<val e="Hide State 06" v="0.00,"/>
-			<val e="Remote Controls 06" v="1023.00,"/>
+			<val e="Remote Controls 06" v="255.00,"/>
 			<val e="Stereo 07" v="1.00,"/>
 			<val e="Name 07" v=""/>
 			<val e="Chan Mute 07" v="0.00,"/>
@@ -2410,7 +2410,7 @@
 			<val e="Exp Thresh. 07" v="-60.00,"/>
 			<val e="Exp Ratio 07" v="1.00,"/>
 			<val e="Hide State 07" v="0.00,"/>
-			<val e="Remote Controls 07" v="1023.00,"/>
+			<val e="Remote Controls 07" v="255.00,"/>
 			<val e="Stereo 08" v="1.00,"/>
 			<val e="Name 08" v=""/>
 			<val e="Chan Mute 08" v="0.00,"/>
@@ -2460,7 +2460,7 @@
 			<val e="Exp Thresh. 08" v="-60.00,"/>
 			<val e="Exp Ratio 08" v="1.00,"/>
 			<val e="Hide State 08" v="0.00,"/>
-			<val e="Remote Controls 08" v="1023.00,"/>
+			<val e="Remote Controls 08" v="255.00,"/>
 			<val e="Stereo 09" v="1.00,"/>
 			<val e="Name 09" v=""/>
 			<val e="Chan Mute 09" v="0.00,"/>
@@ -2510,7 +2510,7 @@
 			<val e="Exp Thresh. 09" v="-60.00,"/>
 			<val e="Exp Ratio 09" v="1.00,"/>
 			<val e="Hide State 09" v="0.00,"/>
-			<val e="Remote Controls 09" v="1023.00,"/>
+			<val e="Remote Controls 09" v="255.00,"/>
 			<val e="Stereo 10" v="1.00,"/>
 			<val e="Name 10" v=""/>
 			<val e="Chan Mute 10" v="0.00,"/>
@@ -2560,7 +2560,7 @@
 			<val e="Exp Thresh. 10" v="-60.00,"/>
 			<val e="Exp Ratio 10" v="1.00,"/>
 			<val e="Hide State 10" v="0.00,"/>
-			<val e="Remote Controls 10" v="1023.00,"/>
+			<val e="Remote Controls 10" v="255.00,"/>
 			<val e="Stereo 11" v="1.00,"/>
 			<val e="Name 11" v=""/>
 			<val e="Chan Mute 11" v="0.00,"/>
@@ -2610,7 +2610,7 @@
 			<val e="Exp Thresh. 11" v="-60.00,"/>
 			<val e="Exp Ratio 11" v="1.00,"/>
 			<val e="Hide State 11" v="0.00,"/>
-			<val e="Remote Controls 11" v="1023.00,"/>
+			<val e="Remote Controls 11" v="255.00,"/>
 			<val e="Stereo 12" v="1.00,"/>
 			<val e="Name 12" v=""/>
 			<val e="Chan Mute 12" v="0.00,"/>
@@ -2660,7 +2660,7 @@
 			<val e="Exp Thresh. 12" v="-60.00,"/>
 			<val e="Exp Ratio 12" v="1.00,"/>
 			<val e="Hide State 12" v="0.00,"/>
-			<val e="Remote Controls 12" v="1023.00,"/>
+			<val e="Remote Controls 12" v="255.00,"/>
 			<val e="Stereo 13" v="1.00,"/>
 			<val e="Name 13" v=""/>
 			<val e="Chan Mute 13" v="0.00,"/>
@@ -2710,7 +2710,7 @@
 			<val e="Exp Thresh. 13" v="-60.00,"/>
 			<val e="Exp Ratio 13" v="1.00,"/>
 			<val e="Hide State 13" v="0.00,"/>
-			<val e="Remote Controls 13" v="1023.00,"/>
+			<val e="Remote Controls 13" v="255.00,"/>
 			<val e="Stereo 14" v="1.00,"/>
 			<val e="Name 14" v=""/>
 			<val e="Chan Mute 14" v="0.00,"/>
@@ -2760,7 +2760,7 @@
 			<val e="Exp Thresh. 14" v="-60.00,"/>
 			<val e="Exp Ratio 14" v="1.00,"/>
 			<val e="Hide State 14" v="0.00,"/>
-			<val e="Remote Controls 14" v="1023.00,"/>
+			<val e="Remote Controls 14" v="255.00,"/>
 			<val e="Stereo 15" v="1.00,"/>
 			<val e="Name 15" v=""/>
 			<val e="Chan Mute 15" v="0.00,"/>
@@ -2810,7 +2810,7 @@
 			<val e="Exp Thresh. 15" v="-60.00,"/>
 			<val e="Exp Ratio 15" v="1.00,"/>
 			<val e="Hide State 15" v="0.00,"/>
-			<val e="Remote Controls 15" v="1023.00,"/>
+			<val e="Remote Controls 15" v="255.00,"/>
 			<val e="Stereo 16" v="1.00,"/>
 			<val e="Name 16" v=""/>
 			<val e="Chan Mute 16" v="0.00,"/>
@@ -2860,7 +2860,7 @@
 			<val e="Exp Thresh. 16" v="-60.00,"/>
 			<val e="Exp Ratio 16" v="1.00,"/>
 			<val e="Hide State 16" v="0.00,"/>
-			<val e="Remote Controls 16" v="1023.00,"/>
+			<val e="Remote Controls 16" v="255.00,"/>
 			<val e="Stereo 17" v="1.00,"/>
 			<val e="Name 17" v=""/>
 			<val e="Chan Mute 17" v="0.00,"/>
@@ -2910,7 +2910,7 @@
 			<val e="Exp Thresh. 17" v="-60.00,"/>
 			<val e="Exp Ratio 17" v="1.00,"/>
 			<val e="Hide State 17" v="0.00,"/>
-			<val e="Remote Controls 17" v="1023.00,"/>
+			<val e="Remote Controls 17" v="255.00,"/>
 			<val e="Stereo 18" v="1.00,"/>
 			<val e="Name 18" v=""/>
 			<val e="Chan Mute 18" v="0.00,"/>
@@ -2960,7 +2960,7 @@
 			<val e="Exp Thresh. 18" v="-60.00,"/>
 			<val e="Exp Ratio 18" v="1.00,"/>
 			<val e="Hide State 18" v="0.00,"/>
-			<val e="Remote Controls 18" v="1023.00,"/>
+			<val e="Remote Controls 18" v="255.00,"/>
 			<val e="Stereo 19" v="1.00,"/>
 			<val e="Name 19" v=""/>
 			<val e="Chan Mute 19" v="0.00,"/>
@@ -3010,7 +3010,7 @@
 			<val e="Exp Thresh. 19" v="-60.00,"/>
 			<val e="Exp Ratio 19" v="1.00,"/>
 			<val e="Hide State 19" v="0.00,"/>
-			<val e="Remote Controls 19" v="1023.00,"/>
+			<val e="Remote Controls 19" v="255.00,"/>
 			<val e="Stereo 20" v="1.00,"/>
 			<val e="Name 20" v=""/>
 			<val e="Chan Mute 20" v="0.00,"/>
@@ -3060,7 +3060,7 @@
 			<val e="Exp Thresh. 20" v="-60.00,"/>
 			<val e="Exp Ratio 20" v="1.00,"/>
 			<val e="Hide State 20" v="0.00,"/>
-			<val e="Remote Controls 20" v="1023.00,"/>
+			<val e="Remote Controls 20" v="255.00,"/>
 			<val e="Stereo 21" v="1.00,"/>
 			<val e="Name 21" v=""/>
 			<val e="Chan Mute 21" v="0.00,"/>
@@ -3110,7 +3110,7 @@
 			<val e="Exp Thresh. 21" v="-60.00,"/>
 			<val e="Exp Ratio 21" v="1.00,"/>
 			<val e="Hide State 21" v="0.00,"/>
-			<val e="Remote Controls 21" v="1023.00,"/>
+			<val e="Remote Controls 21" v="255.00,"/>
 			<val e="Stereo 22" v="1.00,"/>
 			<val e="Name 22" v=""/>
 			<val e="Chan Mute 22" v="0.00,"/>
@@ -3160,7 +3160,7 @@
 			<val e="Exp Thresh. 22" v="-60.00,"/>
 			<val e="Exp Ratio 22" v="1.00,"/>
 			<val e="Hide State 22" v="0.00,"/>
-			<val e="Remote Controls 22" v="1023.00,"/>
+			<val e="Remote Controls 22" v="255.00,"/>
 			<val e="Stereo 23" v="1.00,"/>
 			<val e="Name 23" v=""/>
 			<val e="Chan Mute 23" v="0.00,"/>
@@ -3210,7 +3210,7 @@
 			<val e="Exp Thresh. 23" v="-60.00,"/>
 			<val e="Exp Ratio 23" v="1.00,"/>
 			<val e="Hide State 23" v="0.00,"/>
-			<val e="Remote Controls 23" v="1023.00,"/>
+			<val e="Remote Controls 23" v="255.00,"/>
 			<val e="Stereo 24" v="1.00,"/>
 			<val e="Name 24" v=""/>
 			<val e="Chan Mute 24" v="0.00,"/>
@@ -3260,7 +3260,7 @@
 			<val e="Exp Thresh. 24" v="-60.00,"/>
 			<val e="Exp Ratio 24" v="1.00,"/>
 			<val e="Hide State 24" v="0.00,"/>
-			<val e="Remote Controls 24" v="1023.00,"/>
+			<val e="Remote Controls 24" v="255.00,"/>
 			<val e="Stereo 25" v="1.00,"/>
 			<val e="Name 25" v=""/>
 			<val e="Chan Mute 25" v="0.00,"/>
@@ -3310,7 +3310,7 @@
 			<val e="Exp Thresh. 25" v="-60.00,"/>
 			<val e="Exp Ratio 25" v="1.00,"/>
 			<val e="Hide State 25" v="0.00,"/>
-			<val e="Remote Controls 25" v="1023.00,"/>
+			<val e="Remote Controls 25" v="255.00,"/>
 			<val e="Stereo 26" v="1.00,"/>
 			<val e="Name 26" v=""/>
 			<val e="Chan Mute 26" v="0.00,"/>
@@ -3360,7 +3360,7 @@
 			<val e="Exp Thresh. 26" v="-60.00,"/>
 			<val e="Exp Ratio 26" v="1.00,"/>
 			<val e="Hide State 26" v="0.00,"/>
-			<val e="Remote Controls 26" v="1023.00,"/>
+			<val e="Remote Controls 26" v="255.00,"/>
 			<val e="Stereo 27" v="1.00,"/>
 			<val e="Name 27" v=""/>
 			<val e="Chan Mute 27" v="0.00,"/>
@@ -3410,7 +3410,7 @@
 			<val e="Exp Thresh. 27" v="-60.00,"/>
 			<val e="Exp Ratio 27" v="1.00,"/>
 			<val e="Hide State 27" v="0.00,"/>
-			<val e="Remote Controls 27" v="1023.00,"/>
+			<val e="Remote Controls 27" v="255.00,"/>
 			<val e="Stereo 28" v="1.00,"/>
 			<val e="Name 28" v=""/>
 			<val e="Chan Mute 28" v="0.00,"/>
@@ -3460,7 +3460,7 @@
 			<val e="Exp Thresh. 28" v="-60.00,"/>
 			<val e="Exp Ratio 28" v="1.00,"/>
 			<val e="Hide State 28" v="0.00,"/>
-			<val e="Remote Controls 28" v="1023.00,"/>
+			<val e="Remote Controls 28" v="255.00,"/>
 			<val e="Stereo 29" v="1.00,"/>
 			<val e="Name 29" v=""/>
 			<val e="Chan Mute 29" v="0.00,"/>
@@ -3510,7 +3510,7 @@
 			<val e="Exp Thresh. 29" v="-60.00,"/>
 			<val e="Exp Ratio 29" v="1.00,"/>
 			<val e="Hide State 29" v="0.00,"/>
-			<val e="Remote Controls 29" v="1023.00,"/>
+			<val e="Remote Controls 29" v="255.00,"/>
 		</Outputs>
 		<Mixer>
 			<val e="Slider 00 00" v="-65.00,"/>
@@ -3521,10 +3521,9 @@
 			<val e="Slider 00 05" v="-65.00,"/>
 			<val e="Slider 00 06" v="-65.00,"/>
 			<val e="Slider 00 07" v="-65.00,"/>
-			<val e="Slider 00 08" v="6.02,"/>
-			<val e="Pan 00 08" v="-1.00,"/>
-			<val e="Slider 00 09" v="-1.86,"/>
-			<val e="Slider 00 10" v="6.00,"/>
+			<val e="Slider 00 08" v="-65.00,"/>
+			<val e="Slider 00 09" v="-0.71,"/>
+			<val e="Slider 00 10" v="-2.71,"/>
 			<val e="Pan 00 10" v="-0.50,"/>
 			<val e="Slider 00 11" v="-65.00,"/>
 			<val e="Pan 00 11" v="1.00,"/>
@@ -3577,8 +3576,8 @@
 			<val e="Slider 00 58" v="0.00,"/>
 			<val e="Slider 00 59" v="0.00,"/>
 			<val e="Slider 00 60" v="0.00,"/>
-			<val e="Slider 02 09" v="-3.71,"/>
-			<val e="Slider 02 10" v="-4.86,"/>
+			<val e="Slider 02 09" v="-0.71,"/>
+			<val e="Slider 02 10" v="-2.71,"/>
 			<val e="Pan 02 10" v="-1.00,"/>
 			<val e="Pan 02 11" v="1.00,"/>
 			<val e="Slider 02 30" v="0.00,"/>
@@ -3611,8 +3610,8 @@
 			<val e="Slider 02 57" v="0.00,"/>
 			<val e="Slider 02 58" v="0.00,"/>
 			<val e="Slider 02 59" v="0.00,"/>
-			<val e="Slider 02 60" v="-20.10,"/>
-			<val e="Slider 03 60" v="-20.10,"/>
+			<val e="Slider 02 60" v="-16.98,"/>
+			<val e="Slider 03 60" v="-16.98,"/>
 			<val e="Pan 04 10" v="-1.00,"/>
 			<val e="Pan 04 11" v="1.00,"/>
 			<val e="Slider 04 32" v="0.00,"/>
@@ -3623,9 +3622,8 @@
 			<val e="Pan 06 11" v="1.00,"/>
 			<val e="Slider 06 34" v="0.00,"/>
 			<val e="Slider 06 35" v="0.00,"/>
-			<val e="Slider 06 60" v="6.00,"/>
-			<val e="Slider 07 60" v="6.00,"/>
-			<val e="Slider 08 08" v="6.02,"/>
+			<val e="Slider 06 60" v="5.43,"/>
+			<val e="Slider 07 60" v="5.43,"/>
 			<val e="Pan 08 08" v="-1.00,"/>
 			<val e="Slider 08 11" v="-65.00,"/>
 			<val e="Pan 08 11" v="1.00,"/>
@@ -3749,6 +3747,8 @@
 			<val e="Slider 09 59" v="-293.98,"/>
 			<val e="Pan 09 59" v="1.00,"/>
 			<val e="Slider 09 60" v="6.00,"/>
+			<val e="Slider 10 09" v="-5.29,"/>
+			<val e="Slider 10 10" v="-5.29,"/>
 			<val e="Pan 10 10" v="-1.00,"/>
 			<val e="Pan 10 11" v="1.00,"/>
 			<val e="Slider 10 38" v="0.00,"/>
@@ -3761,64 +3761,52 @@
 			<val e="Slider 12 41" v="0.00,"/>
 			<val e="Slider 12 60" v="0.00,"/>
 			<val e="Slider 13 60" v="0.00,"/>
-			<val e="Slider 14 09" v="-2.43,"/>
 			<val e="Pan 14 10" v="-1.00,"/>
 			<val e="Pan 14 11" v="1.00,"/>
 			<val e="Slider 14 42" v="0.00,"/>
 			<val e="Slider 14 43" v="0.00,"/>
 			<val e="Slider 14 60" v="0.00,"/>
 			<val e="Slider 15 60" v="0.00,"/>
-			<val e="Slider 16 09" v="-1.86,"/>
-			<val e="Slider 16 10" v="0.29,"/>
 			<val e="Pan 16 11" v="1.00,"/>
 			<val e="Slider 16 44" v="-0.14,"/>
 			<val e="Slider 16 45" v="-0.14,"/>
 			<val e="Slider 16 60" v="0.00,"/>
 			<val e="Slider 17 60" v="0.00,"/>
-			<val e="Slider 18 09" v="-4.71,"/>
-			<val e="Slider 18 10" v="6.00,"/>
 			<val e="Pan 18 11" v="1.00,"/>
 			<val e="Slider 18 46" v="0.00,"/>
 			<val e="Slider 18 47" v="0.00,"/>
 			<val e="Slider 18 60" v="0.00,"/>
 			<val e="Slider 19 60" v="0.00,"/>
-			<val e="Slider 20 09" v="-5.00,"/>
 			<val e="Pan 20 10" v="-1.00,"/>
 			<val e="Pan 20 11" v="1.00,"/>
 			<val e="Slider 20 48" v="0.00,"/>
 			<val e="Slider 20 49" v="0.00,"/>
 			<val e="Slider 20 60" v="0.00,"/>
 			<val e="Slider 21 60" v="0.00,"/>
-			<val e="Slider 22 09" v="-5.86,"/>
-			<val e="Slider 22 10" v="-2.29,"/>
 			<val e="Pan 22 10" v="-1.00,"/>
 			<val e="Pan 22 11" v="1.00,"/>
 			<val e="Slider 22 50" v="0.00,"/>
 			<val e="Slider 22 51" v="0.00,"/>
 			<val e="Slider 22 60" v="0.00,"/>
 			<val e="Slider 23 60" v="0.00,"/>
-			<val e="Slider 24 09" v="-3.29,"/>
 			<val e="Pan 24 10" v="-1.00,"/>
 			<val e="Pan 24 11" v="1.00,"/>
 			<val e="Slider 24 52" v="0.00,"/>
 			<val e="Slider 24 53" v="0.00,"/>
 			<val e="Slider 24 60" v="0.00,"/>
 			<val e="Slider 25 60" v="0.00,"/>
-			<val e="Slider 26 09" v="-2.71,"/>
 			<val e="Pan 26 10" v="-1.00,"/>
 			<val e="Pan 26 11" v="1.00,"/>
 			<val e="Slider 26 54" v="0.00,"/>
 			<val e="Slider 26 55" v="0.00,"/>
 			<val e="Slider 26 60" v="0.00,"/>
 			<val e="Slider 27 60" v="0.00,"/>
-			<val e="Slider 28 09" v="-8.53,"/>
 			<val e="Pan 28 10" v="-1.00,"/>
 			<val e="Pan 28 11" v="1.00,"/>
 			<val e="Slider 28 56" v="0.00,"/>
 			<val e="Slider 28 57" v="0.00,"/>
 			<val e="Slider 28 60" v="0.00,"/>
 			<val e="Slider 29 60" v="0.00,"/>
-			<val e="Slider 30 09" v="-5.00,"/>
 			<val e="Pan 30 10" v="-1.00,"/>
 			<val e="Pan 30 11" v="1.00,"/>
 			<val e="Slider 30 58" v="0.00,"/>
@@ -3828,11 +3816,11 @@
 		</Mixer>
 		<MidiRemote0>
 			<val e="MidiRemoteInUse" v="1"/>
-			<val e="MidiIn" v=""/>
-			<val e="MidiOut" v=""/>
+			<val e="MidiIn" v="None"/>
+			<val e="MidiOut" v="None"/>
 			<val e="MidiSelBus" v="0"/>
 			<val e="MidiSelChannel" v="0"/>
-			<val e="MidiSelSubmix" v="8"/>
+			<val e="MidiSelSubmix" v="2"/>
 			<val e="MCSupport" v="1"/>
 			<val e="MCExtender" v="0"/>
 			<val e="MCSelSubmixInPb" v="0"/>
@@ -3897,16 +3885,16 @@
 		<OscRemote0>
 			<val e="OscSelBus" v="0"/>
 			<val e="OscSelChannel" v="0"/>
-			<val e="OscSelSubmix" v="8"/>
+			<val e="OscSelSubmix" v="2"/>
 			<val e="OSCRemoteInUse" v="1"/>
 			<val e="OSCOwnPort" v="7001"/>
 			<val e="OSCRemotePort" v="9001"/>
 			<val e="OSCRemoteHost" v=""/>
 			<val e="OSCSendLevel" v="0"/>
 			<val e="OSCLevelHold" v="0"/>
-			<val e="OSCChannelsPerBank" v="0"/>
+			<val e="OSCChannelsPerBank" v="8"/>
 			<val e="FixToSubmix" v="0"/>
-			<val e="FixedToSubmix" v="0"/>
+			<val e="FixedToSubmix" v="2"/>
 		</OscRemote0>
 		<OscRemote1>
 			<val e="OscSelBus" v="0"/>
@@ -3953,8 +3941,8 @@
 		<AuxDevice0>
 			<val e="AuxDeviceType" v="0"/>
 			<val e="AuxDeviceID" v="0"/>
-			<val e="AuxMidiIn" v=""/>
-			<val e="AuxMidiOut" v=""/>
+			<val e="AuxMidiIn" v="Fireface 802 (23673985) Port 1"/>
+			<val e="AuxMidiOut" v="Fireface 802 (23673985) Port 1"/>
 		</AuxDevice0>
 		<AuxDevice1>
 			<val e="AuxDeviceType" v="0"/>
