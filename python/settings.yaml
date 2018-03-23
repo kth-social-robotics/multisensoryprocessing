@@ -27,7 +27,7 @@ messaging:
   mocap_host: "172.18.133.161"
 
   # furhat host
-  furhat_host: "130.237.67.172"
+  furhat_host: "130.237.67.115"
 
   # exchanges
   artificial_agent: "artificial-agent"

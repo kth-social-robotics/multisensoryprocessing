@@ -1,7 +1,7 @@
 from furhat import connect_to_iristk
 from time import sleep
 
-FURHAT_IP = '130.237.67.172' # Furhat IP address
+FURHAT_IP = '130.237.67.115' # Furhat IP address
 FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
 
 with connect_to_iristk(FURHAT_IP) as furhat_client:
