@@ -50,13 +50,13 @@ Starting sequence:
 +++-WebGL Visualisation browser (win/mac)
     +++-Define number of glasses and targets (now works only if p2 has gloves)
     +++-Open MAMP    
-+++-TobiiMocap bat (win):
-    +++-Tobii pre-processor bat (win)
-    +++-Mocap pre-processor bat (win)
-        +++-Update mocap objects
-    +++-Mocap sensor bat (win)
-+++-Tobii glasses1 (win)
-+++-Tobii glasses2 (win)
+-TobiiMocap bat (pmil):
+    -Tobii pre-processor bat (pmil)
+    -Mocap pre-processor bat (pmil)
+        -Update mocap objects
+    -Mocap sensor bat (pmil)
+-Tobii glasses1 (pmil)
+-Tobii glasses2 (pmil)
 -NLP sh (macjocke):
     -NLP processor sh (macjocke)
     -ASR sh (macjocke)
