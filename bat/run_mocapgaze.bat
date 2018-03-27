@@ -1,4 +1,10 @@
-REM START CMD /K CALL "run_tobiimocap.bat"
+REM START CMD /K CALL "run_mocapgaze.bat"
+
+REM start mocapgaze processor
+START CMD /K CALL "mocapgazeprocessor.bat"
+
+REM delay for 10 seconds
+CHOICE /N /C YN /T 10 /D Y >NUL
 
 REM start tobii preprocessor
 START CMD /K CALL "tobiipreprocessor.bat"

@@ -45,13 +45,16 @@ Starting sequence:
         +++-Define mic for P1 and P2
         +++-Define number of targets and tables
         +++-Define glasses and hands markers
-    +++-Mocap-gaze processor sh (mac)
-        -Define Tobii markers and head angle on Matlab
+
 -WebGL Visualisation browser (mac)
+    -Run mocapgaze process separately
     -Define pointing markers for gloves
     -Define number of glasses, gloves and targets
     -Open MAMP and Firefox
--TobiiMocap bat (pmil):
+
+-Mocapgaze bat (pmil):
+    -Mocap-gaze processor bat (pmil)
+        -Define Tobii markers and head angle on Matlab
     -Tobii pre-processor bat (pmil)
     -Mocap pre-processor bat (pmil)
         -Update mocap objects
