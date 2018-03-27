@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/python/processors/featurevector
-python2 feature.py 130.237.67.232 furhat
+cd /Users/tmhadmin/Documents/GitHub/multisensoryprocessing/python/processors/featurevector
+python feature.py 130.237.67.196 furhat

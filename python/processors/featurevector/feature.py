@@ -66,8 +66,8 @@ client.start()
 
 # Start matlab engine
 mateng = matlab.engine.start_matlab()
-mateng.addpath(r'/Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/matlab', nargout=0)
-#mateng.addpath(r'C:/Users/PMIL/Documents/GitHub/multisensoryprocessing/matlab', nargout=0)
+#mateng.addpath(r'/Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/matlab', nargout=0)
+mateng.addpath(r'/Users/tmhadmin/Documents/GitHub/multisensoryprocessing/matlab', nargout=0)
 print("MATLAB")
 
 # Settings
@@ -531,7 +531,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
                 # Furhat react to P2 speech
                 if nlpbody['mic'] == p2mic and nlpbody['speech'] == 'hello ':
-                    furhat_client.say(FURHAT_AGENT_NAME, 'Hi builder.')
+                    furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
 
                 # Furhat look at person speaking
                 if nlpbody['mic'] == p1mic:
