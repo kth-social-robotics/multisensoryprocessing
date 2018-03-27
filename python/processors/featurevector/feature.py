@@ -1,4 +1,4 @@
-# python feature.py 130.237.67.232 furhat
+# python feature.py 130.237.67.196 furhat
 # Wait for Matlab to start
 
 import zmq
@@ -30,29 +30,13 @@ from time import sleep
 FURHAT_IP = '130.237.67.115' # Furhat IP address
 FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
 
-# Mocap and Furhat Ranges X
-MocapMaxx = -1.82
-MocapMinx = -3.23
-MocapRangex = (MocapMaxx - MocapMinx)
-FurhatMaxx = 3
-FurhatMinx = -2
-FurhatRangex = (FurhatMaxx - FurhatMinx)
-
-# Mocap and Furhat Ranges Y
-MocapMaxy = 1.70
-MocapMiny = 0.75
-MocapRangey = (MocapMaxy - MocapMiny)
-FurhatMaxy = 1
-FurhatMiny = -1
-FurhatRangey = (FurhatMaxy - FurhatMiny)
-
 # Microphones
-p1mic = 'mic0'
-p2mic = 'mic3'
+p1mic = 'mic3'
+p2mic = 'mic9'
 
 # Mocap objects
 glasses_num = 2
-gloves_num = 1
+gloves_num = 2
 targets_num = 14
 tables_num = 1
 
@@ -80,6 +64,7 @@ client.start()
 # Start matlab engine
 mateng = matlab.engine.start_matlab()
 mateng.addpath(r'/Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/matlab', nargout=0)
+#mateng.addpath(r'C:/Users/PMIL/Documents/GitHub/multisensoryprocessing/matlab', nargout=0)
 print("MATLAB")
 
 # Settings
@@ -102,7 +87,10 @@ feature_dict = defaultdict(lambda : defaultdict(dict))
 # Each key is the local timestamp in seconds. The second key is the frame
 # Time, Frame: Timestamp, P1 Np, P1 Adj, P1 Verb, P1 Det, P1 Pron, P1 Feedback, P1 ASR,
 # P2 Np, P2 Adj, P2 Verb, P2 Det, P2 Pron, P2 Feedback, P2 ASR,
-# P1 Gaze Label, P2 Gaze Label, P1 Gaze Probabilities, P2 Gaze Probabilities, P2 Holding object, Step
+# P1 Gaze Label, P2 Gaze Label, P1 Gaze Probabilities, P2 Gaze Probabilities, P2 Holding object,
+# P1 Pointing Label, P1 Pointing Probability Left, P1 Pointing Probability Right,
+# P2 Pointing Label, P2 Pointing Probability Left, P2 Pointing Probability Right,
+# Step
 feature_dict[0][0]['TS'] = ''
 feature_dict[0][0]['P1N'] = ''
 feature_dict[0][0]['P1A'] = ''
@@ -123,21 +111,19 @@ feature_dict[0][0]['P2GL'] = ['']
 feature_dict[0][0]['P1GP'] = ['']
 feature_dict[0][0]['P2GP'] = ['']
 feature_dict[0][0]['P2HL'] = ['']
-feature_dict[0][0]['P2PLL'] = ['']
-feature_dict[0][0]['P2PLR'] = ['']
+feature_dict[0][0]['P1PL'] = ['']
+feature_dict[0][0]['P1PPL'] = ['']
+feature_dict[0][0]['P1PPR'] = ['']
+feature_dict[0][0]['P2PL'] = ['']
 feature_dict[0][0]['P2PPL'] = ['']
 feature_dict[0][0]['P2PPR'] = ['']
 feature_dict[0][0]['S'] = ''
-
-#fixfilter = 0
 
 # Connect to Furhat
 with connect_to_iristk(FURHAT_IP) as furhat_client:
     # Introduce Furhat
     furhat_client.say(FURHAT_AGENT_NAME, 'Hello there. I am here to learn how you are putting this furniture together.')
-    #sleep(0.01)
-    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P2 position
-    #sleep(0.01)
+    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
 
     # Log Furhat events
     def event_callback(event):
@@ -149,6 +135,8 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
     # Listen to events
     furhat_client.start_listening(event_callback) # register the event callback receiver
+
+
 
     # Procees mocap input data
     def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):

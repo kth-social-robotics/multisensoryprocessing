@@ -41,10 +41,10 @@ Starting sequence:
     +++-Define server IP
 +++-Processors sh (mac):
     +++-Feature Vector sh (mac)
-        +++-Define Furhat IP and coordinate ranges
-        +++-Define mic for P1 and P2
-        +++-Define number of targets and tables
         +++-Define glasses and hands markers
+        -Define Furhat IP
+        -Define mic for P1 and P2
+        -Define number of targets, glasses, gloves and tables
 
 -WebGL Visualisation browser (mac)
     -Run mocapgaze process separately
