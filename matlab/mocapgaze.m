@@ -15,10 +15,10 @@ if (strcmp(tobii_device, 'tobii_glasses1'))
     % Calculate a transform from rigidbody coordinates to tobii glasses
     % coordinates, assuming there are 2 markers on the front, and 2 markers
     % at the back
-    front_left_marker = 1;
-    front_right_marker = 3;
-    back_left_marker = 2;
-    back_right_marker = 4;
+    front_left_marker = 3;
+    front_right_marker = 2;
+    back_left_marker = 4;
+    back_right_marker = 1;
 elseif (strcmp(tobii_device, 'tobii_glasses2'))
     % Values
     gd.left = [0, 0, 0];
@@ -33,10 +33,10 @@ elseif (strcmp(tobii_device, 'tobii_glasses2'))
     % Calculate a transform from rigidbody coordinates to tobii glasses
     % coordinates, assuming there are 2 markers on the front, and 2 markers
     % at the back
-    front_left_marker = 3;
-    front_right_marker = 1;
-    back_left_marker = 4;
-    back_right_marker = 2;
+    front_left_marker = 1;
+    front_right_marker = 4;
+    back_left_marker = 2;
+    back_right_marker = 3;
 end
 
 % Normalise gp3
@@ -49,7 +49,7 @@ gd.gp3 = clamp_magnitude(ggp3, 2, Inf);
 % not necessary as it is only used for robustness. The back left marker is
 % positioned always at the same place for all glasses, while the back right
 % position varies.
-tobii_data = assemble_tobii_data(gd, tobii_rgbdata, front_left_marker, front_right_marker, back_left_marker);
+tobii_data = assemble_tobii_data(tobii_device, gd, tobii_rgbdata, front_left_marker, front_right_marker, back_left_marker);
 
 % Remove nan cases of gp3 and put 0
 if (isnan(tobii_data.gaze3D_w))

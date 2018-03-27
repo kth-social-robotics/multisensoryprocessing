@@ -46,7 +46,7 @@ Starting sequence:
         +++-Define number of targets and tables
         +++-Define glasses and hands markers
     +++-Mocap-gaze processor sh (mac)
-        +++-Define Tobii markers on Matlab
+        +++-Define Tobii markers and head angle on Matlab
 -WebGL Visualisation browser (mac)
     -Define pointing markers for gloves
     -Define number of glasses, gloves and targets
