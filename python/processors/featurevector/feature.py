@@ -27,7 +27,7 @@ from client import Client
 from furhat import connect_to_iristk
 from time import sleep
 
-FURHAT_IP = '130.237.67.172' # Furhat IP address
+FURHAT_IP = '130.237.67.115' # Furhat IP address
 FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
 
 # Mocap and Furhat Ranges X
@@ -250,6 +250,37 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                                 if frame % 10 == 0:
                                     furhat_client.gaze(FURHAT_AGENT_NAME, {'x': FurhatValuex, 'y': FurhatValuey,'z': 2.00})
                                     #sleep(0.001)
+
+
+
+                                #         fx = tobiimocap_dict[second][frame-10]['mocap_furhat']['position']['x']
+                                #         fy = tobiimocap_dict[second][frame-10]['mocap_furhat']['position']['y']
+                                #         fz = tobiimocap_dict[second][frame-10]['mocap_furhat']['position']['z']
+                                #
+                                #         ox = tobiimocap_dict[second][frame-10]['mocap_target8']['position']['x']
+                                #         oy = tobiimocap_dict[second][frame-10]['mocap_target8']['position']['y']
+                                #         oz = tobiimocap_dict[second][frame-10]['mocap_target8']['position']['z']
+                                #
+                                #         gaze_target_x = oz - fz
+                                #         gaze_target_y = oy - fy
+                                #         gaze_target_z = - (ox - fx)
+                                #
+                                #         furhatx = False
+                                #         furhaty = False
+                                #         furhatz = False
+                                #
+                                #         if -4 <= gaze_target_x <= 4:
+                                #             furhatx = True
+                                #         if -1 <= gaze_target_y <= 1:
+                                #             furhaty = True
+                                #         if 0 <= gaze_target_z <= 3:
+                                #             furhatz = True
+                                #
+                                #         if frame % 10 == 0 and furhatx and furhaty and furhatz:
+                                #             furhat_client.gaze(FURHAT_AGENT_NAME, {'x': gaze_target_x, 'y': gaze_target_y,'z': gaze_target_z})
+                                #             print (second, frame, gaze_target_x, gaze_target_y, gaze_target_z)
+
+
 
                     # aaa
 

@@ -47,9 +47,10 @@ Starting sequence:
         +++-Define glasses and hands markers
     +++-Mocap-gaze processor sh (mac)
         +++-Define Tobii markers on Matlab
-+++-WebGL Visualisation browser (win/mac)
-    +++-Define number of glasses and targets (now works only if p2 has gloves)
-    +++-Open MAMP    
+-WebGL Visualisation browser (mac)
+    -Define pointing markers for gloves
+    -Define number of glasses, gloves and targets
+    -Open MAMP and Firefox
 -TobiiMocap bat (pmil):
     -Tobii pre-processor bat (pmil)
     -Mocap pre-processor bat (pmil)
