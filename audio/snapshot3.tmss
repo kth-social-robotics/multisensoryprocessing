@@ -598,7 +598,7 @@
 			<val e="M/S-Coding 10" v="0.00,"/>
 			<val e="Width 10" v="1.00,"/>
 			<val e="PF Listen 10" v="0.00,"/>
-			<val e="Rev Send 10" v="-63.21,"/>
+			<val e="Rev Send 10" v="-65.79,"/>
 			<val e="Loopback 10" v="0.00,"/>
 			<val e="Phant Power 10" v="1.00,"/>
 			<val e="High Z Inp 10" v="0.00,"/>
@@ -3523,8 +3523,8 @@
 			<val e="Slider 00 07" v="-65.00,"/>
 			<val e="Slider 00 08" v="-65.00,"/>
 			<val e="Slider 00 09" v="-0.71,"/>
-			<val e="Slider 00 10" v="-2.71,"/>
-			<val e="Pan 00 10" v="-0.50,"/>
+			<val e="Slider 00 10" v="-5.29,"/>
+			<val e="Pan 00 10" v="-1.00,"/>
 			<val e="Slider 00 11" v="-65.00,"/>
 			<val e="Pan 00 11" v="1.00,"/>
 			<val e="Slider 00 12" v="-65.00,"/>
@@ -3577,7 +3577,7 @@
 			<val e="Slider 00 59" v="0.00,"/>
 			<val e="Slider 00 60" v="0.00,"/>
 			<val e="Slider 02 09" v="-0.71,"/>
-			<val e="Slider 02 10" v="-2.71,"/>
+			<val e="Slider 02 10" v="-44.45,"/>
 			<val e="Pan 02 10" v="-1.00,"/>
 			<val e="Pan 02 11" v="1.00,"/>
 			<val e="Slider 02 30" v="0.00,"/>
