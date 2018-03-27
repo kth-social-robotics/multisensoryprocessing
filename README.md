@@ -33,24 +33,29 @@ Starting sequence:
     -Logging of processors (pmil) (optional)
     -Logging of sensors (pmil) (optional)
 
+-WebGL Visualisation browser (mac) (optional)
+    -Run mocapgaze process separately
+    -Define pointing markers for gloves
+    -Define number of glasses, gloves and targets
+    -Open MAMP and Firefox
+
 +++-Attention model (Server) (mac)
     +++-Define server IP on server and client files and feature bat file
     +++-Get log files
     +++-Define objects and tables
 +++-Instructions (mac):
     +++-Define server IP
-+++-Processors sh (mac):
-    +++-Feature Vector sh (mac)
+-Feature sh (macjocke):
+    -Feature Vector sh (macjocke)
         -Define glasses and hands markers
         -Define Furhat IP
         -Define mic for P1 and P2
         -Define number of targets, glasses, gloves and tables
-
--WebGL Visualisation browser (mac)
-    -Run mocapgaze process separately
-    -Define pointing markers for gloves
-    -Define number of glasses, gloves and targets
-    -Open MAMP and Firefox
+    -NLP sh (macjocke):
+        -NLP processor sh (macjocke)
+        -ASR sh (macjocke)
+        -Microphone sh (macjocke)
+        -Microphone sh (macjocke)
 
 -Mocapgaze bat (pmil):
     -Mocap-gaze processor bat (pmil)
@@ -59,10 +64,6 @@ Starting sequence:
     -Mocap pre-processor bat (pmil)
         -Update mocap objects
     -Mocap sensor bat (pmil)
+
 -Tobii glasses1 (pmil)
 -Tobii glasses2 (pmil)
--NLP sh (macjocke):
-    -NLP processor sh (macjocke)
-    -ASR sh (macjocke)
-    -Microphone sh (macjocke)
-    -Microphone sh (macjocke)
