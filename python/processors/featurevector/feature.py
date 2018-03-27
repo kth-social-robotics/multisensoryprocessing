@@ -31,8 +31,8 @@ FURHAT_IP = '130.237.67.115' # Furhat IP address
 FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
 
 # Microphones
-p1mic = 'mic3'
-p2mic = 'mic9'
+p1mic = 'mic9'
+p2mic = 'mic3'
 
 # Mocap objects
 glasses_num = 2
@@ -85,8 +85,9 @@ mq.publish(
 feature_dict = defaultdict(lambda : defaultdict(dict))
 
 # Each key is the local timestamp in seconds. The second key is the frame
-# Time, Frame: Timestamp, P1 Np, P1 Adj, P1 Verb, P1 Det, P1 Pron, P1 Feedback, P1 ASR,
-# P2 Np, P2 Adj, P2 Verb, P2 Det, P2 Pron, P2 Feedback, P2 ASR,
+# Time, Frame: Timestamp,
+# P1 Np, P1 Adj, P1 Verb, P1 Det, P1 Pron, P1 Feedback, P1 ASR, P1 Keywords,
+# P2 Np, P2 Adj, P2 Verb, P2 Det, P2 Pron, P2 Feedback, P2 ASR, P2 Keywords,
 # P1 Gaze Label, P2 Gaze Label, P1 Gaze Probabilities, P2 Gaze Probabilities, P2 Holding object,
 # P1 Pointing Label, P1 Pointing Probability Left, P1 Pointing Probability Right,
 # P2 Pointing Label, P2 Pointing Probability Left, P2 Pointing Probability Right,
@@ -99,6 +100,7 @@ feature_dict[0][0]['P1D'] = ''
 feature_dict[0][0]['P1P'] = ''
 feature_dict[0][0]['P1F'] = ''
 feature_dict[0][0]['P1ASR'] = ['']
+feature_dict[0][0]['P1Keywords'] = ['']
 feature_dict[0][0]['P2N'] = ''
 feature_dict[0][0]['P2A'] = ''
 feature_dict[0][0]['P2V'] = ''
@@ -106,6 +108,7 @@ feature_dict[0][0]['P2D'] = ''
 feature_dict[0][0]['P2P'] = ''
 feature_dict[0][0]['P2F'] = ''
 feature_dict[0][0]['P2ASR'] = ['']
+feature_dict[0][0]['P2Keywords'] = ['']
 feature_dict[0][0]['P1GL'] = ['']
 feature_dict[0][0]['P2GL'] = ['']
 feature_dict[0][0]['P1GP'] = ['']
@@ -469,6 +472,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                     feature_dict[second][frame]['P1P'] = nlpbody['language']['pronouns']
                     feature_dict[second][frame]['P1F'] = nlpbody['language']['feedback']
                     feature_dict[second][frame]['P1ASR'] = [nlpbody['speech']]
+                    feature_dict[second][frame]['P1Keywords'] = [nlpbody['keywords']]
                 elif nlpbody['mic'] == p2mic:
                     feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
                     feature_dict[second][frame]['P2N'] = nlpbody['language']['nouns']
@@ -478,23 +482,23 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                     feature_dict[second][frame]['P2P'] = nlpbody['language']['pronouns']
                     feature_dict[second][frame]['P2F'] = nlpbody['language']['feedback']
                     feature_dict[second][frame]['P2ASR'] = [nlpbody['speech']]
+                    feature_dict[second][frame]['P2Keywords'] = [nlpbody['keywords']]
 
                 # Furhat react to P1 speech
                 if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
                     furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
-                    #sleep(0.01)
 
                 # Furhat look at person speaking
                 if nlpbody['mic'] == p1mic:
-                    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P1 position
+                    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
                 elif nlpbody['mic'] == p2mic:
-                    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P2 position
+                    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
 
                 # Print feature vector
                 print(feature_dict[second][frame])
                 #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
 
-                # Sending messages to ROS
+                # Sending messages to attention module
                 my_message = json.dumps(feature_dict[second][frame])
                 my_message = "interpreter;data;" + my_message + "$"
 

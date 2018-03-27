@@ -1,0 +1,72 @@
+1522164797.6;0;{'P2D': ['this', 'a'], 'P2F': [], 'P2A': [], 'P2ASR': ['this is a test '], 'P2N': [], 'P2V': ['is'], 'P2P': []}
+1522164805.07;0;{'P2D': ['this', 'another'], 'P2F': ['no'], 'P2A': [], 'P2ASR': ['this is another test '], 'P2N': [], 'P2V': ['is'], 'P2P': []}
+1522164818.99;0;{'P2D': ['this', 'another'], 'P2F': ['no'], 'P2A': [], 'P2ASR': ['once more this is another test '], 'P2N': [], 'P2V': ['is'], 'P2P': []}
+1522164844.35;0;{'P2D': [], 'P2F': [], 'P2A': [], 'P2ASR': ['how do you do '], 'P2N': [], 'P2V': ['do'], 'P2P': ['you']}
+1522164854.92;0;{'P2D': [], 'P2F': ['yes'], 'P2A': [], 'P2ASR': ['yes Sir you just have to go there '], 'P2N': [], 'P2V': ['go', 'Sir', 'have'], 'P2P': ['you']}
+1522164931.96;0;{'P2D': ['this', 'a'], 'P2F': [], 'P2A': ['new'], 'P2ASR': ['this is a new test '], 'P2N': [], 'P2V': ['is'], 'P2P': []}
+1522165027.33;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['is it this '], 'P1N': [], 'P1P': ['it'], 'P1V': ['is']}
+1522165050.33;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['hello '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522165054.4;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['hi '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522165069.55;0;{'P1A': [], 'P1D': ['this', 'a'], 'P1F': [], 'P1ASR': ['this is a test '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522165069.63;0;{'P2D': ['this', 'a'], 'P2F': [], 'P2A': [], 'P2ASR': ['this is a test '], 'P2N': [], 'P2V': ['is'], 'P2P': []}
+1522165091.63;0;{'P2D': ['this'], 'P2F': [], 'P2A': [], 'P2ASR': ['okay so this is one you test '], 'P2N': ['test'], 'P2V': ['is'], 'P2P': ['you']}
+1522165091.64;0;{'P1A': [], 'P1D': ['this'], 'P1F': [], 'P1ASR': ['okay so this is one you test '], 'P1N': ['test'], 'P1P': ['you'], 'P1V': ['is']}
+1522165119.31;0;{'P1A': [], 'P1D': [], 'P1F': ['yes'], 'P1ASR': ['yes so you can hear me you can hear me very very carefully '], 'P1N': [], 'P1P': ['me', 'you'], 'P1V': ['hear']}
+1522165119.35;0;{'P2D': [], 'P2F': [], 'P2A': [], 'P2ASR': ['so you can hear me you can hear me very very carefully '], 'P2N': [], 'P2V': ['hear'], 'P2P': ['me', 'you']}
+1522165139.8;0;{'P1A': [], 'P1D': ['this', 'a'], 'P1F': [], 'P1ASR': ['hello this is a test '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522165170.54;0;{'P1A': [], 'P1D': ['this', 'a'], 'P1F': [], 'P1ASR': ['hello this is a test '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522165193.35;0;{'P1A': [], 'P1D': [], 'P1F': ['no'], 'P1ASR': ['can you hear me now '], 'P1N': [], 'P1P': ['me', 'you'], 'P1V': ['hear']}
+1522165204.11;0;{'P1A': [], 'P1D': [], 'P1F': ['no'], 'P1ASR': ['how about now '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522165224.03;0;{'P1A': [], 'P1D': [], 'P1F': ['no'], 'P1ASR': ['what about now '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522165224.14;0;{'P2D': [], 'P2F': ['no'], 'P2A': [], 'P2ASR': ['what about now '], 'P2N': [], 'P2V': [], 'P2P': []}
+1522165227.75;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['but '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522165273.18;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['although '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522165279.6;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['although '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522165311.13;0;{'P1A': [], 'P1D': [], 'P1F': ['no'], 'P1ASR': ['I know '], 'P1N': [], 'P1P': ['I'], 'P1V': ['know']}
+1522165417.34;0;{'P1A': [], 'P1D': [], 'P1F': ['no'], 'P1ASR': ['you hear me now '], 'P1N': [], 'P1P': ['me', 'you'], 'P1V': ['hear']}
+1522165443.92;0;{'P2D': [], 'P2F': [], 'P2A': [], 'P2ASR': ['although '], 'P2N': [], 'P2V': [], 'P2P': []}
+1522165443.98;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['hello '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522165450.48;0;{'P2D': [], 'P2F': [], 'P2A': [], 'P2ASR': ['hi '], 'P2N': [], 'P2V': [], 'P2P': []}
+1522165475.63;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['hello '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522165488.38;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['hello '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522165776.02;0;{'P2D': ['this'], 'P2F': [], 'P2A': [], 'P2ASR': ['this is me '], 'P2N': [], 'P2V': ['is'], 'P2P': []}
+1522165784.03;0;{'P1A': [], 'P1D': ['this'], 'P1F': [], 'P1ASR': ['this is you '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522165992.08;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['hello '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522166003.12;0;{'P1A': [], 'P1D': ['this'], 'P1F': [], 'P1ASR': ['this is me '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522166008.72;0;{'P2D': ['this'], 'P2F': [], 'P2A': [], 'P2ASR': ['this is me '], 'P2N': [], 'P2V': ['is'], 'P2P': []}
+1522166008.74;0;{'P1A': [], 'P1D': ['this'], 'P1F': [], 'P1ASR': ['this is me '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522166016.94;0;{'P2D': ['this'], 'P2F': [], 'P2A': [], 'P2ASR': ['this is '], 'P2N': [], 'P2V': ['is'], 'P2P': []}
+1522166017.35;0;{'P1A': [], 'P1D': ['this'], 'P1F': [], 'P1ASR': ['this is me '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522166027.42;0;{'P2D': [], 'P2F': [], 'P2A': [], 'P2ASR': ['okay '], 'P2N': [], 'P2V': [], 'P2P': []}
+1522166028.79;0;{'P2D': [], 'P2F': [], 'P2A': [], 'P2ASR': ['first these '], 'P2N': [], 'P2V': [], 'P2P': []}
+1522166029.75;0;{'P1A': [], 'P1D': ['these', 'a'], 'P1F': [], 'P1ASR': ['okay so first these top with a furniture '], 'P1N': ['top', 'furniture'], 'P1P': [], 'P1V': []}
+1522166055.26;0;{'P2D': [], 'P2F': [], 'P2A': [], 'P2ASR': ['you mean here '], 'P2N': [], 'P2V': ['mean'], 'P2P': ['you']}
+1522166081.58;0;{'P2D': [], 'P2F': [], 'P2A': [], 'P2ASR': ['or maybe you '], 'P2N': [], 'P2V': [], 'P2P': []}
+1522166081.59;0;{'P1A': [], 'P1D': [], 'P1F': ['no'], 'P1ASR': ['or maybe you know '], 'P1N': [], 'P1P': ['you'], 'P1V': ['know']}
+1522166082.38;0;{'P2D': [], 'P2F': [], 'P2A': [], 'P2ASR': ['here '], 'P2N': [], 'P2V': [], 'P2P': []}
+1522166082.45;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['here '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522166116.87;0;{'P2D': ['this', 'the'], 'P2F': [], 'P2A': [], 'P2ASR': ['is this the best '], 'P2N': [], 'P2V': ['is'], 'P2P': []}
+1522166141.83;0;{'P1A': [], 'P1D': [], 'P1F': ['no'], 'P1ASR': ['can you hear me now '], 'P1N': [], 'P1P': ['me', 'you'], 'P1V': ['hear']}
+1522166150.24;0;{'P1A': [], 'P1D': [], 'P1F': ['no'], 'P1ASR': ['now '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522166158.42;0;{'P1A': [], 'P1D': [], 'P1F': ['no'], 'P1ASR': ['I know '], 'P1N': [], 'P1P': ['I'], 'P1V': ['know']}
+1522166167.92;0;{'P2D': [], 'P2F': [], 'P2A': [], 'P2ASR': ['hello '], 'P2N': [], 'P2V': [], 'P2P': []}
+1522166198.44;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['okay '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522166222.75;0;{'P1A': [], 'P1D': [], 'P1F': ['yeah'], 'P1ASR': ['yeah '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522166255.26;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['okay '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522166274.91;0;{'P2D': [], 'P2F': ['yes'], 'P2A': [], 'P2ASR': ['yes '], 'P2N': [], 'P2V': [], 'P2P': []}
+1522166324.74;0;{'P2D': [], 'P2F': ['yes'], 'P2A': [], 'P2ASR': ['yes '], 'P2N': [], 'P2V': [], 'P2P': []}
+1522166427.52;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['hello '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522166440.51;0;"{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': [""is what you're talking about ""], 'P1N': [], 'P1P': ['you'], 'P1V': ['talking', 'is', ""'re""]}"
+1522166494.37;0;{'P1A': [], 'P1D': ['the'], 'P1F': [], 'P1ASR': ['the game '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522166501.93;0;{'P1A': [], 'P1D': ['the'], 'P1F': [], 'P1ASR': ['the name '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522166507.03;0;{'P1A': [], 'P1D': ['this', 'the'], 'P1F': [], 'P1ASR': ['this is the game '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522166517.23;0;{'P1A': ['right'], 'P1D': ['this', 'the'], 'P1F': [], 'P1ASR': ['this is the right block '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522166527.04;0;{'P1A': ['orange'], 'P1D': ['this', 'the'], 'P1F': [], 'P1ASR': ['this is the orange block '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522166537.98;0;{'P1A': [], 'P1D': ['this', 'the'], 'P1F': [], 'P1ASR': ['this is the orange box '], 'P1N': ['orange'], 'P1P': [], 'P1V': ['is']}
+1522166548.18;0;{'P1A': [], 'P1D': ['this', 'the'], 'P1F': [], 'P1ASR': ['this is the books '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522166570.0;0;{'P1A': [], 'P1D': [], 'P1F': ['yeah'], 'P1ASR': ['yeah '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522166579.89;0;{'P1A': ['red'], 'P1D': ['the'], 'P1F': [], 'P1ASR': ['can you pass me the red block '], 'P1N': ['block'], 'P1P': ['me', 'you'], 'P1V': ['pass']}
+1522166591.51;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1ASR': ['hello '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522167016.23;0;{'P1A': [], 'P1D': ['this', 'a'], 'P1F': [], 'P1Keywords': [[['this', 74.73, 74.91], ['is', 74.91, 75.03], ['a', 75.03, 75.1], ['test', 75.1, 75.43]]], 'P1ASR': ['this is a test '], 'P1N': [], 'P1P': [], 'P1V': ['is']}
+1522168323.13;0;{'P1A': [], 'P1D': [], 'P1F': [], 'P1Keywords': [[['really', 15.53, 15.92]]], 'P1ASR': ['really '], 'P1N': [], 'P1P': [], 'P1V': []}
+1522168341.56;0;{'P2D': [], 'P2F': ['yes'], 'P2A': [], 'P2ASR': ['yes I am talking '], 'P2N': [], 'P2Keywords': [[['yes', 35.8, 36.08], ['I', 36.08, 36.16], ['am', 36.16, 36.27], ['talking', 36.27, 36.64]]], 'P2V': ['talking', 'am'], 'P2P': ['I']}
