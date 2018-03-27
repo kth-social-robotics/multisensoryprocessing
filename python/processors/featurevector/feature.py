@@ -27,6 +27,9 @@ from client import Client
 from furhat import connect_to_iristk
 from time import sleep
 
+# Print messages
+DEBUG = False
+
 FURHAT_IP = '130.237.67.115' # Furhat IP address
 FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
 
@@ -92,6 +95,8 @@ feature_dict = defaultdict(lambda : defaultdict(dict))
 # P1 Holding object, P2 Holding object,
 # P1 Pointing Label, P1 Pointing Probability Left, P1 Pointing Probability Right,
 # P2 Pointing Label, P2 Pointing Probability Left, P2 Pointing Probability Right,
+# P1 Head Label, P1 Head Probability,
+# P2 Head Label, P2 Head Probability,
 # Step
 feature_dict[0][0]['TS'] = ''
 feature_dict[0][0]['P1N'] = ''
@@ -122,6 +127,10 @@ feature_dict[0][0]['P1PPR'] = ['']
 feature_dict[0][0]['P2PL'] = ['']
 feature_dict[0][0]['P2PPL'] = ['']
 feature_dict[0][0]['P2PPR'] = ['']
+feature_dict[0][0]['P1HDL'] = ['']
+feature_dict[0][0]['P1HDP'] = ['']
+feature_dict[0][0]['P2HDL'] = ['']
+feature_dict[0][0]['P2HDP'] = ['']
 feature_dict[0][0]['S'] = ''
 
 # Connect to Furhat
@@ -129,6 +138,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
     # Introduce Furhat
     furhat_client.say(FURHAT_AGENT_NAME, 'Hello there. I am here to learn how you are putting this furniture together.')
     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+    #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
 
     # Log Furhat events
     def event_callback(event):
@@ -219,7 +229,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                                 feature_dict[second][frame]['TS'] = str(mocaptime)
                                 feature_dict[second][frame]['P' + str(x + 1) + 'HL'] = ['T' + str(y + 1)]
                                 # Print frame
-                                print(feature_dict[second][frame])
+                                if DEBUG: print(feature_dict[second][frame])
                                 # Sending messages to the server
                                 my_message = json.dumps(feature_dict[second][frame])
                                 my_message = "interpreter;data;" + my_message + "$"
@@ -260,44 +270,49 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                     # Gaze, Head and Pointing Hits
                     # Call Matlab script to calculate gaze, head and pointing hits and angles
                     gaze_hits = mateng.gazehits(mocapbody, agent, glasses_num, gloves_num, targets_num, tables_num)
-                    #print(gaze_hits[13][0])
                     # gaze_hits[0] - P1GL
                     # gaze_hits[1] - P2GL
                     # gaze_hits[2] - P1GA
                     # gaze_hits[3] - P2GA
-                    # gaze_hits[4] - P2PLL
-                    # gaze_hits[5] - P2PRL
-                    # gaze_hits[6] - P2PLA
-                    # gaze_hits[7] - P2PRA
+                    # gaze_hits[4] - P1PL
+                    # gaze_hits[5] - P1PLA
+                    # gaze_hits[6] - P1PRA
+                    # gaze_hits[7] - P2PL
+                    # gaze_hits[8] - P2PLA
+                    # gaze_hits[9] - P2PRA
+                    # gaze_hits[10] - P1HL
+                    # gaze_hits[11] - P2HL
+                    # gaze_hits[12] - P1HA
+                    # gaze_hits[13] - P2HA
 
-                    # Gaze on Yumi Table
-                    if agent == 'yumi':
-                        # Vision system point bottom right: x = 0.65, y = 0.34
-                        # Mocap system point bottom right: x = -2.81, z = 4.19
-                        # xrobot = -zmocap (-3.54)
-                        # yrobot = -xmocap (+3.15)
-
-                        # Table Tobii 1 gaze position
-                        if gaze_hits[0] == 'Tab1':
-                            xrobot = 0.65 - (gaze_hits[1][0][0] - 4.19) # xrobot - (xcurrent - xmocap)
-                            yrobot = 0.34 - (gaze_hits[1][0][2] + 2.81) # yrobot - (ycurrent + ymocap)
-
-                            # Put in dictionary
-                            feature_dict[second][frame]['P1GP'] = [xrobot, yrobot]
-
-                            # Print frame
-                            #print(feature_dict[second][frame])
-
-                            # Sending messages to ROS
-                            my_message = json.dumps(feature_dict[second][frame])
-                            my_message = "interpreter;data;" + my_message + "$"
-
-                            # Encode the string to utf-8 and write it to the pipe defined above
-                            os.write(pipe_out, my_message.encode("utf-8"))
-                            sys.stdout.flush()
-
-                            # Remove from dict
-                            feature_dict[second].pop(frame, None)
+                    # # Gaze on Yumi Table
+                    # if agent == 'yumi':
+                    #     # Vision system point bottom right: x = 0.65, y = 0.34
+                    #     # Mocap system point bottom right: x = -2.81, z = 4.19
+                    #     # xrobot = -zmocap (-3.54)
+                    #     # yrobot = -xmocap (+3.15)
+                    #
+                    #     # Table Tobii 1 gaze position
+                    #     if gaze_hits[0] == 'Tab1':
+                    #         xrobot = 0.65 - (gaze_hits[1][0][0] - 4.19) # xrobot - (xcurrent - xmocap)
+                    #         yrobot = 0.34 - (gaze_hits[1][0][2] + 2.81) # yrobot - (ycurrent + ymocap)
+                    #
+                    #         # Put in dictionary
+                    #         feature_dict[second][frame]['P1GP'] = [xrobot, yrobot]
+                    #
+                    #         # Print frame
+                    #         #print(feature_dict[second][frame])
+                    #
+                    #         # Sending messages to ROS
+                    #         my_message = json.dumps(feature_dict[second][frame])
+                    #         my_message = "interpreter;data;" + my_message + "$"
+                    #
+                    #         # Encode the string to utf-8 and write it to the pipe defined above
+                    #         os.write(pipe_out, my_message.encode("utf-8"))
+                    #         sys.stdout.flush()
+                    #
+                    #         # Remove from dict
+                    #         feature_dict[second].pop(frame, None)
 
                     # Glasses 1 Gaze Label
                     if gaze_hits[0] != ['']:
@@ -305,21 +320,12 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         feature_dict[second][frame]['TS'] = str(mocaptime)
                         feature_dict[second][frame]['P1GL'] = [gaze_hits[0]]
 
-                        # # Count and filter by fixation (5 frames = 100ms, 10 frames = 200ms)
-                        # for x in range(1, 10):
-                        #     if feature_dict[second][frame] == feature_dict[second][frame-x]:
-                        #         fixfilter = fixfilter + 1
-                        #     else:
-                        #         fixfilter = 0
-
                         # Print frame
-                        #if fixfilter == 9:
-                            #fixfilter = 0
-                            #print(feature_dict[second][frame])
-                            #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+                        if DEBUG: print(feature_dict[second][frame])
 
-                        # Print frame
-                        #print(feature_dict[second][frame])
+                        # Print for calibration
+                        if gaze_hits[0] == 'Calibration':
+                            print('P1 - Calibration')
 
                         # Sending messages to the server
                         my_message = json.dumps(feature_dict[second][frame])
@@ -338,7 +344,11 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         feature_dict[second][frame]['P2GL'] = [gaze_hits[1]]
 
                         # Print frame
-                        #print(feature_dict[second][frame])
+                        if DEBUG: print(feature_dict[second][frame])
+
+                        # Print for calibration
+                        if gaze_hits[1] == 'Calibration':
+                            print('P2 - Calibration')
 
                         # Sending messages to the server
                         my_message = json.dumps(feature_dict[second][frame])
@@ -350,14 +360,14 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         # Remove from dict
                         feature_dict[second].pop(frame, None)
 
-                    # Hand Left 2 Point Label
+                    # Hands 1 Point Label
                     if gaze_hits[4] != ['']:
                         # Put in dictionary
                         feature_dict[second][frame]['TS'] = str(mocaptime)
-                        feature_dict[second][frame]['P2PLL'] = [gaze_hits[4]]
+                        feature_dict[second][frame]['P1PL'] = [gaze_hits[4]]
 
                         # Print frame
-                        #print(feature_dict[second][frame])
+                        if DEBUG: print(feature_dict[second][frame])
 
                         # Sending messages to the server
                         my_message = json.dumps(feature_dict[second][frame])
@@ -369,14 +379,52 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         # Remove from dict
                         feature_dict[second].pop(frame, None)
 
-                    # Hand Right 2 Point Label
-                    if gaze_hits[5] != ['']:
+                    # Hands 2 Point Label
+                    if gaze_hits[7] != ['']:
                         # Put in dictionary
                         feature_dict[second][frame]['TS'] = str(mocaptime)
-                        feature_dict[second][frame]['P2PLR'] = [gaze_hits[5]]
+                        feature_dict[second][frame]['P2LL'] = [gaze_hits[7]]
 
                         # Print frame
-                        #print(feature_dict[second][frame])
+                        if DEBUG: print(feature_dict[second][frame])
+
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
+
+                        # Remove from dict
+                        feature_dict[second].pop(frame, None)
+
+                    # Head 1 Point Label
+                    if gaze_hits[10] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P1HDL'] = [gaze_hits[10]]
+
+                        # Print frame
+                        if DEBUG: print(feature_dict[second][frame])
+
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
+
+                        # Remove from dict
+                        feature_dict[second].pop(frame, None)
+
+                    # Head 2 Point Label
+                    if gaze_hits[11] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P2HDL'] = [gaze_hits[11]]
+
+                        # Print frame
+                        if DEBUG: print(feature_dict[second][frame])
 
                         # Sending messages to the server
                         my_message = json.dumps(feature_dict[second][frame])
@@ -396,13 +444,25 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                     feature_dict[second][frame]['P1GP'] = [np1.tolist()]
                     feature_dict[second][frame]['P2GP'] = [np2.tolist()]
 
-                    # Hands L and R Pointing Angles (Probabilities)
-                    np3 = numpy.array(gaze_hits[6])
-                    np4 = numpy.array(gaze_hits[7])
+                    # Hands 1L,1R and 2L,2R Pointing Angles (Probabilities)
+                    np3 = numpy.array(gaze_hits[5])
+                    np4 = numpy.array(gaze_hits[6])
+                    np5 = numpy.array(gaze_hits[8])
+                    np6 = numpy.array(gaze_hits[9])
                     # Put in dictionary
                     feature_dict[second][frame]['TS'] = str(mocaptime)
-                    feature_dict[second][frame]['P2PPL'] = [np3.tolist()]
-                    feature_dict[second][frame]['P2PPR'] = [np4.tolist()]
+                    feature_dict[second][frame]['P1PPL'] = [np3.tolist()]
+                    feature_dict[second][frame]['P1PPR'] = [np4.tolist()]
+                    feature_dict[second][frame]['P2PPL'] = [np5.tolist()]
+                    feature_dict[second][frame]['P2PPR'] = [np6.tolist()]
+
+                    # Glasses 1 and 2 Head Angles (Probabilities)
+                    np7 = numpy.array(gaze_hits[12])
+                    np8 = numpy.array(gaze_hits[13])
+                    # Put in dictionary
+                    feature_dict[second][frame]['TS'] = str(mocaptime)
+                    feature_dict[second][frame]['P1HDP'] = [np7.tolist()]
+                    feature_dict[second][frame]['P2HDP'] = [np8.tolist()]
 
                     # Print frame
                     #print(feature_dict[second][frame])
@@ -416,8 +476,6 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
                     # Remove from dict
                     feature_dict[second].pop(frame, None)
-
-                    # aaa
 
         t1 = Thread(target = runA)
         t1.setDaemon(True)
@@ -469,7 +527,11 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
                 # Furhat react to P1 speech
                 if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
-                    furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
+                    furhat_client.say(FURHAT_AGENT_NAME, 'Hi instructor.')
+
+                # Furhat react to P2 speech
+                if nlpbody['mic'] == p2mic and nlpbody['speech'] == 'hello ':
+                    furhat_client.say(FURHAT_AGENT_NAME, 'Hi builder.')
 
                 # Furhat look at person speaking
                 if nlpbody['mic'] == p1mic:
