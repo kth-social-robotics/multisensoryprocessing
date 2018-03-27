@@ -258,8 +258,9 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                                     furhat_client.gaze(FURHAT_AGENT_NAME, {'x': furhat_gaze_target_x, 'y': furhat_gaze_target_y,'z': furhat_gaze_target_z})
 
                     # Gaze, Head and Pointing Hits
-                    # Call Matlab script to calculate gaze hits and angles and pointing hits and angles
-                    gaze_hits = mateng.gazehits(mocapbody, agent, glasses_num, targets_num, tables_num)
+                    # Call Matlab script to calculate gaze, head and pointing hits and angles
+                    gaze_hits = mateng.gazehits(mocapbody, agent, glasses_num, gloves_num, targets_num, tables_num)
+                    #print(gaze_hits[13][0])
                     # gaze_hits[0] - P1GL
                     # gaze_hits[1] - P2GL
                     # gaze_hits[2] - P1GA
@@ -285,7 +286,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                             feature_dict[second][frame]['P1GP'] = [xrobot, yrobot]
 
                             # Print frame
-                            print(feature_dict[second][frame])
+                            #print(feature_dict[second][frame])
 
                             # Sending messages to ROS
                             my_message = json.dumps(feature_dict[second][frame])
@@ -318,7 +319,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                             #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
 
                         # Print frame
-                        print(feature_dict[second][frame])
+                        #print(feature_dict[second][frame])
 
                         # Sending messages to the server
                         my_message = json.dumps(feature_dict[second][frame])
@@ -337,7 +338,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         feature_dict[second][frame]['P2GL'] = [gaze_hits[1]]
 
                         # Print frame
-                        print(feature_dict[second][frame])
+                        #print(feature_dict[second][frame])
 
                         # Sending messages to the server
                         my_message = json.dumps(feature_dict[second][frame])
@@ -356,7 +357,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         feature_dict[second][frame]['P2PLL'] = [gaze_hits[4]]
 
                         # Print frame
-                        print(feature_dict[second][frame])
+                        #print(feature_dict[second][frame])
 
                         # Sending messages to the server
                         my_message = json.dumps(feature_dict[second][frame])
@@ -375,7 +376,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         feature_dict[second][frame]['P2PLR'] = [gaze_hits[5]]
 
                         # Print frame
-                        print(feature_dict[second][frame])
+                        #print(feature_dict[second][frame])
 
                         # Sending messages to the server
                         my_message = json.dumps(feature_dict[second][frame])

@@ -1,3 +1,6 @@
 *.pyc
 *.wav
 src/main/python/pre_processors/asr/watson_credentials.json
+logs/feature_log.csv
+
+logs/pilot0.2/feature_log.csv
