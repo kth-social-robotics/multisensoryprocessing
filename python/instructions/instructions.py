@@ -50,9 +50,9 @@ feature_dict = defaultdict(lambda : defaultdict(dict))
 # Connect to Furhat
 with connect_to_iristk(FURHAT_IP) as furhat_client:
     # Introduce Furhat
-    furhat_client.say(FURHAT_AGENT_NAME, 'Hello there. I am here to learn how you are putting this furniture together.')
-    #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+    furhat_client.say(FURHAT_AGENT_NAME, 'You will instruct the builder on how to construct this item.')
+    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+    #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
 
     # Log Furhat events
     def event_callback(event):
