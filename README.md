@@ -60,6 +60,7 @@ Starting sequence:
 
 -Mocapgaze bat (pmil):
     -Mocap-gaze processor bat (pmil)
+        -Define Furhat IP
         -Define Tobii markers and head angle on Matlab
     -Tobii pre-processor bat (pmil)
     -Mocap pre-processor bat (pmil)

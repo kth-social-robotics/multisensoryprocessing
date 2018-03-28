@@ -57,7 +57,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
     # Log Furhat events
     def event_callback(event):
         #print(event) # Receives each event the furhat sends out.
-        fd = open('../../../logs/furhat_log.csv','a')
+        fd = open('../../logs/furhat_log.csv','a')
         fd.write(event)
         fd.write('\n')
         fd.close()
