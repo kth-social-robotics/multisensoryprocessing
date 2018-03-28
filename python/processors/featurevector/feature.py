@@ -498,12 +498,12 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                     # Print frame
                     #print(feature_dict[second][frame])
 
-                    # Sending messages to the server
-                    my_message = json.dumps(feature_dict[second][frame])
-                    my_message = "interpreter;data;" + my_message + "$"
-                    # Encode the string to utf-8 and write it to the pipe defined above
-                    os.write(pipe_out, my_message.encode("utf-8"))
-                    sys.stdout.flush()
+                    # # Sending messages to the server
+                    # my_message = json.dumps(feature_dict[second][frame])
+                    # my_message = "interpreter;data;" + my_message + "$"
+                    # # Encode the string to utf-8 and write it to the pipe defined above
+                    # os.write(pipe_out, my_message.encode("utf-8"))
+                    # sys.stdout.flush()
 
                     # Remove from dict
                     feature_dict[second].pop(frame, None)
