@@ -14,7 +14,7 @@ import math
 from datetime import datetime
 
 # Server IP
-IP = "130.237.67.232"
+IP = "130.237.67.196"
 
 # Define window
 master = Tk()

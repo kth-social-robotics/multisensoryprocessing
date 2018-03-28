@@ -44,7 +44,7 @@ Starting sequence:
     +++-Get log files
     +++-Define objects and tables
 +++-Instructions (mac):
-    +++-Define server IP
+    -Define server IP
 -Feature sh (macjocke):
     -Feature Vector sh (macjocke)
         -Define glasses and hands markers
