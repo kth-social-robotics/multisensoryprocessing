@@ -20,7 +20,7 @@ IP = "130.237.67.196"
 
 # Define window
 master = Tk()
-master.minsize(500,300)
+master.minsize(500, 300)
 master.geometry("520x300")
 
 # Create pipes to communicate to the client process
@@ -42,17 +42,19 @@ client.start()
 # Define dictionary for message
 feature_dict = defaultdict(lambda : defaultdict(dict))
 
-# Callback when the button is pressed
-def callback():
-    print("Next step.")
+# Callback when the start button is pressed
+def startCallback():
     # Define time stamp
     time = datetime.now()
-    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}\t".format(\
+    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
                   time.year, time.month, time.day, time.hour, time.minute, time.second,\
                   str(time.microsecond)[:3])
 
     feature_dict[0][0]['TS'] = time_stamp
-    feature_dict[0][0]['S'] = 'Sn'
+    feature_dict[0][0]['S'] = 'start'
+
+    # Print current frame
+    print(feature_dict[0][0])
 
     # Sending messages to the server
     my_message = json.dumps(feature_dict[0][0])
@@ -62,8 +64,56 @@ def callback():
     os.write(pipe_out, my_message.encode("utf-8"))
     sys.stdout.flush()
 
-b = Button(master, text="Next", command=callback)
-b.pack()
+# Callback when the next button is pressed
+def nextCallback():
+    # Define time stamp
+    time = datetime.now()
+    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
+                  time.year, time.month, time.day, time.hour, time.minute, time.second,\
+                  str(time.microsecond)[:3])
+
+    feature_dict[0][0]['TS'] = time_stamp
+    feature_dict[0][0]['S'] = 'next'
+
+    # Print current frame
+    print(feature_dict[0][0])
+
+    # Sending messages to the server
+    my_message = json.dumps(feature_dict[0][0])
+
+    my_message = "interpreter;data;" + my_message + "$"
+    # Encode the string to utf-8 and write it to the pipe defined above
+    os.write(pipe_out, my_message.encode("utf-8"))
+    sys.stdout.flush()
+
+# Callback when the end button is pressed
+def endCallback():
+    # Define time stamp
+    time = datetime.now()
+    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
+                  time.year, time.month, time.day, time.hour, time.minute, time.second,\
+                  str(time.microsecond)[:3])
+
+    feature_dict[0][0]['TS'] = time_stamp
+    feature_dict[0][0]['S'] = 'end'
+
+    # Print current frame
+    print(feature_dict[0][0])
+
+    # Sending messages to the server
+    my_message = json.dumps(feature_dict[0][0])
+
+    my_message = "interpreter;data;" + my_message + "$"
+    # Encode the string to utf-8 and write it to the pipe defined above
+    os.write(pipe_out, my_message.encode("utf-8"))
+    sys.stdout.flush()
+
+b1 = Button(master, text="Start", command=startCallback)
+b2 = Button(master, text="Next", command=nextCallback)
+b3 = Button(master, text="End", command=endCallback)
+b1.pack()
+b2.pack()
+b3.pack()
 
 mainloop()
 

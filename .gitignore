@@ -4,3 +4,17 @@ src/main/python/pre_processors/asr/watson_credentials.json
 logs/feature_log.csv
 
 logs/pilot0.2/feature_log.csv
+
+logs/attention_table_0.csv
+
+logs/attention_table_0.csv
+
+logs/attention_table_1.csv
+
+logs/attention_table_2.csv
+
+logs/attention_table_3.csv
+
+logs/attention_table_4.csv
+
+logs/language_table.csv
