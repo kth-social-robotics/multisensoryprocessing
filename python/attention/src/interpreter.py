@@ -33,6 +33,20 @@
 # feature_dict[0][0]['P2HDP'] = ['']
 # feature_dict[0][0]['S'] = ''
 
+# # Furhat react to P1 speech
+# if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
+#     furhat_client.say(FURHAT_AGENT_NAME, 'Hi instructor.')
+#
+# # Furhat react to P2 speech
+# if nlpbody['mic'] == p2mic and nlpbody['speech'] == 'hello ':
+#     furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
+#
+# # Furhat look at person speaking
+# if nlpbody['mic'] == p1mic:
+#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+# elif nlpbody['mic'] == p2mic:
+#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+
 """ Module doc string
 """
 import ast

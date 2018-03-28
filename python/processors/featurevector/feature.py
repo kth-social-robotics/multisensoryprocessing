@@ -136,9 +136,9 @@ feature_dict[0][0]['S'] = ''
 # Connect to Furhat
 with connect_to_iristk(FURHAT_IP) as furhat_client:
     # Introduce Furhat
-    furhat_client.say(FURHAT_AGENT_NAME, 'Hello there. I am here to learn how you are putting this furniture together.')
-    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-    #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+    furhat_client.say(FURHAT_AGENT_NAME, 'It seems like I can now hear what you are saying.')
+    #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
 
     # Log Furhat events
     def event_callback(event):
@@ -240,32 +240,33 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                                 feature_dict[second].pop(frame, None)
                                 touchtarget = 100
 
-                                # Furhat gaze at object holded
+                                # Furhat gaze at object holded apart form the 3 big ones
                                 # Furhat and object positions
-                                fx = mocapbody['mocap_furhat']['position']['x']
-                                fy = mocapbody['mocap_furhat']['position']['y']
-                                fz = mocapbody['mocap_furhat']['position']['z']
-                                ox = mocapbody['mocap_target' + str(y + 1)]['position']['x']
-                                oy = mocapbody['mocap_target' + str(y + 1)]['position']['y']
-                                oz = mocapbody['mocap_target' + str(y + 1)]['position']['z']
-                                furhat_gaze_target_x = oz - fz
-                                furhat_gaze_target_y = oy - fy
-                                furhat_gaze_target_z = - (ox - fx)
+                                if y != 0 and y != 1 and y != 2:
+                                    fx = mocapbody['mocap_furhat']['position']['x']
+                                    fy = mocapbody['mocap_furhat']['position']['y']
+                                    fz = mocapbody['mocap_furhat']['position']['z']
+                                    ox = mocapbody['mocap_target' + str(y + 1)]['position']['x']
+                                    oy = mocapbody['mocap_target' + str(y + 1)]['position']['y']
+                                    oz = mocapbody['mocap_target' + str(y + 1)]['position']['z']
+                                    furhat_gaze_target_x = oz - fz
+                                    furhat_gaze_target_y = oy - fy
+                                    furhat_gaze_target_z = - (ox - fx)
 
-                                # Make sure the position is in furhat's limits
-                                furhat_xlimit = False
-                                furhat_ylimit = False
-                                furhat_zlimit = False
-                                if -4 <= furhat_gaze_target_x <= 4:
-                                    furhat_xlimit = True
-                                if -1 <= furhat_gaze_target_y <= 1:
-                                    furhat_ylimit = True
-                                if 0 <= furhat_gaze_target_z <= 3:
-                                    furhat_zlimit = True
+                                    # Make sure the position is in furhat's limits
+                                    furhat_xlimit = False
+                                    furhat_ylimit = False
+                                    furhat_zlimit = False
+                                    if -4 <= furhat_gaze_target_x <= 4:
+                                        furhat_xlimit = True
+                                    if -1 <= furhat_gaze_target_y <= 1:
+                                        furhat_ylimit = True
+                                    if 0 <= furhat_gaze_target_z <= 3:
+                                        furhat_zlimit = True
 
-                                # Move only every 10 frames and if gaze is within the limits
-                                if frame % 10 == 0 and furhat_xlimit and furhat_ylimit and furhat_zlimit:
-                                    furhat_client.gaze(FURHAT_AGENT_NAME, {'x': furhat_gaze_target_x, 'y': furhat_gaze_target_y,'z': furhat_gaze_target_z})
+                                    # Move only every 10 frames and if gaze is within the limits
+                                    if frame % 10 == 0 and furhat_xlimit and furhat_ylimit and furhat_zlimit:
+                                        furhat_client.gaze(FURHAT_AGENT_NAME, {'x': furhat_gaze_target_x, 'y': furhat_gaze_target_y,'z': furhat_gaze_target_z})
 
                     # Gaze, Head and Pointing Hits
                     # Call Matlab script to calculate gaze, head and pointing hits and angles
@@ -359,6 +360,36 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
                         # Remove from dict
                         feature_dict[second].pop(frame, None)
+
+                    # Furhat follow object of joint attention
+                    if gaze_hits[0] != [''] and gaze_hits[1] != [''] and gaze_hits[0] == gaze_hits[1]:
+                        # Check that it is only the objects
+                        if gaze_hits[0] != 'Screen' and gaze_hits[0] != 'Furhat' and gaze_hits[0] != 'Calibration':
+                            # Furhat and object positions
+                            fx = mocapbody['mocap_furhat']['position']['x']
+                            fy = mocapbody['mocap_furhat']['position']['y']
+                            fz = mocapbody['mocap_furhat']['position']['z']
+                            ox = mocapbody['mocap_target' + gaze_hits[0][1:]]['position']['x']
+                            oy = mocapbody['mocap_target' + gaze_hits[0][1:]]['position']['y']
+                            oz = mocapbody['mocap_target' + gaze_hits[0][1:]]['position']['z']
+                            furhat_gaze_target_x = oz - fz
+                            furhat_gaze_target_y = oy - fy
+                            furhat_gaze_target_z = - (ox - fx)
+
+                            # Make sure the position is in furhat's limits
+                            furhat_xlimit = False
+                            furhat_ylimit = False
+                            furhat_zlimit = False
+                            if -4 <= furhat_gaze_target_x <= 4:
+                                furhat_xlimit = True
+                            if -1 <= furhat_gaze_target_y <= 1:
+                                furhat_ylimit = True
+                            if 0 <= furhat_gaze_target_z <= 3:
+                                furhat_zlimit = True
+
+                            # Move only every 10 frames and if gaze is within the limits
+                            if frame % 10 == 0 and furhat_xlimit and furhat_ylimit and furhat_zlimit:
+                                furhat_client.gaze(FURHAT_AGENT_NAME, {'x': furhat_gaze_target_x, 'y': furhat_gaze_target_y,'z': furhat_gaze_target_z})
 
                     # Hands 1 Point Label
                     if gaze_hits[4] != ['']:
@@ -524,20 +555,6 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                     feature_dict[second][frame]['P2F'] = nlpbody['language']['feedback']
                     feature_dict[second][frame]['P2ASR'] = [nlpbody['speech']]
                     feature_dict[second][frame]['P2Keywords'] = [nlpbody['keywords']]
-
-                # Furhat react to P1 speech
-                if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
-                    furhat_client.say(FURHAT_AGENT_NAME, 'Hi instructor.')
-
-                # Furhat react to P2 speech
-                if nlpbody['mic'] == p2mic and nlpbody['speech'] == 'hello ':
-                    furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
-
-                # Furhat look at person speaking
-                if nlpbody['mic'] == p1mic:
-                    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-                elif nlpbody['mic'] == p2mic:
-                    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
 
                 # Print feature vector
                 print(feature_dict[second][frame])
