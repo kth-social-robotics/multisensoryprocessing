@@ -44,7 +44,8 @@ Starting sequence:
     +++-Get log files
     +++-Define objects and tables
 +++-Instructions (mac):
-    -Define server IP
+    -Define server and Furhat IP
+
 -Feature sh (macjocke):
     -Feature Vector sh (macjocke)
         -Define glasses and hands markers
@@ -67,3 +68,9 @@ Starting sequence:
 
 -Tobii glasses1 (pmil)
 -Tobii glasses2 (pmil)
+
+-Test:
+    -Look at calibration
+    -Say hello
+
+-Start instructions

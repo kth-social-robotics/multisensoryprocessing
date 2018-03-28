@@ -14,9 +14,14 @@ import numpy
 from client import Client
 import math
 from datetime import datetime
+from furhat import connect_to_iristk
+from time import sleep
 
 # Server IP
 IP = "130.237.67.196"
+
+FURHAT_IP = '130.237.67.115' # Furhat IP address
+FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
 
 # Define window
 master = Tk()
@@ -42,81 +47,111 @@ client.start()
 # Define dictionary for message
 feature_dict = defaultdict(lambda : defaultdict(dict))
 
-# Callback when the start button is pressed
-def startCallback():
-    # Define time stamp
-    time = datetime.now()
-    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
-                  time.year, time.month, time.day, time.hour, time.minute, time.second,\
-                  str(time.microsecond)[:3])
+# Connect to Furhat
+with connect_to_iristk(FURHAT_IP) as furhat_client:
+    # Introduce Furhat
+    furhat_client.say(FURHAT_AGENT_NAME, 'Hello there. I am here to learn how you are putting this furniture together.')
+    #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+    furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
 
-    feature_dict[0][0]['TS'] = time_stamp
-    feature_dict[0][0]['S'] = 'start'
+    # Log Furhat events
+    def event_callback(event):
+        #print(event) # Receives each event the furhat sends out.
+        fd = open('../../../logs/furhat_log.csv','a')
+        fd.write(event)
+        fd.write('\n')
+        fd.close()
 
-    # Print current frame
-    print(feature_dict[0][0])
+    # Listen to events
+    furhat_client.start_listening(event_callback) # register the event callback receiver
 
-    # Sending messages to the server
-    my_message = json.dumps(feature_dict[0][0])
+    # Callback when the start button is pressed
+    def startCallback():
+        # Define time stamp
+        time = datetime.now()
+        time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
+                      time.year, time.month, time.day, time.hour, time.minute, time.second,\
+                      str(time.microsecond)[:3])
 
-    my_message = "interpreter;data;" + my_message + "$"
-    # Encode the string to utf-8 and write it to the pipe defined above
-    os.write(pipe_out, my_message.encode("utf-8"))
-    sys.stdout.flush()
+        feature_dict[0][0]['TS'] = time_stamp
+        feature_dict[0][0]['S'] = 'start'
 
-# Callback when the next button is pressed
-def nextCallback():
-    # Define time stamp
-    time = datetime.now()
-    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
-                  time.year, time.month, time.day, time.hour, time.minute, time.second,\
-                  str(time.microsecond)[:3])
+        # Furhat
+        furhat_client.say(FURHAT_AGENT_NAME, 'Okay lets start.')
+        furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
 
-    feature_dict[0][0]['TS'] = time_stamp
-    feature_dict[0][0]['S'] = 'next'
+        # Print current frame
+        print(feature_dict[0][0])
 
-    # Print current frame
-    print(feature_dict[0][0])
+        # Sending messages to the server
+        my_message = json.dumps(feature_dict[0][0])
 
-    # Sending messages to the server
-    my_message = json.dumps(feature_dict[0][0])
+        my_message = "interpreter;data;" + my_message + "$"
+        # Encode the string to utf-8 and write it to the pipe defined above
+        os.write(pipe_out, my_message.encode("utf-8"))
+        sys.stdout.flush()
 
-    my_message = "interpreter;data;" + my_message + "$"
-    # Encode the string to utf-8 and write it to the pipe defined above
-    os.write(pipe_out, my_message.encode("utf-8"))
-    sys.stdout.flush()
+    # Callback when the next button is pressed
+    def nextCallback():
+        # Define time stamp
+        time = datetime.now()
+        time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
+                      time.year, time.month, time.day, time.hour, time.minute, time.second,\
+                      str(time.microsecond)[:3])
 
-# Callback when the end button is pressed
-def endCallback():
-    # Define time stamp
-    time = datetime.now()
-    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
-                  time.year, time.month, time.day, time.hour, time.minute, time.second,\
-                  str(time.microsecond)[:3])
+        feature_dict[0][0]['TS'] = time_stamp
+        feature_dict[0][0]['S'] = 'next'
 
-    feature_dict[0][0]['TS'] = time_stamp
-    feature_dict[0][0]['S'] = 'end'
+        # Furhat
+        furhat_client.say(FURHAT_AGENT_NAME, 'Lets get to the next one.')
+        furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
 
-    # Print current frame
-    print(feature_dict[0][0])
+        # Print current frame
+        print(feature_dict[0][0])
 
-    # Sending messages to the server
-    my_message = json.dumps(feature_dict[0][0])
+        # Sending messages to the server
+        my_message = json.dumps(feature_dict[0][0])
 
-    my_message = "interpreter;data;" + my_message + "$"
-    # Encode the string to utf-8 and write it to the pipe defined above
-    os.write(pipe_out, my_message.encode("utf-8"))
-    sys.stdout.flush()
+        my_message = "interpreter;data;" + my_message + "$"
+        # Encode the string to utf-8 and write it to the pipe defined above
+        os.write(pipe_out, my_message.encode("utf-8"))
+        sys.stdout.flush()
 
-b1 = Button(master, text="Start", command=startCallback)
-b2 = Button(master, text="Next", command=nextCallback)
-b3 = Button(master, text="End", command=endCallback)
-b1.pack()
-b2.pack()
-b3.pack()
+    # Callback when the end button is pressed
+    def endCallback():
+        # Define time stamp
+        time = datetime.now()
+        time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
+                      time.year, time.month, time.day, time.hour, time.minute, time.second,\
+                      str(time.microsecond)[:3])
 
-mainloop()
+        feature_dict[0][0]['TS'] = time_stamp
+        feature_dict[0][0]['S'] = 'end'
 
-# Close the client safely, not always necessary
-client.close() # Tell it to close
-client.join() # Wait for it to close
+        # Furhat
+        furhat_client.say(FURHAT_AGENT_NAME, 'It seems like you finished this task. Well done.')
+        furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+
+        # Print current frame
+        print(feature_dict[0][0])
+
+        # Sending messages to the server
+        my_message = json.dumps(feature_dict[0][0])
+
+        my_message = "interpreter;data;" + my_message + "$"
+        # Encode the string to utf-8 and write it to the pipe defined above
+        os.write(pipe_out, my_message.encode("utf-8"))
+        sys.stdout.flush()
+
+    b1 = Button(master, text="Start", command=startCallback)
+    b2 = Button(master, text="Next", command=nextCallback)
+    b3 = Button(master, text="End", command=endCallback)
+    b1.pack()
+    b2.pack()
+    b3.pack()
+
+    mainloop()
+
+    # Close the client safely, not always necessary
+    client.close() # Tell it to close
+    client.join() # Wait for it to close
