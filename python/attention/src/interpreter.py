@@ -1,52 +1,3 @@
-# feature_dict[0][0]['TS'] = ''
-# feature_dict[0][0]['P1N'] = ''
-# feature_dict[0][0]['P1A'] = ''
-# feature_dict[0][0]['P1V'] = ''
-# feature_dict[0][0]['P1D'] = ''
-# feature_dict[0][0]['P1P'] = ''
-# feature_dict[0][0]['P1F'] = ''
-# feature_dict[0][0]['P1ASR'] = ['']
-# feature_dict[0][0]['P1Keywords'] = ['']
-# feature_dict[0][0]['P2N'] = ''
-# feature_dict[0][0]['P2A'] = ''
-# feature_dict[0][0]['P2V'] = ''
-# feature_dict[0][0]['P2D'] = ''
-# feature_dict[0][0]['P2P'] = ''
-# feature_dict[0][0]['P2F'] = ''
-# feature_dict[0][0]['P2ASR'] = ['']
-# feature_dict[0][0]['P2Keywords'] = ['']
-# feature_dict[0][0]['P1GL'] = ['']
-# feature_dict[0][0]['P2GL'] = ['']
-# feature_dict[0][0]['P1GP'] = ['']
-# feature_dict[0][0]['P2GP'] = ['']
-# feature_dict[0][0]['P1HL'] = ['']
-# feature_dict[0][0]['P2HL'] = ['']
-# feature_dict[0][0]['P1PL'] = ['']
-# feature_dict[0][0]['P1PPL'] = ['']
-# feature_dict[0][0]['P1PPR'] = ['']
-# feature_dict[0][0]['P2PL'] = ['']
-# feature_dict[0][0]['P2PPL'] = ['']
-# feature_dict[0][0]['P2PPR'] = ['']
-# feature_dict[0][0]['P1HDL'] = ['']
-# feature_dict[0][0]['P1HDP'] = ['']
-# feature_dict[0][0]['P2HDL'] = ['']
-# feature_dict[0][0]['P2HDP'] = ['']
-# feature_dict[0][0]['S'] = ''
-
-# # Furhat react to P1 speech
-# if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
-#     furhat_client.say(FURHAT_AGENT_NAME, 'Hi instructor.')
-#
-# # Furhat react to P2 speech
-# if nlpbody['mic'] == p2mic and nlpbody['speech'] == 'hello ':
-#     furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
-#
-# # Furhat look at person speaking
-# if nlpbody['mic'] == p1mic:
-#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-# elif nlpbody['mic'] == p2mic:
-#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
-
 """ Module doc string
 """
 import ast
@@ -85,7 +36,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
     furhat_client.start_listening(event_callback) # register the event callback receiver
 
     class Interpreter(Process):
-        """ The Interpreter-class is a intermediator between the arcitecture and the ROS-network.
+        """ The Interpreter-class is a intermediator between the arcitecture and learning module
         """
         def __init__(self):
             """ Constructor
@@ -113,8 +64,9 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
             # Create and initialize the variables
             self.print_every = 1.0
-            self.verb_keys = ["P1N", "P1A", "P1V", "P1D", "P1P", "P1F", "P1ASR"]
-            self.gaze_keys = ["P1G", "P2G", "P1H"]
+
+            self.verb_keys = ["P1N", "P1A", "P1V", "P1D", "P1P", "P1F", "P1ASR", "P1Keywords", "P2N", "P2A", "P2V", "P2D", "P2P", "P2F", "P2ASR", "P2Keywords"]
+            self.gaze_keys = ["P1GL", "P2GL", "P1HL", "P2HL", "P1PL", "P2PL", "P1HDL", "P2HDL"]
 
             self.current_step = 0
             self.attention_table = self._new_attention_table()
@@ -125,26 +77,22 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
             """ Create and return a new attention table.
             """
             att_table = {}
-            att_attr = ["P1G", "P2G", "P1H"]
+            att_attr = ["P1GL", "P2GL", "P1HL", "P2HL", "P1PL", "P2PL", "P1HDL", "P2HDL"]
             try:
                 for i, label in enumerate(self.label_sequence[self.current_step]):
                     object_dict = {"L":label}
                     for key in att_attr:
                         object_dict[key] = 0
 
-                    # Define objects
+                    # Define objects. On lable sequence: P1, P2, F, T1-14
                     if i == 0:
                         att_table["P1"] = object_dict
                     elif i == 1:
                         att_table["P2"] = object_dict
                     elif i == 2:
                         att_table["Furhat"] = object_dict
-                    elif i == 3:
-                        att_table["Tab1"] = object_dict
-                    elif i == 4:
-                        att_table["Tab2"] = object_dict
                     else:
-                        att_table["T{}".format(i+1-5)] = object_dict
+                        att_table["T{}".format(i-2)] = object_dict
                 return att_table
             except IndexError:
                 return False
@@ -297,3 +245,28 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         row_str += "{:<11}".format(cell)
                     print(row_str)
             print("_"*124)
+
+# feature_dict[0][0]['TS'] = ''
+# feature_dict[0][0]['P1GP'] = ['']
+# feature_dict[0][0]['P2GP'] = ['']
+# feature_dict[0][0]['P1PPL'] = ['']
+# feature_dict[0][0]['P1PPR'] = ['']
+# feature_dict[0][0]['P2PPL'] = ['']
+# feature_dict[0][0]['P2PPR'] = ['']
+# feature_dict[0][0]['P1HDP'] = ['']
+# feature_dict[0][0]['P2HDP'] = ['']
+# feature_dict[0][0]['S'] = ''
+
+# # Furhat react to P1 speech
+# if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
+#     furhat_client.say(FURHAT_AGENT_NAME, 'Hi instructor.')
+#
+# # Furhat react to P2 speech
+# if nlpbody['mic'] == p2mic and nlpbody['speech'] == 'hello ':
+#     furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
+#
+# # Furhat look at person speaking
+# if nlpbody['mic'] == p1mic:
+#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+# elif nlpbody['mic'] == p2mic:
+#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position

@@ -18,3 +18,21 @@ logs/attention_table_3.csv
 logs/attention_table_4.csv
 
 logs/language_table.csv
+
+logs/pilot0.3/furhat_log.csv
+
+logs/furhat_log.csv
+
+logs/pilot0.3/attention_table_0.csv
+
+logs/pilot0.3/attention_table_1.csv
+
+logs/pilot0.3/attention_table_2.csv
+
+logs/pilot0.3/attention_table_3.csv
+
+logs/pilot0.3/attention_table_4.csv
+
+logs/pilot0.3/feature_log.csv
+
+logs/pilot0.3/language_table.csv
