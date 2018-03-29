@@ -162,8 +162,6 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
             log_msg.append(str(data))
             self._save_as(log_msg, "../../logs/feature_log.csv")
 
-
-
         def _process_verbal(self, data):
             """ Add the verbal information in the verbal table.
             """
@@ -188,7 +186,6 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
         def _do_step(self):
             """ Save the current information and reset the variables.
             """
-
             # Format the attention table (dict) into a list of lists and save it.
             att_list = self._dict_of_dicts_to_list_of_lists(self.attention_table,
                                                             ['L'] + self.gaze_keys)
@@ -201,7 +198,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
             self.current_step += 1
             self.attention_table = self._new_attention_table()
             self.current_verbal_dict = self._new_verbal_dict()
-            # If the attention_table returns false the label_sequence if empty and the program should
+            # If the attention_table returns false the label_sequence is empty and the program should
             # save and exit.
             if not self.attention_table:
                 ver_list = self._dict_of_dicts_to_list_of_lists(self.verbal_table,
@@ -247,15 +244,6 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         row_str += "{:<11}".format(cell)
                     print(row_str)
             print("_"*124)
-
-# feature_dict[0][0]['P1GP'] = ['']
-# feature_dict[0][0]['P2GP'] = ['']
-# feature_dict[0][0]['P1PPL'] = ['']
-# feature_dict[0][0]['P1PPR'] = ['']
-# feature_dict[0][0]['P2PPL'] = ['']
-# feature_dict[0][0]['P2PPR'] = ['']
-# feature_dict[0][0]['P1HDP'] = ['']
-# feature_dict[0][0]['P2HDP'] = ['']
 
 # # Furhat react to P1 speech
 # if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
