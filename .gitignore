@@ -40,3 +40,9 @@ logs/pilot0.3/language_table.csv
 =======
 logs/furhat_log.csv
 >>>>>>> origin/pmil
+
+logs/pilot0.4/furhat_log.csv
+
+logs/pilot0.4/attention_table_0.csv
+
+*.csv
