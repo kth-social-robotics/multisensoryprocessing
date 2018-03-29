@@ -190,6 +190,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
             for key in self.gaze_keys:
                 try:
                     for value in data[key]:
+                        #print(value,key)
                         self.attention_table[value][key] += 1
                 except KeyError:
                     pass

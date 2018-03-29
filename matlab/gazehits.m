@@ -434,7 +434,7 @@ if isfield(jsonfile, 'tobii_glasses1') & isfield(jsonfile, 'mocap_glasses1')
             head_hits_op1{i} = head_ang_op1{i} <= hcollision_ang_op1{i};
 
             if head_hits_op1{i} == 1
-                mocapfield{11} = strcat('TH', int2str(i));
+                mocapfield{11} = strcat('T', int2str(i));
             end
         end
     end
@@ -449,7 +449,7 @@ if isfield(jsonfile, 'tobii_glasses1') & isfield(jsonfile, 'mocap_glasses1')
             pointl_hits_op1{i} = pointl_ang_op1{i} <= plcollision_ang_op1{i};
 
             if pointl_hits_op1{i} == 1
-                mocapfield{5} = strcat('TP', int2str(i));
+                mocapfield{5} = strcat('T', int2str(i));
             end
         end
     end
@@ -464,7 +464,7 @@ if isfield(jsonfile, 'tobii_glasses1') & isfield(jsonfile, 'mocap_glasses1')
             pointr_hits_op1{i} = pointr_ang_op1{i} <= prcollision_ang_op1{i};
 
             if pointr_hits_op1{i} == 1
-                mocapfield{5} = strcat('TP', int2str(i));
+                mocapfield{5} = strcat('T', int2str(i));
             end
         end
     end
@@ -578,7 +578,7 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
             head_hits_op2{i} = head_ang_op2{i} <= hcollision_ang_op2{i};
 
             if head_hits_op2{i} == 1
-                mocapfield{12} = strcat('TH', int2str(i));
+                mocapfield{12} = strcat('T', int2str(i));
             end
         end
     end
@@ -593,7 +593,7 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
             pointl_hits_op2{i} = pointl_ang_op2{i} <= plcollision_ang_op2{i};
 
             if pointl_hits_op2{i} == 1
-                mocapfield{8} = strcat('TP', int2str(i));
+                mocapfield{8} = strcat('T', int2str(i));
             end
         end
     end
@@ -608,7 +608,7 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
             pointr_hits_op2{i} = pointr_ang_op2{i} <= prcollision_ang_op2{i};
 
             if pointr_hits_op2{i} == 1
-                mocapfield{8} = strcat('TP', int2str(i));
+                mocapfield{8} = strcat('T', int2str(i));
             end
         end
     end
