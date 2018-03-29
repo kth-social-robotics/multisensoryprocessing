@@ -93,7 +93,7 @@ class Client(Process):
         """ Close the client.
         """
         print("Client is terminating")
-        self.server.send("close me".encode("utf-8"))
+        self.server.send("close me$".encode("utf-8"))
         os.close(self.pipe_in)
         os.close(self.pipe_out)
         self.server.close()

@@ -17,6 +17,9 @@ from time import sleep
 FURHAT_IP = '130.237.67.115' # Furhat IP address
 FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
 
+# Print table
+PRINT_FLAG = True
+
 # Connect to Furhat
 with connect_to_iristk(FURHAT_IP) as furhat_client:
     # Introduce Furhat
@@ -108,7 +111,9 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
             param: N/A
             return: N/A
             """
-            self._print_blocks()
+            # Print attention table
+            if PRINT_FLAG: self._print_blocks()
+
             while True:
                 # Wait for incomming message from the server (via the client)
                 socket_list = [self.pipe_in]
@@ -147,10 +152,16 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
             # Save the data to the logfile
             self._do_log(data)
+
             # Process the verbal information in the data
             self._process_verbal(data)
+
             # Process the gaze and pointing information in the data
             self._process_gaze_hold(data)
+
+            # Process input data online
+            #print(data)
+
             # Check whether the message indicates end of step. If so then save the current state and
             # reset variables.
             if "S" in data.keys():
@@ -244,17 +255,3 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         row_str += "{:<11}".format(cell)
                     print(row_str)
             print("_"*124)
-
-# # Furhat react to P1 speech
-# if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
-#     furhat_client.say(FURHAT_AGENT_NAME, 'Hi instructor.')
-#
-# # Furhat react to P2 speech
-# if nlpbody['mic'] == p2mic and nlpbody['speech'] == 'hello ':
-#     furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
-#
-# # Furhat look at person speaking
-# if nlpbody['mic'] == p1mic:
-#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-# elif nlpbody['mic'] == p2mic:
-#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position

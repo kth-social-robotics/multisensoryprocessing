@@ -42,6 +42,7 @@ Starting sequence:
 -Attention model (server) (mac)
     -Define server IP on server and client files and feature bat file
     -Define FURHAT IP on interpreter
+    -Define print flag on interpreter
     -Get log files
     -Define objects and label sequence table
 -Instructions (mac):

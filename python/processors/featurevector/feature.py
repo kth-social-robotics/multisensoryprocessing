@@ -573,6 +573,22 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                         feature_dict[second][frame]['P2ASR'] = [nlpbody['speech']]
                         feature_dict[second][frame]['P2Keywords'] = [nlpbody['keywords']]
 
+                    # Furhat react to P1 speech
+                    if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
+                        furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+                        furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
+
+                    # Furhat react to P2 speech
+                    if nlpbody['mic'] == p2mic and nlpbody['speech'] == 'hello ':
+                        furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+                        furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
+
+                    # Furhat look at person speaking
+                    # if nlpbody['mic'] == p1mic:
+                    #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+                    # elif nlpbody['mic'] == p2mic:
+                    #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+
                     # Print feature vector
                     print(feature_dict[second][frame])
                     #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
