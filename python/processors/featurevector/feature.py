@@ -334,6 +334,10 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                             if gaze_hits[0] == 'Calibration':
                                 print('P1 - Calibration')
 
+                            # Furhat look at P1 if looking at Furhat
+                            if gaze_hits[0] == 'Furhat':
+                                furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+
                             # Sending messages to the server
                             my_message = json.dumps(feature_dict[second][frame])
                             my_message = "interpreter;data;" + my_message + "$"
@@ -356,6 +360,10 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                             # Print for calibration
                             if gaze_hits[1] == 'Calibration':
                                 print('P2 - Calibration')
+
+                            # Furhat look at P2 if looking at Furhat
+                            if gaze_hits[1] == 'Furhat':
+                                furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
 
                             # Sending messages to the server
                             my_message = json.dumps(feature_dict[second][frame])
