@@ -39,11 +39,12 @@ Starting sequence:
     -Define number of glasses, gloves and targets
     -Open MAMP and Firefox
 
-+++-Attention model (Server) (mac)
-    +++-Define server IP on server and client files and feature bat file and FURHAT IP on interpreter
-    +++-Get log files
-    +++-Define objects and tables
-+++-Instructions (mac):
+-Attention model (server) (mac)
+    -Define server IP on server and client files and feature bat file
+    -Define FURHAT IP on interpreter
+    -Get log files
+    -Define objects and label sequence table
+-Instructions (mac):
     -Define server and Furhat IP
 
 -Feature sh (macjocke):
