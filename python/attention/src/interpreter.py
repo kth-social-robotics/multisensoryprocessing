@@ -149,7 +149,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
             self._do_log(data)
             # Process the verbal information in the data
             self._process_verbal(data)
-            # Process the gaze and hold information in the data
+            # Process the gaze and pointing information in the data
             self._process_gaze_hold(data)
             # Check whether the message indicates end of step. If so then save the current state and
             # reset variables.
@@ -161,6 +161,8 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
             del data["TS"]
             log_msg.append(str(data))
             self._save_as(log_msg, "../../logs/feature_log.csv")
+
+
 
         def _process_verbal(self, data):
             """ Add the verbal information in the verbal table.
@@ -246,7 +248,6 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                     print(row_str)
             print("_"*124)
 
-# feature_dict[0][0]['TS'] = ''
 # feature_dict[0][0]['P1GP'] = ['']
 # feature_dict[0][0]['P2GP'] = ['']
 # feature_dict[0][0]['P1PPL'] = ['']
@@ -255,7 +256,6 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 # feature_dict[0][0]['P2PPR'] = ['']
 # feature_dict[0][0]['P1HDP'] = ['']
 # feature_dict[0][0]['P2HDP'] = ['']
-# feature_dict[0][0]['S'] = ''
 
 # # Furhat react to P1 speech
 # if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
