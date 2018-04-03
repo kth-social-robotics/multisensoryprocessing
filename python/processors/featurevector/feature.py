@@ -1,4 +1,4 @@
-# python feature.py 130.237.67.196 furhat
+# python feature.py 130.237.67.190 furhat
 # Wait for Matlab to start
 
 import zmq
@@ -39,7 +39,7 @@ p1mic = 'mic9'
 p2mic = 'mic3'
 
 # Mocap objects
-glasses_num = 2
+glasses_num = 3
 gloves_num = 2
 targets_num = 14
 tables_num = 1
@@ -92,13 +92,16 @@ feature_dict = defaultdict(lambda : defaultdict(dict))
 # Time, Frame: Timestamp,
 # P1 Np, P1 Adj, P1 Verb, P1 Det, P1 Pron, P1 Feedback, P1 ASR, P1 Keywords,
 # P2 Np, P2 Adj, P2 Verb, P2 Det, P2 Pron, P2 Feedback, P2 ASR, P2 Keywords,
-# P1 Gaze Label, P2 Gaze Label, P1 Gaze Probabilities, P2 Gaze Probabilities,
+# P1 Gaze Label, P2 Gaze Label, P3 Gaze Label,
+# P1 Gaze Probabilities, P2 Gaze Probabilities, P3 Gaze Probabilities,
 # P1 Holding object, P2 Holding object,
 # P1 Pointing Label, P1 Pointing Probability Left, P1 Pointing Probability Right,
 # P2 Pointing Label, P2 Pointing Probability Left, P2 Pointing Probability Right,
 # P1 Head Label, P1 Head Probability,
 # P2 Head Label, P2 Head Probability,
+# P3 Head Label, P3 Head Probability,
 # Step
+
 feature_dict[0][0]['TS'] = ''
 feature_dict[0][0]['P1N'] = ''
 feature_dict[0][0]['P1A'] = ''
@@ -118,8 +121,10 @@ feature_dict[0][0]['P2ASR'] = ['']
 feature_dict[0][0]['P2Keywords'] = ['']
 feature_dict[0][0]['P1GL'] = ['']
 feature_dict[0][0]['P2GL'] = ['']
+feature_dict[0][0]['P3GL'] = ['']
 feature_dict[0][0]['P1GP'] = ['']
 feature_dict[0][0]['P2GP'] = ['']
+feature_dict[0][0]['P3GP'] = ['']
 feature_dict[0][0]['P1HL'] = ['']
 feature_dict[0][0]['P2HL'] = ['']
 feature_dict[0][0]['P1PL'] = ['']
@@ -132,6 +137,8 @@ feature_dict[0][0]['P1HDL'] = ['']
 feature_dict[0][0]['P1HDP'] = ['']
 feature_dict[0][0]['P2HDL'] = ['']
 feature_dict[0][0]['P2HDP'] = ['']
+feature_dict[0][0]['P3HDL'] = ['']
+feature_dict[0][0]['P3HDP'] = ['']
 feature_dict[0][0]['S'] = ''
 
 # Save to log file
@@ -279,18 +286,22 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                         gaze_hits = mateng.gazehits(mocapbody, agent, glasses_num, gloves_num, targets_num, tables_num)
                         # gaze_hits[0] - P1GL
                         # gaze_hits[1] - P2GL
-                        # gaze_hits[2] - P1GA
-                        # gaze_hits[3] - P2GA
-                        # gaze_hits[4] - P1PL
-                        # gaze_hits[5] - P1PLA
-                        # gaze_hits[6] - P1PRA
-                        # gaze_hits[7] - P2PL
-                        # gaze_hits[8] - P2PLA
-                        # gaze_hits[9] - P2PRA
-                        # gaze_hits[10] - P1HL
-                        # gaze_hits[11] - P2HL
-                        # gaze_hits[12] - P1HA
-                        # gaze_hits[13] - P2HA
+                        # gaze_hits[2] - P3GL
+                        # gaze_hits[3] - P1GA
+                        # gaze_hits[4] - P2GA
+                        # gaze_hits[5] - P3GA
+                        # gaze_hits[6] - P1PL
+                        # gaze_hits[7] - P1PLA
+                        # gaze_hits[8] - P1PRA
+                        # gaze_hits[9] - P2PL
+                        # gaze_hits[10] - P2PLA
+                        # gaze_hits[11] - P2PRA
+                        # gaze_hits[12] - P1HL
+                        # gaze_hits[13] - P2HL
+                        # gaze_hits[14] - P3HL
+                        # gaze_hits[15] - P1HA
+                        # gaze_hits[16] - P2HA
+                        # gaze_hits[17] - P3HA
 
                         # # Gaze on Yumi Table
                         # if agent == 'yumi':
@@ -375,7 +386,30 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                             # Remove from dict
                             #feature_dict[second].pop(frame, None)
 
-                        # Furhat follow object of joint attention
+                        # Glasses 3 Gaze Label
+                        if gaze_hits[2] != ['']:
+                            # Put in dictionary
+                            feature_dict[second][frame]['TS'] = str(mocaptime)
+                            feature_dict[second][frame]['P3GL'] = [gaze_hits[2]]
+
+                            # Print frame
+                            if DEBUG: print(feature_dict[second][frame])
+
+                            # Print for calibration
+                            if gaze_hits[2] == 'Calibration':
+                                print('P3 - Calibration')
+
+                            # Sending messages to the server
+                            my_message = json.dumps(feature_dict[second][frame])
+                            my_message = "interpreter;data;" + my_message + "$"
+                            # Encode the string to utf-8 and write it to the pipe defined above
+                            os.write(pipe_out, my_message.encode("utf-8"))
+                            sys.stdout.flush()
+
+                            # Remove from dict
+                            #feature_dict[second].pop(frame, None)
+
+                        # Furhat follow object of joint attention between P1 and P2
                         if gaze_hits[0] != [''] and gaze_hits[1] != [''] and gaze_hits[0] == gaze_hits[1]:
                             # Check that it is only the objects
                             if gaze_hits[0] != 'Screen' and gaze_hits[0] != 'Furhat' and gaze_hits[0] != 'Calibration':
@@ -406,10 +440,10 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                                     furhat_client.gaze(FURHAT_AGENT_NAME, {'x': furhat_gaze_target_x, 'y': furhat_gaze_target_y,'z': furhat_gaze_target_z})
 
                         # Hands 1 Point Label
-                        if gaze_hits[4] != ['']:
+                        if gaze_hits[6] != ['']:
                             # Put in dictionary
                             feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P1PL'] = [gaze_hits[4]]
+                            feature_dict[second][frame]['P1PL'] = [gaze_hits[6]]
 
                             # Print frame
                             if DEBUG: print(feature_dict[second][frame])
@@ -425,10 +459,10 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                             #feature_dict[second].pop(frame, None)
 
                         # Hands 2 Point Label
-                        if gaze_hits[7] != ['']:
+                        if gaze_hits[9] != ['']:
                             # Put in dictionary
                             feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P2LL'] = [gaze_hits[7]]
+                            feature_dict[second][frame]['P2PL'] = [gaze_hits[9]]
 
                             # Print frame
                             if DEBUG: print(feature_dict[second][frame])
@@ -444,10 +478,10 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                             #feature_dict[second].pop(frame, None)
 
                         # Head 1 Point Label
-                        if gaze_hits[10] != ['']:
+                        if gaze_hits[12] != ['']:
                             # Put in dictionary
                             feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P1HDL'] = [gaze_hits[10]]
+                            feature_dict[second][frame]['P1HDL'] = [gaze_hits[12]]
 
                             # Print frame
                             if DEBUG: print(feature_dict[second][frame])
@@ -463,10 +497,10 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                             #feature_dict[second].pop(frame, None)
 
                         # Head 2 Point Label
-                        if gaze_hits[11] != ['']:
+                        if gaze_hits[13] != ['']:
                             # Put in dictionary
                             feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P2HDL'] = [gaze_hits[11]]
+                            feature_dict[second][frame]['P2HDL'] = [gaze_hits[13]]
 
                             # Print frame
                             if DEBUG: print(feature_dict[second][frame])
@@ -481,33 +515,54 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                             # Remove from dict
                             #feature_dict[second].pop(frame, None)
 
-                        # Glasses 1 and 2 Gaze Angles (Probabilities)
-                        np1 = numpy.array(gaze_hits[2])
-                        np2 = numpy.array(gaze_hits[3])
+                        # Head 3 Point Label
+                        if gaze_hits[14] != ['']:
+                            # Put in dictionary
+                            feature_dict[second][frame]['TS'] = str(mocaptime)
+                            feature_dict[second][frame]['P3HDL'] = [gaze_hits[14]]
+
+                            # Print frame
+                            if DEBUG: print(feature_dict[second][frame])
+
+                            # Sending messages to the server
+                            my_message = json.dumps(feature_dict[second][frame])
+                            my_message = "interpreter;data;" + my_message + "$"
+                            # Encode the string to utf-8 and write it to the pipe defined above
+                            os.write(pipe_out, my_message.encode("utf-8"))
+                            sys.stdout.flush()
+
+                            # Remove from dict
+                            #feature_dict[second].pop(frame, None)
+
+                        # Glasses 1, 2 and 3 Gaze Angles (Probabilities)
+                        np1 = numpy.array(gaze_hits[3])
+                        np2 = numpy.array(gaze_hits[4])
+                        np3 = numpy.array(gaze_hits[5])
                         # Put in dictionary
                         feature_dict[second][frame]['TS'] = str(mocaptime)
                         feature_dict[second][frame]['P1GP'] = [np1.tolist()]
                         feature_dict[second][frame]['P2GP'] = [np2.tolist()]
+                        feature_dict[second][frame]['P3GP'] = [np3.tolist()]
 
                         # Hands 1L,1R and 2L,2R Pointing Angles (Probabilities)
-                        np3 = numpy.array(gaze_hits[5])
-                        np4 = numpy.array(gaze_hits[6])
+                        np4 = numpy.array(gaze_hits[7])
                         np5 = numpy.array(gaze_hits[8])
-                        np6 = numpy.array(gaze_hits[9])
+                        np6 = numpy.array(gaze_hits[10])
+                        np7 = numpy.array(gaze_hits[11])
                         # Put in dictionary
-                        feature_dict[second][frame]['TS'] = str(mocaptime)
-                        feature_dict[second][frame]['P1PPL'] = [np3.tolist()]
-                        feature_dict[second][frame]['P1PPR'] = [np4.tolist()]
-                        feature_dict[second][frame]['P2PPL'] = [np5.tolist()]
-                        feature_dict[second][frame]['P2PPR'] = [np6.tolist()]
+                        feature_dict[second][frame]['P1PPL'] = [np4.tolist()]
+                        feature_dict[second][frame]['P1PPR'] = [np5.tolist()]
+                        feature_dict[second][frame]['P2PPL'] = [np6.tolist()]
+                        feature_dict[second][frame]['P2PPR'] = [np7.tolist()]
 
-                        # Glasses 1 and 2 Head Angles (Probabilities)
-                        np7 = numpy.array(gaze_hits[12])
-                        np8 = numpy.array(gaze_hits[13])
+                        # Glasses 1, 2 and 3 Head Angles (Probabilities)
+                        np8 = numpy.array(gaze_hits[15])
+                        np9 = numpy.array(gaze_hits[16])
+                        np10 = numpy.array(gaze_hits[17])
                         # Put in dictionary
-                        feature_dict[second][frame]['TS'] = str(mocaptime)
-                        feature_dict[second][frame]['P1HDP'] = [np7.tolist()]
-                        feature_dict[second][frame]['P2HDP'] = [np8.tolist()]
+                        feature_dict[second][frame]['P1HDP'] = [np8.tolist()]
+                        feature_dict[second][frame]['P2HDP'] = [np9.tolist()]
+                        feature_dict[second][frame]['P3HDP'] = [np10.tolist()]
 
                         # Print frame
                         #print(feature_dict[second][frame])
