@@ -69,7 +69,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
             self.print_every = 1.0
 
             self.verb_keys = ["P1N", "P1A", "P1V", "P1D", "P1P", "P1F", "P1ASR", "P1Keywords", "P2N", "P2A", "P2V", "P2D", "P2P", "P2F", "P2ASR", "P2Keywords"]
-            self.gaze_keys = ["P1GL", "P2GL", "P1HL", "P2HL", "P1PL", "P2PL", "P1HDL", "P2HDL"]
+            self.gaze_keys = ["P1GL", "P2GL", "P3GL", "P1HL", "P2HL", "P1PL", "P2PL", "P1HDL", "P2HDL", "P3HDL"]
 
             self.current_step = 0
             self.attention_table = self._new_attention_table()
@@ -80,22 +80,24 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
             """ Create and return a new attention table.
             """
             att_table = {}
-            att_attr = ["P1GL", "P2GL", "P1HL", "P2HL", "P1PL", "P2PL", "P1HDL", "P2HDL"]
+            att_attr = ["P1GL", "P2GL", "P3GL", "P1HL", "P2HL", "P1PL", "P2PL", "P1HDL", "P2HDL", "P3HDL"]
             try:
                 for i, label in enumerate(self.label_sequence[self.current_step]):
                     object_dict = {"L":label}
                     for key in att_attr:
                         object_dict[key] = 0
 
-                    # Define objects. On lable sequence: P1, P2, F, T1-14
+                    # Define objects. On lable sequence: P1, P2, P3, F, T1-14
                     if i == 0:
                         att_table["P1"] = object_dict
                     elif i == 1:
                         att_table["P2"] = object_dict
                     elif i == 2:
+                        att_table["P3"] = object_dict
+                    elif i == 3:
                         att_table["Furhat"] = object_dict
                     else:
-                        att_table["T{}".format(i-2)] = object_dict
+                        att_table["T{}".format(i-3)] = object_dict
                 return att_table
             except IndexError:
                 return False
@@ -244,7 +246,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
             threading.Timer(self.print_every, self._print_blocks).start()
             clear = "\n" * 100
             print(clear)
-            print("_"*124)
+            print("_"*126)
             if self.attention_table:
                 # Format the attention table (dict) into a list of lists and print it.
                 att_list = self._dict_of_dicts_to_list_of_lists(self.attention_table,
@@ -254,4 +256,4 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                     for cell in row:
                         row_str += "{:<11}".format(cell)
                     print(row_str)
-            print("_"*124)
+            print("_"*126)
