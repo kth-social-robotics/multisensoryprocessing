@@ -40,7 +40,7 @@ Starting sequence:
     -Open MAMP and Firefox
 
 -Attention model (server) (mac)
-    -Define server IP on server and client files and feature bat file
+    -Define server IP on server and client files and feature sh file
     -Define FURHAT IP on interpreter
     -Define print flag on interpreter
     -Get log files
