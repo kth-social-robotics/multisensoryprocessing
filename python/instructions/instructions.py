@@ -67,13 +67,30 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
     photo0 = 'photos/0.png'
     photo1 = "photos/1.png"
     photo2 = "photos/2.png"
+    photo3 = "photos/3.png"
+    photo4 = "photos/4.png"
+    photo5 = "photos/5.png"
+    photo6 = "photos/6.png"
+    photo7 = "photos/7.png"
+    photo8 = "photos/8.png"
+    photo9 = "photos/9.png"
     master.photos = {}
     master.photos[0] = ImageTk.PhotoImage(Image.open(photo0))
     master.photos[1] = ImageTk.PhotoImage(Image.open(photo1))
     master.photos[2] = ImageTk.PhotoImage(Image.open(photo2))
+    master.photos[3] = ImageTk.PhotoImage(Image.open(photo3))
+    master.photos[4] = ImageTk.PhotoImage(Image.open(photo4))
+    master.photos[5] = ImageTk.PhotoImage(Image.open(photo5))
+    master.photos[6] = ImageTk.PhotoImage(Image.open(photo6))
+    master.photos[7] = ImageTk.PhotoImage(Image.open(photo7))
+    master.photos[8] = ImageTk.PhotoImage(Image.open(photo8))
+    master.photos[9] = ImageTk.PhotoImage(Image.open(photo9))
+
+    # Last photo
+    end = 9
 
     # Callback when the button is pressed
-    def nextCallback(index):
+    def nextCallback(index, end):
         # Define time stamp
         time = datetime.now()
         time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
@@ -84,7 +101,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
         feature_dict[0][0]['TS'] = time_stamp
         if index == 0:
             feature_dict[0][0]['S'] = 'start'
-        elif index == 2:
+        elif index == end:
             feature_dict[0][0]['S'] = 'end'
         else:
             feature_dict[0][0]['S'] = 'next'
@@ -93,7 +110,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
         if index == 0:
             furhat_client.say(FURHAT_AGENT_NAME, 'Okay lets start.')
             furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
-        elif index == 2:
+        elif index == end:
             furhat_client.say(FURHAT_AGENT_NAME, 'It seems like you finished this task. Well done.')
             furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
         else:
@@ -128,7 +145,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
     # Set index
     global_index = 1
 
-    b1 = tk.Button(master, text="Next", command=lambda: nextCallback(global_index))
+    b1 = tk.Button(master, text="Next", command=lambda: nextCallback(global_index, end))
     b1.pack()
 
     tk.mainloop()
