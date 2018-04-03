@@ -16,6 +16,7 @@ import math
 from datetime import datetime
 from furhat import connect_to_iristk
 from time import sleep
+from playsound import playsound
 
 # Server IP
 IP = "130.237.67.190"
@@ -82,6 +83,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
         # Print current frame
         print(feature_dict[0][0])
+        playsound('beep.mp3')
 
         # Sending messages to the server
         my_message = json.dumps(feature_dict[0][0])
@@ -108,6 +110,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
         # Print current frame
         print(feature_dict[0][0])
+        playsound('beep.mp3')
 
         # Sending messages to the server
         my_message = json.dumps(feature_dict[0][0])
@@ -134,6 +137,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
         # Print current frame
         print(feature_dict[0][0])
+        playsound('beep.mp3')
 
         # Sending messages to the server
         my_message = json.dumps(feature_dict[0][0])
