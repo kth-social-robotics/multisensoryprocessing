@@ -549,28 +549,18 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
         end
     end
     
-%     % Calculate hits for P2 to Table 1
-%     if isfield(jsonfile, 'mocap_table1')
-%         dist_t1p2 = calc_norm(table1-glassesp2);
-%         collision_ang_t1p2 = atan(object_radius./dist_t1p2);
-%         gaze_ang_t1p2 = calc_angle(gaze_vecp2-glassesp2, table1-glassesp2);
-%         gaze_hits_t1p2 = gaze_ang_t1p2 <= collision_ang_t1p2;
-%     end
+    % Calculate hits for P2 to P3
+    if isfield(jsonfile, 'mocap_glasses3')
+        dist_p3p2 = calc_norm(glassesp3-glassesp2);
+        collision_ang_p3p2 = atan(head_radius./dist_p3p2);
+        gaze_ang_p3p2 = calc_angle(gaze_vecp2-glassesp2, glassesp3-glassesp2);
+        gaze_hits_p3p2 = gaze_ang_p3p2 <= collision_ang_p3p2;
 
-%     % Calculate intersection points for P2 to Table 1
-%     if strcmp(agent, 'yumi')
-%         tableplane = createPlane([table1marker1x table1marker1y table1marker1z], [table1marker2x table1marker2y table1marker2z], [table1marker3x table1marker3y table1marker3z]);
-%         p2_gazeline = createLine3d([gp2z gp2y gp2x], [gpp2z gpp2y gpp2x]);
-%         table_hits_p2 = intersectLinePlane(p2_gazeline, tableplane);
-% 
-%         % Write table position values for P2
-%         mocapfield{4} = table_hits_p2;
-%     end
-
-%     % Write table values for P1
-%     if gaze_hits_t1p2 == 1
-%         mocapfield{2} = 'Tab1';
-%     end
+        % Write human values for P2
+        if gaze_hits_p3p2 == 1
+            mocapfield{2} = 'P3';
+        end
+    end
 
     % Calculate hits for P2 to Furhat
     if isfield(jsonfile, 'mocap_furhat')
@@ -630,7 +620,7 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
             head_hits_op2{i} = head_ang_op2{i} <= hcollision_ang_op2{i};
 
             if head_hits_op2{i} == 1
-                mocapfield{12} = strcat('T', int2str(i));
+                mocapfield{14} = strcat('T', int2str(i));
             end
         end
     end
@@ -645,7 +635,7 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
             pointl_hits_op2{i} = pointl_ang_op2{i} <= plcollision_ang_op2{i};
 
             if pointl_hits_op2{i} == 1
-                mocapfield{8} = strcat('T', int2str(i));
+                mocapfield{10} = strcat('T', int2str(i));
             end
         end
     end
@@ -660,21 +650,121 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
             pointr_hits_op2{i} = pointr_ang_op2{i} <= prcollision_ang_op2{i};
 
             if pointr_hits_op2{i} == 1
-                mocapfield{8} = strcat('T', int2str(i));
+                mocapfield{10} = strcat('T', int2str(i));
             end
         end
     end
 
     % Export gaze and pointing angles (revert to probability)
-    mocapfield{4} = {};
-    mocapfield{9} = {};
-    mocapfield{10} = {};
-    mocapfield{14} = {};
+    mocapfield{5} = {};
+    mocapfield{11} = {};
+    mocapfield{12} = {};
+    mocapfield{17} = {};
     for i = 1:14
-        mocapfield{4} = [mocapfield{4}, (-gaze_ang_op2{i} / pi) + 1];
-        mocapfield{9} = [mocapfield{9}, (-pointl_ang_op2{i} / pi) + 1];
-        mocapfield{10} = [mocapfield{10}, (-pointr_ang_op2{i} / pi) + 1];
-        mocapfield{14} = [mocapfield{14}, (-head_ang_op2{i} / pi) + 1];
+        mocapfield{5} = [mocapfield{5}, (-gaze_ang_op2{i} / pi) + 1];
+        mocapfield{11} = [mocapfield{11}, (-pointl_ang_op2{i} / pi) + 1];
+        mocapfield{12} = [mocapfield{12}, (-pointr_ang_op2{i} / pi) + 1];
+        mocapfield{17} = [mocapfield{17}, (-head_ang_op2{i} / pi) + 1];
+    end
+end
+
+% P3
+if isfield(jsonfile, 'tobii_glasses3') & isfield(jsonfile, 'mocap_glasses3')
+    % Calculate hits for P3 to P1
+    if isfield(jsonfile, 'mocap_glasses1')
+        dist_p1p3 = calc_norm(glassesp1-glassesp3);
+        collision_ang_p1p3 = atan(head_radius./dist_p1p3);
+        gaze_ang_p1p3 = calc_angle(gaze_vecp3-glassesp3, glassesp1-glassesp3);
+        gaze_hits_p1p3 = gaze_ang_p1p3 <= collision_ang_p1p3;
+
+        % Write human values for P3
+        if gaze_hits_p1p3 == 1
+            mocapfield{3} = 'P1';
+        end
+    end
+    
+    % Calculate hits for P3 to P2
+    if isfield(jsonfile, 'mocap_glasses2')
+        dist_p2p3 = calc_norm(glassesp2-glassesp3);
+        collision_ang_p2p3 = atan(head_radius./dist_p2p3);
+        gaze_ang_p2p3 = calc_angle(gaze_vecp3-glassesp3, glassesp2-glassesp3);
+        gaze_hits_p2p3 = gaze_ang_p2p3 <= collision_ang_p2p3;
+
+        % Write human values for P3
+        if gaze_hits_p2p3 == 1
+            mocapfield{3} = 'P2';
+        end
+    end
+
+    % Calculate hits for P3 to Furhat
+    if isfield(jsonfile, 'mocap_furhat')
+        dist_fp3 = calc_norm(furhat-glassesp3);
+        collision_ang_fp3 = atan(object_radius./dist_fp3);
+        gaze_ang_fp3 = calc_angle(gaze_vecp3-glassesp3, furhat-glassesp3);
+        gaze_hits_fp3 = gaze_ang_fp3 <= collision_ang_fp3;
+    end
+
+    % Calculate hits for P3 to calibration
+    if isfield(jsonfile, 'mocap_calibration')
+        dist_cp3 = calc_norm(calibration-glassesp3);
+        collision_ang_cp3 = atan(object_radius./dist_cp3);
+        gaze_ang_cp3 = calc_angle(gaze_vecp3-glassesp3, calibration-glassesp3);
+        gaze_hits_cp3 = gaze_ang_cp3 <= collision_ang_cp3;
+    end
+    
+    % Calculate hits for P3 to screen
+    if isfield(jsonfile, 'mocap_screen')
+        dist_sp3 = calc_norm(screen-glassesp3);
+        collision_ang_sp3 = atan(object_radius./dist_sp3);
+        gaze_ang_sp3 = calc_angle(gaze_vecp3-glassesp3, screen-glassesp3);
+        gaze_hits_sp3 = gaze_ang_sp3 <= collision_ang_sp3;
+    end
+
+    % Write furhat and calibration values for P3
+    if gaze_hits_fp3 == 1
+        mocapfield{3} = 'Furhat';
+    end
+    if gaze_hits_cp3 == 1
+        mocapfield{3} = 'Calibration';
+    end
+    if gaze_hits_sp3 == 1
+        mocapfield{3} = 'Screen';
+    end
+    
+    % Calculate hits for P3 to Objects
+    for i = 1:14
+        if isfield(jsonfile, strcat('mocap_target', int2str(i)))
+            dist_op3{i} = calc_norm(object{i}-glassesp3);
+            collision_ang_op3{i} = atan(object_radius./dist_op3{i});
+            gaze_ang_op3{i} = calc_angle(gaze_vecp3-glassesp3, object{i}-glassesp3);
+            gaze_hits_op3{i} = gaze_ang_op3{i} <= collision_ang_op3{i};
+
+            if gaze_hits_op3{i} == 1
+                mocapfield{3} = strcat('T', int2str(i));
+            end
+        end
+    end
+    
+    % Calculate head hits for P3 to Objects
+    for i = 1:14
+        if isfield(jsonfile, strcat('mocap_target', int2str(i)))
+            hdist_op3{i} = calc_norm(object{i}-glassesp3);
+            hcollision_ang_op3{i} = atan(object_radius./hdist_op3{i});
+            head_ang_op3{i} = calc_angle(head_vecp3-glassesp3, object{i}-glassesp3);
+            head_hits_op3{i} = head_ang_op3{i} <= hcollision_ang_op3{i};
+
+            if head_hits_op3{i} == 1
+                mocapfield{15} = strcat('T', int2str(i));
+            end
+        end
+    end
+
+    % Export gaze angles (revert to probability)
+    mocapfield{6} = {};
+    mocapfield{18} = {};
+    for i = 1:14
+        mocapfield{6} = [mocapfield{6}, (-gaze_ang_op3{i} / pi) + 1];
+        mocapfield{18} = [mocapfield{18}, (-head_ang_op3{i} / pi) + 1];
     end
 end
 
