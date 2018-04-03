@@ -37,6 +37,24 @@ elseif (strcmp(tobii_device, 'tobii_glasses2'))
     front_right_marker = 4;
     back_left_marker = 2;
     back_right_marker = 3;
+elseif (strcmp(tobii_device, 'tobii_glasses3'))
+    % Values
+    gd.left = [0, 0, 0];
+    gd.right = [0, 0, 0];
+
+    tobii_rgbdata.pos = pos;
+    tobii_rgbdata.quat = quat;
+    tobii_rgbdata.rgbMarkers = rgbMarkers;
+    tobii_rgbdata.rgbMarkernames = ['glasses3_1', 'glasses3_2', 'glasses3_3', 'glasses3_4'];
+    tobii_rgbdata.name = ['glasses3'];
+
+    % Calculate a transform from rigidbody coordinates to tobii glasses
+    % coordinates, assuming there are 2 markers on the front, and 2 markers
+    % at the back
+    front_left_marker = 3;
+    front_right_marker = 2;
+    back_left_marker = 4;
+    back_right_marker = 1;
 end
 
 % Normalise gp3

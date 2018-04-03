@@ -38,7 +38,7 @@ tobii_dict['white']['type'] = 'glasses1'
 # blue = glasses2
 tobii_dict['blue']['type'] = 'glasses2'
 # brown = glasses3
-#tobii_dict['brown']['type'] = 'glasses3'
+tobii_dict['brown']['type'] = 'glasses3'
 
 # Procees input data
 def callback(_mq, get_shifted_time, routing_key, body):
@@ -59,9 +59,9 @@ def callback(_mq, get_shifted_time, routing_key, body):
         elif routing_key == "tobii.new_sensor.blue":
             name = 'glasses2'
             pname = 'blue'
-        # elif routing_key == "tobii.new_sensor.brown":
-        #     name = 'glasses3'
-        #     pname = 'brown'
+        elif routing_key == "tobii.new_sensor.brown":
+            name = 'glasses3'
+            pname = 'brown'
         timestamp = None
         # pdleft = None
         # pdright = None

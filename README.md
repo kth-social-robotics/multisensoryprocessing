@@ -26,7 +26,7 @@ Other:
 -ROS connector: sends feature vector to the ROS server
 
 Starting sequence:
--Git sync (macdimos, macjocke, pmil, gigabyte)
+-Git sync (macdimos, macjocke, pmil, macinstructions)
 -Settings
 -RabbitMQ (pmil)
 -Timeserver (pmil)
@@ -45,7 +45,7 @@ Starting sequence:
     -Define print flag on interpreter
     -Get log files
     -Define objects and label sequence table
--Instructions (mac):
+-Instructions (macinstructions):
     -Define server and Furhat IP
 
 -Feature sh (macjocke):
@@ -71,3 +71,4 @@ Starting sequence:
 
 -Tobii glasses1 (pmil)
 -Tobii glasses2 (pmil)
+-Tobii glasses3 (pmil)

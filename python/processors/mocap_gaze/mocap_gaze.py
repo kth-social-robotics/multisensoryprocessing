@@ -1,8 +1,8 @@
 # Get access to tobii live video streaming: rtsp://130.237.67.216:8554/live/eyes or scene
-# websocketd --port=8080 python2 mocap_gaze.py 1 24
+# websocketd --port=8080 python2 mocap_gaze.py 1 25
 # Start webgl: http://130.237.67.196:8888/webgl/realtimevis/realtime/vs.html?IP=130.237.67.196
-# python2 mocap_gaze.py 2 24
-# py -2 .\mocap_gaze.py 2 24
+# python2 mocap_gaze.py 2 25
+# py -2 .\mocap_gaze.py 2 25
 # Check number of mocap objects
 # Wait for Matlab to start
 
@@ -139,6 +139,9 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                         # Run for tobii 2
                         if 'tobii_glasses2' in tobiimocap_dict[new_second][new_frame] and 'mocap_glasses2' in tobiimocap_dict[new_second][new_frame]:
                             mocapgaze('tobii_glasses2', 'mocap_glasses2')
+                        # Run for tobii 3
+                        if 'tobii_glasses3' in tobiimocap_dict[new_second][new_frame] and 'mocap_glasses3' in tobiimocap_dict[new_second][new_frame]:
+                            mocapgaze('tobii_glasses3', 'mocap_glasses3')
 
                     # Print and send 10 frames before
                     # Send to WebGL
