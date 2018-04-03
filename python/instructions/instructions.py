@@ -101,7 +101,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
         feature_dict[0][0]['TS'] = time_stamp
         if index == 0:
             feature_dict[0][0]['S'] = 'start'
-        elif index == end:
+        elif index == end - 1:
             feature_dict[0][0]['S'] = 'end'
         else:
             feature_dict[0][0]['S'] = 'next'
@@ -110,7 +110,7 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
         if index == 0:
             furhat_client.say(FURHAT_AGENT_NAME, 'Okay lets start.')
             furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
-        elif index == end:
+        elif index == end - 1:
             furhat_client.say(FURHAT_AGENT_NAME, 'It seems like you finished this task. Well done.')
             furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
         else:
@@ -120,15 +120,12 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
         # Print current frame
         print(feature_dict[0][0])
 
-        # Send sync signal
-        playsound('beep.mp3')
-
-        # Update screen
-        vlabel.configure(image = master.photos[index])
-
         # Update index
         global global_index
         global_index = index + 1
+
+        # Update screen
+        vlabel.configure(image = master.photos[global_index])
 
         # Sending messages to the server
         my_message = json.dumps(feature_dict[0][0])
@@ -136,14 +133,16 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
         # Encode the string to utf-8 and write it to the pipe defined above
         os.write(pipe_out, my_message.encode("utf-8"))
         sys.stdout.flush()
-        return(index)
+
+        # Send sync signal
+        playsound('beep.mp3')
 
     # Define first photo
     vlabel = tk.Label(master, image = master.photos[0])
     vlabel.pack()
 
     # Set index
-    global_index = 1
+    global_index = 0
 
     b1 = tk.Button(master, text="Next", command=lambda: nextCallback(global_index, end))
     b1.pack()
