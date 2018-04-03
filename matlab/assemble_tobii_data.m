@@ -48,5 +48,8 @@ function [tobii_data] = assemble_tobii_data(device, gaze_data, tobiiRbg, frontLe
     elseif (strcmp(device, 'tobii_glasses2'))
         head_pose = [0, 0.4, 2]; % y is 0.4 up
         tobii_data.headpose = local2worldspace(head_pose, tobii_data.quat, tobii_data.pos);
+    elseif (strcmp(device, 'tobii_glasses3'))
+        head_pose = [0, 0.4, 2]; % y is 0.4 up
+        tobii_data.headpose = local2worldspace(head_pose, tobii_data.quat, tobii_data.pos);
     end
 end
