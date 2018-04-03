@@ -71,9 +71,3 @@ Starting sequence:
 
 -Tobii glasses1 (pmil)
 -Tobii glasses2 (pmil)
-
--Test:
-    -Look at calibration
-    -Say hello
-
--Start instructions
