@@ -28,7 +28,7 @@ FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connection
 
 # Define window
 master = tk.Tk()
-master.minsize(1400, 750)
+master.minsize(1270, 750)
 master.geometry("520x300")
 
 # Create pipes to communicate to the client process
