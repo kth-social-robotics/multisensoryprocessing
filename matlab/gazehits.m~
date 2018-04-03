@@ -523,14 +523,14 @@ if isfield(jsonfile, 'tobii_glasses1') & isfield(jsonfile, 'mocap_glasses1')
     
     % Export gaze and pointing angles (revert to probability)
     mocapfield{4} = {};
-    mocapfield{8} = {};
-    mocapfield{9} = {};
-    mocapfield{16} = {};
+    mocapfield{6} = {};
+    mocapfield{7} = {};
+    mocapfield{13} = {};
     for i = 1:14
         mocapfield{4} = [mocapfield{4}, (-gaze_ang_op1{i} / pi) + 1];
-        mocapfield{8} = [mocapfield{8}, (-pointl_ang_op1{i} / pi) + 1];
-        mocapfield{9} = [mocapfield{9}, (-pointr_ang_op1{i} / pi) + 1];
-        mocapfield{16} = [mocapfield{16}, (-head_ang_op1{i} / pi) + 1];
+        mocapfield{6} = [mocapfield{6}, (-pointl_ang_op1{i} / pi) + 1];
+        mocapfield{7} = [mocapfield{7}, (-pointr_ang_op1{i} / pi) + 1];
+        mocapfield{13} = [mocapfield{13}, (-head_ang_op1{i} / pi) + 1];
     end
 end
 

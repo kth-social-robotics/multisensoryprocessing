@@ -39,7 +39,7 @@ p1mic = 'mic9'
 p2mic = 'mic3'
 
 # Mocap objects
-glasses_num = 2
+glasses_num = 3
 gloves_num = 2
 targets_num = 14
 tables_num = 1
@@ -92,13 +92,16 @@ feature_dict = defaultdict(lambda : defaultdict(dict))
 # Time, Frame: Timestamp,
 # P1 Np, P1 Adj, P1 Verb, P1 Det, P1 Pron, P1 Feedback, P1 ASR, P1 Keywords,
 # P2 Np, P2 Adj, P2 Verb, P2 Det, P2 Pron, P2 Feedback, P2 ASR, P2 Keywords,
-# P1 Gaze Label, P2 Gaze Label, P1 Gaze Probabilities, P2 Gaze Probabilities,
+# P1 Gaze Label, P2 Gaze Label, P3 Gaze Label,
+# P1 Gaze Probabilities, P2 Gaze Probabilities, P3 Gaze Probabilities,
 # P1 Holding object, P2 Holding object,
 # P1 Pointing Label, P1 Pointing Probability Left, P1 Pointing Probability Right,
 # P2 Pointing Label, P2 Pointing Probability Left, P2 Pointing Probability Right,
 # P1 Head Label, P1 Head Probability,
 # P2 Head Label, P2 Head Probability,
+# P3 Head Label, P3 Head Probability,
 # Step
+
 feature_dict[0][0]['TS'] = ''
 feature_dict[0][0]['P1N'] = ''
 feature_dict[0][0]['P1A'] = ''
@@ -118,8 +121,10 @@ feature_dict[0][0]['P2ASR'] = ['']
 feature_dict[0][0]['P2Keywords'] = ['']
 feature_dict[0][0]['P1GL'] = ['']
 feature_dict[0][0]['P2GL'] = ['']
+feature_dict[0][0]['P3GL'] = ['']
 feature_dict[0][0]['P1GP'] = ['']
 feature_dict[0][0]['P2GP'] = ['']
+feature_dict[0][0]['P3GP'] = ['']
 feature_dict[0][0]['P1HL'] = ['']
 feature_dict[0][0]['P2HL'] = ['']
 feature_dict[0][0]['P1PL'] = ['']
@@ -132,6 +137,8 @@ feature_dict[0][0]['P1HDL'] = ['']
 feature_dict[0][0]['P1HDP'] = ['']
 feature_dict[0][0]['P2HDL'] = ['']
 feature_dict[0][0]['P2HDP'] = ['']
+feature_dict[0][0]['P3HDL'] = ['']
+feature_dict[0][0]['P3HDP'] = ['']
 feature_dict[0][0]['S'] = ''
 
 # Save to log file
@@ -277,20 +284,25 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                         # Gaze, Head and Pointing Hits
                         # Call Matlab script to calculate gaze, head and pointing hits and angles
                         gaze_hits = mateng.gazehits(mocapbody, agent, glasses_num, gloves_num, targets_num, tables_num)
+                        print(gaze_hits[0], gaze_hits[12])
                         # gaze_hits[0] - P1GL
                         # gaze_hits[1] - P2GL
-                        # gaze_hits[2] - P1GA
-                        # gaze_hits[3] - P2GA
-                        # gaze_hits[4] - P1PL
-                        # gaze_hits[5] - P1PLA
-                        # gaze_hits[6] - P1PRA
-                        # gaze_hits[7] - P2PL
-                        # gaze_hits[8] - P2PLA
-                        # gaze_hits[9] - P2PRA
-                        # gaze_hits[10] - P1HL
-                        # gaze_hits[11] - P2HL
-                        # gaze_hits[12] - P1HA
-                        # gaze_hits[13] - P2HA
+                        # gaze_hits[2] - P3GL
+                        # gaze_hits[3] - P1GA
+                        # gaze_hits[4] - P2GA
+                        # gaze_hits[5] - P3GA
+                        # gaze_hits[6] - P1PL
+                        # gaze_hits[7] - P1PLA
+                        # gaze_hits[8] - P1PRA
+                        # gaze_hits[9] - P2PL
+                        # gaze_hits[10] - P2PLA
+                        # gaze_hits[11] - P2PRA
+                        # gaze_hits[12] - P1HL
+                        # gaze_hits[13] - P2HL
+                        # gaze_hits[14] - P3HL
+                        # gaze_hits[15] - P1HA
+                        # gaze_hits[16] - P2HA
+                        # gaze_hits[17] - P3HA
 
                         # # Gaze on Yumi Table
                         # if agent == 'yumi':
