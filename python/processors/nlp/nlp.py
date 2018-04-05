@@ -1,4 +1,4 @@
-# python nlp.py
+# python nlp.py 0 # for only asr or 1 for nlp
 
 import zmq
 import pika
@@ -21,6 +21,11 @@ settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 
 # Print messages
 DEBUG = False
+
+# Get nlp flag
+if len(sys.argv) != 2:
+    exit('Error. Enter nlp flag')
+nlpflag = sys.argv[1]
 
 # Define server
 zmq_socket, zmq_server_addr = create_zmq_server()
@@ -76,15 +81,25 @@ def callback(_mq, get_shifted_time, routing_key, body):
         inputdata = s.recv()
         msgdata, localtime = msgpack.unpackb(inputdata, use_list=False)
 
-        syntax = calc_syntaxnet(msgdata['text'])
+        if nlpflag == 1:
+            syntax = calc_syntaxnet(msgdata['text'])
 
-        data = {
-            'timestamp': localtime,
-            'mic': msgdata['mic'],
-            'speech': msgdata['text'],
-            'keywords': [list(x) for x in msgdata['timestamps']],
-            'language': syntax
-        }
+            data = {
+                'timestamp': localtime,
+                'mic': msgdata['mic'],
+                'nlp': '1',
+                'speech': msgdata['text'],
+                'keywords': [list(x) for x in msgdata['timestamps']],
+                'language': syntax
+            }
+        else:
+            data = {
+                'timestamp': localtime,
+                'mic': msgdata['mic'],
+                'nlp': '0',
+                'speech': msgdata['text'],
+                'keywords': [list(x) for x in msgdata['timestamps']]
+            }
 
         if DEBUG: print(data)
 

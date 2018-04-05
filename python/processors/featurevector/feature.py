@@ -224,6 +224,8 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                         dist_tarl = [[0 for x in range(targets_num)] for y in range(gloves_num)]
                         dist_tarr = [[0 for x in range(targets_num)] for y in range(gloves_num)]
 
+                        furhat_obj_look = 0
+
                         # Calculate distance between hands and targets
                         for x in range(0, gloves_num):
                             for y in range(0, targets_num):
@@ -252,6 +254,7 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                                     # Remove from dict
                                     #feature_dict[second].pop(frame, None)
                                     touchtarget = 100
+                                    furhat_obj_look = 1
 
                                     # Furhat gaze at object holded apart form the 3 big ones
                                     # Furhat and object positions
@@ -346,7 +349,7 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                                 print('P1 - Calibration')
 
                             # Furhat look at P1 if looking at Furhat
-                            if gaze_hits[0] == 'Furhat':
+                            if gaze_hits[0] == 'Furhat' and furhat_obj_look == 0:
                                 furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
 
                             # Sending messages to the server
@@ -373,7 +376,7 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                                 print('P2 - Calibration')
 
                             # Furhat look at P2 if looking at Furhat
-                            if gaze_hits[1] == 'Furhat':
+                            if gaze_hits[1] == 'Furhat' and furhat_obj_look == 0:
                                 furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
 
                             # Sending messages to the server
@@ -609,22 +612,24 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
                     # Put in dictionary
                     if nlpbody['mic'] == p1mic:
                         feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
-                        feature_dict[second][frame]['P1N'] = nlpbody['language']['nouns']
-                        feature_dict[second][frame]['P1A'] = nlpbody['language']['adjectives']
-                        feature_dict[second][frame]['P1V'] = nlpbody['language']['verbs']
-                        feature_dict[second][frame]['P1D'] = nlpbody['language']['determiners']
-                        feature_dict[second][frame]['P1P'] = nlpbody['language']['pronouns']
-                        feature_dict[second][frame]['P1F'] = nlpbody['language']['feedback']
+                        if nlpbody['nlp'] == '1':
+                            feature_dict[second][frame]['P1N'] = nlpbody['language']['nouns']
+                            feature_dict[second][frame]['P1A'] = nlpbody['language']['adjectives']
+                            feature_dict[second][frame]['P1V'] = nlpbody['language']['verbs']
+                            feature_dict[second][frame]['P1D'] = nlpbody['language']['determiners']
+                            feature_dict[second][frame]['P1P'] = nlpbody['language']['pronouns']
+                            feature_dict[second][frame]['P1F'] = nlpbody['language']['feedback']
                         feature_dict[second][frame]['P1ASR'] = [nlpbody['speech']]
                         feature_dict[second][frame]['P1Keywords'] = [nlpbody['keywords']]
                     elif nlpbody['mic'] == p2mic:
                         feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
-                        feature_dict[second][frame]['P2N'] = nlpbody['language']['nouns']
-                        feature_dict[second][frame]['P2A'] = nlpbody['language']['adjectives']
-                        feature_dict[second][frame]['P2V'] = nlpbody['language']['verbs']
-                        feature_dict[second][frame]['P2D'] = nlpbody['language']['determiners']
-                        feature_dict[second][frame]['P2P'] = nlpbody['language']['pronouns']
-                        feature_dict[second][frame]['P2F'] = nlpbody['language']['feedback']
+                        if nlpbody['nlp'] == '1':
+                            feature_dict[second][frame]['P2N'] = nlpbody['language']['nouns']
+                            feature_dict[second][frame]['P2A'] = nlpbody['language']['adjectives']
+                            feature_dict[second][frame]['P2V'] = nlpbody['language']['verbs']
+                            feature_dict[second][frame]['P2D'] = nlpbody['language']['determiners']
+                            feature_dict[second][frame]['P2P'] = nlpbody['language']['pronouns']
+                            feature_dict[second][frame]['P2F'] = nlpbody['language']['feedback']
                         feature_dict[second][frame]['P2ASR'] = [nlpbody['speech']]
                         feature_dict[second][frame]['P2Keywords'] = [nlpbody['keywords']]
 
