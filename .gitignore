@@ -50,5 +50,8 @@ logs/pilot0.4/attention_table_0.csv
 >>>>>>> a982aa8d264269b70de37abd8a20fb9bc0ed43e2
 *.csv
 logs/.DS_Store
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/pmil
 logs/.DS_Store

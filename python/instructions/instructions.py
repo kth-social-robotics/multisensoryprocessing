@@ -137,6 +137,31 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
         # Send sync signal
         playsound('beep.mp3')
 
+    def wrongCallback(index):
+        # Define time stamp
+        time = datetime.now()
+        time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
+                      time.year, time.month, time.day, time.hour, time.minute, time.second,\
+                      str(time.microsecond)[:3])
+
+        # Define feature dict
+        feature_dict[0][0]['TS'] = time_stamp
+        feature_dict[0][0]['S'] = str(index) + '_wrong'
+
+        # Furhat
+        furhat_client.say(FURHAT_AGENT_NAME, 'It seems that is not right.')
+        furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+
+        # Print current frame
+        print(feature_dict[0][0])
+
+        # Sending messages to the server
+        my_message = json.dumps(feature_dict[0][0])
+        my_message = "interpreter;data;" + my_message + "$"
+        # Encode the string to utf-8 and write it to the pipe defined above
+        os.write(pipe_out, my_message.encode("utf-8"))
+        sys.stdout.flush()
+
     # Define first photo
     vlabel = tk.Label(master, image = master.photos[0])
     vlabel.pack()
@@ -145,7 +170,9 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
     global_index = 0
 
     b1 = tk.Button(master, text="Next", command=lambda: nextCallback(global_index, end))
+    b2 = tk.Button(master, text="Wrong", command=lambda: wrongCallback(global_index))
     b1.pack()
+    b2.pack()
 
     tk.mainloop()
 
