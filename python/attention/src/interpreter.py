@@ -170,10 +170,11 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
                 self._do_step()
 
         def _do_log(self, data):
-            log_msg = [str(data["TS"]), str(self.current_step)]
-            del data["TS"]
-            log_msg.append(str(data))
-            self._save_as(log_msg, "../../logs/feature_log.csv")
+            if 'TS' in data:
+                log_msg = [str(data["TS"]), str(self.current_step)]
+                del data["TS"]
+                log_msg.append(str(data))
+                self._save_as(log_msg, "../../logs/feature_log.csv")
 
         def _process_verbal(self, data):
             """ Add the verbal information in the verbal table.
