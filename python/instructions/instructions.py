@@ -174,6 +174,12 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
     b1.pack()
     b2.pack()
 
+    def yourFunction(event):
+        print('left')
+
+    master.bind("<Left>",yourFunction)   #Binds the "left" key to the frame and exexutes yourFunction if "left" key was pressed
+    master.pack()
+
     tk.mainloop()
 
     # Close the client safely, not always necessary
