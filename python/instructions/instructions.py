@@ -193,20 +193,11 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
         if repr(event.char) == "u'\uf72d'":
             nextCallback(global_index, end)
 
-    # def callback(event):
-    #     frame.focus_set()
-    #     print "clicked at", event.x, event.y
-
+    # Frame for detecting key events
     frame = Frame(master, highlightbackground="green", highlightcolor="green", highlightthickness=1, width=100, height=100, bd=0)
-
     frame.bind("<Key>", key)
-    #frame.bind("<Button-1>", callback)
-
     frame.focus_force()
-
     frame.pack(side="left", fill="both", expand=True)
-
-
 
     tk.mainloop()
 
