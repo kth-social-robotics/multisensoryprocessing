@@ -5,7 +5,7 @@ http://www.binarytides.com/code-chat-application-server-client-sockets-python/
 """
 
 # DEFINE IP
-IP = "130.237.67.207"
+IP = "130.237.67.237"
 
 import socket
 import select
