@@ -2,6 +2,7 @@
 # python instructions.py
 
 import Tkinter as tk
+from Tkinter import Frame, Tk, Button
 import subprocess
 from collections import defaultdict
 import json
@@ -162,6 +163,9 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
         os.write(pipe_out, my_message.encode("utf-8"))
         sys.stdout.flush()
 
+        # Send wrong signal
+        playsound('wrong.mp3')
+
     # Define first photo
     vlabel = tk.Label(master, image = master.photos[0])
     vlabel.pack()
@@ -171,14 +175,38 @@ with connect_to_iristk(FURHAT_IP) as furhat_client:
 
     b1 = tk.Button(master, text="Next", command=lambda: nextCallback(global_index, end))
     b2 = tk.Button(master, text="Wrong", command=lambda: wrongCallback(global_index))
-    b1.pack()
-    b2.pack()
+    #b1.pack()
+    #b2.pack()
 
-    def yourFunction(event):
-        print('left')
+    # Get key read from the presenter
+    def key(event):
+        #Up Left: u'\uf72c'
+        #Up Right: u'\uf72d'
+        #Down Left: u'\uf708'
+        #Down Right: '.'
 
-    master.bind("<Left>",yourFunction)   #Binds the "left" key to the frame and exexutes yourFunction if "left" key was pressed
-    master.pack()
+        # Up Left: Wrong item
+        if repr(event.char) == "u'\uf72c'":
+            wrongCallback(global_index)
+
+        # Up Right: Next step (Right item)
+        if repr(event.char) == "u'\uf72d'":
+            nextCallback(global_index, end)
+
+    # def callback(event):
+    #     frame.focus_set()
+    #     print "clicked at", event.x, event.y
+
+    frame = Frame(master, highlightbackground="green", highlightcolor="green", highlightthickness=1, width=100, height=100, bd=0)
+
+    frame.bind("<Key>", key)
+    #frame.bind("<Button-1>", callback)
+
+    frame.focus_force()
+
+    frame.pack(side="left", fill="both", expand=True)
+
+
 
     tk.mainloop()
 
