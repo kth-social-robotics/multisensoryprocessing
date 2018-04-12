@@ -146,538 +146,550 @@ with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in
     w = csv.DictWriter(f, feature_dict[0][0].keys(), delimiter=";")
     w.writeheader()
 
-    # Connect to Furhat
-    with connect_to_iristk(FURHAT_IP) as furhat_client:
-        # Introduce Furhat
-        furhat_client.say(FURHAT_AGENT_NAME, 'It seems like I can now hear what you are saying.')
-        #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-        furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+# Uncomment for furhat and indent
+    # # Connect to Furhat
+    # with connect_to_iristk(FURHAT_IP) as furhat_client:
+    #     # Introduce Furhat
+    #     furhat_client.say(FURHAT_AGENT_NAME, 'It seems like I can now hear what you are saying.')
+    #     #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+    #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+    #
+    #     # Log Furhat events
+    #     def event_callback(event):
+    #         #print(event) # Receives each event the furhat sends out.
+    #         fd = open('../../../logs/furhat_log.csv','a')
+    #         fd.write(event)
+    #         fd.write('\n')
+    #         fd.close()
+    #
+    #     # Listen to events
+    #     furhat_client.start_listening(event_callback) # register the event callback receiver
+# Uncomment for furhat and indent
 
-        # Log Furhat events
-        def event_callback(event):
-            #print(event) # Receives each event the furhat sends out.
-            fd = open('../../../logs/furhat_log.csv','a')
-            fd.write(event)
-            fd.write('\n')
-            fd.close()
+    # Procees mocap input data
+    def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
+        context1 = zmq.Context()
+        s1 = context1.socket(zmq.SUB)
+        s1.setsockopt_string(zmq.SUBSCRIBE, u'')
+        s1.connect(body1.get('address'))
 
-        # Listen to events
-        furhat_client.start_listening(event_callback) # register the event callback receiver
+        def runA():
+            while True:
+                data1 = s1.recv()
+                mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
 
-        # Procees mocap input data
-        def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
-            context1 = zmq.Context()
-            s1 = context1.socket(zmq.SUB)
-            s1.setsockopt_string(zmq.SUBSCRIBE, u'')
-            s1.connect(body1.get('address'))
+                # Get mocap localtime
+                mocaptime = localtime1
 
-            def runA():
-                while True:
-                    data1 = s1.recv()
-                    mocapbody, localtime1 = msgpack.unpackb(data1, use_list=False)
+                # First get which second
+                second = int(mocaptime)
 
-                    # Get mocap localtime
-                    mocaptime = localtime1
+                # Get decimals to decide which frame
+                frame = int(math.modf(mocaptime)[0] * 50)
 
-                    # First get which second
-                    second = int(mocaptime)
+                # Check that data is received
+                if mocapbody:
+                    # Initiate objects
+                    handl = []
+                    handr = []
+                    target = []
+                    table = []
+                    # Hands
+                    for x in range(0, gloves_num):
+                        handl.append(0)
+                        handr.append(0)
+                    # Targets
+                    for x in range(0, targets_num):
+                        target.append(0)
+                    # Tables
+                    for x in range(0, tables_num):
+                        table.append(0)
 
-                    # Get decimals to decide which frame
-                    frame = int(math.modf(mocaptime)[0] * 50)
+                    # Get objects
+                    # Hands
+                    for x in range(0, gloves_num):
+                        if 'mocap_hand' + str(x + 1) + 'l' in mocapbody:
+                            handl[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['z']))
+                        if 'mocap_hand' + str(x + 1) + 'r' in mocapbody:
+                            handr[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['z']))
+                    # Targets
+                    for x in range(0, targets_num):
+                        if 'mocap_target' + str(x + 1) in mocapbody:
+                            target[x] = numpy.array((mocapbody['mocap_target' + str(x + 1)]['position']['x'], mocapbody['mocap_target' + str(x + 1)]['position']['y'], mocapbody['mocap_target' + str(x + 1)]['position']['z']))
+                    # Tables
+                    for x in range(0, tables_num):
+                        if 'mocap_table' + str(x + 1) in mocapbody:
+                            table[x] = numpy.array((mocapbody['mocap_table' + str(x + 1)]['position']['x'], mocapbody['mocap_table' + str(x + 1)]['position']['y'], mocapbody['mocap_table' + str(x + 1)]['position']['z']))
 
-                    # Check that data is received
-                    if mocapbody:
-                        # Initiate objects
-                        handl = []
-                        handr = []
-                        target = []
-                        table = []
-                        # Hands
-                        for x in range(0, gloves_num):
-                            handl.append(0)
-                            handr.append(0)
-                        # Targets
-                        for x in range(0, targets_num):
-                            target.append(0)
-                        # Tables
-                        for x in range(0, tables_num):
-                            table.append(0)
+                    # Calculate object holdings
+                    # Targets
+                    dist_tarl = [[0 for x in range(targets_num)] for y in range(gloves_num)]
+                    dist_tarr = [[0 for x in range(targets_num)] for y in range(gloves_num)]
 
-                        # Get objects
-                        # Hands
-                        for x in range(0, gloves_num):
-                            if 'mocap_hand' + str(x + 1) + 'l' in mocapbody:
-                                handl[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'l']['position']['z']))
-                            if 'mocap_hand' + str(x + 1) + 'r' in mocapbody:
-                                handr[x] = numpy.array((mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['x'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['y'], mocapbody['mocap_hand' + str(x + 1) + 'r']['position']['z']))
-                        # Targets
-                        for x in range(0, targets_num):
-                            if 'mocap_target' + str(x + 1) in mocapbody:
-                                target[x] = numpy.array((mocapbody['mocap_target' + str(x + 1)]['position']['x'], mocapbody['mocap_target' + str(x + 1)]['position']['y'], mocapbody['mocap_target' + str(x + 1)]['position']['z']))
-                        # Tables
-                        for x in range(0, tables_num):
-                            if 'mocap_table' + str(x + 1) in mocapbody:
-                                table[x] = numpy.array((mocapbody['mocap_table' + str(x + 1)]['position']['x'], mocapbody['mocap_table' + str(x + 1)]['position']['y'], mocapbody['mocap_table' + str(x + 1)]['position']['z']))
+                    furhat_obj_look = 0
 
-                        # Calculate object holdings
-                        # Targets
-                        dist_tarl = [[0 for x in range(targets_num)] for y in range(gloves_num)]
-                        dist_tarr = [[0 for x in range(targets_num)] for y in range(gloves_num)]
+                    # Calculate distance between hands and targets
+                    for x in range(0, gloves_num):
+                        for y in range(0, targets_num):
+                            dist_tarl[x][y] = numpy.linalg.norm(handl[x] - target[y])
+                            dist_tarr[x][y] = numpy.linalg.norm(handr[x] - target[y])
+                            touchtarget = 100
 
-                        furhat_obj_look = 0
+                            # If less than 15cm put in feature vector
+                            if dist_tarl[x][y] != 0 and dist_tarl[x][y] < 0.15:
+                                touchtarget = y
+                            if dist_tarr[x][y] != 0 and dist_tarr[x][y] < 0.15:
+                                touchtarget = y
 
-                        # Calculate distance between hands and targets
-                        for x in range(0, gloves_num):
-                            for y in range(0, targets_num):
-                                dist_tarl[x][y] = numpy.linalg.norm(handl[x] - target[y])
-                                dist_tarr[x][y] = numpy.linalg.norm(handr[x] - target[y])
+                            if touchtarget != 100:
+                                # Put in dictionary
+                                feature_dict[second][frame]['TS'] = str(mocaptime)
+                                feature_dict[second][frame]['P' + str(x + 1) + 'HL'] = ['T' + str(y + 1)]
+                                # Print frame
+                                if DEBUG: print(feature_dict[second][frame])
+                                # Sending messages to the server
+                                my_message = json.dumps(feature_dict[second][frame])
+                                my_message = "interpreter;data;" + my_message + "$"
+                                # Encode the string to utf-8 and write it to the pipe defined above
+                                os.write(pipe_out, my_message.encode("utf-8"))
+                                sys.stdout.flush()
+                                # Remove from dict
+                                #feature_dict[second].pop(frame, None)
                                 touchtarget = 100
+                                furhat_obj_look = 1
 
-                                # If less than 15cm put in feature vector
-                                if dist_tarl[x][y] != 0 and dist_tarl[x][y] < 0.15:
-                                    touchtarget = y
-                                if dist_tarr[x][y] != 0 and dist_tarr[x][y] < 0.15:
-                                    touchtarget = y
+# Uncomment for Furhat
+                                # # Furhat gaze at object holded apart form the 3 big ones
+                                # # Furhat and object positions
+                                # if y != 0 and y != 1 and y != 2:
+                                #     fx = mocapbody['mocap_furhat']['position']['x']
+                                #     fy = mocapbody['mocap_furhat']['position']['y']
+                                #     fz = mocapbody['mocap_furhat']['position']['z']
+                                #     ox = mocapbody['mocap_target' + str(y + 1)]['position']['x']
+                                #     oy = mocapbody['mocap_target' + str(y + 1)]['position']['y']
+                                #     oz = mocapbody['mocap_target' + str(y + 1)]['position']['z']
+                                #     furhat_gaze_target_x = oz - fz
+                                #     furhat_gaze_target_y = oy - fy
+                                #     furhat_gaze_target_z = - (ox - fx)
+                                #
+                                #     # Make sure the position is in furhat's limits
+                                #     furhat_xlimit = False
+                                #     furhat_ylimit = False
+                                #     furhat_zlimit = False
+                                #     if -4 <= furhat_gaze_target_x <= 4:
+                                #         furhat_xlimit = True
+                                #     if -1 <= furhat_gaze_target_y <= 1:
+                                #         furhat_ylimit = True
+                                #     if 0 <= furhat_gaze_target_z <= 3:
+                                #         furhat_zlimit = True
+                                #
+                                #     # Move only every 10 frames and if gaze is within the limits
+                                #     if frame % 10 == 0 and furhat_xlimit and furhat_ylimit and furhat_zlimit:
+                                #         furhat_client.gaze(FURHAT_AGENT_NAME, {'x': furhat_gaze_target_x, 'y': furhat_gaze_target_y,'z': furhat_gaze_target_z})
+# Uncomment for Furhat
 
-                                if touchtarget != 100:
-                                    # Put in dictionary
-                                    feature_dict[second][frame]['TS'] = str(mocaptime)
-                                    feature_dict[second][frame]['P' + str(x + 1) + 'HL'] = ['T' + str(y + 1)]
-                                    # Print frame
-                                    if DEBUG: print(feature_dict[second][frame])
-                                    # Sending messages to the server
-                                    my_message = json.dumps(feature_dict[second][frame])
-                                    my_message = "interpreter;data;" + my_message + "$"
-                                    # Encode the string to utf-8 and write it to the pipe defined above
-                                    os.write(pipe_out, my_message.encode("utf-8"))
-                                    sys.stdout.flush()
-                                    # Remove from dict
-                                    #feature_dict[second].pop(frame, None)
-                                    touchtarget = 100
-                                    furhat_obj_look = 1
+                    # Gaze, Head and Pointing Hits
+                    # Call Matlab script to calculate gaze, head and pointing hits and angles
+                    gaze_hits = mateng.gazehits(mocapbody, agent, glasses_num, gloves_num, targets_num, tables_num)
+                    # gaze_hits[0] - P1GL
+                    # gaze_hits[1] - P2GL
+                    # gaze_hits[2] - P3GL
+                    # gaze_hits[3] - P1GA
+                    # gaze_hits[4] - P2GA
+                    # gaze_hits[5] - P3GA
+                    # gaze_hits[6] - P1PL
+                    # gaze_hits[7] - P1PLA
+                    # gaze_hits[8] - P1PRA
+                    # gaze_hits[9] - P2PL
+                    # gaze_hits[10] - P2PLA
+                    # gaze_hits[11] - P2PRA
+                    # gaze_hits[12] - P1HL
+                    # gaze_hits[13] - P2HL
+                    # gaze_hits[14] - P3HL
+                    # gaze_hits[15] - P1HA
+                    # gaze_hits[16] - P2HA
+                    # gaze_hits[17] - P3HA
 
-                                    # Furhat gaze at object holded apart form the 3 big ones
-                                    # Furhat and object positions
-                                    if y != 0 and y != 1 and y != 2:
-                                        fx = mocapbody['mocap_furhat']['position']['x']
-                                        fy = mocapbody['mocap_furhat']['position']['y']
-                                        fz = mocapbody['mocap_furhat']['position']['z']
-                                        ox = mocapbody['mocap_target' + str(y + 1)]['position']['x']
-                                        oy = mocapbody['mocap_target' + str(y + 1)]['position']['y']
-                                        oz = mocapbody['mocap_target' + str(y + 1)]['position']['z']
-                                        furhat_gaze_target_x = oz - fz
-                                        furhat_gaze_target_y = oy - fy
-                                        furhat_gaze_target_z = - (ox - fx)
+                    # # Gaze on Yumi Table
+                    # if agent == 'yumi':
+                    #     # Vision system point bottom right: x = 0.65, y = 0.34
+                    #     # Mocap system point bottom right: x = -2.81, z = 4.19
+                    #     # xrobot = -zmocap (-3.54)
+                    #     # yrobot = -xmocap (+3.15)
+                    #
+                    #     # Table Tobii 1 gaze position
+                    #     if gaze_hits[0] == 'Tab1':
+                    #         xrobot = 0.65 - (gaze_hits[1][0][0] - 4.19) # xrobot - (xcurrent - xmocap)
+                    #         yrobot = 0.34 - (gaze_hits[1][0][2] + 2.81) # yrobot - (ycurrent + ymocap)
+                    #
+                    #         # Put in dictionary
+                    #         feature_dict[second][frame]['P1GP'] = [xrobot, yrobot]
+                    #
+                    #         # Print frame
+                    #         #print(feature_dict[second][frame])
+                    #
+                    #         # Sending messages to ROS
+                    #         my_message = json.dumps(feature_dict[second][frame])
+                    #         my_message = "interpreter;data;" + my_message + "$"
+                    #
+                    #         # Encode the string to utf-8 and write it to the pipe defined above
+                    #         os.write(pipe_out, my_message.encode("utf-8"))
+                    #         sys.stdout.flush()
+                    #
+                    #         # Remove from dict
+                    #         feature_dict[second].pop(frame, None)
 
-                                        # Make sure the position is in furhat's limits
-                                        furhat_xlimit = False
-                                        furhat_ylimit = False
-                                        furhat_zlimit = False
-                                        if -4 <= furhat_gaze_target_x <= 4:
-                                            furhat_xlimit = True
-                                        if -1 <= furhat_gaze_target_y <= 1:
-                                            furhat_ylimit = True
-                                        if 0 <= furhat_gaze_target_z <= 3:
-                                            furhat_zlimit = True
-
-                                        # Move only every 10 frames and if gaze is within the limits
-                                        if frame % 10 == 0 and furhat_xlimit and furhat_ylimit and furhat_zlimit:
-                                            furhat_client.gaze(FURHAT_AGENT_NAME, {'x': furhat_gaze_target_x, 'y': furhat_gaze_target_y,'z': furhat_gaze_target_z})
-
-                        # Gaze, Head and Pointing Hits
-                        # Call Matlab script to calculate gaze, head and pointing hits and angles
-                        gaze_hits = mateng.gazehits(mocapbody, agent, glasses_num, gloves_num, targets_num, tables_num)
-                        # gaze_hits[0] - P1GL
-                        # gaze_hits[1] - P2GL
-                        # gaze_hits[2] - P3GL
-                        # gaze_hits[3] - P1GA
-                        # gaze_hits[4] - P2GA
-                        # gaze_hits[5] - P3GA
-                        # gaze_hits[6] - P1PL
-                        # gaze_hits[7] - P1PLA
-                        # gaze_hits[8] - P1PRA
-                        # gaze_hits[9] - P2PL
-                        # gaze_hits[10] - P2PLA
-                        # gaze_hits[11] - P2PRA
-                        # gaze_hits[12] - P1HL
-                        # gaze_hits[13] - P2HL
-                        # gaze_hits[14] - P3HL
-                        # gaze_hits[15] - P1HA
-                        # gaze_hits[16] - P2HA
-                        # gaze_hits[17] - P3HA
-
-                        # # Gaze on Yumi Table
-                        # if agent == 'yumi':
-                        #     # Vision system point bottom right: x = 0.65, y = 0.34
-                        #     # Mocap system point bottom right: x = -2.81, z = 4.19
-                        #     # xrobot = -zmocap (-3.54)
-                        #     # yrobot = -xmocap (+3.15)
-                        #
-                        #     # Table Tobii 1 gaze position
-                        #     if gaze_hits[0] == 'Tab1':
-                        #         xrobot = 0.65 - (gaze_hits[1][0][0] - 4.19) # xrobot - (xcurrent - xmocap)
-                        #         yrobot = 0.34 - (gaze_hits[1][0][2] + 2.81) # yrobot - (ycurrent + ymocap)
-                        #
-                        #         # Put in dictionary
-                        #         feature_dict[second][frame]['P1GP'] = [xrobot, yrobot]
-                        #
-                        #         # Print frame
-                        #         #print(feature_dict[second][frame])
-                        #
-                        #         # Sending messages to ROS
-                        #         my_message = json.dumps(feature_dict[second][frame])
-                        #         my_message = "interpreter;data;" + my_message + "$"
-                        #
-                        #         # Encode the string to utf-8 and write it to the pipe defined above
-                        #         os.write(pipe_out, my_message.encode("utf-8"))
-                        #         sys.stdout.flush()
-                        #
-                        #         # Remove from dict
-                        #         feature_dict[second].pop(frame, None)
-
-                        # Glasses 1 Gaze Label
-                        if gaze_hits[0] != ['']:
-                            # Put in dictionary
-                            feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P1GL'] = [gaze_hits[0]]
-
-                            # Print frame
-                            if DEBUG: print(feature_dict[second][frame])
-
-                            # Print for calibration
-                            if gaze_hits[0] == 'Calibration':
-                                print('P1 - Calibration')
-
-                            # Furhat look at P1 if looking at Furhat
-                            if gaze_hits[0] == 'Furhat' and furhat_obj_look == 0:
-                                furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-
-                            # Sending messages to the server
-                            my_message = json.dumps(feature_dict[second][frame])
-                            my_message = "interpreter;data;" + my_message + "$"
-                            # Encode the string to utf-8 and write it to the pipe defined above
-                            os.write(pipe_out, my_message.encode("utf-8"))
-                            sys.stdout.flush()
-
-                            # Remove from dict
-                            #feature_dict[second].pop(frame, None)
-
-                        # Glasses 2 Gaze Label
-                        if gaze_hits[1] != ['']:
-                            # Put in dictionary
-                            feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P2GL'] = [gaze_hits[1]]
-
-                            # Print frame
-                            if DEBUG: print(feature_dict[second][frame])
-
-                            # Print for calibration
-                            if gaze_hits[1] == 'Calibration':
-                                print('P2 - Calibration')
-
-                            # Furhat look at P2 if looking at Furhat
-                            if gaze_hits[1] == 'Furhat' and furhat_obj_look == 0:
-                                furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
-
-                            # Sending messages to the server
-                            my_message = json.dumps(feature_dict[second][frame])
-                            my_message = "interpreter;data;" + my_message + "$"
-                            # Encode the string to utf-8 and write it to the pipe defined above
-                            os.write(pipe_out, my_message.encode("utf-8"))
-                            sys.stdout.flush()
-
-                            # Remove from dict
-                            #feature_dict[second].pop(frame, None)
-
-                        # Glasses 3 Gaze Label
-                        if gaze_hits[2] != ['']:
-                            # Put in dictionary
-                            feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P3GL'] = [gaze_hits[2]]
-
-                            # Print frame
-                            if DEBUG: print(feature_dict[second][frame])
-
-                            # Print for calibration
-                            if gaze_hits[2] == 'Calibration':
-                                print('P3 - Calibration')
-
-                            # Sending messages to the server
-                            my_message = json.dumps(feature_dict[second][frame])
-                            my_message = "interpreter;data;" + my_message + "$"
-                            # Encode the string to utf-8 and write it to the pipe defined above
-                            os.write(pipe_out, my_message.encode("utf-8"))
-                            sys.stdout.flush()
-
-                            # Remove from dict
-                            #feature_dict[second].pop(frame, None)
-
-                        # Furhat follow object of joint attention between P1 and P2
-                        if gaze_hits[0] != [''] and gaze_hits[1] != [''] and gaze_hits[0] == gaze_hits[1]:
-                            # Check that it is only the objects
-                            if gaze_hits[0] != 'Screen' and gaze_hits[0] != 'Furhat' and gaze_hits[0] != 'Calibration':
-                                # Furhat and object positions
-                                fx = mocapbody['mocap_furhat']['position']['x']
-                                fy = mocapbody['mocap_furhat']['position']['y']
-                                fz = mocapbody['mocap_furhat']['position']['z']
-                                ox = mocapbody['mocap_target' + gaze_hits[0][1:]]['position']['x']
-                                oy = mocapbody['mocap_target' + gaze_hits[0][1:]]['position']['y']
-                                oz = mocapbody['mocap_target' + gaze_hits[0][1:]]['position']['z']
-                                furhat_gaze_target_x = oz - fz
-                                furhat_gaze_target_y = oy - fy
-                                furhat_gaze_target_z = - (ox - fx)
-
-                                # Make sure the position is in furhat's limits
-                                furhat_xlimit = False
-                                furhat_ylimit = False
-                                furhat_zlimit = False
-                                if -4 <= furhat_gaze_target_x <= 4:
-                                    furhat_xlimit = True
-                                if -1 <= furhat_gaze_target_y <= 1:
-                                    furhat_ylimit = True
-                                if 0 <= furhat_gaze_target_z <= 3:
-                                    furhat_zlimit = True
-
-                                # Move only every 10 frames and if gaze is within the limits
-                                if frame % 10 == 0 and furhat_xlimit and furhat_ylimit and furhat_zlimit:
-                                    furhat_client.gaze(FURHAT_AGENT_NAME, {'x': furhat_gaze_target_x, 'y': furhat_gaze_target_y,'z': furhat_gaze_target_z})
-
-                        # Hands 1 Point Label
-                        if gaze_hits[6] != ['']:
-                            # Put in dictionary
-                            feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P1PL'] = [gaze_hits[6]]
-
-                            # Print frame
-                            if DEBUG: print(feature_dict[second][frame])
-
-                            # Sending messages to the server
-                            my_message = json.dumps(feature_dict[second][frame])
-                            my_message = "interpreter;data;" + my_message + "$"
-                            # Encode the string to utf-8 and write it to the pipe defined above
-                            os.write(pipe_out, my_message.encode("utf-8"))
-                            sys.stdout.flush()
-
-                            # Remove from dict
-                            #feature_dict[second].pop(frame, None)
-
-                        # Hands 2 Point Label
-                        if gaze_hits[9] != ['']:
-                            # Put in dictionary
-                            feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P2PL'] = [gaze_hits[9]]
-
-                            # Print frame
-                            if DEBUG: print(feature_dict[second][frame])
-
-                            # Sending messages to the server
-                            my_message = json.dumps(feature_dict[second][frame])
-                            my_message = "interpreter;data;" + my_message + "$"
-                            # Encode the string to utf-8 and write it to the pipe defined above
-                            os.write(pipe_out, my_message.encode("utf-8"))
-                            sys.stdout.flush()
-
-                            # Remove from dict
-                            #feature_dict[second].pop(frame, None)
-
-                        # Head 1 Point Label
-                        if gaze_hits[12] != ['']:
-                            # Put in dictionary
-                            feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P1HDL'] = [gaze_hits[12]]
-
-                            # Print frame
-                            if DEBUG: print(feature_dict[second][frame])
-
-                            # Sending messages to the server
-                            my_message = json.dumps(feature_dict[second][frame])
-                            my_message = "interpreter;data;" + my_message + "$"
-                            # Encode the string to utf-8 and write it to the pipe defined above
-                            os.write(pipe_out, my_message.encode("utf-8"))
-                            sys.stdout.flush()
-
-                            # Remove from dict
-                            #feature_dict[second].pop(frame, None)
-
-                        # Head 2 Point Label
-                        if gaze_hits[13] != ['']:
-                            # Put in dictionary
-                            feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P2HDL'] = [gaze_hits[13]]
-
-                            # Print frame
-                            if DEBUG: print(feature_dict[second][frame])
-
-                            # Sending messages to the server
-                            my_message = json.dumps(feature_dict[second][frame])
-                            my_message = "interpreter;data;" + my_message + "$"
-                            # Encode the string to utf-8 and write it to the pipe defined above
-                            os.write(pipe_out, my_message.encode("utf-8"))
-                            sys.stdout.flush()
-
-                            # Remove from dict
-                            #feature_dict[second].pop(frame, None)
-
-                        # Head 3 Point Label
-                        if gaze_hits[14] != ['']:
-                            # Put in dictionary
-                            feature_dict[second][frame]['TS'] = str(mocaptime)
-                            feature_dict[second][frame]['P3HDL'] = [gaze_hits[14]]
-
-                            # Print frame
-                            if DEBUG: print(feature_dict[second][frame])
-
-                            # Sending messages to the server
-                            my_message = json.dumps(feature_dict[second][frame])
-                            my_message = "interpreter;data;" + my_message + "$"
-                            # Encode the string to utf-8 and write it to the pipe defined above
-                            os.write(pipe_out, my_message.encode("utf-8"))
-                            sys.stdout.flush()
-
-                            # Remove from dict
-                            #feature_dict[second].pop(frame, None)
-
-                        # Glasses 1, 2 and 3 Gaze Angles (Probabilities)
-                        np1 = numpy.array(gaze_hits[3])
-                        np2 = numpy.array(gaze_hits[4])
-                        np3 = numpy.array(gaze_hits[5])
+                    # Glasses 1 Gaze Label
+                    if gaze_hits[0] != ['']:
                         # Put in dictionary
                         feature_dict[second][frame]['TS'] = str(mocaptime)
-                        feature_dict[second][frame]['P1GP'] = [np1.tolist()]
-                        feature_dict[second][frame]['P2GP'] = [np2.tolist()]
-                        feature_dict[second][frame]['P3GP'] = [np3.tolist()]
-
-                        # Hands 1L,1R and 2L,2R Pointing Angles (Probabilities)
-                        np4 = numpy.array(gaze_hits[7])
-                        np5 = numpy.array(gaze_hits[8])
-                        np6 = numpy.array(gaze_hits[10])
-                        np7 = numpy.array(gaze_hits[11])
-                        # Put in dictionary
-                        feature_dict[second][frame]['P1PPL'] = [np4.tolist()]
-                        feature_dict[second][frame]['P1PPR'] = [np5.tolist()]
-                        feature_dict[second][frame]['P2PPL'] = [np6.tolist()]
-                        feature_dict[second][frame]['P2PPR'] = [np7.tolist()]
-
-                        # Glasses 1, 2 and 3 Head Angles (Probabilities)
-                        np8 = numpy.array(gaze_hits[15])
-                        np9 = numpy.array(gaze_hits[16])
-                        np10 = numpy.array(gaze_hits[17])
-                        # Put in dictionary
-                        feature_dict[second][frame]['P1HDP'] = [np8.tolist()]
-                        feature_dict[second][frame]['P2HDP'] = [np9.tolist()]
-                        feature_dict[second][frame]['P3HDP'] = [np10.tolist()]
+                        feature_dict[second][frame]['P1GL'] = [gaze_hits[0]]
 
                         # Print frame
-                        #print(feature_dict[second][frame])
+                        if DEBUG: print(feature_dict[second][frame])
+
+                        # Print for calibration
+                        if gaze_hits[0] == 'Calibration':
+                            print('P1 - Calibration')
+
+# Uncomment for Furhat
+                        # # Furhat look at P1 if looking at Furhat
+                        # if gaze_hits[0] == 'Furhat' and furhat_obj_look == 0:
+                        #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+# Uncomment for Furhat
 
                         # Sending messages to the server
-                        #my_message = json.dumps(feature_dict[second][frame])
-                        #my_message = "interpreter;data;" + my_message + "$"
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
                         # Encode the string to utf-8 and write it to the pipe defined above
-                        #os.write(pipe_out, my_message.encode("utf-8"))
-                        #sys.stdout.flush()
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
 
-                        # Log to csv file
-                        w.writerow(feature_dict[second][frame])
+                        # Remove from dict
+                        #feature_dict[second].pop(frame, None)
 
-                        # Remove from dict (all features - also nlp)
-                        feature_dict[second].pop(frame, None)
+                    # Glasses 2 Gaze Label
+                    if gaze_hits[1] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P2GL'] = [gaze_hits[1]]
 
-            t1 = Thread(target = runA)
-            t1.setDaemon(True)
-            t1.start()
-            #s1.close()
+                        # Print frame
+                        if DEBUG: print(feature_dict[second][frame])
 
-        # Process nlp input data
-        def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
-            context2 = zmq.Context()
-            s2 = context2.socket(zmq.SUB)
-            s2.setsockopt_string(zmq.SUBSCRIBE, u'')
-            s2.connect(body2.get('address'))
+                        # Print for calibration
+                        if gaze_hits[1] == 'Calibration':
+                            print('P2 - Calibration')
 
-            def runB():
-                while True:
-                    data2 = s2.recv()
-                    nlpbody, localtime2 = msgpack.unpackb(data2, use_list=False)
+# Uncomment for Furhat
+                        # # Furhat look at P2 if looking at Furhat
+                        # if gaze_hits[1] == 'Furhat' and furhat_obj_look == 0:
+                        #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+# Uncomment for Furhat
 
-                    # Get nlp localtime
-                    nlptime = localtime2
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
 
-                    # First get which second
-                    second = int(nlptime)
+                        # Remove from dict
+                        #feature_dict[second].pop(frame, None)
 
-                    # Get decimals to decide which frame
-                    frame = int(math.modf(nlptime)[0] * 50)
+                    # Glasses 3 Gaze Label
+                    if gaze_hits[2] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P3GL'] = [gaze_hits[2]]
 
+                        # Print frame
+                        if DEBUG: print(feature_dict[second][frame])
+
+                        # Print for calibration
+                        if gaze_hits[2] == 'Calibration':
+                            print('P3 - Calibration')
+
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
+
+                        # Remove from dict
+                        #feature_dict[second].pop(frame, None)
+
+# Uncomment for Furhat
+                    # # Furhat follow object of joint attention between P1 and P2
+                    # if gaze_hits[0] != [''] and gaze_hits[1] != [''] and gaze_hits[0] == gaze_hits[1]:
+                    #     # Check that it is only the objects
+                    #     if gaze_hits[0] != 'Screen' and gaze_hits[0] != 'Furhat' and gaze_hits[0] != 'Calibration':
+                    #         # Furhat and object positions
+                    #         fx = mocapbody['mocap_furhat']['position']['x']
+                    #         fy = mocapbody['mocap_furhat']['position']['y']
+                    #         fz = mocapbody['mocap_furhat']['position']['z']
+                    #         ox = mocapbody['mocap_target' + gaze_hits[0][1:]]['position']['x']
+                    #         oy = mocapbody['mocap_target' + gaze_hits[0][1:]]['position']['y']
+                    #         oz = mocapbody['mocap_target' + gaze_hits[0][1:]]['position']['z']
+                    #         furhat_gaze_target_x = oz - fz
+                    #         furhat_gaze_target_y = oy - fy
+                    #         furhat_gaze_target_z = - (ox - fx)
+                    #
+                    #         # Make sure the position is in furhat's limits
+                    #         furhat_xlimit = False
+                    #         furhat_ylimit = False
+                    #         furhat_zlimit = False
+                    #         if -4 <= furhat_gaze_target_x <= 4:
+                    #             furhat_xlimit = True
+                    #         if -1 <= furhat_gaze_target_y <= 1:
+                    #             furhat_ylimit = True
+                    #         if 0 <= furhat_gaze_target_z <= 3:
+                    #             furhat_zlimit = True
+                    #
+                    #         # Move only every 10 frames and if gaze is within the limits
+                    #         if frame % 10 == 0 and furhat_xlimit and furhat_ylimit and furhat_zlimit:
+                    #             furhat_client.gaze(FURHAT_AGENT_NAME, {'x': furhat_gaze_target_x, 'y': furhat_gaze_target_y,'z': furhat_gaze_target_z})
+# Uncomment for Furhat
+
+                    # Hands 1 Point Label
+                    if gaze_hits[6] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P1PL'] = [gaze_hits[6]]
+
+                        # Print frame
+                        if DEBUG: print(feature_dict[second][frame])
+
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
+
+                        # Remove from dict
+                        #feature_dict[second].pop(frame, None)
+
+                    # Hands 2 Point Label
+                    if gaze_hits[9] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P2PL'] = [gaze_hits[9]]
+
+                        # Print frame
+                        if DEBUG: print(feature_dict[second][frame])
+
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
+
+                        # Remove from dict
+                        #feature_dict[second].pop(frame, None)
+
+                    # Head 1 Point Label
+                    if gaze_hits[12] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P1HDL'] = [gaze_hits[12]]
+
+                        # Print frame
+                        if DEBUG: print(feature_dict[second][frame])
+
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
+
+                        # Remove from dict
+                        #feature_dict[second].pop(frame, None)
+
+                    # Head 2 Point Label
+                    if gaze_hits[13] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P2HDL'] = [gaze_hits[13]]
+
+                        # Print frame
+                        if DEBUG: print(feature_dict[second][frame])
+
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
+
+                        # Remove from dict
+                        #feature_dict[second].pop(frame, None)
+
+                    # Head 3 Point Label
+                    if gaze_hits[14] != ['']:
+                        # Put in dictionary
+                        feature_dict[second][frame]['TS'] = str(mocaptime)
+                        feature_dict[second][frame]['P3HDL'] = [gaze_hits[14]]
+
+                        # Print frame
+                        if DEBUG: print(feature_dict[second][frame])
+
+                        # Sending messages to the server
+                        my_message = json.dumps(feature_dict[second][frame])
+                        my_message = "interpreter;data;" + my_message + "$"
+                        # Encode the string to utf-8 and write it to the pipe defined above
+                        os.write(pipe_out, my_message.encode("utf-8"))
+                        sys.stdout.flush()
+
+                        # Remove from dict
+                        #feature_dict[second].pop(frame, None)
+
+                    # Glasses 1, 2 and 3 Gaze Angles (Probabilities)
+                    np1 = numpy.array(gaze_hits[3])
+                    np2 = numpy.array(gaze_hits[4])
+                    np3 = numpy.array(gaze_hits[5])
                     # Put in dictionary
-                    if nlpbody['mic'] == p1mic:
-                        feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
-                        if nlpbody['nlp'] == '1':
-                            feature_dict[second][frame]['P1N'] = nlpbody['language']['nouns']
-                            feature_dict[second][frame]['P1A'] = nlpbody['language']['adjectives']
-                            feature_dict[second][frame]['P1V'] = nlpbody['language']['verbs']
-                            feature_dict[second][frame]['P1D'] = nlpbody['language']['determiners']
-                            feature_dict[second][frame]['P1P'] = nlpbody['language']['pronouns']
-                            feature_dict[second][frame]['P1F'] = nlpbody['language']['feedback']
-                        feature_dict[second][frame]['P1ASR'] = [nlpbody['speech']]
-                        feature_dict[second][frame]['P1Keywords'] = [nlpbody['keywords']]
-                    elif nlpbody['mic'] == p2mic:
-                        feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
-                        if nlpbody['nlp'] == '1':
-                            feature_dict[second][frame]['P2N'] = nlpbody['language']['nouns']
-                            feature_dict[second][frame]['P2A'] = nlpbody['language']['adjectives']
-                            feature_dict[second][frame]['P2V'] = nlpbody['language']['verbs']
-                            feature_dict[second][frame]['P2D'] = nlpbody['language']['determiners']
-                            feature_dict[second][frame]['P2P'] = nlpbody['language']['pronouns']
-                            feature_dict[second][frame]['P2F'] = nlpbody['language']['feedback']
-                        feature_dict[second][frame]['P2ASR'] = [nlpbody['speech']]
-                        feature_dict[second][frame]['P2Keywords'] = [nlpbody['keywords']]
+                    feature_dict[second][frame]['TS'] = str(mocaptime)
+                    feature_dict[second][frame]['P1GP'] = [np1.tolist()]
+                    feature_dict[second][frame]['P2GP'] = [np2.tolist()]
+                    feature_dict[second][frame]['P3GP'] = [np3.tolist()]
 
-                    # Furhat react to P1 speech
-                    if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
-                        furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-                        furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
+                    # Hands 1L,1R and 2L,2R Pointing Angles (Probabilities)
+                    np4 = numpy.array(gaze_hits[7])
+                    np5 = numpy.array(gaze_hits[8])
+                    np6 = numpy.array(gaze_hits[10])
+                    np7 = numpy.array(gaze_hits[11])
+                    # Put in dictionary
+                    feature_dict[second][frame]['P1PPL'] = [np4.tolist()]
+                    feature_dict[second][frame]['P1PPR'] = [np5.tolist()]
+                    feature_dict[second][frame]['P2PPL'] = [np6.tolist()]
+                    feature_dict[second][frame]['P2PPR'] = [np7.tolist()]
 
-                    # Furhat react to P2 speech
-                    if nlpbody['mic'] == p2mic and nlpbody['speech'] == 'hello ':
-                        furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
-                        furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
+                    # Glasses 1, 2 and 3 Head Angles (Probabilities)
+                    np8 = numpy.array(gaze_hits[15])
+                    np9 = numpy.array(gaze_hits[16])
+                    np10 = numpy.array(gaze_hits[17])
+                    # Put in dictionary
+                    feature_dict[second][frame]['P1HDP'] = [np8.tolist()]
+                    feature_dict[second][frame]['P2HDP'] = [np9.tolist()]
+                    feature_dict[second][frame]['P3HDP'] = [np10.tolist()]
 
-                    # Furhat look at person speaking
-                    # if nlpbody['mic'] == p1mic:
-                    #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-                    # elif nlpbody['mic'] == p2mic:
-                    #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+                    # Print frame
+                    #print(feature_dict[second][frame])
 
-                    # Print feature vector
-                    print(feature_dict[second][frame])
-                    #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
-
-                    # Sending messages to attention module
-                    my_message = json.dumps(feature_dict[second][frame])
-                    my_message = "interpreter;data;" + my_message + "$"
-
+                    # Sending messages to the server
+                    #my_message = json.dumps(feature_dict[second][frame])
+                    #my_message = "interpreter;data;" + my_message + "$"
                     # Encode the string to utf-8 and write it to the pipe defined above
-                    os.write(pipe_out, my_message.encode("utf-8"))
-                    sys.stdout.flush()
+                    #os.write(pipe_out, my_message.encode("utf-8"))
+                    #sys.stdout.flush()
 
-                    # Remove value from dict
-                    #feature_dict[second].pop(frame, None)
+                    # Log to csv file
+                    w.writerow(feature_dict[second][frame])
 
-            t2 = Thread(target = runB)
-            t2.setDaemon(True)
-            t2.start()
-            #s2.close()
+                    # Remove from dict (all features - also nlp)
+                    feature_dict[second].pop(frame, None)
 
-        mq = MessageQueue('feature-processor')
-        mq.bind_queue(exchange='processor', routing_key=settings['messaging']['mocaptobii_processing'], callback=mocapcallback)
-        mq.bind_queue(exchange='processor', routing_key=settings['messaging']['nlp_data'], callback=nlpcallback)
+        t1 = Thread(target = runA)
+        t1.setDaemon(True)
+        t1.start()
+        #s1.close()
 
-        mq.listen()
+    # Process nlp input data
+    def nlpcallback(_mq2, get_shifted_time2, routing_key2, body2):
+        context2 = zmq.Context()
+        s2 = context2.socket(zmq.SUB)
+        s2.setsockopt_string(zmq.SUBSCRIBE, u'')
+        s2.connect(body2.get('address'))
 
-        zmq_socket.send(b'CLOSE')
-        zmq_socket.close()
+        def runB():
+            while True:
+                data2 = s2.recv()
+                nlpbody, localtime2 = msgpack.unpackb(data2, use_list=False)
 
-        # Close the client safely, not always necessary
-        client.close() # Tell it to close
-        client.join() # Wait for it to close
+                # Get nlp localtime
+                nlptime = localtime2
+
+                # First get which second
+                second = int(nlptime)
+
+                # Get decimals to decide which frame
+                frame = int(math.modf(nlptime)[0] * 50)
+
+                # Put in dictionary
+                if nlpbody['mic'] == p1mic:
+                    feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
+                    if nlpbody['nlp'] == '1':
+                        feature_dict[second][frame]['P1N'] = nlpbody['language']['nouns']
+                        feature_dict[second][frame]['P1A'] = nlpbody['language']['adjectives']
+                        feature_dict[second][frame]['P1V'] = nlpbody['language']['verbs']
+                        feature_dict[second][frame]['P1D'] = nlpbody['language']['determiners']
+                        feature_dict[second][frame]['P1P'] = nlpbody['language']['pronouns']
+                        feature_dict[second][frame]['P1F'] = nlpbody['language']['feedback']
+                    feature_dict[second][frame]['P1ASR'] = [nlpbody['speech']]
+                    feature_dict[second][frame]['P1Keywords'] = [nlpbody['keywords']]
+                elif nlpbody['mic'] == p2mic:
+                    feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
+                    if nlpbody['nlp'] == '1':
+                        feature_dict[second][frame]['P2N'] = nlpbody['language']['nouns']
+                        feature_dict[second][frame]['P2A'] = nlpbody['language']['adjectives']
+                        feature_dict[second][frame]['P2V'] = nlpbody['language']['verbs']
+                        feature_dict[second][frame]['P2D'] = nlpbody['language']['determiners']
+                        feature_dict[second][frame]['P2P'] = nlpbody['language']['pronouns']
+                        feature_dict[second][frame]['P2F'] = nlpbody['language']['feedback']
+                    feature_dict[second][frame]['P2ASR'] = [nlpbody['speech']]
+                    feature_dict[second][frame]['P2Keywords'] = [nlpbody['keywords']]
+
+# Uncomment for Furhat
+                # # Furhat react to P1 speech
+                # if nlpbody['mic'] == p1mic and nlpbody['speech'] == 'hello ':
+                #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+                #     furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
+                #
+                # # Furhat react to P2 speech
+                # if nlpbody['mic'] == p2mic and nlpbody['speech'] == 'hello ':
+                #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+                #     furhat_client.say(FURHAT_AGENT_NAME, 'Hi.')
+# Uncomment for Furhat
+
+                # Furhat look at person speaking
+                # if nlpbody['mic'] == p1mic:
+                #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+                # elif nlpbody['mic'] == p2mic:
+                #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+
+                # Print feature vector
+                print(feature_dict[second][frame])
+                #zmq_socket.send(msgpack.packb((tobiimocap_dict[second][frame-1], mq.get_shifted_time())))
+
+                # Sending messages to attention module
+                my_message = json.dumps(feature_dict[second][frame])
+                my_message = "interpreter;data;" + my_message + "$"
+
+                # Encode the string to utf-8 and write it to the pipe defined above
+                os.write(pipe_out, my_message.encode("utf-8"))
+                sys.stdout.flush()
+
+                # Remove value from dict
+                #feature_dict[second].pop(frame, None)
+
+        t2 = Thread(target = runB)
+        t2.setDaemon(True)
+        t2.start()
+        #s2.close()
+
+    mq = MessageQueue('feature-processor')
+    mq.bind_queue(exchange='processor', routing_key=settings['messaging']['mocaptobii_processing'], callback=mocapcallback)
+    mq.bind_queue(exchange='processor', routing_key=settings['messaging']['nlp_data'], callback=nlpcallback)
+
+    mq.listen()
+
+    zmq_socket.send(b'CLOSE')
+    zmq_socket.close()
+
+    # Close the client safely, not always necessary
+    client.close() # Tell it to close
+    client.join() # Wait for it to close
