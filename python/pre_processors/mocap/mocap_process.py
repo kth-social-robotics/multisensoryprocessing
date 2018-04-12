@@ -54,9 +54,11 @@ mocap_dict[18]['name'] = 'target12'
 mocap_dict[19]['name'] = 'target13'
 mocap_dict[20]['name'] = 'target14'
 mocap_dict[21]['name'] = 'table1'
-mocap_dict[22]['name'] = 'furhat'
-mocap_dict[23]['name'] = 'calibration'
-mocap_dict[24]['name'] = 'screen'
+mocap_dict[22]['name'] = 'calibration'
+# Uncomment for Furhat and screen
+#mocap_dict[23]['name'] = 'furhat'
+#mocap_dict[24]['name'] = 'screen'
+# Uncomment for Furhat and screen
 
 # Procees input data
 def callback(_mq, get_shifted_time, routing_key, body):
@@ -136,12 +138,14 @@ def callback(_mq, get_shifted_time, routing_key, body):
                 objid = 20
             elif objects['table1'][0] == rigidbody[3][0]:
                 objid = 21
-            elif objects['furhat'][0] == rigidbody[3][0]:
-                objid = 22
             elif objects['calibration'][0] == rigidbody[3][0]:
-                objid = 23
-            elif objects['screen'][0] == rigidbody[3][0]:
-                objid = 24
+                objid = 22
+# Uncomment for Furhat and screen
+            # elif objects['furhat'][0] == rigidbody[3][0]:
+            #     objid = 23
+            # elif objects['screen'][0] == rigidbody[3][0]:
+            #     objid = 24
+# Uncomment for Furhat and screen
 
             mocap_dict[objid]['id'] = rigidbody[0]
             mocap_dict[objid]['position'] = rigidbody[1]
@@ -220,8 +224,10 @@ def callback(_mq, get_shifted_time, routing_key, body):
         sendjson(20)
         sendjson(21)
         sendjson(22)
-        sendjson(23)
-        sendjson(24)
+# Uncomment for Furhat and screen
+        # sendjson(23)
+        # sendjson(24)
+# Uncomment for Furhat and screen
     s.close()
 
 mq = MessageQueue('mocap-preprocessor')
