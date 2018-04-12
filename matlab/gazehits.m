@@ -26,9 +26,9 @@ mocapfield{3} = {''}; % P3
 %     mocapfield{4} = [0, 0, 0]; % P2
 % elseif strcmp(agent, 'furhat')
 % Angles to targets
-mocapfield{4} = zeros(targets_num); % P1
-mocapfield{5} = zeros(targets_num); % P2
-mocapfield{6} = zeros(targets_num); % P3
+mocapfield{4} = zeros(targets_num + 2); % P1
+mocapfield{5} = zeros(targets_num + 2); % P2
+mocapfield{6} = zeros(targets_num + 2); % P3
 %end
 
 % Pointing Targets labels and angles for P1
@@ -526,12 +526,18 @@ if isfield(jsonfile, 'tobii_glasses1') & isfield(jsonfile, 'mocap_glasses1')
     mocapfield{8} = {};
     mocapfield{9} = {};
     mocapfield{16} = {};
+
     for i = 1:14
         mocapfield{4} = [mocapfield{4}, (-gaze_ang_op1{i} / pi) + 1];
         mocapfield{8} = [mocapfield{8}, (-pointl_ang_op1{i} / pi) + 1];
         mocapfield{9} = [mocapfield{9}, (-pointr_ang_op1{i} / pi) + 1];
         mocapfield{16} = [mocapfield{16}, (-head_ang_op1{i} / pi) + 1];
     end
+    
+    % Add gaze angles to P1, P2 and P3
+    mocapfield{4} = [mocapfield{4}, 0];
+    mocapfield{4} = [mocapfield{4}, (-gaze_ang_p2p1 / pi) + 1];
+    mocapfield{4} = [mocapfield{4}, (-gaze_ang_p3p1 / pi) + 1];
 end
 
 % P2
@@ -666,6 +672,11 @@ if isfield(jsonfile, 'tobii_glasses2') & isfield(jsonfile, 'mocap_glasses2')
         mocapfield{12} = [mocapfield{12}, (-pointr_ang_op2{i} / pi) + 1];
         mocapfield{17} = [mocapfield{17}, (-head_ang_op2{i} / pi) + 1];
     end
+    
+    % Add gaze angles to P1, P2 and P3
+    mocapfield{5} = [mocapfield{5}, (-gaze_ang_p1p2 / pi) + 1];
+    mocapfield{5} = [mocapfield{5}, 0];
+    mocapfield{5} = [mocapfield{5}, (-gaze_ang_p3p2 / pi) + 1];
 end
 
 % P3
@@ -766,6 +777,11 @@ if isfield(jsonfile, 'tobii_glasses3') & isfield(jsonfile, 'mocap_glasses3')
         mocapfield{6} = [mocapfield{6}, (-gaze_ang_op3{i} / pi) + 1];
         mocapfield{18} = [mocapfield{18}, (-head_ang_op3{i} / pi) + 1];
     end
+    
+    % Add gaze angles to P1, P2 and P3
+    mocapfield{6} = [mocapfield{6}, (-gaze_ang_p1p3 / pi) + 1];
+    mocapfield{6} = [mocapfield{6}, (-gaze_ang_p2p3 / pi) + 1];
+    mocapfield{6} = [mocapfield{6}, 0];
 end
 
 data = mocapfield;

@@ -27,6 +27,7 @@ from client import Client
 from furhat import connect_to_iristk
 from time import sleep
 import csv
+import time, os, fnmatch, shutil
 
 # Print messages
 DEBUG = False
@@ -142,7 +143,9 @@ feature_dict[0][0]['P3HDP'] = ['']
 feature_dict[0][0]['S'] = ''
 
 # Save to log file
-with open('../../../logs/probabilities.csv', 'wb') as f:  # Just use 'w' mode in 3.x
+logt = time.localtime()
+logtimestamp = time.strftime('%b-%d-%Y_%H%M', logt)
+with open('../../../logs/probabilities/probabilities_' + logtimestamp + ".csv", 'wb') as f:  # Just use 'w' mode in 3.x
     w = csv.DictWriter(f, feature_dict[0][0].keys(), delimiter=";")
     w.writeheader()
 
