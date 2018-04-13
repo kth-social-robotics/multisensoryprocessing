@@ -13,6 +13,7 @@ import csv
 import collections
 from furhat import connect_to_iristk
 from time import sleep
+import time, os, fnmatch, shutil
 
 FURHAT_IP = '130.237.67.115' # Furhat IP address
 FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
@@ -168,7 +169,7 @@ class Interpreter(Process):
 
         # Check whether the message indicates end of step. If so then save the current state and
         # reset variables.
-        if "S" in data.keys():
+        if "S" in data.keys() and (str(data["S"]) == 'start' or str(data["S"]) == 'next' or str(data["S"]) == 'end'):
             self._do_step()
 
     def _do_log(self, data):
@@ -176,7 +177,9 @@ class Interpreter(Process):
             log_msg = [str(data["TS"]), str(self.current_step)]
             del data["TS"]
             log_msg.append(str(data))
-            self._save_as(log_msg, "../../logs/feature_log.csv")
+            logt = time.localtime()
+            logtimestamp = time.strftime('%b-%d-%Y_%H%M', logt)
+            self._save_as(log_msg, "../../logs/logs/feature_log_" + logtimestamp + ".csv")
 
     def _process_verbal(self, data):
         """ Add the verbal information in the verbal table.
@@ -203,9 +206,11 @@ class Interpreter(Process):
         """ Save the current information and reset the variables.
         """
         # Format the attention table (dict) into a list of lists and save it.
+        logt = time.localtime()
+        logtimestamp = time.strftime('%b-%d-%Y_%H%M', logt)
         att_list = self._dict_of_dicts_to_list_of_lists(self.attention_table,
                                                         ['L'] + self.gaze_keys)
-        self._save_as(att_list, "../../logs/attention_table_{}.csv".format(self.current_step))
+        self._save_as(att_list, "../../logs/logs/attention_table_{}_".format(self.current_step) + logtimestamp + ".csv")
 
         # Add the verbal information to the verbal_table.
         self.verbal_table[self.current_step] = self.current_verbal_dict
@@ -220,7 +225,9 @@ class Interpreter(Process):
             ver_list = self._dict_of_dicts_to_list_of_lists(self.verbal_table,
                                                             self.verb_keys)
             ver_list[0][0] = "Step"
-            self._save_as(ver_list, "../../logs/language_table.csv")
+            logt = time.localtime()
+            logtimestamp = time.strftime('%b-%d-%Y_%H%M', logt)
+            self._save_as(ver_list, "../../logs/logs/language_table_" + logtimestamp + ".csv")
             self.client.close()
             sys.exit()
 
