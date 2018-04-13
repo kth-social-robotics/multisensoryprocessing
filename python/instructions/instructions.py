@@ -104,8 +104,14 @@ def nextCallback(index, end):
     feature_dict[0][0]['TS'] = time_stamp
     if index == 0:
         feature_dict[0][0]['S'] = 'start'
+
+        # Send first sync signal
+        playsound('beep.mp3')
     elif index == end - 1:
         feature_dict[0][0]['S'] = 'end'
+
+        # Send last sync signal
+        playsound('beep.mp3')
     else:
         feature_dict[0][0]['S'] = 'next'
 
@@ -139,9 +145,6 @@ def nextCallback(index, end):
     os.write(pipe_out, my_message.encode("utf-8"))
     sys.stdout.flush()
 
-    # Send sync signal
-    playsound('beep.mp3')
-
 def wrongCallback(index):
     # Define time stamp
     time = datetime.now()
@@ -172,6 +175,36 @@ def wrongCallback(index):
     # Send wrong signal
     playsound('wrong.mp3')
 
+def rightCallback(index):
+    # Define time stamp
+    time = datetime.now()
+    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
+                  time.year, time.month, time.day, time.hour, time.minute, time.second,\
+                  str(time.microsecond)[:3])
+
+    # Define feature dict
+    feature_dict[0][0]['TS'] = time_stamp
+    feature_dict[0][0]['S'] = str(index) + '_right'
+
+# Uncomment for Furhat
+    # # Furhat
+    # furhat_client.say(FURHAT_AGENT_NAME, 'It seems that is not right.')
+    # furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+# Uncomment for Furhat
+
+    # Print current frame
+    print(feature_dict[0][0])
+
+    # Sending messages to the server
+    my_message = json.dumps(feature_dict[0][0])
+    my_message = "interpreter;data;" + my_message + "$"
+    # Encode the string to utf-8 and write it to the pipe defined above
+    os.write(pipe_out, my_message.encode("utf-8"))
+    sys.stdout.flush()
+
+    # Send right signal
+    playsound('beep.mp3')
+
 # Define first photo
 vlabel = tk.Label(master, image = master.photos[0])
 vlabel.pack()
@@ -181,7 +214,9 @@ global_index = 0
 
 b1 = tk.Button(master, text="Next", command=lambda: nextCallback(global_index, end))
 b2 = tk.Button(master, text="Wrong", command=lambda: wrongCallback(global_index))
+b3 = tk.Button(master, text="Right", command=lambda: rightCallback(global_index))
 #b1.pack()
+#b2.pack()
 #b2.pack()
 
 # Get key read from the presenter
@@ -195,8 +230,12 @@ def key(event):
     if repr(event.char) == "u'\uf72c'":
         wrongCallback(global_index)
 
-    # Up Right: Next step (Right item)
+    # Up Right: Right item
     if repr(event.char) == "u'\uf72d'":
+        rightCallback(global_index)
+
+    # Down Right: Next step
+    if repr(event.char) == "'.'":
         nextCallback(global_index, end)
 
 # Frame for detecting key events
