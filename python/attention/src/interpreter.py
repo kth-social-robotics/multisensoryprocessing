@@ -60,6 +60,10 @@ class Interpreter(Process):
                              pipe_out=self.pipe_out_client)
         self.client.start()
 
+        # Log timestamp
+        logt = time.localtime()
+        self.logtimestamp = time.strftime('%b-%d-%Y_%H%M', logt)
+
         # Read the label file into a list of lists
         data_file = "../../logs/label_sequence.csv"
         with open(data_file, newline='') as csvfile:
@@ -177,9 +181,7 @@ class Interpreter(Process):
             log_msg = [str(data["TS"]), str(self.current_step)]
             del data["TS"]
             log_msg.append(str(data))
-            logt = time.localtime()
-            logtimestamp = time.strftime('%b-%d-%Y_%H%M', logt)
-            self._save_as(log_msg, "../../logs/logs/feature_log_" + logtimestamp + ".csv")
+            self._save_as(log_msg, "../../logs/logs/feature_log_" + self.logtimestamp + ".csv")
 
     def _process_verbal(self, data):
         """ Add the verbal information in the verbal table.
@@ -206,11 +208,9 @@ class Interpreter(Process):
         """ Save the current information and reset the variables.
         """
         # Format the attention table (dict) into a list of lists and save it.
-        logt = time.localtime()
-        logtimestamp = time.strftime('%b-%d-%Y_%H%M', logt)
         att_list = self._dict_of_dicts_to_list_of_lists(self.attention_table,
                                                         ['L'] + self.gaze_keys)
-        self._save_as(att_list, "../../logs/logs/attention_table_{}_".format(self.current_step) + logtimestamp + ".csv")
+        self._save_as(att_list, "../../logs/logs/attention_table_{}_".format(self.current_step) + self.logtimestamp + ".csv")
 
         # Add the verbal information to the verbal_table.
         self.verbal_table[self.current_step] = self.current_verbal_dict
@@ -225,9 +225,7 @@ class Interpreter(Process):
             ver_list = self._dict_of_dicts_to_list_of_lists(self.verbal_table,
                                                             self.verb_keys)
             ver_list[0][0] = "Step"
-            logt = time.localtime()
-            logtimestamp = time.strftime('%b-%d-%Y_%H%M', logt)
-            self._save_as(ver_list, "../../logs/logs/language_table_" + logtimestamp + ".csv")
+            self._save_as(ver_list, "../../logs/logs/language_table_" + self.logtimestamp + ".csv")
             self.client.close()
             sys.exit()
 
