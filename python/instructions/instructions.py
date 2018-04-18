@@ -22,7 +22,7 @@ from playsound import playsound
 from PIL import Image, ImageTk
 
 # Server IP
-IP = "130.237.67.237"
+IP = "130.237.67.82"
 
 FURHAT_IP = '130.237.67.115' # Furhat IP address
 FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
