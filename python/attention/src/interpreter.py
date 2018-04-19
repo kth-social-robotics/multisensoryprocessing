@@ -173,7 +173,7 @@ class Interpreter(Process):
 
         # Check whether the message indicates end of step. If so then save the current state and
         # reset variables.
-        if "S" in data.keys() and (str(data["S"]) == 'start' or str(data["S"]) == 'next' or str(data["S"]) == 'end'):
+        if "S" in data.keys() and ('start' in data["S"] or 'next' in data["S"] or 'end' in data["S"]):
             self._do_step()
 
     def _do_log(self, data):

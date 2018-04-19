@@ -20,6 +20,8 @@ from furhat import connect_to_iristk
 from time import sleep
 from playsound import playsound
 from PIL import Image, ImageTk
+import csv
+import time, os, fnmatch, shutil
 
 # Server IP
 IP = "130.237.67.82"
@@ -47,205 +49,231 @@ client.start()
 
 # Define dictionary for message
 feature_dict = defaultdict(lambda : defaultdict(dict))
+feature_dict[0][0]['TS'] = '0'
+feature_dict[0][0]['S'] = '0'
 
-# Uncomment for furhat and indent
-# Connect to Furhat
-# with connect_to_iristk(FURHAT_IP) as furhat_client:
-#     # Introduce Furhat
-#     furhat_client.say(FURHAT_AGENT_NAME, 'You will instruct the builder on how to construct this item.')
-#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-#     #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
-#     # Log Furhat events
-#     def event_callback(event):
-#         #print(event) # Receives each event the furhat sends out.
-#         fd = open('../../logs/furhat_log.csv','a')
-#         fd.write(event)
-#         fd.write('\n')
-#         fd.close()
-#     # Listen to events
-#     furhat_client.start_listening(event_callback) # register the event callback receiver
-# Uncomment for furhat and indent
+# Save to log file
+logt = time.localtime()
+logtimestamp = time.strftime('%b-%d-%Y_%H%M', logt)
+with open('../../logs/instructions/instructions_' + logtimestamp + ".csv", 'wb') as f:  # Just use 'w' mode in 3.x
+    w = csv.DictWriter(f, feature_dict[0][0].keys(), delimiter=";")
+    w.writeheader()
 
-# Define photos for instructions
-photo0 = 'photos/0.png'
-photo1 = "photos/1.png"
-photo2 = "photos/2.png"
-photo3 = "photos/3.png"
-photo4 = "photos/4.png"
-photo5 = "photos/5.png"
-photo6 = "photos/6.png"
-photo7 = "photos/7.png"
-photo8 = "photos/8.png"
-photo9 = "photos/9.png"
-master.photos = {}
-master.photos[0] = ImageTk.PhotoImage(Image.open(photo0))
-master.photos[1] = ImageTk.PhotoImage(Image.open(photo1))
-master.photos[2] = ImageTk.PhotoImage(Image.open(photo2))
-master.photos[3] = ImageTk.PhotoImage(Image.open(photo3))
-master.photos[4] = ImageTk.PhotoImage(Image.open(photo4))
-master.photos[5] = ImageTk.PhotoImage(Image.open(photo5))
-master.photos[6] = ImageTk.PhotoImage(Image.open(photo6))
-master.photos[7] = ImageTk.PhotoImage(Image.open(photo7))
-master.photos[8] = ImageTk.PhotoImage(Image.open(photo8))
-master.photos[9] = ImageTk.PhotoImage(Image.open(photo9))
-
-# Last photo
-end = 9
-
-# Callback when the button is pressed
-def nextCallback(index, end):
-    # Define time stamp
-    time = datetime.now()
-    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
-                  time.year, time.month, time.day, time.hour, time.minute, time.second,\
-                  str(time.microsecond)[:3])
-
-    # Define feature dict
-    feature_dict[0][0]['TS'] = time_stamp
-    if index == 0:
-        feature_dict[0][0]['S'] = 'start'
-
-        # Send first sync signal
-        playsound('beep.mp3')
-    elif index == end - 1:
-        feature_dict[0][0]['S'] = 'end'
-
-        # Send last sync signal
-        playsound('beep.mp3')
-    else:
-        feature_dict[0][0]['S'] = 'next'
-
-# Uncomment for Furhat
-    # # Furhat
-    # if index == 0:
-    #     furhat_client.say(FURHAT_AGENT_NAME, 'Okay lets start.')
-    #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
-    # elif index == end - 1:
-    #     furhat_client.say(FURHAT_AGENT_NAME, 'It seems like you finished this task. Well done.')
-    #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
-    # else:
-    #     furhat_client.say(FURHAT_AGENT_NAME, 'Lets get to the next one.')
+    # Uncomment for furhat and indent
+    # Connect to Furhat
+    # with connect_to_iristk(FURHAT_IP) as furhat_client:
+    #     # Introduce Furhat
+    #     furhat_client.say(FURHAT_AGENT_NAME, 'You will instruct the builder on how to construct this item.')
     #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-# Uncomment for Furhat
+    #     #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+    #     # Log Furhat events
+    #     def event_callback(event):
+    #         #print(event) # Receives each event the furhat sends out.
+    #         fd = open('../../logs/furhat_log.csv','a')
+    #         fd.write(event)
+    #         fd.write('\n')
+    #         fd.close()
+    #     # Listen to events
+    #     furhat_client.start_listening(event_callback) # register the event callback receiver
+    # Uncomment for furhat and indent
 
-    # Print current frame
-    print(feature_dict[0][0])
+    # Define photos for instructions
+    photo0 = 'photos/0.png'
+    photo1 = "photos/1.png"
+    photo2 = "photos/2.png"
+    photo3 = "photos/3.png"
+    photo4 = "photos/4.png"
+    photo5 = "photos/5.png"
+    photo6 = "photos/6.png"
+    photo7 = "photos/7.png"
+    photo8 = "photos/8.png"
+    photo9 = "photos/9.png"
+    master.photos = {}
+    master.photos[0] = ImageTk.PhotoImage(Image.open(photo0))
+    master.photos[1] = ImageTk.PhotoImage(Image.open(photo1))
+    master.photos[2] = ImageTk.PhotoImage(Image.open(photo2))
+    master.photos[3] = ImageTk.PhotoImage(Image.open(photo3))
+    master.photos[4] = ImageTk.PhotoImage(Image.open(photo4))
+    master.photos[5] = ImageTk.PhotoImage(Image.open(photo5))
+    master.photos[6] = ImageTk.PhotoImage(Image.open(photo6))
+    master.photos[7] = ImageTk.PhotoImage(Image.open(photo7))
+    master.photos[8] = ImageTk.PhotoImage(Image.open(photo8))
+    master.photos[9] = ImageTk.PhotoImage(Image.open(photo9))
 
-    # Update index
-    global global_index
-    global_index = index + 1
+    # Last photo
+    end = 9
 
-    # Update screen
-    vlabel.configure(image = master.photos[global_index])
+    # Callback when the button is pressed
+    def nextCallback(index, end):
+        if index < end:
+            # Define time stamp
+            time = datetime.now()
+            time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
+                          time.year, time.month, time.day, time.hour, time.minute, time.second,\
+                          str(time.microsecond)[:3])
 
-    # Sending messages to the server
-    my_message = json.dumps(feature_dict[0][0])
-    my_message = "interpreter;data;" + my_message + "$"
-    # Encode the string to utf-8 and write it to the pipe defined above
-    os.write(pipe_out, my_message.encode("utf-8"))
-    sys.stdout.flush()
+            # Define feature dict
+            feature_dict[0][0]['TS'] = time_stamp
+            if index == 0:
+                feature_dict[0][0]['S'] = str(index) + '_start'
 
-def wrongCallback(index):
-    # Define time stamp
-    time = datetime.now()
-    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
-                  time.year, time.month, time.day, time.hour, time.minute, time.second,\
-                  str(time.microsecond)[:3])
+                # Send first sync signal
+                playsound('beep.mp3')
+            elif index == end - 1:
+                feature_dict[0][0]['S'] = str(index) + '_end'
 
-    # Define feature dict
-    feature_dict[0][0]['TS'] = time_stamp
-    feature_dict[0][0]['S'] = str(index) + '_wrong'
+                # Send last sync signal
+                playsound('beep.mp3')
+            else:
+                feature_dict[0][0]['S'] = str(index) + '_next'
 
-# Uncomment for Furhat
-    # # Furhat
-    # furhat_client.say(FURHAT_AGENT_NAME, 'It seems that is not right.')
-    # furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-# Uncomment for Furhat
+                # Send next sync signal
+                playsound('beep.mp3')
 
-    # Print current frame
-    print(feature_dict[0][0])
+        # Uncomment for Furhat
+            # # Furhat
+            # if index == 0:
+            #     furhat_client.say(FURHAT_AGENT_NAME, 'Okay lets start.')
+            #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+            # elif index == end - 1:
+            #     furhat_client.say(FURHAT_AGENT_NAME, 'It seems like you finished this task. Well done.')
+            #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+            # else:
+            #     furhat_client.say(FURHAT_AGENT_NAME, 'Lets get to the next one.')
+            #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+        # Uncomment for Furhat
 
-    # Sending messages to the server
-    my_message = json.dumps(feature_dict[0][0])
-    my_message = "interpreter;data;" + my_message + "$"
-    # Encode the string to utf-8 and write it to the pipe defined above
-    os.write(pipe_out, my_message.encode("utf-8"))
-    sys.stdout.flush()
+            # Print current frame
+            print(feature_dict[0][0])
 
-    # Send wrong signal
-    playsound('wrong.mp3')
+            # Log to csv file
+            w.writerow(feature_dict[0][0])
 
-def rightCallback(index):
-    # Define time stamp
-    time = datetime.now()
-    time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
-                  time.year, time.month, time.day, time.hour, time.minute, time.second,\
-                  str(time.microsecond)[:3])
+            # Update index
+            global global_index
+            global_index = index + 1
 
-    # Define feature dict
-    feature_dict[0][0]['TS'] = time_stamp
-    feature_dict[0][0]['S'] = str(index) + '_right'
+            # Update screen
+            vlabel.configure(image = master.photos[global_index])
 
-# Uncomment for Furhat
-    # # Furhat
-    # furhat_client.say(FURHAT_AGENT_NAME, 'It seems that is not right.')
-    # furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-# Uncomment for Furhat
+            # Sending messages to the server
+            my_message = json.dumps(feature_dict[0][0])
+            my_message = "interpreter;data;" + my_message + "$"
+            # Encode the string to utf-8 and write it to the pipe defined above
+            os.write(pipe_out, my_message.encode("utf-8"))
+            sys.stdout.flush()
 
-    # Print current frame
-    print(feature_dict[0][0])
+    def wrongCallback(index, end):
+        if index < end:
+            # Define time stamp
+            time = datetime.now()
+            time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
+                          time.year, time.month, time.day, time.hour, time.minute, time.second,\
+                          str(time.microsecond)[:3])
 
-    # Sending messages to the server
-    my_message = json.dumps(feature_dict[0][0])
-    my_message = "interpreter;data;" + my_message + "$"
-    # Encode the string to utf-8 and write it to the pipe defined above
-    os.write(pipe_out, my_message.encode("utf-8"))
-    sys.stdout.flush()
+            # Define feature dict
+            feature_dict[0][0]['TS'] = time_stamp
+            feature_dict[0][0]['S'] = str(index) + '_wrong'
 
-    # Send right signal
-    playsound('beep.mp3')
+        # Uncomment for Furhat
+            # # Furhat
+            # furhat_client.say(FURHAT_AGENT_NAME, 'It seems that is not right.')
+            # furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+        # Uncomment for Furhat
 
-# Define first photo
-vlabel = tk.Label(master, image = master.photos[0])
-vlabel.pack()
+            # Print current frame
+            print(feature_dict[0][0])
 
-# Set index
-global_index = 0
+            # Log to csv file
+            w.writerow(feature_dict[0][0])
 
-b1 = tk.Button(master, text="Next", command=lambda: nextCallback(global_index, end))
-b2 = tk.Button(master, text="Wrong", command=lambda: wrongCallback(global_index))
-b3 = tk.Button(master, text="Right", command=lambda: rightCallback(global_index))
-#b1.pack()
-#b2.pack()
-#b2.pack()
+            # Sending messages to the server
+            my_message = json.dumps(feature_dict[0][0])
+            my_message = "interpreter;data;" + my_message + "$"
+            # Encode the string to utf-8 and write it to the pipe defined above
+            os.write(pipe_out, my_message.encode("utf-8"))
+            sys.stdout.flush()
 
-# Get key read from the presenter
-def key(event):
-    #Up Left: u'\uf72c'
-    #Up Right: u'\uf72d'
-    #Down Left: u'\uf708'
-    #Down Right: '.'
+            # Send wrong signal
+            playsound('wrong.mp3')
 
-    # Up Left: Wrong item
-    if repr(event.char) == "u'\uf72c'":
-        wrongCallback(global_index)
+    def rightCallback(index, end):
+        if index < end:
+            # Define time stamp
+            time = datetime.now()
+            time_stamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:4}".format(\
+                          time.year, time.month, time.day, time.hour, time.minute, time.second,\
+                          str(time.microsecond)[:3])
 
-    # Up Right: Right item
-    if repr(event.char) == "u'\uf72d'":
-        rightCallback(global_index)
+            # Define feature dict
+            feature_dict[0][0]['TS'] = time_stamp
+            feature_dict[0][0]['S'] = str(index) + '_right'
 
-    # Down Right: Next step
-    if repr(event.char) == "'.'":
-        nextCallback(global_index, end)
+        # Uncomment for Furhat
+            # # Furhat
+            # furhat_client.say(FURHAT_AGENT_NAME, 'It seems that is not right.')
+            # furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+        # Uncomment for Furhat
 
-# Frame for detecting key events
-frame = Frame(master, highlightbackground="green", highlightcolor="green", highlightthickness=1, width=100, height=100, bd=0)
-frame.bind("<Key>", key)
-frame.focus_force()
-frame.pack(side="left", fill="both", expand=True)
+            # Print current frame
+            print(feature_dict[0][0])
 
-tk.mainloop()
+            # Log to csv file
+            w.writerow(feature_dict[0][0])
 
-# Close the client safely, not always necessary
-client.close() # Tell it to close
-client.join() # Wait for it to close
+            # Sending messages to the server
+            my_message = json.dumps(feature_dict[0][0])
+            my_message = "interpreter;data;" + my_message + "$"
+            # Encode the string to utf-8 and write it to the pipe defined above
+            os.write(pipe_out, my_message.encode("utf-8"))
+            sys.stdout.flush()
+
+            # Send right signal
+            playsound('correct.mp3')
+
+    # Define first photo
+    vlabel = tk.Label(master, image = master.photos[0])
+    vlabel.pack()
+
+    # Set index
+    global_index = 0
+
+    b1 = tk.Button(master, text="Next", command=lambda: nextCallback(global_index, end))
+    b2 = tk.Button(master, text="Wrong", command=lambda: wrongCallback(global_index, end))
+    b3 = tk.Button(master, text="Right", command=lambda: rightCallback(global_index, end))
+    #b1.pack()
+    #b2.pack()
+    #b2.pack()
+
+    # Get key read from the presenter
+    def key(event):
+        #Up Left: u'\uf72c'
+        #Up Right: u'\uf72d'
+        #Down Left: u'\uf708'
+        #Down Right: '.'
+
+        # Up Left: Wrong item
+        if repr(event.char) == "u'\uf72c'":
+        #if repr(event.char) == "','":
+            wrongCallback(global_index, end)
+
+        # Up Right: Right item
+        if repr(event.char) == "u'\uf72d'":
+        #if repr(event.char) == "'-'":
+            rightCallback(global_index, end)
+
+        # Down Right: Next step
+        if repr(event.char) == "'.'":
+            nextCallback(global_index, end)
+
+    # Frame for detecting key events
+    frame = Frame(master, highlightbackground="green", highlightcolor="green", highlightthickness=1, width=100, height=100, bd=0)
+    frame.bind("<Key>", key)
+    frame.focus_force()
+    frame.pack(side="left", fill="both", expand=True)
+
+    tk.mainloop()
+
+    # Close the client safely, not always necessary
+    client.close() # Tell it to close
+    client.join() # Wait for it to close
