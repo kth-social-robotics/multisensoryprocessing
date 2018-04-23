@@ -1,6 +1,6 @@
 # py -2 tobii_sensor.py white 130.237.67.212 (glasses1)
-# py -2 tobii_sensor.py blue 130.237.67.191 (glasses2)
-# py -2 tobii_sensor.py brown 130.237.67.86 (glasses3)
+# py -2 tobii_sensor.py blue 130.237.67.171 (glasses2)
+# py -2 tobii_sensor.py brown 130.237.67.83 (glasses3)
 
 import pika
 import sys
