@@ -27,7 +27,7 @@ s.listen()
 ```
 import time
 from farmi import Publisher
-pub = Publisher('helloX')
+pub = Publisher('some_topic')
 time.sleep(1)
 
 for i in range(10):
