@@ -1,4 +1,4 @@
-There are three main components to farmi.
+There are three main components to the multi sensory processing framework named farmi.
 
 
 There are publishers, which publish data; there are subscribers which subscribe to data and there is a directory service where publishers register themselves so that subscribers can find them.
@@ -12,7 +12,7 @@ ds = DirectoryService()
 ds.listen()
 ```
 
-`subscriber.py`
+`receiver.py`
 ```
 from farmi import Subscriber
 
@@ -23,7 +23,7 @@ s = Subscriber('some_topic', fn)
 s.listen()
 ```
 
-`publisher.py`
+`sender.py`
 ```
 import time
 from farmi import Publisher
