@@ -6,7 +6,7 @@ import zmq
 
 
 class Subscriber(Farmi):
-    def __init__(self, topic, fn, directory_service_address='127.0.0.1:5555'):
+    def __init__(self, topic, fn, directory_service_address='tcp://127.0.0.1:5555'):
         super().__init__(topic, directory_service_address)
         self.fn = fn
         self.topic = topic

@@ -9,7 +9,7 @@ from farmi.farmi import Farmi
 
 
 class Publisher(Farmi):
-    def __init__(self, topic, local_save=None, directory_service_address='127.0.0.1:5555', heartbeat_frequency=20):
+    def __init__(self, topic, local_save=None, directory_service_address='tcp://127.0.0.1:5555', heartbeat_frequency=20):
         super().__init__(topic, directory_service_address)
 
         self.pub_socket = None
