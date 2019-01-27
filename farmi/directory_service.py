@@ -129,8 +129,3 @@ class DirectoryService(object):
             return 'OK'
         else:
             return 'NOT_REGISTERED'
-
-
-if __name__ == '__main__':
-    ds = DirectoryService()
-    ds.listen()
