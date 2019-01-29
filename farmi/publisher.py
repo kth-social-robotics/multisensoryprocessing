@@ -17,8 +17,7 @@ class Publisher(Farmi):
         self.heartbeat_frequency = heartbeat_frequency
         
         self._create_publisher()
-        self.t = Thread(target=self._heartbeat)
-        self.t.start()
+        Thread(target=self._heartbeat).start()
         
         if local_save:
             self.packer = msgpack.Packer()
@@ -30,7 +29,6 @@ class Publisher(Farmi):
 
     def _heartbeat(self):
         while not self.exit.is_set():
-            print('pre send')
             self.directory_service.send_json({
                 'action': 'HEARTBEAT',
                 'topic': self.topic,

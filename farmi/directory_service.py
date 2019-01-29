@@ -29,13 +29,16 @@ class DirectoryService(object):
                 to_be_deleted.append(topic)
 
         for topic in to_be_deleted:
-            self._topics.pop(topic)
-            self._broadcast(json.dumps({
-                'action': 'DEREGISTERED',
-                'topic': topic
-            }))
+            self._deregister(topic)
 
         return self._topics
+
+    def _deregister(self, topic):
+        self._topics.pop(topic)
+        self._broadcast(json.dumps({
+            'action': 'DEREGISTERED',
+            'topic': topic
+        }))
 
     def listen(self):
         while True:
@@ -55,6 +58,8 @@ class DirectoryService(object):
                 response = self.handle_get_pub_address(msg)
             elif action == 'REGISTER':
                 response = self.handle_register(msg)
+            elif action == 'DEREGISTER':
+                response = self.handle_deregister(msg)
             elif action == 'SYNC':
                 response = self.handle_sync(msg)
             elif action == 'ANNOUNCE':
@@ -80,6 +85,12 @@ class DirectoryService(object):
 
     def handle_get_pub_address(self, msg):
         return self.pub_address
+
+    def handle_deregister(self, msg):
+        if not self._check_required_args(msg, ['topic']):
+            return 'MISSING_INFORMATION'
+        self._deregister(msg.get('topic'))
+        return 'OK'
 
     def handle_register(self, msg):
         if not self._check_required_args(msg, ['topic', 'address']):
