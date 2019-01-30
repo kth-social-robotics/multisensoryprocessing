@@ -23,6 +23,10 @@ class DirectoryService(object):
 
     @property
     def topics(self):
+        self._purge_topics()
+        return self._topics
+
+    def _purge_topics(self):
         to_be_deleted = []
         for topic, info in self._topics.items():
             if time.time() - info['latest_hearbeat'] > self.purge_timeout:
@@ -30,8 +34,6 @@ class DirectoryService(object):
 
         for topic in to_be_deleted:
             self._deregister(topic)
-
-        return self._topics
 
     def _deregister(self, topic):
         self._topics.pop(topic)
@@ -52,7 +54,7 @@ class DirectoryService(object):
             
             action = msg.get('action')
 
-            logger.info('received action: {}'.format(msg.get('action')))
+            
 
             if action == 'GET_PUB_ADDRESS':
                 response = self.handle_get_pub_address(msg)
@@ -71,6 +73,7 @@ class DirectoryService(object):
             else:
                 response = 'COMMAND_NOT_FOUND'
 
+            logger.info('received msg: {}, responded: {}'.format(msg, response))
             self.rep_socket.send_string(response)
 
     def _broadcast(self, data, topic=''):
@@ -134,6 +137,8 @@ class DirectoryService(object):
             self._topics[topic]['latest_heartbeat'] = time.time()
 
             self._broadcast(json.dumps({
+                'action': 'HEARTBEAT',
+                'topic': topic,
                 'time': time.time(),
                 'sender_time': time_
             }))

@@ -5,8 +5,7 @@ import time
 
 class Farmi(object):
     """docstring for Farmi"""
-    def __init__(self, topic, directory_service_address='tcp://127.0.0.1:5555'):
-        self.topic = topic
+    def __init__(self, directory_service_address='tcp://127.0.0.1:5555'):
         self.exit = Event()
         self.context = zmq.Context()
         self.directory_service = self.context.socket(zmq.REQ)

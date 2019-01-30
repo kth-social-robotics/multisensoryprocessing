@@ -1,25 +1,18 @@
 from farmi.farmi import Farmi
 import json
 from collections import defaultdict
-from threading import Thread
 import zmq
+import re
 
 
 class Subscriber(Farmi):
-    def __init__(self, topic, fn, directory_service_address='tcp://127.0.0.1:5555'):
-        super().__init__(topic, directory_service_address)
-        self.fn = fn
+    def __init__(self, directory_service_address='tcp://127.0.0.1:5555'):
+        super().__init__(directory_service_address)
         self.topics = defaultdict(dict)
         self.poller = zmq.Poller()
 
         self.directory_service.send_json({'action': 'GET_PUB_ADDRESS'})
         sub_address = self.directory_service.recv_string()
-
-        self.directory_service.send_json({'action': 'TOPICS'})
-        topics = self.directory_service.recv_json()
-        for topic, info in topics.items():
-            if self._subscription_filter(topic):
-                self._add_topic(topic, info['address'])
 
         self.directory_service_sub = self.context.socket(zmq.SUB)
         self.directory_service_sub.connect(sub_address)
@@ -27,8 +20,22 @@ class Subscriber(Farmi):
 
         self.poller.register(self.directory_service_sub, zmq.POLLIN)
 
-    def _subscription_filter(self, topic):
-        return self.topic == topic
+    def get_matching_topics(self, topic):
+        for topic_matchers in self.topics.keys():
+            if topic_matchers.match(topic):
+                yield topic_matchers
+
+    def subscribe_to(self, topic, fn):
+        if not isinstance(topic, re._pattern_type):
+            topic = re.compile('%s$' % re.escape(topic))
+        self.topics[topic]['fn'] = fn
+
+        self.directory_service.send_json({'action': 'TOPICS'})
+        topics = self.directory_service.recv_json()
+        print(topics)
+        for received_topic, info in topics.items():
+            for matching_topic in self.get_matching_topics(received_topic):
+                self._add_topic(matching_topic, info['address'])
 
     def _add_topic(self, topic, address):
         self.topics[topic]['address'] = address
@@ -39,9 +46,12 @@ class Subscriber(Farmi):
         self.poller.register(self.topics[topic]['socket'], zmq.POLLIN)
 
     def _remove_topic(self, topic):
-        self.poller.unregister(self.topics[topic]['socket'])
-        self.topics[topic]['socket'].close()
-        self.topics.pop(topic)
+        if self.topics[topic].get('socket'):
+            self.poller.unregister(self.topics[topic]['socket'])
+            self.topics[topic]['socket'].close()
+        
+        if self.topics[topic]:
+            self.topics.pop(topic)
 
     def listen(self):
         while not self.exit.is_set():
@@ -54,10 +64,14 @@ class Subscriber(Farmi):
                     action = msg.get('action')
                     if action == 'REGISTERED':
                         topic, address = msg.get('topic'), msg.get('address')
-                        if self._subscription_filter(topic) and self.topics[topic].get('address') != address:
-                            self._add_topic(topic, address)
+                        for matching_topic in self.get_matching_topics(topic):
+                            if self.topics[matching_topic].get('address') != address:
+                                self._add_topic(matching_topic, address)
+                            
                     elif action == 'DEREGISTERED':
                         self._remove_topic(msg.get('topic'))
                 else:
-                    msg = poll.recv_multipart()
-                    self.fn(msg)
+                    for topic in self.topics.values():
+                        if topic.get('socket') == poll:
+                            msg = poll.recv_multipart()
+                            topic['fn'](msg)

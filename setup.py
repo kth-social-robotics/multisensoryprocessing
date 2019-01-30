@@ -1,10 +1,6 @@
 #!/usr/bin/env python
-
 from setuptools import setup, find_packages
 
-#!/usr/bin/env python
-
-from setuptools import setup, find_packages
 
 setup(name='farmi',
     install_requires=[
@@ -13,7 +9,7 @@ setup(name='farmi',
         'msgpack-numpy'
     ],
     python_requires='>=3',
-    version='3.0.2',
+    version='3.0.3',
     description='Multisensory processing framework ',
     author='Patrik Jonell',
     author_email='pjjonell@kth.se',
