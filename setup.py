@@ -9,7 +9,7 @@ setup(name='farmi',
         'msgpack-numpy'
     ],
     python_requires='>=3',
-    version='3.0.3',
+    version='3.0.5',
     description='Multisensory processing framework ',
     author='Patrik Jonell',
     author_email='pjjonell@kth.se',

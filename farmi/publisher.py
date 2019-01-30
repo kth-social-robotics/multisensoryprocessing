@@ -64,8 +64,12 @@ class Publisher(Farmi):
         self.pub_socket.send_multipart([self.topic.encode('utf-8'), str(data_time).encode('utf-8'), msgpack.packb(data, use_bin_type=True)])
 
     def close(self):
+        self.directory_service.send_json({
+            'action': 'DEREGISTER',
+            'topic': self.topic
+        })
+        self.directory_service.recv()
         super().close()
-
         self.pub_socket.send(b'CLOSE')
         self.pub_socket.close()
         if self.file_handle:

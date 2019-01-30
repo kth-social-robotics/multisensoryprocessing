@@ -3,6 +3,7 @@ import json
 from collections import defaultdict
 import zmq
 import re
+import msgpack
 
 
 class Subscriber(Farmi):
@@ -26,8 +27,10 @@ class Subscriber(Farmi):
                 yield topic_matchers
 
     def subscribe_to(self, topic, fn):
-        if not isinstance(topic, re._pattern_type):
-            topic = re.compile('%s$' % re.escape(topic))
+        try:
+            topic.match('')
+        except:
+            topic = re.compile('^%s$' % re.escape(topic))
         self.topics[topic]['fn'] = fn
 
         self.directory_service.send_json({'action': 'TOPICS'})
@@ -48,9 +51,15 @@ class Subscriber(Farmi):
         if self.topics[topic].get('socket'):
             self.poller.unregister(self.topics[topic]['socket'])
             self.topics[topic]['socket'].close()
-        
-        if self.topics[topic]:
-            self.topics.pop(topic)
+            self.topics[topic].pop('socket')
+            self.topics[topic].pop('address')
+            
+
+    def close(self):
+        for topic, info in self.topics.items():
+            if info['socket']:
+                info['socket'].close()
+        super().close()
 
     def listen(self):
         while not self.exit.is_set():
@@ -65,13 +74,14 @@ class Subscriber(Farmi):
                         for matching_topic in self.get_matching_topics(topic):
                             if self.topics[matching_topic].get('address') != address:
                                 self._add_topic(matching_topic, address)
-                            
                     elif action == 'DEREGISTERED':
-                        self._remove_topic(msg.get('topic'))
+                        for matching_topic in list(self.get_matching_topics(msg.get('topic')))[:]:
+                            self._remove_topic(matching_topic)
                     for matching_topic in self.get_matching_topics(action):
-                        self.topics[matching_topic]['fn'](msg)
+                        self.topics[matching_topic]['fn'](msg.get('topic'), msg.get('time'), msg)
                 else:
                     for topic in self.topics.values():
                         if topic.get('socket') == poll:
                             msg = poll.recv_multipart()
-                            topic['fn'](msg)
+                            topic_, time_, body = msg
+                            topic['fn'](topic_.decode('utf-8'), float(time_.decode('utf-8')), msgpack.unpackb(body, raw=False))

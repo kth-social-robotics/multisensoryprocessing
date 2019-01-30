@@ -26,9 +26,4 @@ class Farmi(object):
     def close(self):
         self.exit.set()
         time.sleep(0.3)
-        self.directory_service.send_json({
-            'action': 'DEREGISTER',
-            'topic': self.topic
-        })
-        self.directory_service.recv()
         self.directory_service.close()
