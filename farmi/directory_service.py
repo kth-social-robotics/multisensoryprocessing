@@ -36,11 +36,12 @@ class DirectoryService(object):
             self._deregister(topic)
 
     def _deregister(self, topic):
-        self._topics.pop(topic)
-        self._broadcast(json.dumps({
-            'action': 'DEREGISTERED',
-            'topic': topic
-        }))
+        if self._topics[topic]:
+            self._topics.pop(topic)
+            self._broadcast(json.dumps({
+                'action': 'DEREGISTERED',
+                'topic': topic
+            }))
 
     def listen(self):
         while True:

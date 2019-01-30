@@ -32,7 +32,6 @@ class Subscriber(Farmi):
 
         self.directory_service.send_json({'action': 'TOPICS'})
         topics = self.directory_service.recv_json()
-        print(topics)
         for received_topic, info in topics.items():
             for matching_topic in self.get_matching_topics(received_topic):
                 self._add_topic(matching_topic, info['address'])
@@ -60,7 +59,6 @@ class Subscriber(Farmi):
                 if poll == self.directory_service_sub:
                     _, raw_msg = poll.recv_multipart()
                     msg = json.loads(raw_msg.decode('utf-8'))
-                    print(msg)
                     action = msg.get('action')
                     if action == 'REGISTERED':
                         topic, address = msg.get('topic'), msg.get('address')
@@ -70,6 +68,8 @@ class Subscriber(Farmi):
                             
                     elif action == 'DEREGISTERED':
                         self._remove_topic(msg.get('topic'))
+                    for matching_topic in self.get_matching_topics(action):
+                        self.topics[matching_topic]['fn'](msg)
                 else:
                     for topic in self.topics.values():
                         if topic.get('socket') == poll:
