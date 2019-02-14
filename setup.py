@@ -10,7 +10,7 @@ setup(
         'msgpack-numpy'
     ],
     python_requires='>=3',
-    version='3.0.6',
+    version='3.0.7',
     description='Multisensory processing framework ',
     author='Patrik Jonell',
     author_email='pjjonell@kth.se',
