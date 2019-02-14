@@ -9,11 +9,11 @@ from farmi.farmi import Farmi
 
 
 class Publisher(Farmi):
-    def __init__(self, topic, local_save=None, directory_service_address='tcp://127.0.0.1:5555', heartbeat_frequency=20):
+    def __init__(self, topic, local_save=None, directory_service_address='tcp://127.0.0.1:5555', heartbeat_frequency=5):
         super().__init__(directory_service_address)
         self.topic = topic
         self.heartbeat_frequency = heartbeat_frequency
-
+        self.pub_address = None
         self.pub_socket = self.context.socket(zmq.PUB)
         
         self._create_publisher()
@@ -34,21 +34,23 @@ class Publisher(Farmi):
                 'topic': self.topic,
                 'time': time.time()
             })
-            self.directory_service.recv()
+            response = self.directory_service.recv_string()
+            if response == 'NOT_REGISTERED':
+                self._register()
             self.exit.wait(self.heartbeat_frequency)
 
-
-    def _create_publisher(self):
-        zmq_port = self.pub_socket.bind_to_random_port('tcp://*', max_tries=150)
-        zmq_server_addr = 'tcp://{}:{}'.format(get_ip(), zmq_port)
+    def _register(self):
         self.directory_service.send_json({
             'action': 'REGISTER',
             'topic': self.topic,
-            'address': zmq_server_addr
+            'address': self.pub_address
         })
-        response = self.directory_service.recv_string()
-        if response == 'TOPIC_ALREADY_REGISTERED':
-            raise Exception('TOPIC_ALREADY_REGISTERED')
+        self.directory_service.recv_string()
+
+    def _create_publisher(self):
+        zmq_port = self.pub_socket.bind_to_random_port('tcp://*', max_tries=150)
+        self.pub_address = 'tcp://{}:{}'.format(get_ip(), zmq_port)
+        self._register()
 
 
     def get_shifted_time(self):

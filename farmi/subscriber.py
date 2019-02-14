@@ -83,5 +83,9 @@ class Subscriber(Farmi):
                     for topic in self.topics.values():
                         if topic.get('socket') == poll:
                             msg = poll.recv_multipart()
-                            topic_, time_, body = msg
+                            try:
+                                topic_, time_, body = msg
+                            except ValueError as e:
+                                print(msg)
+                                raise e
                             topic['fn'](topic_.decode('utf-8'), float(time_.decode('utf-8')), msgpack.unpackb(body, raw=False))

@@ -4,13 +4,13 @@ import json
 from farmi.utils import get_ip
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+# logger.setLevel(logging.DEBUG)
 
 
 class DirectoryService(object):
-    def __init__(self, port=5555, purge_timeout=60):
+    def __init__(self, port=5555, purge_timeout=20):
         self._topics = {}
         self.purge_timeout = purge_timeout
         context = zmq.Context()
@@ -29,14 +29,14 @@ class DirectoryService(object):
     def _purge_topics(self):
         to_be_deleted = []
         for topic, info in self._topics.items():
-            if time.time() - info['latest_hearbeat'] > self.purge_timeout:
+            if time.time() - info['latest_heartbeat'] > self.purge_timeout:
                 to_be_deleted.append(topic)
 
         for topic in to_be_deleted:
             self._deregister(topic)
 
     def _deregister(self, topic):
-        if self._topics[topic]:
+        if self._topics.get(topic):
             self._topics.pop(topic)
             self._broadcast(json.dumps({
                 'action': 'DEREGISTERED',
@@ -49,13 +49,11 @@ class DirectoryService(object):
             try:
                 msg = json.loads(raw_msg)
             except ValueError:
+                logger.info('MALFORMED_JSON' + raw_msg)
                 self.rep_socket.send_string('MALFORMED_JSON')
                 continue
-            
-            
-            action = msg.get('action')
 
-            
+            action = msg.get('action')
 
             if action == 'GET_PUB_ADDRESS':
                 response = self.handle_get_pub_address(msg)
@@ -103,11 +101,12 @@ class DirectoryService(object):
         topic, address = msg.get('topic'), msg.get('address')
 
         if self.topics.get(topic):
-            return 'TOPIC_ALREADY_REGISTERED'
+            self._deregister(topic)
+            # return 'TOPIC_ALREADY_REGISTERED'
 
         self.topics[topic] = {
             'address': address,
-            'latest_hearbeat': time.time()
+            'latest_heartbeat': time.time()
         }
         self._broadcast(json.dumps({
             'action': 'REGISTERED',
