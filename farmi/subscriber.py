@@ -2,10 +2,10 @@ import json
 import re
 from collections import defaultdict
 
-import msgpack
 import zmq
 
 from farmi.farmi import Farmi
+from farmi.serialization import deserialize
 
 
 class Subscriber(Farmi):
@@ -94,8 +94,15 @@ class Subscriber(Farmi):
                                 except ValueError as e:
                                     print(msg)
                                     raise e
+                                deserialized_body = deserialize(body)
+                                if isinstance(
+                                    deserialized_body, list
+                                ) and deserialized_body[0] == topic_.decode("utf-8"):
+                                    b = deserialized_body[2]
+                                else:
+                                    b = deserialized_body
                                 topic["fn"](
                                     topic_.decode("utf-8"),
                                     float(time_.decode("utf-8")),
-                                    msgpack.unpackb(body, raw=False),
+                                    b,
                                 )

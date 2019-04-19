@@ -1,6 +1,6 @@
 import socket
 
-import msgpack
+from farmi.serialization import deserialize_file
 
 
 def get_ip():
@@ -18,6 +18,5 @@ def get_ip():
 
 def read_farmi_file(filename):
     with open(filename, "rb") as f:
-        unpacker = msgpack.Unpacker(f)
-        for value in unpacker:
+        for value in deserialize_file(f):
             yield value
