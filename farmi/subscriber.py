@@ -66,9 +66,9 @@ class Subscriber(Farmi):
         while not self.exit.is_set():
             poller = dict(self.poller.poll())
             for poll in poller:
+                raw_msg = poll.recv_multipart()
                 if poll == self.directory_service_sub:
-                    _, raw_msg = poll.recv_multipart()
-                    msg = json.loads(raw_msg.decode("utf-8"))
+                    msg = json.loads(raw_msg[1].decode("utf-8"))
                     action = msg.get("action")
                     if action == "REGISTERED":
                         topic, address = msg.get("topic"), msg.get("address")
@@ -87,12 +87,11 @@ class Subscriber(Farmi):
                 else:
                     for topic in self.topics.values():
                         if topic.get("socket") == poll:
-                            msg = poll.recv_multipart()
-                            if len(msg) == 3:
+                            if len(raw_msg) == 3:
                                 try:
-                                    topic_, time_, body = msg
+                                    topic_, time_, body = raw_msg
                                 except ValueError as e:
-                                    print(msg)
+                                    print(raw_msg)
                                     raise e
                                 deserialized_body = deserialize(body)
                                 if isinstance(
