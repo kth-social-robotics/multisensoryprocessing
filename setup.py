@@ -5,7 +5,7 @@ setup(
     name="farmi",
     install_requires=["pyzmq", "msgpack", "msgpack-numpy"],
     python_requires=">=3",
-    version="3.1.2",
+    version="3.1.3",
     description="Multisensory processing framework ",
     author="Patrik Jonell",
     author_email="pjjonell@kth.se",
