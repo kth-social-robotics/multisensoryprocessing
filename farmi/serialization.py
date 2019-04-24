@@ -5,7 +5,7 @@ m.patch()
 
 
 def deserialize_file(f, legacy=False):
-    return msgpack.Unpacker(f, raw=legacy, use_list=True)
+    return msgpack.Unpacker(f, raw=legacy, use_list=True, max_str_len=99999999999)
 
 
 def deserialize(data):
