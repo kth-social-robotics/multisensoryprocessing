@@ -4,30 +4,27 @@ file_storage:
   port: 139
 
 logging:
-  asr_path: 'C:\Users\PMIL\Documents\Dimos\ICMI\DATA\asr'
-  #asr_path: 'C:\Users\kalins\Documents\Data\multisensoryprocessing\asr'
-  sensor_path: 'C:\Users\PMIL\Documents\Dimos\ICMI\DATA\sensors'
-  #sensor_path: 'C:\Users\kalins\Documents\Data\multisensoryprocessing\sensors'
-  processor_path: 'C:\Users\PMIL\Documents\Dimos\ICMI\DATA\processors'
-  #processor_path: 'C:\Users\kalins\Documents\Data\multisensoryprocessing\processors'
+  asr_path: 'C:\Users\PMIL\Documents\Dimos\CHI\DATA\asr'
+  sensor_path: 'C:\Users\PMIL\Documents\Dimos\CHI\DATA\sensors'
+  processor_path: 'C:\Users\PMIL\Documents\Dimos\CHI\DATA\processors'
 
 messaging:
-  broker_host: "130.237.67.186"
+  broker_host: "192.168.1.136"
   broker_port: 5672
   broker_user: "test"
   broker_pass: "test"
 
   # time server host
-  time_server_host: "tcp://130.237.67.186:45321"
+  time_server_host: "tcp://192.168.1.136:45321"
 
   # connection server
-  connection_server_host: "tcp://130.237.67.186:45322"
+  connection_server_host: "tcp://192.168.1.136:45322"
 
   # sensor hosts
   mocap_host: "172.18.133.161"
 
   # furhat host
-  furhat_host: "130.237.67.115"
+  furhat_host: "192.168.1.133"
 
   # exchanges
   artificial_agent: "artificial-agent"
