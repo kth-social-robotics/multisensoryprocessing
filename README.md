@@ -1,31 +1,3 @@
-\item Video Camera 1
-\item Video Camera 2
-\item Audacity
-\item OptiTrack
-\item Attention model (server) (mac)
-\item Instructions (macinstructions)
-\item Feature sh (macjocke)
-\item Mocapgaze bat (pmil)
-\item Tobii glasses1 (pmil)
-\item Tobii glasses2 (pmil)
-\item Tobii glasses3 (pmil)
-\item Check they looked at calibration
-\item Clap
-\item Check the likelihood table is updated
-\item Start instructions signal (observer) before the instructor starts with the first instructions
-\item \textbf{Interaction}
-\item End instructions signal (observer) when the last item has been placed
-\item Clap
-\item Stop processes on pmil: tobii1, tobii2, tobii3, mocapsensor, mocappreprocessor, tobiipreprocessor, mocapgaze
-\item Stop recordings on opttitrack (save)
-\item Stop processes on jockemac: mic1, mic2, asr, nlp, feature
-\item Stop recordings on audacity (save, quit and start again)
-\item Stop processes on macinstructions: instructions
-\item Stop processes on mac: attention
-\item Stop recordings on camera1 and camera2
-
-
-
 Multisensory Processing Architecture
 
 Misc:
@@ -54,49 +26,49 @@ Other:
 -ROS connector: sends feature vector to the ROS server
 
 Starting sequence:
--Git sync (macdimos, macjocke, pmil, macinstructions)
--Settings
--RabbitMQ (pmil)
--Timeserver (pmil)
-    -Logging of processors (pmil) (optional)
-    -Logging of sensors (pmil) (optional)
++Git sync (pmil, macdimos, +macjocke, +macinstructions)
++Settings
++RabbitMQ (pmil)
++Timeserver (pmil)
+    +Logging of processors (pmil) (optional)
+    +Logging of sensors (pmil) (optional)
 
--WebGL Visualisation browser (mac) (optional)
-    -Run mocapgaze process separately
-    -Define pointing markers for gloves
-    -Define number of glasses, gloves and targets
-    -Open MAMP and Firefox
++WebGL Visualisation browser (mac) (optional)
+    +Run mocapgaze process separately
+    +Define pointing markers for gloves
+    +Define number of glasses, gloves and targets
+    +Open MAMP and Firefox
 
--Attention model (server) (mac)
-    -Define server IP on server and client files and feature sh file
-    -Define FURHAT IP on interpreter
-    -Define print flag on interpreter
-    -Get log files
-    -Define objects and label sequence table
--Instructions (macinstructions):
-    -Define server and Furhat IP
++Attention model (server) (mac)
+    +Define server IP on server and client files and feature sh file
+    +Define FURHAT IP on interpreter
+    +Define print flag on interpreter
+    +Get log files
+    +Define objects and label sequence table
++Instructions (macinstructions):
+    +Define server and Furhat IP
 
--Feature sh (macjocke):
-    -Feature Vector sh (macjocke)
-        -Define glasses and hands markers
-        -Define Furhat IP
-        -Define mic for P1 and P2
-        -Define number of targets, glasses, gloves and tables
-    -NLP sh (macjocke):
-        -NLP processor sh (macjocke)
-        -ASR sh (macjocke)
-        -Microphone sh (macjocke)
-        -Microphone sh (macjocke)
++Feature sh (macjocke):
+    +Feature Vector sh (macjocke)
+        +Define glasses and hands markers
+        +Define Furhat IP
+        +Define mic for P1 and P2
+        +Define number of targets, glasses, gloves and tables
+    +NLP sh (macjocke):
+        +NLP processor sh (macjocke)
+        +ASR sh (macjocke)
+        +Microphone sh (macjocke)
+        +Microphone sh (macjocke)
 
--Mocapgaze bat (pmil):
-    -Mocap-gaze processor bat (pmil)
-        -Define Furhat IP
-        -Define Tobii markers and head angle on Matlab
-    -Tobii pre-processor bat (pmil)
-    -Mocap pre-processor bat (pmil)
-        -Update mocap objects
-    -Mocap sensor bat (pmil)
++Mocapgaze bat (pmil):
+    +Mocap-gaze processor bat (pmil)
+        +Define Furhat IP
+        +Define Tobii markers and head angle on Matlab
+    +Tobii pre-processor bat (pmil)
+    +Mocap pre-processor bat (pmil)
+        +Update mocap objects
+    +Mocap sensor bat (pmil)
 
--Tobii glasses1 (pmil)
--Tobii glasses2 (pmil)
--Tobii glasses3 (pmil)
++Tobii glasses1 (pmil)
++Tobii glasses2 (pmil)
++Tobii glasses3 (pmil)
