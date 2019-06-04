@@ -1,3 +1,31 @@
+\item Video Camera 1
+\item Video Camera 2
+\item Audacity
+\item OptiTrack
+\item Attention model (server) (mac)
+\item Instructions (macinstructions)
+\item Feature sh (macjocke)
+\item Mocapgaze bat (pmil)
+\item Tobii glasses1 (pmil)
+\item Tobii glasses2 (pmil)
+\item Tobii glasses3 (pmil)
+\item Check they looked at calibration
+\item Clap
+\item Check the likelihood table is updated
+\item Start instructions signal (observer) before the instructor starts with the first instructions
+\item \textbf{Interaction}
+\item End instructions signal (observer) when the last item has been placed
+\item Clap
+\item Stop processes on pmil: tobii1, tobii2, tobii3, mocapsensor, mocappreprocessor, tobiipreprocessor, mocapgaze
+\item Stop recordings on opttitrack (save)
+\item Stop processes on jockemac: mic1, mic2, asr, nlp, feature
+\item Stop recordings on audacity (save, quit and start again)
+\item Stop processes on macinstructions: instructions
+\item Stop processes on mac: attention
+\item Stop recordings on camera1 and camera2
+
+
+
 Multisensory Processing Architecture
 
 Misc:
