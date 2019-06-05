@@ -25,18 +25,18 @@ Other:
 -Visualisation: gets data from mocap_gaze processor and visualises the objects
 -ROS connector: sends feature vector to the ROS server
 
+
 Starting sequence:
 -Git sync (pmil, mac)
 -Settings
 -RabbitMQ (pmil)
 -Timeserver (pmil)
 
-
-+WebGL Visualisation browser (mac) (optional)
-    +Run mocapgaze process separately
-    +Define pointing markers for gloves
-    +Define number of glasses, gloves and targets
-    +Open MAMP and Firefox
+-WebGL Visualisation browser (mac) (optional)
+    -Run mocapgaze process separately
+    -Define pointing markers for gloves
+    -Define number of glasses, gloves and targets
+    -Open MAMP and Firefox
 
 
 +Attention model (server) (mac)
@@ -56,15 +56,15 @@ Starting sequence:
         +Define mic for P1 and P2
         +Define number of targets, glasses, gloves and tables
 
+
 -NLP sh (mac):
     -NLP processor sh (mac)
     -ASR sh (mac)
     -Microphone sh (mac)
 
-+Mocapgaze bat (pmil):
-    +Mocap-gaze processor bat (pmil)
-        +Define Furhat IP
-        +Define Tobii markers and head angle on Matlab
+-Mocapgaze bat (pmil):
+    -Mocap-gaze processor bat (pmil)
+        -Define Tobii markers and head angle on Matlab
     -Tobii pre-processor bat (pmil)
     -Mocap pre-processor bat (pmil)
         -Update mocap objects
