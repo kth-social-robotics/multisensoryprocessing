@@ -35,10 +35,6 @@ mq.publish(
 tobii_dict = defaultdict(lambda : defaultdict(dict))
 # white = glasses1
 tobii_dict['white']['type'] = 'glasses1'
-# blue = glasses2
-tobii_dict['blue']['type'] = 'glasses2'
-# brown = glasses3
-tobii_dict['brown']['type'] = 'glasses3'
 
 # Procees input data
 def callback(_mq, get_shifted_time, routing_key, body):
@@ -56,17 +52,9 @@ def callback(_mq, get_shifted_time, routing_key, body):
         if routing_key == "tobii.new_sensor.white":
             name = 'glasses1'
             pname = 'white'
-        elif routing_key == "tobii.new_sensor.blue":
-            name = 'glasses2'
-            pname = 'blue'
-        elif routing_key == "tobii.new_sensor.brown":
-            name = 'glasses3'
-            pname = 'brown'
         timestamp = None
-        # pdleft = None
-        # pdright = None
-        # gdleft = None
-        # gdright = None
+        pdleft = None
+        pdright = None
         gp = None
         gp3 = None
 
@@ -91,32 +79,18 @@ def callback(_mq, get_shifted_time, routing_key, body):
                 if DEBUG: print "Timestamp: ", timestamp
 
             # Get pupil diameter
-            # r1 = re.search('"pd":(.*)', msgdata)
-            # if r1:
-            #     r1a = re.search('"eye":"left"', msgdata)
-            #     r1b = re.search('"eye":"right"', msgdata)
-            #     if r1a:
-            #         pdleft = r1.group(1)
-            #         pdleft = pdleft.split(',')[0]
-            #         if DEBUG: print "PD Left: ", pdleft
-            #     if r1b:
-            #         pdright = r1.group(1)
-            #         pdright = pdright.split(',')[0]
-            #         if DEBUG: print "PD Right: ", pdright
-
-            # Get gaze direction
-            # r2 = re.search('"gd":(.*)', msgdata)
-            # if r2:
-            #     r2a = re.search('"eye":"left"', msgdata)
-            #     r2b = re.search('"eye":"right"', msgdata)
-            #     if r2a:
-            #         gdleft = r2.group(1)
-            #         gdleft = gdleft.split(',')[0] + "," + gdleft.split(',')[1] + "," + gdleft.split(',')[2]
-            #         if DEBUG: print "GD Left: ", gdleft
-            #     if r2b:
-            #         gdright = r2.group(1)
-            #         gdright = gdright.split(',')[0] + "," + gdright.split(',')[1] + "," + gdright.split(',')[2]
-            #         if DEBUG: print "GD Right: ", gdright
+            r1 = re.search('"pd":(.*)', msgdata)
+            if r1:
+                r1a = re.search('"eye":"left"', msgdata)
+                r1b = re.search('"eye":"right"', msgdata)
+                if r1a:
+                    pdleft = r1.group(1)
+                    pdleft = pdleft.split(',')[0]
+                    if DEBUG: print "PD Left: ", pdleft
+                if r1b:
+                    pdright = r1.group(1)
+                    pdright = pdright.split(',')[0]
+                    if DEBUG: print "PD Right: ", pdright
 
             # Get gaze position
             r3 = re.search('"gp":(.*)', msgdata)
@@ -138,10 +112,8 @@ def callback(_mq, get_shifted_time, routing_key, body):
             tobii_dict[pname]['participant'] = pname
             tobii_dict[pname]['object'] = name
             tobii_dict[pname]['timestamp'] = timestamp
-            # tobii_dict[pname]['pdleft'] = pdleft
-            # tobii_dict[pname]['pdright'] = pdright
-            # tobii_dict[pname]['gdleft'] = gdleft
-            # tobii_dict[pname]['gdright'] = gdright
+            tobii_dict[pname]['pdleft'] = pdleft
+            tobii_dict[pname]['pdright'] = pdright
             tobii_dict[pname]['gp'] = gp
             tobii_dict[pname]['gp3'] = gp3
 
@@ -165,14 +137,12 @@ def callback(_mq, get_shifted_time, routing_key, body):
                     "participant": tobii_dict[pname]['participant'],
                     "name":  tobii_dict[pname]['object'],
                     "timestamp":  tobii_dict[pname]['timestamp'],
+                    "pdleft":  tobii_dict[pname]['pdleft'],
+                    "pdright":  tobii_dict[pname]['pdright'],
                     "gp": coordtofloat2d(tobii_dict[pname]['gp']),
                     "gp3": coordtofloat3d(tobii_dict[pname]['gp3']),
                     "localtime": localtime
                 }
-
-                # key = settings['messaging']['tobii_processing']
-                # new_routing_key = "{key}.{participant}".format(key=key, participant=pname)
-                # _mq.publish(exchange='pre-processor', routing_key=new_routing_key, body=json_data)
 
                 zmq_socket.send(msgpack.packb((json_data, mq.get_shifted_time())))
 
