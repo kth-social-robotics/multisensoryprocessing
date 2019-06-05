@@ -1,5 +1,4 @@
-# python3 microphone.py 9
-# python3 microphone.py 3
+# python3 microphone.py 2
 
 import pyaudio
 import sys
@@ -23,7 +22,6 @@ RATE = 44100
 CHUNK = 2000
 
 zmq_socket_1, zmq_server_addr_1 = create_zmq_server()
-#zmq_socket_2, zmq_server_addr_2 = create_zmq_server()
 
 mq = MessageQueue('microphone-sensor')
 
@@ -38,9 +36,6 @@ for i in range(p.get_device_count()):
 # Hardcoded first device index
 device_index = int(device_names_string)
 
-# if not device_index:
-#     exit('please connect a proper soundcard')
-
 device_names = device_names_string.split(',')
 # Add the mic ID to the message
 device_names[0] = 'mic' + str(device_names_string)
@@ -50,11 +45,6 @@ mq.publish(
     routing_key='microphone.new_sensor.{}'.format(device_names[0]),
     body={'address': zmq_server_addr_1, 'file_type': 'audio'}
 )
-# mq.publish(
-#     exchange='sensors',
-#     routing_key='microphone.new_sensor.{}'.format(device_names[1]),
-#     body={'address': zmq_server_addr_2, 'file_type': 'audio'}
-# )
 
 session_name = datetime.datetime.now().isoformat().replace('.', '_').replace(':', '_') + device_names_string
 
@@ -69,7 +59,6 @@ def callback(in_data, frame_count, time_info, status):
     result = np.reshape(result, (frame_count, 2))
     the_time = mq.get_shifted_time()
     zmq_socket_1.send(msgpack.packb((result[:, 0].tobytes(), the_time)))
-    #zmq_socket_2.send(msgpack.packb((result[:, 1].tobytes(), the_time)))
     #waveFile.writeframes(in_data)
     return None, pyaudio.paContinue
 
@@ -83,13 +72,10 @@ stream = p.open(
     stream_callback=callback
 )
 try:
-    #input('[*] Serving at {} and {}. To exit press enter'.format(zmq_server_addr_1, zmq_server_addr_2))
     input('[*] Serving at {}. To exit press enter'.format(zmq_server_addr_1))
 finally:
     #waveFile.close()
     stream.stop_stream()
     stream.close()
     zmq_socket_1.send(b'CLOSE')
-    #zmq_socket_2.send(b'CLOSE')
     zmq_socket_1.close()
-    #zmq_socket_2.close()

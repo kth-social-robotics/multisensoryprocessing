@@ -1,8 +1,9 @@
-# python nlp.py 0 # for only asr or 1 for nlp
+# python3 nlp.py 0 # for only asr or 1 for asr+nlp
 
 import zmq
 import pika
 import json
+import json.decoder
 import time
 import msgpack
 import re
@@ -79,7 +80,7 @@ def callback(_mq, get_shifted_time, routing_key, body):
 
     while True:
         inputdata = s.recv()
-        msgdata, localtime = msgpack.unpackb(inputdata, use_list=False)
+        msgdata, localtime = msgpack.unpackb(inputdata, use_list=False, encoding='utf-8')
 
         if nlpflag == 1:
             syntax = calc_syntaxnet(msgdata['text'])
@@ -104,12 +105,6 @@ def callback(_mq, get_shifted_time, routing_key, body):
         if DEBUG: print(data)
 
         zmq_socket.send(msgpack.packb((data, mq.get_shifted_time())))
-
-        # _mq.publish(
-        #     exchange='pre-processor',
-        #     routing_key='nlp.data.{}'.format(participant),
-        #     body=data
-        # )
 
 mq = MessageQueue('nlp-processor')
 

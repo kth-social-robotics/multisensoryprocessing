@@ -7,7 +7,7 @@ Misc:
 Processors:
 -Feature vector: gathers data from mocap_gaze processor and nlp processor and creates feature
 -Mocap Gaze: gathers streams from mocap and tobii and aligns the data
--NLP: gathers data from ASR and parses with syntaxnet
+-NLP: gathers data from ASR and parses with syntaxnet or with predetermined grammar
 
 Pre-Processors:
 -Mocap: gathers data from mocap stream and creates rigid bodies
@@ -26,12 +26,12 @@ Other:
 -ROS connector: sends feature vector to the ROS server
 
 Starting sequence:
-+Git sync (pmil, macdimos, +macjocke, +macinstructions)
-+Settings
-+RabbitMQ (pmil)
-+Timeserver (pmil)
-    +Logging of processors (pmil) (optional)
-    +Logging of sensors (pmil) (optional)
+-Git sync (pmil, mac)
+-Settings
+-RabbitMQ (pmil)
+-Timeserver (pmil)
+    -Logging of processors (pmil) (optional)
+    -Logging of sensors (pmil) (optional)
 
 +WebGL Visualisation browser (mac) (optional)
     +Run mocapgaze process separately
@@ -45,6 +45,7 @@ Starting sequence:
     +Define print flag on interpreter
     +Get log files
     +Define objects and label sequence table
+
 +Instructions (macinstructions):
     +Define server and Furhat IP
 
@@ -54,11 +55,11 @@ Starting sequence:
         +Define Furhat IP
         +Define mic for P1 and P2
         +Define number of targets, glasses, gloves and tables
-    +NLP sh (macjocke):
-        +NLP processor sh (macjocke)
-        +ASR sh (macjocke)
-        +Microphone sh (macjocke)
-        +Microphone sh (macjocke)
+
++NLP sh (mac):
+    +NLP processor sh (mac)
+    -ASR sh (mac)
+    -Microphone sh (mac)
 
 +Mocapgaze bat (pmil):
     +Mocap-gaze processor bat (pmil)

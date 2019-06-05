@@ -161,11 +161,6 @@ def callback(_mq, get_shifted_time, routing_key, body):
             data["mic"] = participant
 
             if DEBUG: print(data)
-            # _mq.publish(
-            #     exchange='pre-processor',
-            #     routing_key='asr.data.{}'.format(participant),
-            #     body=data
-            # )
             zmq_socket.send(msgpack.packb((data, mq.get_shifted_time())))
 
     WatsonASR(body.get('address'), recognition_method_url, token, on_message)
