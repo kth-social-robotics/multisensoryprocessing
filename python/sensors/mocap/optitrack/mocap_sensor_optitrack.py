@@ -16,7 +16,7 @@ if len(sys.argv) != 2:
 mocap_ip = sys.argv[1]
 
 # Print messages
-DEBUG = False
+DEBUG = True
 
 # Settings
 SETTINGS_FILE = '../../../settings.yaml'
