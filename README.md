@@ -69,4 +69,4 @@ Starting sequence:
         +Update mocap objects
     +Mocap sensor bat (pmil)
 
-+Tobii glasses1 (pmil)
+-Tobii glasses1 (pmil)
