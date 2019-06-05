@@ -67,6 +67,6 @@ Starting sequence:
     +Tobii pre-processor bat (pmil)
     +Mocap pre-processor bat (pmil)
         +Update mocap objects
-    +Mocap sensor bat (pmil)
+    -Mocap sensor bat (pmil)
 
 -Tobii glasses1 (pmil)

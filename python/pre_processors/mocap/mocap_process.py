@@ -14,7 +14,7 @@ import yaml
 from collections import defaultdict
 from shared import create_zmq_server, MessageQueue
 
-DEBUG = False
+DEBUG = True
 
 # Settings
 SETTINGS_FILE = '../../settings.yaml'
