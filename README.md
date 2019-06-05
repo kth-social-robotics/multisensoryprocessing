@@ -30,8 +30,7 @@ Starting sequence:
 -Settings
 -RabbitMQ (pmil)
 -Timeserver (pmil)
-    -Logging of processors (pmil) (optional)
-    -Logging of sensors (pmil) (optional)
+
 
 +WebGL Visualisation browser (mac) (optional)
     +Run mocapgaze process separately
@@ -56,8 +55,8 @@ Starting sequence:
         +Define mic for P1 and P2
         +Define number of targets, glasses, gloves and tables
 
-+NLP sh (mac):
-    +NLP processor sh (mac)
+-NLP sh (mac):
+    -NLP processor sh (mac)
     -ASR sh (mac)
     -Microphone sh (mac)
 
@@ -71,5 +70,3 @@ Starting sequence:
     +Mocap sensor bat (pmil)
 
 +Tobii glasses1 (pmil)
-+Tobii glasses2 (pmil)
-+Tobii glasses3 (pmil)
