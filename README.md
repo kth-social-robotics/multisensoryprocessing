@@ -38,6 +38,7 @@ Starting sequence:
     +Define number of glasses, gloves and targets
     +Open MAMP and Firefox
 
+
 +Attention model (server) (mac)
     +Define server IP on server and client files and feature sh file
     +Define FURHAT IP on interpreter
@@ -64,9 +65,9 @@ Starting sequence:
     +Mocap-gaze processor bat (pmil)
         +Define Furhat IP
         +Define Tobii markers and head angle on Matlab
-    +Tobii pre-processor bat (pmil)
-    +Mocap pre-processor bat (pmil)
-        +Update mocap objects
+    -Tobii pre-processor bat (pmil)
+    -Mocap pre-processor bat (pmil)
+        -Update mocap objects
     -Mocap sensor bat (pmil)
 
 -Tobii glasses1 (pmil)

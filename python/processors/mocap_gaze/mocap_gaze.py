@@ -1,8 +1,8 @@
-# Get access to tobii live video streaming: rtsp://130.237.67.212:8554/live/eyes or scene
-# websocketd --port=8080 python2 mocap_gaze.py 1 23
-# Start webgl: http://130.237.67.82:8888/webgl/realtimevis/realtime/vs.html?IP=130.237.67.82
-# python2 mocap_gaze.py 2 23
-# py -2 .\mocap_gaze.py 2 23
+# Get access to tobii live video streaming: rtsp://192.168.1.135:8554/live/eyes or scene
+# websocketd --port=8080 python2 mocap_gaze.py 1 9
+# Start webgl: http://192.168.1.134:8888/realtimevis/realtime/vs.html?IP=192.168.1.134
+# python2 mocap_gaze.py 2 9
+# py -2 .\mocap_gaze.py 2 9
 # Check number of mocap objects
 # Wait for Matlab to start
 
@@ -23,9 +23,6 @@ from threading import Thread
 import matlab.engine
 from furhat import connect_to_iristk
 from time import sleep
-
-FURHAT_IP = '130.237.67.115' # Furhat IP address
-FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
 
 # Get print flag
 if len(sys.argv) != 3:
@@ -58,26 +55,6 @@ tobiimocap_dict = defaultdict(lambda : defaultdict(dict))
 
 # Each key is the local timestamp in seconds. The second key is the frame
 tobiimocap_dict[0][0]['device'] = 'body'
-
-#Uncomment for Furhat and indent
-# # Connect to Furhat
-# with connect_to_iristk(FURHAT_IP) as furhat_client:
-#     # Introduce Furhat
-#     furhat_client.say(FURHAT_AGENT_NAME, 'Now please help my friend to calibrate my vision.')
-#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-#     #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
-#
-#     # Log Furhat events
-#     def event_callback(event):
-#         #print(event) # Receives each event the furhat sends out.
-#         fd = open('../../../logs/furhat_log.csv','a')
-#         fd.write(event)
-#         fd.write('\n')
-#         fd.close()
-#
-#     # Listen to events
-#     furhat_client.start_listening(event_callback) # register the event callback receiver
-#Uncomment for Furhat and indent
 
 # Procees mocap input data
 def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
@@ -124,8 +101,6 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                     gp3_3d = mateng.mocapgaze(tobii_device, gp3, pos, quat, rgbMarkers)
 
                     # Get 3d values
-                    gaze_left = {"x": gp3_3d[0][0][0], "y": gp3_3d[0][1][0], "z": gp3_3d[0][2][0]}
-                    gaze_right = {"x": gp3_3d[0][0][1], "y": gp3_3d[0][1][1], "z": gp3_3d[0][2][1]}
                     gaze_gp3 = {"x": gp3_3d[0][0][2], "y": gp3_3d[0][1][2], "z": gp3_3d[0][2][2]}
                     head_pose = {"x": gp3_3d[0][0][3], "y": gp3_3d[0][1][3], "z": gp3_3d[0][2][3]}
 
@@ -138,12 +113,6 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                     # Run for tobii 1
                     if 'tobii_glasses1' in tobiimocap_dict[new_second][new_frame] and 'mocap_glasses1' in tobiimocap_dict[new_second][new_frame]:
                         mocapgaze('tobii_glasses1', 'mocap_glasses1')
-                    # Run for tobii 2
-                    if 'tobii_glasses2' in tobiimocap_dict[new_second][new_frame] and 'mocap_glasses2' in tobiimocap_dict[new_second][new_frame]:
-                        mocapgaze('tobii_glasses2', 'mocap_glasses2')
-                    # Run for tobii 3
-                    if 'tobii_glasses3' in tobiimocap_dict[new_second][new_frame] and 'mocap_glasses3' in tobiimocap_dict[new_second][new_frame]:
-                        mocapgaze('tobii_glasses3', 'mocap_glasses3')
 
                 # Print and send 10 frames before
                 # Send to WebGL
@@ -156,13 +125,9 @@ def mocapcallback(_mq1, get_shifted_time1, routing_key1, body1):
                 # Remove from dictionary
                 tobiimocap_dict[new_second].pop(new_frame, None)
 
-                #key = settings['messaging']['mocaptobii_processing']
-                #_mq.publish(exchange='processor', routing_key=key, body=tobiimocap_dict[new_second][new_frame])
-
     t1 = Thread(target = runA)
     t1.setDaemon(True)
     t1.start()
-    #s1.close()
 
 # Procees tobii input data
 def tobiicallback(_mq2, get_shifted_time2, routing_key2, body2):
@@ -191,7 +156,6 @@ def tobiicallback(_mq2, get_shifted_time2, routing_key2, body2):
     t2 = Thread(target = runB)
     t2.setDaemon(True)
     t2.start()
-    #s2.close()
 
 mq = MessageQueue('mocaptobii-processor')
 mq.bind_queue(exchange='pre-processor', routing_key=settings['messaging']['mocap_processing'], callback=mocapcallback)
