@@ -43,8 +43,8 @@ tables_num = 1
 
 # Start matlab engine
 mateng = matlab.engine.start_matlab()
-mateng.addpath(r'/Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/matlab', nargout=0)
-#mateng.addpath(r'C:/Users/PMIL/Documents/GitHub/multisensoryprocessing/matlab', nargout=0)
+#mateng.addpath(r'/Users/diko/Dropbox/University/PhD/Code/MultiSensoryProcessing/multisensoryprocessing/matlab', nargout=0)
+mateng.addpath(r'C:/Users/PMIL/Documents/GitHub/multisensoryprocessing/matlab', nargout=0)
 print("MATLAB")
 
 # Settings
