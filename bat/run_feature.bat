@@ -1,4 +1,4 @@
-REM CMD /K CALL "run_mocapgaze.bat"
+REM CMD /K CALL "run_feature.bat"
 
 REM start feature processor
 START CMD /K CALL "featureprocessor.bat"
