@@ -49,17 +49,14 @@ Starting sequence:
 +Instructions (macinstructions):
     +Define server and Furhat IP
 
-+Furhat (pmil)
-
-+Feature sh (pmil):
-    +Feature Vector sh (pmil)
-        +Define glasses and hands markers
-        +Define Furhat IP
-        +Define mic for P1 and P2
-        +Define number of targets, glasses, gloves and tables
++Furhat bat (pmil)
 
 
--Mocapgaze bat (pmil):
+-Feature bat (pmil):
+    -Feature vector bat (pmil)
+        -Define glasses and hands markers
+        -Define mic for P1
+        -Define number of targets, glasses, gloves and tables
     -Mocap-gaze processor bat (pmil)
         -Define Tobii markers and head angle on Matlab
     -Tobii pre-processor bat (pmil)
