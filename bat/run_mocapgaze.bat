@@ -1,10 +1,16 @@
 REM CMD /K CALL "run_mocapgaze.bat"
 
+REM start feature processor
+START CMD /K CALL "featureprocessor.bat"
+
+REM delay for 15 seconds
+CHOICE /N /C YN /T 15 /D Y >NUL
+
 REM start mocapgaze processor
 START CMD /K CALL "mocapgazeprocessor.bat"
 
-REM delay for 10 seconds
-CHOICE /N /C YN /T 10 /D Y >NUL
+REM delay for 15 seconds
+CHOICE /N /C YN /T 15 /D Y >NUL
 
 REM start tobii preprocessor
 START CMD /K CALL "tobiipreprocessor.bat"

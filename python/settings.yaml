@@ -50,5 +50,6 @@ messaging:
   #processors
   mocaptobii_processing: "mocaptobii.processing"
   feature_processing: "feature.processing"
+  furhat_processing: "furhat.processing"
   nlp_data: "nlp.data"
   asr_watson: "asr.data"

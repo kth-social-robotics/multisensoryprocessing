@@ -49,18 +49,15 @@ Starting sequence:
 +Instructions (macinstructions):
     +Define server and Furhat IP
 
-+Feature sh (macjocke):
-    +Feature Vector sh (macjocke)
++Furhat (pmil)
+
++Feature sh (pmil):
+    +Feature Vector sh (pmil)
         +Define glasses and hands markers
         +Define Furhat IP
         +Define mic for P1 and P2
         +Define number of targets, glasses, gloves and tables
 
-
--NLP sh (mac):
-    -NLP processor sh (mac)
-    -ASR sh (mac)
-    -Microphone sh (mac)
 
 -Mocapgaze bat (pmil):
     -Mocap-gaze processor bat (pmil)
@@ -69,5 +66,10 @@ Starting sequence:
     -Mocap pre-processor bat (pmil)
         -Update mocap objects
     -Mocap sensor bat (pmil)
+
+-NLP sh (mac):
+    -NLP processor sh (mac)
+    -ASR sh (mac)
+    -Microphone sh (mac)
 
 -Tobii glasses1 (pmil)
