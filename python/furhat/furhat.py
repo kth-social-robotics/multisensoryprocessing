@@ -221,3 +221,26 @@ ws.send(
 ws.send(
     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
 )
+
+
+
+    # Get key read from the presenter
+    def key(event):
+        #Up Left: u'\uf72c'
+        #Up Right: u'\uf72d'
+        #Down Left: u'\uf708'
+        #Down Right: '.'
+
+        # Up Left: Wrong item
+        if repr(event.char) == "u'\uf72c'":
+        #if repr(event.char) == "','":
+            wrongCallback(global_index, end)
+
+        # Up Right: Right item
+        if repr(event.char) == "u'\uf72d'":
+        #if repr(event.char) == "'-'":
+            rightCallback(global_index, end)
+
+        # Down Right: Next step
+        if repr(event.char) == "'.'":
+            nextCallback(global_index, end)

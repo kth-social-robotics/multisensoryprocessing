@@ -39,16 +39,6 @@ Starting sequence:
     -Open MAMP and Firefox
 
 
-+Attention model (server) (mac)
-    +Define server IP on server and client files and feature sh file
-    +Define FURHAT IP on interpreter
-    +Define print flag on interpreter
-    +Get log files
-    +Define objects and label sequence table
-
-+Instructions (macinstructions):
-    +Define server and Furhat IP
-
 +Furhat bat (pmil)
 
 
