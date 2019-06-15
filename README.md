@@ -29,8 +29,8 @@ Other:
 Starting sequence:
 -Git sync (pmil/windows, mac)
 -Settings
--RabbitMQ (pmil)
--Timeserver (pmil)
+-RabbitMQ (pmil/windows)
+-Timeserver (pmil/windows)
 
 -WebGL Visualisation browser (mac) (optional)
     -Run mocapgaze process separately
@@ -54,7 +54,7 @@ Starting sequence:
         -Update mocap objects
     -Mocap sensor bat (pmil)
 
--NLP sh (mac):
+-NLP sh (mac) (define microphone):
     -NLP processor sh (mac)
     -ASR sh (mac)
     -Microphone sh (mac)

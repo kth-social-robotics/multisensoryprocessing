@@ -83,7 +83,8 @@ def featurecallback(_mq1, get_shifted_time1, routing_key1, body1):
     t1.start()
 
 mq = MessageQueue('furhat-processor')
-mq.bind_queue(exchange='processor', routing_key=settings['messaging']['feature_processing'], callback=featurecallback)
+#mq.bind_queue(exchange='processor', routing_key=settings['messaging']['feature_processing'], callback=featurecallback)
+mq.bind_queue(exchange='processor', routing_key=settings['messaging']['nlp_data'], callback=featurecallback)
 
 mq.listen()
 
@@ -225,32 +226,32 @@ ws = create_connection("ws://192.168.1.133:80/api")
 # ws.send(
 #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "On your left."})
 # )
-ws.send(
-    json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Yeah."})
-)
-ws.send(
-    json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
-)
+# ws.send(
+#     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Yeah."})
+# )
+# ws.send(
+#     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
+# )
 
 
 
-    # Get key read from the presenter
-    def key(event):
-        #Up Left: u'\uf72c'
-        #Up Right: u'\uf72d'
-        #Down Left: u'\uf708'
-        #Down Right: '.'
-
-        # Up Left: Wrong item
-        if repr(event.char) == "u'\uf72c'":
-        #if repr(event.char) == "','":
-            wrongCallback(global_index, end)
-
-        # Up Right: Right item
-        if repr(event.char) == "u'\uf72d'":
-        #if repr(event.char) == "'-'":
-            rightCallback(global_index, end)
-
-        # Down Right: Next step
-        if repr(event.char) == "'.'":
-            nextCallback(global_index, end)
+# # Get key read from the presenter
+# def key(event):
+#     #Up Left: u'\uf72c'
+#     #Up Right: u'\uf72d'
+#     #Down Left: u'\uf708'
+#     #Down Right: '.'
+#
+#     # Up Left: Wrong item
+#     if repr(event.char) == "u'\uf72c'":
+#     #if repr(event.char) == "','":
+#         wrongCallback(global_index, end)
+#
+#     # Up Right: Right item
+#     if repr(event.char) == "u'\uf72d'":
+#     #if repr(event.char) == "'-'":
+#         rightCallback(global_index, end)
+#
+#     # Down Right: Next step
+#     if repr(event.char) == "'.'":
+#         nextCallback(global_index, end)
