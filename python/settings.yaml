@@ -57,3 +57,4 @@ messaging:
   furhat_processing: "furhat.processing"
   nlp_data: "nlp.data"
   asr_watson: "asr.data"
+  wizard_data: "wizard.data"

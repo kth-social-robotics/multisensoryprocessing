@@ -43,16 +43,17 @@ mq.publish(
     body={'address': zmq_server_addr, 'file_type': 'txt'}
 )
 
+# Furhat connection
+ws = create_connection("ws://130.237.67.157:80/api")
+
 # Dictionaries
 furhat_dict = defaultdict(lambda : defaultdict(dict))
 
 # Each key is the local timestamp in seconds. The second key is the frame
 # Time, Frame: Timestamp,
-# P1 Test
 # Step
 
 furhat_dict[0][0]['TS'] = ''
-furhat_dict[0][0]['P1TEST'] = ['']
 furhat_dict[0][0]['S'] = ''
 
 # Procees feature input data
@@ -76,15 +77,59 @@ def featurecallback(_mq1, get_shifted_time1, routing_key1, body1):
             # Get decimals to decide which frame
             frame = int(math.modf(featuretime)[0] * 50)
 
+            # Get key from wizard
             print(featurebody)
+            #feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
+            #key = input('Action:')
+            #print(key)
+            # ws.send(
+            #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Hello!"})
+            # )
+            # Print furhat dict
+            print(furhat_dict[second][frame])
+
 
     t1 = Thread(target = runA)
     t1.setDaemon(True)
     t1.start()
 
+# Process wizard input data
+def wizardcallback(_mq2, get_shifted_time2, routing_key2, body2):
+    context2 = zmq.Context()
+    s2 = context2.socket(zmq.SUB)
+    s2.setsockopt_string(zmq.SUBSCRIBE, u'')
+    s2.connect(body2.get('address'))
+
+    def runB():
+        while True:
+            data2 = s2.recv()
+            wizardbody, localtime2 = msgpack.unpackb(data2, use_list=False, encoding='utf-8')
+
+            # Get wizard localtime
+            wizardtime = localtime2
+
+            # First get which second
+            second = int(wizardtime)
+
+            # Get decimals to decide which frame
+            frame = int(math.modf(wizardtime)[0] * 50)
+
+            print(wizardbody)
+            # Put in dictionary
+            #feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
+
+    t2 = Thread(target = runB)
+    t2.setDaemon(True)
+    t2.start()
+
+
+
+
+
 mq = MessageQueue('furhat-processor')
 #mq.bind_queue(exchange='processor', routing_key=settings['messaging']['feature_processing'], callback=featurecallback)
 mq.bind_queue(exchange='processor', routing_key=settings['messaging']['nlp_data'], callback=featurecallback)
+mq.bind_queue(exchange='processor', routing_key=settings['messaging']['wizard_data'], callback=wizardcallback)
 
 mq.listen()
 
@@ -92,8 +137,6 @@ zmq_socket.send(b'CLOSE')
 zmq_socket.close()
 
 
-
-ws = create_connection("ws://192.168.1.133:80/api")
 
 # SPEECH
 # ws.send(
