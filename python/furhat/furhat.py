@@ -103,6 +103,11 @@ ws = create_connection("ws://192.168.1.133:80/api")
 #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeechStop"})
 # )
 
+# PROSODY
+#Uh, the one with the <emphasis level="moderate">white</emphasis> stripes! Yeah!
+#reduced, moderate, strong, none
+#https://docs.aws.amazon.com/polly/latest/dg/supported-ssml.html
+
 # GESTURES
 # ws.send(
 #     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
@@ -114,6 +119,11 @@ ws = create_connection("ws://192.168.1.133:80/api")
 # GAZE
 # ws.send(
 #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
+# )
+
+# ATTEND
+# ws.send(
+#     json.dumps({"event_name": "furhatos.event.actions.ActionAttend", "target": "all")
 # )
 
 

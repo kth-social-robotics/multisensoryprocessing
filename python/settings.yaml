@@ -9,22 +9,26 @@ logging:
   processor_path: 'C:\Users\PMIL\Documents\Dimos\CHI\DATA\processors'
 
 messaging:
-  broker_host: "192.168.1.136"
+  #broker_host: "192.168.1.136"
+  broker_host: "130.237.67.194"
   broker_port: 5672
   broker_user: "test"
   broker_pass: "test"
 
   # time server host
-  time_server_host: "tcp://192.168.1.136:45321"
+  #time_server_host: "tcp://192.168.1.136:45321"
+  time_server_host: "tcp://130.237.67.194:45321"
 
   # connection server
-  connection_server_host: "tcp://192.168.1.136:45322"
+  #connection_server_host: "tcp://192.168.1.136:45322"
+  connection_server_host: "tcp://130.237.67.194:45322"
 
   # sensor hosts
   mocap_host: "172.18.133.161"
 
   # furhat host
-  furhat_host: "192.168.1.133"
+  #furhat_host: "192.168.1.133"
+  furhat_host: "130.237.67.157"
 
   # exchanges
   artificial_agent: "artificial-agent"

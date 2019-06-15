@@ -27,7 +27,7 @@ Other:
 
 
 Starting sequence:
--Git sync (pmil, mac)
+-Git sync (pmil/windows, mac)
 -Settings
 -RabbitMQ (pmil)
 -Timeserver (pmil)
