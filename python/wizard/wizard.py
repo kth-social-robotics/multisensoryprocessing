@@ -1,4 +1,4 @@
-# python3 wizard.py [condition]
+# python3 wizard.py [agent] [condition]
 
 import zmq
 import pika
@@ -16,17 +16,15 @@ from subprocess import PIPE
 import os
 from shared import create_zmq_server, MessageQueue
 
-# Print messages
-DEBUG = True
-
 # Settings
 SETTINGS_FILE = '../settings.yaml'
 settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
 
 # Get condition flag
-if len(sys.argv) != 2:
+if len(sys.argv) != 3:
     exit('Error. Enter condition flag')
-conditionflag = sys.argv[1]
+agent = sys.argv[1]
+condition = sys.argv[2]
 
 # Define server
 zmq_socket, zmq_server_addr = create_zmq_server()
@@ -40,19 +38,35 @@ mq.publish(
 
 while True:
     # Print actions
-    print("Actions:")
-    print("1. Start")
-    print("2. End")
+    print("--------------------")
+    print("Robot Actions:")
+    print("1. Start Interaction")
+    print("2. Next Step")
+    print("3. End Interaction")
+    print("--------------------")
+    print("User Actions:")
+    print("4. Correct Action")
+    print("5. Wrong Action")
+    print("6. Speech-Where")
+    print("7. Speech-Which")
+    print("8. Speech-Repeat")
+    print("9. Gaze-Object")
+    print("10. Gaze-Other")
+    print("11. Gaze-Robot")
+    print("--------------------")
 
     # Get current key
     key = input('Press: ')
 
     data = {
-        'condition': conditionflag,
+        'agent': agent,
+        'condition': condition,
         'action': key
     }
 
-    if DEBUG: print(data)
+    # Print message
+    print("STATUS")
+    print(data)
 
     zmq_socket.send(msgpack.packb((data, mq.get_shifted_time())))
 

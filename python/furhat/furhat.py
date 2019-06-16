@@ -29,6 +29,9 @@ from websocket import create_connection
 # Print messages
 DEBUG = True
 
+# Furhat connection
+ws = create_connection("ws://130.237.67.157:80/api")
+
 # Settings
 SETTINGS_FILE = '../settings.yaml'
 settings = yaml.safe_load(open(SETTINGS_FILE, 'r').read())
@@ -43,9 +46,6 @@ mq.publish(
     body={'address': zmq_server_addr, 'file_type': 'txt'}
 )
 
-# Furhat connection
-ws = create_connection("ws://130.237.67.157:80/api")
-
 # Dictionaries
 furhat_dict = defaultdict(lambda : defaultdict(dict))
 
@@ -56,245 +56,262 @@ furhat_dict = defaultdict(lambda : defaultdict(dict))
 furhat_dict[0][0]['TS'] = ''
 furhat_dict[0][0]['S'] = ''
 
-# Procees feature input data
-def featurecallback(_mq1, get_shifted_time1, routing_key1, body1):
-    context1 = zmq.Context()
-    s1 = context1.socket(zmq.SUB)
-    s1.setsockopt_string(zmq.SUBSCRIBE, u'')
-    s1.connect(body1.get('address'))
+# Save to log file
+logt = time.localtime()
+logtimestamp = time.strftime('%b-%d-%Y_%H%M', logt)
+with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".csv", 'w') as f:  # Just use 'w' mode in 3.x
+    w = csv.DictWriter(f, furhat_dict[0][0].keys(), delimiter=";")
+    w.writeheader()
 
-    def runA():
-        while True:
-            data1 = s1.recv()
-            featurebody, localtime1 = msgpack.unpackb(data1, use_list=False, encoding='utf-8')
+    # Procees feature input data
+    def featurecallback(_mq1, get_shifted_time1, routing_key1, body1):
+        context1 = zmq.Context()
+        s1 = context1.socket(zmq.SUB)
+        s1.setsockopt_string(zmq.SUBSCRIBE, u'')
+        s1.connect(body1.get('address'))
 
-            # Get feature localtime
-            featuretime = localtime1
+        def runA():
+            while True:
+                data1 = s1.recv()
+                featurebody, localtime1 = msgpack.unpackb(data1, use_list=False, encoding='utf-8')
 
-            # First get which second
-            second = int(featuretime)
+                # Get feature localtime
+                featuretime = localtime1
 
-            # Get decimals to decide which frame
-            frame = int(math.modf(featuretime)[0] * 50)
+                # First get which second
+                second = int(featuretime)
 
-            # Get key from wizard
-            print(featurebody)
-            #feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
-            #key = input('Action:')
-            #print(key)
-            # ws.send(
-            #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Hello!"})
-            # )
-            # Print furhat dict
-            print(furhat_dict[second][frame])
+                # Get decimals to decide which frame
+                frame = int(math.modf(featuretime)[0] * 50)
 
-
-    t1 = Thread(target = runA)
-    t1.setDaemon(True)
-    t1.start()
-
-# Process wizard input data
-def wizardcallback(_mq2, get_shifted_time2, routing_key2, body2):
-    context2 = zmq.Context()
-    s2 = context2.socket(zmq.SUB)
-    s2.setsockopt_string(zmq.SUBSCRIBE, u'')
-    s2.connect(body2.get('address'))
-
-    def runB():
-        while True:
-            data2 = s2.recv()
-            wizardbody, localtime2 = msgpack.unpackb(data2, use_list=False, encoding='utf-8')
-
-            # Get wizard localtime
-            wizardtime = localtime2
-
-            # First get which second
-            second = int(wizardtime)
-
-            # Get decimals to decide which frame
-            frame = int(math.modf(wizardtime)[0] * 50)
-
-            print(wizardbody)
-            # Put in dictionary
-            #feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
-
-    t2 = Thread(target = runB)
-    t2.setDaemon(True)
-    t2.start()
+                # Get key from wizard
+                print(featurebody)
+                #feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
+                #key = input('Action:')
+                #print(key)
+                # ws.send(
+                #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Hello!"})
+                # )
+                # Print furhat dict
+                #csv with instructions and expansions
+                #if key or if action (for now update both and log)
+                # ws.send(
+                #     #json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "I already told you I <emphasis level='strong'>really</emphasis> like that person."})
+                #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Sometimes you want to insert only a single breath."})
+                #     #"<amazon:auto-breaths>Amazon Polly is a service that turns text into lifelike speech, allowing you to create applications that talk and build entirely new categories of speech-enabled products. Yeah.</amazon:auto-breaths>"
+                # )
+                print(furhat_dict[second][frame])
+                # Log to csv file
+                #w.writerow(feature_dict[second][frame])
+                #log keys and actions
 
 
+        t1 = Thread(target = runA)
+        t1.setDaemon(True)
+        t1.start()
 
+    # Process wizard input data
+    def wizardcallback(_mq2, get_shifted_time2, routing_key2, body2):
+        context2 = zmq.Context()
+        s2 = context2.socket(zmq.SUB)
+        s2.setsockopt_string(zmq.SUBSCRIBE, u'')
+        s2.connect(body2.get('address'))
 
+        def runB():
+            while True:
+                data2 = s2.recv()
+                wizardbody, localtime2 = msgpack.unpackb(data2, use_list=False, encoding='utf-8')
 
-mq = MessageQueue('furhat-processor')
-#mq.bind_queue(exchange='processor', routing_key=settings['messaging']['feature_processing'], callback=featurecallback)
-mq.bind_queue(exchange='processor', routing_key=settings['messaging']['nlp_data'], callback=featurecallback)
-mq.bind_queue(exchange='processor', routing_key=settings['messaging']['wizard_data'], callback=wizardcallback)
+                # Get wizard localtime
+                wizardtime = localtime2
 
-mq.listen()
+                # First get which second
+                second = int(wizardtime)
 
-zmq_socket.send(b'CLOSE')
-zmq_socket.close()
+                # Get decimals to decide which frame
+                frame = int(math.modf(wizardtime)[0] * 50)
 
+                print(wizardbody)
+                # Put in dictionary
+                #feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
 
-
-# SPEECH
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Hello! How are you today? Would you like to build some furniture with me?"})
-# )
-# time.sleep(1)
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionSpeechStop"})
-# )
-
-# PROSODY
-#Uh, the one with the <emphasis level="moderate">white</emphasis> stripes! Yeah!
-#reduced, moderate, strong, none
-#https://docs.aws.amazon.com/polly/latest/dg/supported-ssml.html
-
-# GESTURES
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
-# )
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Shake"})
-# )
-
-# GAZE
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
-# )
-
-# ATTEND
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionAttend", "target": "all")
-# )
+        t2 = Thread(target = runB)
+        t2.setDaemon(True)
+        t2.start()
 
 
 
-# Uncomment for furhat and indent
-    # # Connect to Furhat
-    # with connect_to_iristk(FURHAT_IP) as furhat_client:
-    #     # Introduce Furhat
-    #     furhat_client.say(FURHAT_AGENT_NAME, 'It seems like I can now hear what you are saying.')
-    #     #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-    #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+
+
+    mq = MessageQueue('furhat-processor')
+    #mq.bind_queue(exchange='processor', routing_key=settings['messaging']['feature_processing'], callback=featurecallback)
+    mq.bind_queue(exchange='processor', routing_key=settings['messaging']['nlp_data'], callback=featurecallback)
+    mq.bind_queue(exchange='processor', routing_key=settings['messaging']['wizard_data'], callback=wizardcallback)
+
+    mq.listen()
+
+    zmq_socket.send(b'CLOSE')
+    zmq_socket.close()
+
+
+
+    # SPEECH
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Hello! How are you today? Would you like to build some furniture with me?"})
+    # )
+    # time.sleep(1)
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeechStop"})
+    # )
+
+    # PROSODY
+    #Uh, the one with the <emphasis level="moderate">white</emphasis> stripes! Yeah!
+    #reduced, moderate, strong, none
+    #https://docs.aws.amazon.com/polly/latest/dg/supported-ssml.html
+
+    # GESTURES
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
+    # )
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Shake"})
+    # )
+
+    # GAZE
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
+    # )
+
+    # ATTEND
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionAttend", "target": "all")
+    # )
+
+
+
+    # Uncomment for furhat and indent
+        # # Connect to Furhat
+        # with connect_to_iristk(FURHAT_IP) as furhat_client:
+        #     # Introduce Furhat
+        #     furhat_client.say(FURHAT_AGENT_NAME, 'It seems like I can now hear what you are saying.')
+        #     #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
+        #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
+        #
+        #     # Log Furhat events
+        #     def event_callback(event):
+        #         #print(event) # Receives each event the furhat sends out.
+        #         fd = open('../../../logs/furhat_log.csv','a')
+        #         fd.write(event)
+        #         fd.write('\n')
+        #         fd.close()
+        #
+        #     # Listen to events
+        #     furhat_client.start_listening(event_callback) # register the event callback receiver
+    # Uncomment for furhat and indent
+
+
+
+    # from furhat import connect_to_iristk
+    # from time import sleep
     #
-    #     # Log Furhat events
-    #     def event_callback(event):
+    # FURHAT_IP = '130.237.67.115' # Furhat IP address
+    # FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
+    #
+    # def convert_to_furhat_coordinates(furhat_position, object_position):
+    #     return [ object_position[2] - furhat_position[2], object_position[1] - furhat_position[1], - (object_position[0] - furhat_position[0])]
+    #
+    # with connect_to_iristk(FURHAT_IP) as furhat_client:
+    #     #def event_callback(event):
     #         #print(event) # Receives each event the furhat sends out.
-    #         fd = open('../../../logs/furhat_log.csv','a')
-    #         fd.write(event)
-    #         fd.write('\n')
-    #         fd.close()
     #
     #     # Listen to events
-    #     furhat_client.start_listening(event_callback) # register the event callback receiver
-# Uncomment for furhat and indent
+    #     #furhat_client.start_listening(event_callback) # register our event callback receiver
+    #
+    #     # Speak
+    #     furhat_client.say(FURHAT_AGENT_NAME, 'hello humans')
+    #
+    #     # Head Limits
+    #     # X from -1 (right) to +1 (left)
+    #     # Y from -1 (down) to +1 (up)
+    #     # Z from 0 to 2 (forwards)
+    #     # Gaze can go further
+    #
+    #     # Coordinates from mocap
+    #     furhat_position = [-1.02193, 0.96456 + 0.2, 2.74624]
+    #     object_position1 = [-2.74473, 0.7612, 3.37574]
+    #     object_position2 = [-2.267, 1.152, 3.735]
+    #
+    #     # Convert to mocap space
+    #     object_coordinates_furhat_space = convert_to_furhat_coordinates(furhat_position, object_position1)
+    #     print(object_coordinates_furhat_space)
+    #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x': object_coordinates_furhat_space[0], 'y': object_coordinates_furhat_space[1],'z': object_coordinates_furhat_space[2]})
+    #     sleep(0.01)
+    #
+    #     object_coordinates_furhat_space = convert_to_furhat_coordinates(furhat_position, object_position2)
+    #     print(object_coordinates_furhat_space)
+    #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x': object_coordinates_furhat_space[0], 'y': object_coordinates_furhat_space[1],'z': object_coordinates_furhat_space[2]})
+    #     sleep(0.01)
+    #
+    #     # Continuous gaze
+    #     # for i in range(10,-10,-1):
+    #     #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':i/10,'y':i/10,'z':2.00})
+    #     #     sleep(0.1)
+    #
+    #     furhat_client.say(FURHAT_AGENT_NAME, 'I gazed')
+    #     sleep(0.01)
 
 
 
-# from furhat import connect_to_iristk
-# from time import sleep
-#
-# FURHAT_IP = '130.237.67.115' # Furhat IP address
-# FURHAT_AGENT_NAME = 'system' # Furhat agent name. Can be found under "Connections" in the furhat web-GUI
-#
-# def convert_to_furhat_coordinates(furhat_position, object_position):
-#     return [ object_position[2] - furhat_position[2], object_position[1] - furhat_position[1], - (object_position[0] - furhat_position[0])]
-#
-# with connect_to_iristk(FURHAT_IP) as furhat_client:
-#     #def event_callback(event):
-#         #print(event) # Receives each event the furhat sends out.
-#
-#     # Listen to events
-#     #furhat_client.start_listening(event_callback) # register our event callback receiver
-#
-#     # Speak
-#     furhat_client.say(FURHAT_AGENT_NAME, 'hello humans')
-#
-#     # Head Limits
-#     # X from -1 (right) to +1 (left)
-#     # Y from -1 (down) to +1 (up)
-#     # Z from 0 to 2 (forwards)
-#     # Gaze can go further
-#
-#     # Coordinates from mocap
-#     furhat_position = [-1.02193, 0.96456 + 0.2, 2.74624]
-#     object_position1 = [-2.74473, 0.7612, 3.37574]
-#     object_position2 = [-2.267, 1.152, 3.735]
-#
-#     # Convert to mocap space
-#     object_coordinates_furhat_space = convert_to_furhat_coordinates(furhat_position, object_position1)
-#     print(object_coordinates_furhat_space)
-#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x': object_coordinates_furhat_space[0], 'y': object_coordinates_furhat_space[1],'z': object_coordinates_furhat_space[2]})
-#     sleep(0.01)
-#
-#     object_coordinates_furhat_space = convert_to_furhat_coordinates(furhat_position, object_position2)
-#     print(object_coordinates_furhat_space)
-#     furhat_client.gaze(FURHAT_AGENT_NAME, {'x': object_coordinates_furhat_space[0], 'y': object_coordinates_furhat_space[1],'z': object_coordinates_furhat_space[2]})
-#     sleep(0.01)
-#
-#     # Continuous gaze
-#     # for i in range(10,-10,-1):
-#     #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':i/10,'y':i/10,'z':2.00})
-#     #     sleep(0.1)
-#
-#     furhat_client.say(FURHAT_AGENT_NAME, 'I gazed')
-#     sleep(0.01)
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
+    # )
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Next, you should take the white piece to put on top."})
+    # )
+    # time.sleep(1.5)
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.4, "y": -0.4, "z": +1}, "mode": 0, "gazeSpeed": 2})
+    # )
+    # time.sleep(3)
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
+    # )
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "It is the one with the black stripes."})
+    # )
+    # time.sleep(1.5)
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.4, "y": -0.4, "z": +1}, "mode": 0, "gazeSpeed": 2})
+    # )
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "On your left."})
+    # )
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Yeah."})
+    # )
+    # ws.send(
+    #     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
+    # )
 
 
 
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
-# )
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Next, you should take the white piece to put on top."})
-# )
-# time.sleep(1.5)
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.4, "y": -0.4, "z": +1}, "mode": 0, "gazeSpeed": 2})
-# )
-# time.sleep(3)
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
-# )
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "It is the one with the black stripes."})
-# )
-# time.sleep(1.5)
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.4, "y": -0.4, "z": +1}, "mode": 0, "gazeSpeed": 2})
-# )
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "On your left."})
-# )
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Yeah."})
-# )
-# ws.send(
-#     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
-# )
-
-
-
-# # Get key read from the presenter
-# def key(event):
-#     #Up Left: u'\uf72c'
-#     #Up Right: u'\uf72d'
-#     #Down Left: u'\uf708'
-#     #Down Right: '.'
-#
-#     # Up Left: Wrong item
-#     if repr(event.char) == "u'\uf72c'":
-#     #if repr(event.char) == "','":
-#         wrongCallback(global_index, end)
-#
-#     # Up Right: Right item
-#     if repr(event.char) == "u'\uf72d'":
-#     #if repr(event.char) == "'-'":
-#         rightCallback(global_index, end)
-#
-#     # Down Right: Next step
-#     if repr(event.char) == "'.'":
-#         nextCallback(global_index, end)
+    # # Get key read from the presenter
+    # def key(event):
+    #     #Up Left: u'\uf72c'
+    #     #Up Right: u'\uf72d'
+    #     #Down Left: u'\uf708'
+    #     #Down Right: '.'
+    #
+    #     # Up Left: Wrong item
+    #     if repr(event.char) == "u'\uf72c'":
+    #     #if repr(event.char) == "','":
+    #         wrongCallback(global_index, end)
+    #
+    #     # Up Right: Right item
+    #     if repr(event.char) == "u'\uf72d'":
+    #     #if repr(event.char) == "'-'":
+    #         rightCallback(global_index, end)
+    #
+    #     # Down Right: Next step
+    #     if repr(event.char) == "'.'":
+    #         nextCallback(global_index, end)
