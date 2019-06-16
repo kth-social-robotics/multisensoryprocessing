@@ -8,8 +8,8 @@ import json
 
 # Connect to Amazon Polly
 polly_client = boto3.Session(
-    aws_access_key_id = "AKIAJZ3IUTAZPQIIBW4A",
-    aws_secret_access_key = "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",
+    aws_access_key_id = "",
+    aws_secret_access_key = "",
     region_name='us-west-2').client('polly')
 
 # Sunthesis
