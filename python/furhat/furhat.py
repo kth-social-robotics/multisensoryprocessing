@@ -19,7 +19,8 @@ from subprocess import PIPE
 import os
 from os import system
 import unicodedata
-import numpy
+import pandas as pd
+import numpy as np
 from furhat import connect_to_iristk
 from time import sleep
 import csv
@@ -46,15 +47,16 @@ mq.publish(
     body={'address': zmq_server_addr, 'file_type': 'txt'}
 )
 
-# Dictionaries
+# Create dataframe
+df = pd.DataFrame(columns=['TS', 'Second', 'Frame', 'Speech'])
+
+# Dictionaries (Each key is the local timestamp in seconds. The second key is the frame)
 furhat_dict = defaultdict(lambda : defaultdict(dict))
-
-# Each key is the local timestamp in seconds. The second key is the frame
-# Time, Frame: Timestamp,
-# Step
-
 furhat_dict[0][0]['TS'] = ''
 furhat_dict[0][0]['S'] = ''
+furhat_dict[0][0]['Agent'] = ''
+furhat_dict[0][0]['Condition'] = ''
+furhat_dict[0][0]['WizardAction'] = ''
 
 # Save to log file
 logt = time.localtime()
@@ -72,6 +74,9 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
 
         def runA():
             while True:
+                # Get dataframe
+                global df
+
                 data1 = s1.recv()
                 featurebody, localtime1 = msgpack.unpackb(data1, use_list=False, encoding='utf-8')
 
@@ -84,27 +89,12 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
                 # Get decimals to decide which frame
                 frame = int(math.modf(featuretime)[0] * 50)
 
-                # Get key from wizard
-                print(featurebody)
-                #feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
-                #key = input('Action:')
-                #print(key)
-                # ws.send(
-                #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Hello!"})
-                # )
-                # Print furhat dict
-                #csv with instructions and expansions
-                #if key or if action (for now update both and log)
-                # ws.send(
-                #     #json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "I already told you I <emphasis level='strong'>really</emphasis> like that person."})
-                #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Sometimes you want to insert only a single breath."})
-                #     #"<amazon:auto-breaths>Amazon Polly is a service that turns text into lifelike speech, allowing you to create applications that talk and build entirely new categories of speech-enabled products. Yeah.</amazon:auto-breaths>"
-                # )
-                print(furhat_dict[second][frame])
-                # Log to csv file
-                #w.writerow(feature_dict[second][frame])
-                #log keys and actions
+                # Put in df
+                df_temp = pd.DataFrame([[featuretime, second, frame, str(featurebody['speech'])]], columns=['TS', 'Second', 'Frame', 'Speech'])
+                df = df.append(df_temp, ignore_index=True)
 
+                # Print ASR
+                if DEBUG: print(featurebody['speech'])
 
         t1 = Thread(target = runA)
         t1.setDaemon(True)
@@ -119,6 +109,9 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
 
         def runB():
             while True:
+                # Get dataframe
+                global df
+
                 data2 = s2.recv()
                 wizardbody, localtime2 = msgpack.unpackb(data2, use_list=False, encoding='utf-8')
 
@@ -131,17 +124,49 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
                 # Get decimals to decide which frame
                 frame = int(math.modf(wizardtime)[0] * 50)
 
-                print(wizardbody)
+
+                print(df)
+                # Robot Actions:
+                # 1. Start Interaction
+                # 2. Next Step
+                # 3. End Interaction
+                # --------------------
+                # User Actions:
+                # 4. Correct Action
+                # 5. Wrong Action
+                # 6. Speech-Where
+                # 7. Speech-Which
+                # 8. Speech-Repeat
+                # 9. Gaze-Object
+                # 10. Gaze-Other
+                # 11. Gaze-Robot
+                # --------------------
+                #if key or if action (for now update both and log)
+                #csv with instructions and expansions
+                # ws.send(
+                #     #json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "I already told you I <emphasis level='strong'>really</emphasis> like that person."})
+                #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Sometimes you want to insert only a single breath."})
+                #     #"<amazon:auto-breaths>Amazon Polly is a service that turns text into lifelike speech, allowing you to create applications that talk and build entirely new categories of speech-enabled products. Yeah.</amazon:auto-breaths>"
+                # )
+                #also print and log what furhat says
+
+
                 # Put in dictionary
-                #feature_dict[second][frame]['TS'] = str(nlpbody['timestamp'])
+                furhat_dict[second][frame]['TS'] = localtime2
+                furhat_dict[second][frame]['Agent'] = str(wizardbody['agent'])
+                furhat_dict[second][frame]['Condition'] = str(wizardbody['condition'])
+                furhat_dict[second][frame]['WizardAction'] = str(wizardbody['action'])
+
+                # Log to csv file
+                w.writerow(furhat_dict[second][frame])
+                if DEBUG: print(furhat_dict[second][frame])
+
+                # Remove dict frames when an action is already used and reset pandas df
+                #TODO
 
         t2 = Thread(target = runB)
         t2.setDaemon(True)
         t2.start()
-
-
-
-
 
     mq = MessageQueue('furhat-processor')
     #mq.bind_queue(exchange='processor', routing_key=settings['messaging']['feature_processing'], callback=featurecallback)
@@ -186,28 +211,6 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
     # ws.send(
     #     json.dumps({"event_name": "furhatos.event.actions.ActionAttend", "target": "all")
     # )
-
-
-
-    # Uncomment for furhat and indent
-        # # Connect to Furhat
-        # with connect_to_iristk(FURHAT_IP) as furhat_client:
-        #     # Introduce Furhat
-        #     furhat_client.say(FURHAT_AGENT_NAME, 'It seems like I can now hear what you are saying.')
-        #     #furhat_client.gaze(FURHAT_AGENT_NAME, {'x':3.00,'y':0.00,'z':2.00}) # At default P1 position
-        #     furhat_client.gaze(FURHAT_AGENT_NAME, {'x':-2.00,'y':0.00,'z':2.00}) # At default P2 position
-        #
-        #     # Log Furhat events
-        #     def event_callback(event):
-        #         #print(event) # Receives each event the furhat sends out.
-        #         fd = open('../../../logs/furhat_log.csv','a')
-        #         fd.write(event)
-        #         fd.write('\n')
-        #         fd.close()
-        #
-        #     # Listen to events
-        #     furhat_client.start_listening(event_callback) # register the event callback receiver
-    # Uncomment for furhat and indent
 
 
 
@@ -259,59 +262,3 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
     #
     #     furhat_client.say(FURHAT_AGENT_NAME, 'I gazed')
     #     sleep(0.01)
-
-
-
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
-    # )
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Next, you should take the white piece to put on top."})
-    # )
-    # time.sleep(1.5)
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.4, "y": -0.4, "z": +1}, "mode": 0, "gazeSpeed": 2})
-    # )
-    # time.sleep(3)
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
-    # )
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "It is the one with the black stripes."})
-    # )
-    # time.sleep(1.5)
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.4, "y": -0.4, "z": +1}, "mode": 0, "gazeSpeed": 2})
-    # )
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "On your left."})
-    # )
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Yeah."})
-    # )
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
-    # )
-
-
-
-    # # Get key read from the presenter
-    # def key(event):
-    #     #Up Left: u'\uf72c'
-    #     #Up Right: u'\uf72d'
-    #     #Down Left: u'\uf708'
-    #     #Down Right: '.'
-    #
-    #     # Up Left: Wrong item
-    #     if repr(event.char) == "u'\uf72c'":
-    #     #if repr(event.char) == "','":
-    #         wrongCallback(global_index, end)
-    #
-    #     # Up Right: Right item
-    #     if repr(event.char) == "u'\uf72d'":
-    #     #if repr(event.char) == "'-'":
-    #         rightCallback(global_index, end)
-    #
-    #     # Down Right: Next step
-    #     if repr(event.char) == "'.'":
-    #         nextCallback(global_index, end)
