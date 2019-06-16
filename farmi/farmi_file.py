@@ -28,7 +28,7 @@ class FarmiFile(object):
             for filename in compress_files:
                 new_path = filename + ".lz4"
                 with open(filename, "rb") as f_in, lz4.frame.open(
-                        new_path, "wb"
+                    new_path, "wb"
                 ) as f_out:
                     shutil.copyfileobj(f_in, f_out)
                     os.remove(f_in.name)
@@ -62,4 +62,5 @@ class FarmiFile(object):
                 yield value
 
     def close(self):
-        self.file_handle.close()
+        if self.file_handle:
+            self.file_handle.close()
