@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="farmi",
-    install_requires=["pyzmq", "msgpack", "msgpack-numpy"],
+    install_requires=["pyzmq", "msgpack", "msgpack-numpy", "lz4"],
     python_requires=">=3",
     version="3.1.3",
     description="Multisensory processing framework ",
