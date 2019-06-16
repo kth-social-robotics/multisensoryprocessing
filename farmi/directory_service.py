@@ -6,9 +6,7 @@ import zmq
 
 from farmi.utils import get_ip
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 
 class DirectoryService(object):
