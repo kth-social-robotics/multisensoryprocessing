@@ -57,6 +57,8 @@ furhat_dict[0][0]['S'] = ''
 furhat_dict[0][0]['Agent'] = ''
 furhat_dict[0][0]['Condition'] = ''
 furhat_dict[0][0]['WizardAction'] = ''
+furhat_dict[0][0]['UserSpeech'] = ''
+furhat_dict[0][0]['RobotSpeech'] = ''
 
 # Save to log file
 logt = time.localtime()
@@ -64,6 +66,13 @@ logtimestamp = time.strftime('%b-%d-%Y_%H%M', logt)
 with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".csv", 'w') as f:  # Just use 'w' mode in 3.x
     w = csv.DictWriter(f, furhat_dict[0][0].keys(), delimiter=";")
     w.writeheader()
+
+    # Robot actions
+    def robotActions(action, speech):
+
+
+        print("Robot")
+        print(speech)
 
     # Procees feature input data
     def featurecallback(_mq1, get_shifted_time1, routing_key1, body1):
@@ -89,12 +98,30 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
                 # Get decimals to decide which frame
                 frame = int(math.modf(featuretime)[0] * 50)
 
-                # Put in df
-                df_temp = pd.DataFrame([[featuretime, second, frame, str(featurebody['speech'])]], columns=['TS', 'Second', 'Frame', 'Speech'])
+                # Check gaze
+                #TODO
+
+                # Check speech
+                speech = str(featurebody['speech'])
+
+                # Put asr in df
+                df_temp = pd.DataFrame([[featuretime, second, frame, speech]], columns=['TS', 'Second', 'Frame', 'Speech'])
                 df = df.append(df_temp, ignore_index=True)
 
                 # Print ASR
-                if DEBUG: print(featurebody['speech'])
+                print(speech)
+
+                # Check speech
+                if "next" in speech:
+                    _speech = [df.Speech]
+                    robotActions(_speech)
+                    df = pd.DataFrame(columns=['TS', 'Second', 'Frame', 'Speech'])
+
+                # Check correct action
+                #TODO
+
+
+
 
         t1 = Thread(target = runA)
         t1.setDaemon(True)
