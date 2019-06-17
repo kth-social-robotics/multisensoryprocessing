@@ -64,7 +64,6 @@ furhat_dict[0][0]['Condition'] = condition
 furhat_dict[0][0]['WizardAction'] = ''
 furhat_dict[0][0]['Action'] = ''
 furhat_dict[0][0]['UserSpeech'] = ''
-furhat_dict[0][0]['RobotSpeech'] = ''
 
 # Save to log file
 logt = time.localtime()
@@ -75,14 +74,38 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
 
     # Robot actions
     def robotActions(action):
+        #PROSODY: reduced, moderate, strong, none
+        global step
+
+        # Start interaction
+        if "start" in action:
+            # Gaze
+            #TODO
+
+            # Speech
+            ws.send(
+                json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Hello! Welcome to our experiment. I am <emphasis level='moderate'>really</emphasis> excited to build some furniture with you."})
+            )
+
+            # Head nod
+            ws.send(
+                json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
+            )
+
+            # Update step
+            step = 0
+
+        # Print robot action
+        print("Robot:", action)
+
+        #also log what furhat says
         #csv with instructions and expansions
         # ws.send(
-        #     #json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "I already told you I <emphasis level='strong'>really</emphasis> like that person."})
-        #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Sometimes you want to insert only a single breath."})
-        #     #"<amazon:auto-breaths>Amazon Polly is a service that turns text into lifelike speech, allowing you to create applications that talk and build entirely new categories of speech-enabled products. Yeah.</amazon:auto-breaths>"
+        #     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Shake"})
         # )
-        #also print and log what furhat says
-        print("Robot:", action)
+        # ws.send(
+        #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
+        # )
 
     # Procees feature input data
     def featurecallback(_mq1, get_shifted_time1, routing_key1, body1):
@@ -182,34 +205,37 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
                     robotActions("start")
                 # 2. Next Step
                 elif '2' in wizardbody['action']:
-                    robotActions("next")
-                # 3. End Interaction
+                    robotActions("instruct")
+                # 3. Expand Step
                 elif '3' in wizardbody['action']:
+                    robotActions("expand")
+                # 4. End Interaction
+                elif '4' in wizardbody['action']:
                     robotActions("end")
                 # User Actions:
-                # 4. Correct Action
-                elif '4' in wizardbody['action']:
-                    robotActions("correct")
-                # 5. Wrong Action
-                elif '5' in wizardbody['action']:
-                    robotActions("wrong")
-                # 6. Speech-Where
-                elif '6' in wizardbody['action']:
-                    robotActions("where")
-                # 7. Speech-Which
-                elif '7' in wizardbody['action']:
-                    robotActions("which")
-                # 8. Speech-Repeat
-                elif '8' in wizardbody['action']:
-                    robotActions("repeat")
-                # 9. Gaze-Object
-                elif '9' in wizardbody['action']:
-                    robotActions("gaze_object")
-                # 10. Gaze-Other
-                elif '10' in wizardbody['action']:
-                    robotActions("gaze_other")
-                # 11. Gaze-Robot
+                # 11. Correct Action
                 elif '11' in wizardbody['action']:
+                    robotActions("correct")
+                # 12. Wrong Action
+                elif '12' in wizardbody['action']:
+                    robotActions("wrong")
+                # 13. Speech-Where
+                elif '13' in wizardbody['action']:
+                    robotActions("where")
+                # 14. Speech-Which
+                elif '14' in wizardbody['action']:
+                    robotActions("which")
+                # 15. Speech-Repeat
+                elif '15' in wizardbody['action']:
+                    robotActions("repeat")
+                # 16. Gaze-Object
+                elif '16' in wizardbody['action']:
+                    robotActions("gaze_object")
+                # 17. Gaze-Other
+                elif '17' in wizardbody['action']:
+                    robotActions("gaze_other")
+                # 18. Gaze-Robot
+                elif '18' in wizardbody['action']:
                     robotActions("gaze_robot")
 
                 # Put in dictionary
@@ -239,40 +265,6 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
 
     zmq_socket.send(b'CLOSE')
     zmq_socket.close()
-
-
-
-    # SPEECH
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "Hello! How are you today? Would you like to build some furniture with me?"})
-    # )
-    # time.sleep(1)
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeechStop"})
-    # )
-
-    # PROSODY
-    #Uh, the one with the <emphasis level="moderate">white</emphasis> stripes! Yeah!
-    #reduced, moderate, strong, none
-    #https://docs.aws.amazon.com/polly/latest/dg/supported-ssml.html
-
-    # GESTURES
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
-    # )
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Shake"})
-    # )
-
-    # GAZE
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
-    # )
-
-    # ATTEND
-    # ws.send(
-    #     json.dumps({"event_name": "furhatos.event.actions.ActionAttend", "target": "all")
-    # )
 
 
 
