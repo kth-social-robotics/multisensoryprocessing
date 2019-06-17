@@ -47,16 +47,22 @@ mq.publish(
     body={'address': zmq_server_addr, 'file_type': 'txt'}
 )
 
+# Define default vars
+step = '0'
+agent = 'none'
+condition = 'none'
+
 # Create dataframe
 df = pd.DataFrame(columns=['TS', 'Second', 'Frame', 'Speech'])
 
 # Dictionaries (Each key is the local timestamp in seconds. The second key is the frame)
 furhat_dict = defaultdict(lambda : defaultdict(dict))
 furhat_dict[0][0]['TS'] = ''
-furhat_dict[0][0]['S'] = ''
-furhat_dict[0][0]['Agent'] = ''
-furhat_dict[0][0]['Condition'] = ''
+furhat_dict[0][0]['S'] = step
+furhat_dict[0][0]['Agent'] = agent
+furhat_dict[0][0]['Condition'] = condition
 furhat_dict[0][0]['WizardAction'] = ''
+furhat_dict[0][0]['Action'] = ''
 furhat_dict[0][0]['UserSpeech'] = ''
 furhat_dict[0][0]['RobotSpeech'] = ''
 
@@ -68,11 +74,15 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
     w.writeheader()
 
     # Robot actions
-    def robotActions(action, speech):
-
-
-        print("Robot")
-        print(speech)
+    def robotActions(action):
+        #csv with instructions and expansions
+        # ws.send(
+        #     #json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "I already told you I <emphasis level='strong'>really</emphasis> like that person."})
+        #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Sometimes you want to insert only a single breath."})
+        #     #"<amazon:auto-breaths>Amazon Polly is a service that turns text into lifelike speech, allowing you to create applications that talk and build entirely new categories of speech-enabled products. Yeah.</amazon:auto-breaths>"
+        # )
+        #also print and log what furhat says
+        print("Robot:", action)
 
     # Procees feature input data
     def featurecallback(_mq1, get_shifted_time1, routing_key1, body1):
@@ -112,16 +122,29 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
                 print(speech)
 
                 # Check speech
-                if "next" in speech:
-                    _speech = [df.Speech]
-                    robotActions(_speech)
+                if "yes" in speech:
+                    _speech = df.Speech.values.tolist()
+
+                    # Put in dictionary
+                    furhat_dict[second][frame]['TS'] = localtime1
+                    furhat_dict[second][frame]['S'] = step
+                    furhat_dict[second][frame]['Agent'] = agent
+                    furhat_dict[second][frame]['Condition'] = condition
+                    furhat_dict[second][frame]['Action'] = 'yes'
+                    furhat_dict[second][frame]['UserSpeech'] = _speech
+
+                    # Log to csv file
+                    w.writerow(furhat_dict[second][frame])
+                    if DEBUG: print(furhat_dict[second][frame])
+
+                    # Tell robot what to do
+                    robotActions("yes")
+
+                    # Reset df
                     df = pd.DataFrame(columns=['TS', 'Second', 'Frame', 'Speech'])
 
-                # Check correct action
+                # Check action
                 #TODO
-
-
-
 
         t1 = Thread(target = runA)
         t1.setDaemon(True)
@@ -136,8 +159,9 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
 
         def runB():
             while True:
-                # Get dataframe
-                global df
+                global step
+                global agent
+                global condition
 
                 data2 = s2.recv()
                 wizardbody, localtime2 = msgpack.unpackb(data2, use_list=False, encoding='utf-8')
@@ -151,45 +175,56 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
                 # Get decimals to decide which frame
                 frame = int(math.modf(wizardtime)[0] * 50)
 
-
-                print(df)
+                # Tell robot what to do
                 # Robot Actions:
                 # 1. Start Interaction
+                if '1' in wizardbody['action']:
+                    robotActions("start")
                 # 2. Next Step
+                elif '2' in wizardbody['action']:
+                    robotActions("next")
                 # 3. End Interaction
-                # --------------------
+                elif '3' in wizardbody['action']:
+                    robotActions("end")
                 # User Actions:
                 # 4. Correct Action
+                elif '4' in wizardbody['action']:
+                    robotActions("correct")
                 # 5. Wrong Action
+                elif '5' in wizardbody['action']:
+                    robotActions("wrong")
                 # 6. Speech-Where
+                elif '6' in wizardbody['action']:
+                    robotActions("where")
                 # 7. Speech-Which
+                elif '7' in wizardbody['action']:
+                    robotActions("which")
                 # 8. Speech-Repeat
+                elif '8' in wizardbody['action']:
+                    robotActions("repeat")
                 # 9. Gaze-Object
+                elif '9' in wizardbody['action']:
+                    robotActions("gaze_object")
                 # 10. Gaze-Other
+                elif '10' in wizardbody['action']:
+                    robotActions("gaze_other")
                 # 11. Gaze-Robot
-                # --------------------
-                #if key or if action (for now update both and log)
-                #csv with instructions and expansions
-                # ws.send(
-                #     #json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "I already told you I <emphasis level='strong'>really</emphasis> like that person."})
-                #     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Sometimes you want to insert only a single breath."})
-                #     #"<amazon:auto-breaths>Amazon Polly is a service that turns text into lifelike speech, allowing you to create applications that talk and build entirely new categories of speech-enabled products. Yeah.</amazon:auto-breaths>"
-                # )
-                #also print and log what furhat says
-
+                elif '11' in wizardbody['action']:
+                    robotActions("gaze_robot")
 
                 # Put in dictionary
+                agent = str(wizardbody['agent'])
+                condition = str(wizardbody['condition'])
+
                 furhat_dict[second][frame]['TS'] = localtime2
-                furhat_dict[second][frame]['Agent'] = str(wizardbody['agent'])
-                furhat_dict[second][frame]['Condition'] = str(wizardbody['condition'])
+                furhat_dict[second][frame]['S'] = step
+                furhat_dict[second][frame]['Agent'] = agent
+                furhat_dict[second][frame]['Condition'] = condition
                 furhat_dict[second][frame]['WizardAction'] = str(wizardbody['action'])
 
                 # Log to csv file
                 w.writerow(furhat_dict[second][frame])
                 if DEBUG: print(furhat_dict[second][frame])
-
-                # Remove dict frames when an action is already used and reset pandas df
-                #TODO
 
         t2 = Thread(target = runB)
         t2.setDaemon(True)
