@@ -48,7 +48,7 @@ mq.publish(
 )
 
 # Define default vars
-step = '0'
+step = 0
 agent = 'none'
 condition = 'none'
 
@@ -78,27 +78,51 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
         global step
 
         # Start interaction
-        if "start" in action:
-            # Gaze
-            #TODO
+        if step == 0:
+            if "start" in action:
+                # Gaze
+                #TODO
 
-            # Speech
-            ws.send(
-                json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Hello! Welcome to our experiment. I am <emphasis level='moderate'>really</emphasis> excited to build some furniture with you."})
-            )
+                # Speech
+                ws.send(
+                    json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Hi there!"})
+                )
+                time.sleep(3)
+                ws.send(
+                    json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Welcome to our experiment. I am <emphasis level='moderate'>really</emphasis> excited to build some furniture with you."})
+                )
 
-            # Head nod
-            ws.send(
-                json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
-            )
+                # Head nod
+                ws.send(
+                    json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
+                )
 
-            # Update step
-            step = 0
+                # Ask question
+                time.sleep(2.5)
+                ws.send(
+                    json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Are you ready to start?"})
+                )
+
+                # Update step
+                step = 0.1
+
+        # Demographics
+        if step == 0.1:
+            if "yes" in action:
+                # Gaze
+                #TODO
+
+                # Speech
+                ws.send(
+                    json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Brilliant! Have you built IKEA furniture before?"})
+                )
+
+                # Update step
+                step = 0.2
 
         # Print robot action
         print("Robot:", action)
 
-        #also log what furhat says
         #csv with instructions and expansions
         # ws.send(
         #     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Shake"})
@@ -134,7 +158,7 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
                 # Check gaze
                 #TODO
 
-                # Check speech
+                # Get speech
                 speech = str(featurebody['speech'])
 
                 # Put asr in df
