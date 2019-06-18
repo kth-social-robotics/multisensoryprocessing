@@ -74,7 +74,6 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
 
     # Robot actions
     def robotActions(action):
-        #PROSODY: reduced, moderate, strong, none
         global step
 
         # Start interaction
@@ -91,6 +90,7 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
                 ws.send(
                     json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Welcome to our experiment. I am <emphasis level='moderate'>really</emphasis> excited to build some furniture with you."})
                 )
+                #PROSODY: reduced, moderate, strong, none
 
                 # Head nod
                 ws.send(
@@ -148,6 +148,7 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
                     step = 1
                     return
 
+        # Instructions
         elif step == 1:
             if "yes" in action:
                 if "action" in condition:
@@ -178,6 +179,7 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
             #
             #     return
 
+        # Feedback
         elif step == 1.1:
             if "correct" in action:
                 if "action" in condition:
@@ -216,6 +218,7 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
 
                     return
 
+        # End
         # elif step == 99:
         #     if "action" in condition:
         #         # Gaze
@@ -310,26 +313,26 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
 
                     # Reset df
                     df = pd.DataFrame(columns=['TS', 'Second', 'Frame', 'Speech'])
-                else:
-                    _speech = df.Speech.values.tolist()
-
-                    # Put in dictionary
-                    furhat_dict[second][frame]['TS'] = localtime1
-                    furhat_dict[second][frame]['S'] = step
-                    furhat_dict[second][frame]['Agent'] = agent
-                    furhat_dict[second][frame]['Condition'] = condition
-                    furhat_dict[second][frame]['Action'] = 'misunderstood'
-                    furhat_dict[second][frame]['UserSpeech'] = _speech
-
-                    # Log to csv file
-                    w.writerow(furhat_dict[second][frame])
-                    if DEBUG: print(furhat_dict[second][frame])
-
-                    # Tell robot what to do
-                    robotActions("misunderstood")
-
-                    # Reset df
-                    df = pd.DataFrame(columns=['TS', 'Second', 'Frame', 'Speech'])
+                # else:
+                #     _speech = df.Speech.values.tolist()
+                #
+                #     # Put in dictionary
+                #     furhat_dict[second][frame]['TS'] = localtime1
+                #     furhat_dict[second][frame]['S'] = step
+                #     furhat_dict[second][frame]['Agent'] = agent
+                #     furhat_dict[second][frame]['Condition'] = condition
+                #     furhat_dict[second][frame]['Action'] = 'misunderstood'
+                #     furhat_dict[second][frame]['UserSpeech'] = _speech
+                #
+                #     # Log to csv file
+                #     w.writerow(furhat_dict[second][frame])
+                #     if DEBUG: print(furhat_dict[second][frame])
+                #
+                #     # Tell robot what to do
+                #     robotActions("misunderstood")
+                #
+                #     # Reset df
+                #     df = pd.DataFrame(columns=['TS', 'Second', 'Frame', 'Speech'])
 
                 # Check action
                 #TODO
