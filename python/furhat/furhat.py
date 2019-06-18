@@ -105,28 +105,149 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
 
                 # Update step
                 step = 0.1
+                return
 
         # Demographics
-        if step == 0.1:
+        elif step == 0.1:
             if "yes" in action:
-                # Gaze
-                #TODO
+                if "action" in condition:
+                    # Gaze
+                    #TODO
 
-                # Speech
-                ws.send(
-                    json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Brilliant! Have you built IKEA furniture before?"})
-                )
+                    # Speech
+                    ws.send(
+                        json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Brilliant! Have you built IKEA furniture before?"})
+                    )
 
-                # Update step
-                step = 0.2
+                    # Update step
+                    step = 0.2
+                    return
+
+        elif step == 0.2:
+            if "yes" in action:
+                if "action" in condition:
+                    # Gaze
+                    #TODO
+
+                    # Speech
+                    ws.send(
+                        json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>I wish I could build one myself, but for now I am going to help you with the instructions."})
+                    )
+                    time.sleep(2)
+                    ws.send(
+                        json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Should we start?"})
+                    )
+
+                    # Head nod
+                    time.sleep(2.5)
+                    ws.send(
+                        json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
+                    )
+
+                    # Update step
+                    step = 1
+                    return
+
+        elif step == 1:
+            if "yes" in action:
+                if "action" in condition:
+                    # Gaze
+                    #TODO
+
+                    # Speech
+                    ws.send(
+                        json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Great!"})
+                    )
+                    # Instruction - Expansions 1, 2 and 3
+                    time.sleep(1)
+                    ws.send(
+                        json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Let's start with the big piece on the table. It is the one on your right. Uhm, the one with the white stripes, next to the black piece."})
+                    )
+
+                    # Update step
+                    step = 1.1
+                    return
+            # else:
+            #     # Gaze
+            #     #TODO
+            #
+            #     # Speech
+            #     ws.send(
+            #         json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>I did not get that! Can you please repeat?"})
+            #     )
+            #
+            #     return
+
+        elif step == 1.1:
+            if "correct" in action:
+                if "action" in condition:
+                    # Gaze
+                    #TODO
+
+                    # Speech
+                    ws.send(
+                        json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Great! You can put it on your right for now. Let's get to the next one."})
+                    )
+
+                    # Head nod
+                    time.sleep(1)
+                    ws.send(
+                        json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
+                    )
+
+                    # Update step
+                    step = 2
+                    return
+            if "wrong" in action:
+                if "action" in condition:
+                    # Gaze
+                    #TODO
+
+                    # Speech
+                    ws.send(
+                        json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Uhm, this does not seem to be the right one."})
+                    )
+
+                    # Head nod
+                    time.sleep(1)
+                    ws.send(
+                        json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Shake"})
+                    )
+
+                    return
+
+        # elif step == 99:
+        #     if "action" in condition:
+        #         # Gaze
+        #         #TODO
+        #
+        #         # Speech
+        #         ws.send(
+        #             json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>It seems like we have collected all the right pieces. Now it is time to assemble them together!"})
+        #         )
+        #
+        #         # Head nod
+        #         time.sleep(1)
+        #         ws.send(
+        #             json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Nod"})
+        #         )
+        #
+        #         return
+
+        # else:
+        #     # Gaze
+        #     #TODO
+        #
+        #     # Speech
+        #     ws.send(
+        #         json.dumps({"event_name": "furhatos.event.actions.ActionSpeech", "text": "<amazon:breath duration='medium' volume='x-loud'/>Something seems to be wrong."})
+        #     )
+        #
+        #     return
 
         # Print robot action
         print("Robot:", action)
 
-        #csv with instructions and expansions
-        # ws.send(
-        #     json.dumps({"event_name": "furhatos.event.actions.ActionGesture", "name": "Shake"})
-        # )
         # ws.send(
         #     json.dumps({"event_name": "furhatos.event.actions.ActionGaze", "location": {"x": -0.1, "y": -0.2, "z": +1}, "mode": 0, "gazeSpeed": 2})
         # )
@@ -189,6 +310,26 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
 
                     # Reset df
                     df = pd.DataFrame(columns=['TS', 'Second', 'Frame', 'Speech'])
+                else:
+                    _speech = df.Speech.values.tolist()
+
+                    # Put in dictionary
+                    furhat_dict[second][frame]['TS'] = localtime1
+                    furhat_dict[second][frame]['S'] = step
+                    furhat_dict[second][frame]['Agent'] = agent
+                    furhat_dict[second][frame]['Condition'] = condition
+                    furhat_dict[second][frame]['Action'] = 'misunderstood'
+                    furhat_dict[second][frame]['UserSpeech'] = _speech
+
+                    # Log to csv file
+                    w.writerow(furhat_dict[second][frame])
+                    if DEBUG: print(furhat_dict[second][frame])
+
+                    # Tell robot what to do
+                    robotActions("misunderstood")
+
+                    # Reset df
+                    df = pd.DataFrame(columns=['TS', 'Second', 'Frame', 'Speech'])
 
                 # Check action
                 #TODO
@@ -225,41 +366,41 @@ with open('../../logs/experiment2/instructions/instruction_' + logtimestamp + ".
                 # Tell robot what to do
                 # Robot Actions:
                 # 1. Start Interaction
-                if '1' in wizardbody['action']:
+                if wizardbody['action'] == '1':
                     robotActions("start")
                 # 2. Next Step
-                elif '2' in wizardbody['action']:
+                elif wizardbody['action'] == '2':
                     robotActions("instruct")
                 # 3. Expand Step
-                elif '3' in wizardbody['action']:
+                elif wizardbody['action'] == '3':
                     robotActions("expand")
                 # 4. End Interaction
-                elif '4' in wizardbody['action']:
+                elif wizardbody['action'] == '4':
                     robotActions("end")
                 # User Actions:
                 # 11. Correct Action
-                elif '11' in wizardbody['action']:
+                elif wizardbody['action'] == '11':
                     robotActions("correct")
                 # 12. Wrong Action
-                elif '12' in wizardbody['action']:
+                elif wizardbody['action'] == '12':
                     robotActions("wrong")
                 # 13. Speech-Where
-                elif '13' in wizardbody['action']:
+                elif wizardbody['action'] == '13':
                     robotActions("where")
                 # 14. Speech-Which
-                elif '14' in wizardbody['action']:
+                elif wizardbody['action'] == '14':
                     robotActions("which")
                 # 15. Speech-Repeat
-                elif '15' in wizardbody['action']:
+                elif wizardbody['action'] == '15':
                     robotActions("repeat")
                 # 16. Gaze-Object
-                elif '16' in wizardbody['action']:
+                elif wizardbody['action'] == '16':
                     robotActions("gaze_object")
                 # 17. Gaze-Other
-                elif '17' in wizardbody['action']:
+                elif wizardbody['action'] == '17':
                     robotActions("gaze_other")
                 # 18. Gaze-Robot
-                elif '18' in wizardbody['action']:
+                elif wizardbody['action'] == '18':
                     robotActions("gaze_robot")
 
                 # Put in dictionary
