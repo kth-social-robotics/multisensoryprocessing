@@ -16,8 +16,8 @@ ds.listen()
 ```
 from farmi import Subscriber
 
-def fn(msg):
-    print(msg)
+def fn(topic, time_, msg):
+    print(topic, time_, msg)
 
 s = Subscriber('some_topic', fn)
 s.listen()
